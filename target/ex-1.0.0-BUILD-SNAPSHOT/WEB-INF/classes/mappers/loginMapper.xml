@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="login">
+
+	<select id="getInfo" parameterType="com.spring.ex.login.model.UsersBean" 
+								   resultType="com.spring.ex.login.model.UsersBean">
+		SELECT 
+				user_num as userNum,
+				user_id as userId,
+				password, 
+				name,
+				gender, 
+				email, 
+				phone, 
+				status, 
+				user_role as userRole, 
+				udate,
+				address, 
+				address_sub as addressSub,
+				image 
+	    FROM users
+	    WHERE user_id = #{userId}
+	</select>
+
+</mapper>
