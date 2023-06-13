@@ -1,0 +1,122 @@
+--crew 시퀀스
+drop sequence crew_seq;
+create sequence crew_seq
+	increment by 1
+	start with 1
+	minvalue 1
+	maxvalue 1000
+	nocache;
+
+
+CREATE TABLE crew (
+    large number, --1:1일크루, 2:정기크루
+    small char(1), --M:등산, P:플로깅
+    crew_num number,
+    crew_name varchar2(50) primary key,
+    crew_contents varchar2(100) NOT NULL,
+    crew_limit number,
+    crew_now number default 1,
+    crew_member varchar2(100),
+    crew_manager varchar2(20)
+);
+
+insert into crew(large, small, crew_num, crew_name, crew_contents, crew_limit)
+values(2, 'M', crew_seq.nextval, '오르락', '매주 토요일 만나요', 10);
+
+--crew_board 시퀀스
+drop sequence crewbrd_seq;
+create sequence crewbrd_seq
+	increment by 1
+	start with 1
+	minvalue 1
+	maxvalue 1000
+	nocache; --필요할 때 마다 번호부여
+
+drop table crew_board;
+CREATE TABLE crew_board (
+    crewboard_num number primary key,
+    state number default 0, --0:모집중, 1:완료 
+    large number, --1:번개, 2:장기
+    small char(1), --M:등산, P:플로깅
+    crew_name varchar2(50),
+    subject varchar2(50),
+    writer varchar2(20),
+    contents varchar2(100),
+    reg_date date default sysdate,
+    readcount number default 0
+);
+
+
+**** crewboardlist.jsp 출력을 위한 조인 ****
+select crewboard_num, cb.large, cb.small, cb.crew_name, cb.subject, cb.writer, cb.contents, cb.reg_date, cb.readcount, crew.crew_limit, crew.crew_now,
+(select count(*) from crew_comments where idx = cb.crewboard_num) as comments -- 댓글 개수
+from crew_board cb inner join crew
+on cb.crew_name = crew.crew_name;
+
+--crew_comments 시퀀스
+drop sequence ccmt_seq;
+create sequence ccmt_seq
+	increment by 1
+	start with 1
+	minvalue 1
+	maxvalue 1000
+	nocache; 
+
+drop table crew_comments;
+CREATE TABLE crew_comments (
+    num number primary key,
+    idx number,
+    writer varchar2(20),
+    content varchar2(100),
+    ref number not null,
+    re_level number not null,
+    re_step number not null,
+    reg_date date default sysdate,
+    delete_yn char(1) 
+);
+
+--products시퀀스
+drop sequence prd_seq;
+create sequence prd_seq
+	increment by 1
+	start with 1
+	minvalue 1
+	maxvalue 1000
+	nocache; 
+
+drop table products cascade constraints;
+CREATE TABLE products (
+    products_num number primary key,
+    kind char(1), --a: 판매 b:나눔 c:교환
+    name varchar2(20),
+    price number,
+    info varchar2(100),
+    image varchar2(100),
+    seller varchar2(20),
+    inputdate date default sysdate,
+    state number default 0, -- 0: 판매중, 1:완료
+    readcount number default 0
+);
+
+--products_comments 시퀀스
+drop sequence pcmt_seq;
+create sequence pcmt_seq
+	increment by 1
+	start with 1
+	minvalue 1
+	maxvalue 1000
+	nocache; 
+
+drop table products_comments;
+CREATE TABLE products_comments (
+    num number primary key,
+    idx number,
+    writer varchar2(20),
+    content varchar2(100),
+    ref number not null,
+    re_level number not null,
+    re_step number not null,
+    reg_date date default sysdate,
+    delete_yn char(1) 
+);
+
