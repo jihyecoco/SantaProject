@@ -1,0 +1,15 @@
+eclipse.preferences.version=1
+encoding//src/main/java/com/spring/ex/crew/controller/CrewInsertController.java=UTF-8
+encoding//src/main/java/com/spring/ex/crew/controller/CrewUpdateController.java=UTF-8
+encoding//src/main/java/com/spring/ex/crew/controller/CrewnameCheckController.java=UTF-8
+encoding//src/main/java/com/spring/ex/crewboard/controller/CrewBoardDetailController.java=UTF-8
+encoding//src/main/java/com/spring/ex/crewboard/controller/CrewBoardInsertController.java=UTF-8
+encoding//src/main/java/com/spring/ex/crewboard/controller/CrewBoardListController.java=UTF-8
+encoding//src/main/java/com/spring/ex/crewboard/model/CrewBoardBean.java=UTF-8
+encoding//src/main/java/com/spring/ex/crewcomments/controller/CrewCommentsInsertController.java=UTF-8
+encoding//src/main/java/com/spring/ex/crewcomments/controller/CrewCommentsReplyController.java=UTF-8
+encoding//src/main/java/com/spring/ex/crewcomments/model/CrewCommentsDao.java=UTF-8
+encoding//src/main/java/com/spring/ex/products/controller/ProductsInsertController.java=UTF-8
+encoding//src/main/java/com/spring/ex/products/model/ProductsBean.java=UTF-8
+encoding//src/main/java/com/spring/ex/utility/Paging.java=UTF-8
+encoding//src/main/webapp/WEB-INF/views/login/loginPage.jsp=UTF-8
