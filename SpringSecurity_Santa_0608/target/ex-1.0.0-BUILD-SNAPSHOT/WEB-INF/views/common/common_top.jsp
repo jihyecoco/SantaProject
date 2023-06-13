@@ -91,24 +91,22 @@
 			<div class="navbar-nav ms-auto p-4 p-lg-0">
 				<a href="/main.lg" class="nav-item nav-link">Home</a>
 	            <a href="#" class="nav-item nav-link">산 별 정보</a>
-	            <a href="/crew/user/insert.cr" class="nav-item nav-link">크루</a>
-	            <a href="/crewboard/all/list.bdcr" class="nav-item nav-link">크루게시판</a>
+	            <a href="/crewboard/all/list.bdcr" class="nav-item nav-link">크루</a>
 	            <a href="/qna/all/list.qna" class="nav-item nav-link">QnA</a>    
 	           <div class="nav-item dropdown">
 	               <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">커뮤니티</a>
 	               <div class="dropdown-menu bg-light m-0">
 	                   <a href="/notice/all/list.no" class="dropdown-item">공지사항</a>
-	                   <a href="/board/all/list.br" class="dropdown-item">board 게시판</a>
-	                   <a href="#" class="dropdown-item">게시판3</a>
-	                   <a href="#" class="dropdown-item">게시판4</a>
-	                   <a href="#" class="dropdown-item">게시판5</a>
+	                   <a href="/board/all/list.br" class="dropdown-item">자유게시판</a>
+	                   <a href="" class="dropdown-item">서포터즈</a>
+	                   <a href="/products/all/list.prd" class="dropdown-item">거래게시판</a>
 					</div><!-- //dropdown-menu -->
 				</div><!-- //nav-item -->
 			</div><!-- //navbar-nav -->
 			
 			
 			<a href="#" class="btn btn-primary py-4 px-lg-4 rounded-0 d-none d-lg-block">
-				#미정#<i class="fa fa-arrow-right ms-3"></i>
+				로그인<i class="fa fa-arrow-right ms-3"></i>
 			</a> 
 		</div><!-- //collapse navbar-collapse -->
 	</nav><!-- //navbar -->
