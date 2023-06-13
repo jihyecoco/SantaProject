@@ -16,34 +16,91 @@
 		<result property="qnasecret" column="qna_secret"/>
 	</resultMap>
 	
-	<!-- 튜플 전체 갯수-->
-	<select id="GetTotalCount" resultType="int">
-		select count(*) from qna
-		<if test="whatColumn != null">
-			where qna_category = #{whatColumn}
-			and qna_subject like #{keyword}
-		</if>
+	<!-- 전체 갯수-->
+	<select id="GetTotalCount" resultType="int" resultMap="qnaMap">
+		SELECT
+			count(*)
+			from qna
+		<choose>
+			<when test="whatColumn != null and keyword != null">
+				WHERE
+					qna_category = #{whatColumn}
+					and qna_subject like #{keyword}
+			</when>
+			<when test="whatColumn != null and keyword == null">
+				WHERE
+					qna_category = #{whatColumn}
+			</when>
+			<when test="whatColumn == null and keyword == null">
+				WHERE
+					qna_subject like #{keyword}
+			</when>
+		</choose>
 	</select>
-	<!-- //튜플 전체 갯수-->
+	<!-- //전체 갯수-->
 	
-	<!-- 튜플 전체 목록 -->
+	<!-- 전체 목록 -->
 	<select id="GetAllQna" resultType="com.spring.ex.qna.model.QnaBean" resultMap="qnaMap">
-		select * from qna
-		<if test="whatColumn != null">
-			where qna_category = #{whatColumn}
-			and qna_subject like #{keyword}
-		</if>
+		SELECT
+			 *
+			 from qna
+		<choose>
+			<when test="whatColumn != null and keyword != null">
+				WHERE
+					qna_category = #{whatColumn}
+					and qna_subject like #{keyword}
+			</when>
+			<when test="whatColumn != null and keyword == null">
+				WHERE
+					qna_category = #{whatColumn}
+			</when>
+			<when test="whatColumn == null and keyword == null">
+				WHERE
+					qna_subject like #{keyword}
+			</when>
+		</choose>
 	</select>
-	<!-- //튜플 전체 목록 -->
+	<!-- //전체 목록 -->
 	
-	<!-- 새로운 튜플 삽입 -->
-	<insert id="insertQuestion">
-		insert into qna(qna_num, users_id, qna_category,
-		qna_date, qna_subject, qna_question, qna_image, qna_secret)
-		values(qna_seq.nextval, #{usersid}, #{qnacategory}, sysdate,
-		#{qnasubject}, #{qnaquestion}, #{upload}, #{qnasecret})
+	<!-- 새로운 qna 삽입 -->
+	<insert id="InsertQuestion">
+		INSERT
+			into qna(qna_num, users_id, qna_category,
+			qna_date, qna_subject, qna_question, qna_image, qna_secret)
+		VALUES
+			(qna_seq.nextval, #{usersid}, #{qnacategory}, sysdate,
+			#{qnasubject}, #{qnaquestion}, #{qnaimage}, #{qnasecret})
 	</insert>
-	<!-- //새로운 튜플 삽입 -->
+	<!-- //새로운 qna 삽입 -->
 	
+	<!-- 선택한 qna 삭제 -->
+	<delete id="DeleteQna">
+		DELETE
+			from qna
+		WHERE
+			qna_num = #{qnanum}
+	</delete>
+	<!-- //선택한 qna 삭제 -->
+	
+	<!-- qnanum으로 해당 컬럼 검색 -->
+	<select id="GetQnaByNum" resultType="com.spring.ex.qna.model.QnaBean" resultMap="qnaMap">
+		SELECT
+			 *
+			 from qna
+		WHERE
+			qna_num = #{qnanum}
+	</select>
+	<!-- //qnanum으로 해당 컬럼 검색 -->
+	
+	<!-- 답변 등록 -->
+	<update id="InsertAnswer">
+		UPDATE
+			qna
+		SET
+			qna_answer = #{qnaanswer}
+		WHERE
+			qna_num = #{qnanum}	
+	</update>
+	<!-- //답변 등록 -->
 	
 </mapper>
