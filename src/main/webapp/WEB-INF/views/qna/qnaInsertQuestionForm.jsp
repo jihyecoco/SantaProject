@@ -40,34 +40,31 @@
                 <div class="col-lg-7">
                     <div class="bg-light rounded p-4 p-sm-5 wow fadeInUp" data-wow-delay="0.1s">
                         <div class="row g-3" style="margin-bottom:-10px;">
-                        
-                        	<!-- hidden 입력 사항 -->
-                            <input type="hidden" name="qnasubject" value="${qnaBean.usersid}">
-                        	<!-- //hidden 입력 사항 -->
                         	
                         	<!-- 제목 입력 -->
                             <div class="col-sm-9" style="margin-bottom:-10px;">
                                 <div class="mb-2 mx-1"><b>제목 : </b></div>
-                                    <input type="text" class="form-control border-0" id="subject" name="qnasubject" placeholder="제목"><br>
+                                    <input type="text" value="${qnaBean.qnasubject}" class="form-control border-0" id="subject" name="qnasubject"><br>
                             </div>
+                        	<span class="col-12" style="margin-top:-3px;margin-bottom:-3px;"><form:errors cssClass="err" path="qnasubject"/></span>
                         	<!-- //제목 입력 -->
                         	
                         	<!-- 카테고리 입력 -->
                             <div class="col-sm-3" style="margin-bottom:-10px;">
                                 	<div class="mb-2 mx-1"><b>카테고리 : </b></div>
                                 	<select name="qnacategory" class="form-select border-0">
-                                		<option value="">전체</option>
-	    								<option value="계정">계정</option>
-					    				<option value="크루">크루</option>
-					    				<option value="게시판">게시판</option>
-					    				<option value="거래/나눔">거래/나눔</option>
-					    				<option value="기타">기타</option>
+                                		<option value="">선택</option>
+	    								<option value="계정" <c:if test="${qnaBean.qnacategory=='계정'}">selected</c:if>>계정</option>
+					    				<option value="크루" <c:if test="${qnaBean.qnacategory=='크루'}">selected</c:if>>크루</option>
+					    				<option value="게시판" <c:if test="${qnaBean.qnacategory=='게시판'}">selected</c:if>>게시판</option>
+					    				<option value="거래/나눔" <c:if test="${qnaBean.qnacategory=='거래/나눔'}">selected</c:if>>거래/나눔</option>
+					    				<option value="기타" <c:if test="${qnaBean.qnacategory=='기타'}">selected</c:if>>기타</option>
                                 	</select>
                             </div>
                         	<!-- //카테고리 입력 -->
                         	
                             <!-- 제목/카테고리 오류 메세지 출력 -->
-                            <span class="col-12"><form:errors cssClass="err" path="qnasubject"/> <form:errors cssClass="err" path="qnacategory"/></span>
+                            <span class="col-12" style="margin-bottom:-3px;"><form:errors cssClass="err" path="qnacategory"/></span>
                             <!-- //제목/카테고리 오류 메세지 출력 -->
                             
                             <!-- 사진 첨부 -->
@@ -81,7 +78,7 @@
                         	<!-- 질문 내용 입력 -->
                             <div class="col-12">
                             	<div class="mb-2 mx-1"><b>질문 내용 : </b></div>
-                            	<textarea name="qnaquestion" class="form-control border-0" placeholder="질문 내용" id="message" style="height: 200px"></textarea>
+                            	<textarea name="qnaquestion" class="form-control border-0" placeholder="질문 내용" id="message" style="height: 200px">${qnaBean.qnaquestion}</textarea>
                             </div>
                         	<!-- //질문 내용 입력 -->
                         	
@@ -89,21 +86,24 @@
                             <span class="col-12"><form:errors cssClass="err" path="qnaquestion"/></span>
                             <!-- //질문 내용 오류 메세지 출력 -->
                             
+                            <!-- 비밀글 설정 출력 -->
                             <div class="col-12">
                             	<div class="mb-2 mx-1"><b>비밀글 : </b></div>
-								<div class="form-check">
-								  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+								<div class="form-check form-check-inline">
+								  <input name="qnasecret" value="0" <c:if test="${qnaBean.qnasecret=='0'}">checked</c:if> class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
 								  <label class="form-check-label" for="flexRadioDefault1">
-								    Default radio
+								    전체글
 								  </label>
 								</div>
-								<div class="form-check">
-								  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+								<div class="form-check form-check-inline">
+								  <input name="qnasecret" value="1" <c:if test="${qnaBean.qnasecret=='1'}">checked</c:if> class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
 								  <label class="form-check-label" for="flexRadioDefault2">
-								    Default checked radio
+								    비밀글
 								  </label>
 								</div>
                             </div>
+                            <span class="col-12" style="margin-bottom:-3px;"><form:errors cssClass="err" path="qnasecret"/></span>
+                            <!-- //비밀글 설정 출력 -->
                             
                             <!-- 질문하기 버튼 -->
                             <div class="col-12 text-center">

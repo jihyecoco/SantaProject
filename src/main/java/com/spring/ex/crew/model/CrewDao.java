@@ -28,11 +28,10 @@ public class CrewDao {
 		return cnt;
 	}
 
-	public List<CrewBean> getCrewById(String loginid) {
+	public List<CrewBean> getCrewById(String loginId) {
 		List<CrewBean> cb = new ArrayList<CrewBean>();
-		//cb = sqlSessionTemplate.selectList(namespace+".GetCrewById", loginid);
-		System.out.println("crewdao 아이디 : "+loginid);
-		cb = sqlSessionTemplate.selectList("GetCrewById", loginid);
+		System.out.println("crewdao 아이디 : "+loginId);
+		cb = sqlSessionTemplate.selectList("GetCrewById", loginId);
 //		for(int i=0; i<cb.size(); i++) {
 //			System.out.println("crewdao 크루이름 : "+cb.get(i).getCrewname());
 //			System.out.println("crewdao 설명 : "+cb.get(i).getCrewcontents());
@@ -52,6 +51,36 @@ public class CrewDao {
 		cnt = sqlSessionTemplate.update("UpdateCrew", cb);
 		return cnt;
 	}
+
+	public int getAllCrewCount() {
+		int allcrew_count = 0;
+		allcrew_count = sqlSessionTemplate.selectOne("GetAllCrewCount");
+		return allcrew_count;
+	}
+
+	public int getMountainCrewCount() {
+		int mountaincrew_count = 0;
+		mountaincrew_count = sqlSessionTemplate.selectOne("GetMountainCrewCount");
+		return mountaincrew_count;
+	}
+
+	public int getPloggingCrewCount() {
+		int ploggingcrew_count = 0;
+		ploggingcrew_count = sqlSessionTemplate.selectOne("GetPloggingCrewCount");
+		return ploggingcrew_count;
+	}
+
+	public int getFinishCrewCount() {
+		int finishcrew_count = 0;
+		finishcrew_count = sqlSessionTemplate.selectOne("GetFinishCrewCount");
+		return finishcrew_count;
+	}
 	
+	public List<CrewBean> getJoinCrewById(String loginId) {
+		List<CrewBean> join_crew = new ArrayList<CrewBean>();
+		String login_Id = "%"+loginId+"%";
+		join_crew = sqlSessionTemplate.selectList("GetJoinCrewById", login_Id);
+		return join_crew;
+	}
 	
 }

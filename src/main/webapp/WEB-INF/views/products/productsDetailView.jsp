@@ -8,30 +8,45 @@
 		getAllComments();
 	})
 	
+	/* 댓글 목록 가져오기 */
 	function getAllComments(){
 		//alert('getAllComments');
+		var loginId = $('input[name=writer]').val(); // 현재 로그인 아이디
+		var pageNumber2 = $('input[name=pageNumber]').val(); // 현재 페이지
+		
 		$.ajax({
-			url : 'list.pcmt',
+			url : '/productscomments/user/list.pcmt',
 			type : 'post',
 			data : ({
-				idx : $('input[name=idx]').val()
+				idx : $('input[name=idx]').val(),
+				pageNumber : $('input[name=pageNumber]').val()
 			}),
 			success : function(data){
 				//alert('성공');
 				var result = "<table class='table table-hover'>";
 				$.each(data,function(index, value) { // 값이 여러개 일 때는 반복문 사용
-                	result += "<tr><td>";
-                	if(value.relevel>0){
-                		var wid = value.relevel*20;
-                		result += "<img src='resources/images/crewcomments/level.gif' width='"+wid+"' height='15'>";
-                		result += "<img src='resources/images/crewcomments/re.gif' width='20' height='15'>";
+					result += "<tr><td>";
+	                if(value.relevel>0){ // 대댓글일 경우
+	                	var wid = value.relevel*20;
+	                	result += "<img src='../../../resources/images/comments/level.gif' width='"+wid+"' height='15'>";
+	                	result += "<img src='../../../resources/images/comments/re.gif' width='20' height='15'>";
+	                }
+	                
+                	if(value.deleteyn == 'Y'){ //삭제된 댓글일 경우
+                		result += "삭제된 댓글입니다</td><td></td></tr>";
+                	}else{ 
+	                	result += "작성자 : "+value.writer+"<br>";
+	                	result += "<span id='pcmt_update"+value.num+"'>"+value.content+" ";
+	                	result += "<input type='button' value='답글달기' ";
+	                	result += "onclick='replypcmt("+value.num+","+value.idx+","+value.ref+","+value.restep+","+value.relevel+","+value.pageNumber+")'><br>"+value.regdate+"<br>";
+	                	result += "<span id='replypcmt_area"+value.num+"'></span></td></span>";
+	                	if(value.writer == loginId ){ // 댓글 작성자라면 수정, 삭제 보임
+	                		result += "<td align='right'><a href='javascript:updateComments("+value.num+","+pageNumber2+","+value.idx+")'>수정</a>/";
+	                		result += "<a href='javascript:deleteComments("+value.num+","+pageNumber2+","+value.idx+")'>삭제</a></td>";
+	                	}
+	                	result += "</tr>";
                 	}
-                	result += "작성자 : "+value.writer+"<br>";
-                	result += value.content+" ";
-                	result += "<input type='button' value='답글달기' ";
-                	result += "onclick='replyccmt("+value.num+","+value.idx+","+value.ref+","+value.restep+","+value.relevel+")'><br>"+value.regdate+"<br>";
-                	result += "<span id='replyccmt_area"+value.num+"'></span></td></tr>";
-                })
+                })//each
                 result += "</table>";
                 $('#comments_area').html(result);
 			},
@@ -44,17 +59,84 @@
 	}
 	
 	/* 댓글 답글달기 버튼 클릭 */
-	function replyccmt(num, idx, ref, re_step, re_level){
+	function replypcmt(num, idx, ref, re_step, re_level, pageNumber){
 		//1. 댓글 입력창 보여지기
-		var replyccmt_area = "<form action='reply.pcmt' method='post'>";
-		replyccmt_area += "<input type='hidden' name='idx' value='"+idx+"'>";
-		replyccmt_area += "<input type='hidden' name='ref' value='"+ref+"'>";
-		replyccmt_area += "<input type='hidden' name='restep' value='"+re_step+"'>";
-		replyccmt_area += "<input type='hidden' name='relevel' value='"+re_level+"'>";
-		replyccmt_area += "<input type='text' name='content'>";
-		replyccmt_area += "<input type='submit' value='등록'>";
+		var replypcmt_area = "<form action='/productscomments/user/reply.pcmt' method='post'>";
+		replypcmt_area += "<input type='hidden' name='idx' value='"+idx+"'>";
+		replypcmt_area += "<input type='hidden' name='ref' value='"+ref+"'>";
+		replypcmt_area += "<input type='hidden' name='restep' value='"+re_step+"'>";
+		replypcmt_area += "<input type='hidden' name='relevel' value='"+re_level+"'>";
+		replypcmt_area += "<input type='hidden' name='pageNumber' value='"+pageNumber+"'>";
+		replypcmt_area += "<input type='text' name='content'>";
+		replypcmt_area += "<input type='submit' value='등록'>";
 		
-		$('#replyccmt_area'+num).html(replyccmt_area);
+		$('#replypcmt_area'+num).html(replypcmt_area);
+	}
+	
+	/* 판매완료 버튼 클릭 */
+	function changeState(prd_num, pageNumber){
+		//alert(prd_num);
+		var result = confirm('판매 완료로 바꾸시겠습니까?');
+		if(result == true){ // 판매완료된 상품
+			location.href = '/products/user/update.prd?num='+prd_num+'&state=change&pageNumber='+pageNumber;
+		}
+	}
+	
+	/* 게시글 삭제 버튼 클릭 */
+	function deleteProducts(prd_num, pageNumber){
+		var result = confirm('정말 삭제하시겠습니까?');
+		if(result == true){ // 삭제 요청
+			location.href = '/products/user/delete.prd?num='+prd_num+'&pageNumber='+pageNumber;
+		}
+	}
+	
+	/* 댓글 삭제 버튼 클릭 */
+	function deleteComments(pcmt_num, pageNumber, idx){
+		//alert(ccmt_num);
+		//alert(pageNumber);
+		var pcmt_result = confirm('정말 삭제하시겠습니까?');
+		if(pcmt_result == true){
+			location.href = '/productscomments/user/delete.pcmt?num='+pcmt_num+'&pageNumber='+pageNumber+'&idx='+idx;
+		}
+	}
+	
+	/* 댓글 수정 버튼 클릭 */
+	function updateComments(pcmt_num, pageNumber, idx){
+		alert(pcmt_num);
+		var pcmt_updateform = "<form action='/productscomments/user/update.pcmt' method='post'>";
+		pcmt_updateform += "<input type='text' name='content'>";
+		pcmt_updateform += "<input type='hidden' name='num' value='"+pcmt_num+"'>";
+		pcmt_updateform += "<input type='hidden' name='idx' value='"+idx+"'>";
+		pcmt_updateform += "<input type='hidden' name='pageNumber' value='"+pageNumber+"'>";
+		pcmt_updateform += "<input type='submit' value='확인'>";
+		pcmt_updateform += "<input type='reset' value='취소' onclick='javascript:getAllComments()'>";
+		pcmt_updateform += "</form>";
+		
+		$('#pcmt_update'+pcmt_num).html(pcmt_updateform);
+	}
+	
+	/* 좋아요 버튼 클릭 */
+	var heart_flag = false;
+	function heart(){
+		if(heart_flag == false){ // 좋아요 클릭
+			$('#heart').attr('src', '../../resources/images/icon/heart.png');
+			heart_flag = true;
+		}else{ // 좋아요 취소
+			$('#heart').attr('src', '../../resources/images/icon/empty_heart.png');
+			heart_flag = false;
+		}
+	}
+	
+	/* 북마크 버튼 클릭 */
+	var bookmark_flag = false;
+	function bookmark(){
+		if(bookmark_flag == false){ // 북마크 클릭
+			$('#bookmark').attr('src', '../../resources/images/icon/bookmark.png');
+			bookmark_flag = true;
+		}else{ // 북마크 취소
+			$('#bookmark').attr('src', '../../resources/images/icon/empty_bookmark.png');
+			bookmark_flag = false;
+		}
 	}
 </script>
 
@@ -70,7 +152,13 @@
            	<table class="table">
            		<tr align="right">
            			<td colspan="4">
-           				<input type="button" value="목록보기" onclick="location.href='list.prd'">
+           				<!-- 해당 글 작성자만 보이게 설정 -->
+           				<c:if test="${pb.seller == loginId}">
+           					<c:if test="${pb.state == 0}"> <input type="button" value="판매완료" onclick="changeState(${pb.productsnum},${pageNumber})"> </c:if>
+           					<input type="button" value="수정" onclick="location.href='/products/user/update.prd?num=${pb.productsnum}&pageNumber=${pageNumber}'">
+           					<input type="button" value="삭제" onclick="deleteProducts(${pb.productsnum}, ${pageNumber})">
+           				</c:if>
+           				<!-- //해당 글 작성자만 보이게 설정 -->
            			</td>
            		</tr>
            		<tr align="center">
@@ -80,7 +168,7 @@
            			<td colspan="4">${pb.name}</td>
            		</tr>
            		<tr>
-           			<td colspan="4">
+           			<td colspan="4" align="center">
            			<%-- <c:set var="thumbnail" value="${fn:split(plist.image, ',')}"/> --%>
            			<c:forEach var="prd_img" items="${fn:split(pb.image, ',')}">
            				<img src ="<%=request.getContextPath()%>/resources/images/products/${prd_img}"><br>
@@ -93,14 +181,14 @@
            				작성일 : ${pb.inputdate}
            			</td>
            			<td>
-           				조회수 
+           				조회수 : ${pb.readcount}
            			</td>
            		</tr>
            		<tr>
            			<th>가격</th>
            			<td>${pb.price}</td>
-           			<th>현재 가입인원/정원</th>
-           			<td>/</td>
+           			<th></th>
+           			<td></td>
            		</tr>
            		<tr align="center">
            			<th colspan="4">글 내용</th>
@@ -113,16 +201,28 @@
            		<tr>
            			<td colspan="4" align="right">
            				<input type="button" value="구매하기">
+           				<input type="button" value="목록보기" onclick="location.href='/products/all/list.prd?pageNumber=${pageNumber}'">
            			</td>
            		</tr>
            	</table>	
            	<!-- //게시글 상세보기 -->
         </div>
+        
+        <!-- 좋아요, 북마크 아이콘 -->
+	   	<div class="container">
+	   		<div align="right">
+	   			<img src="<%=request.getContextPath()%>/resources/images/icon/empty_heart.png" id="heart" width="30" height="40" onclick="heart()">
+	   			<img src="<%=request.getContextPath()%>/resources/images/icon/empty_bookmark.png" id="bookmark" width="30" height="30" onclick="bookmark()">
+	   		</div>
+	   		<br>
+	   	</div>
+	   	<!-- // 좋아요, 북마크 아이콘 -->
 	   
 	    <!-- 댓글 입력창 -->
-	    <form action="insert.ccmt" method="post">
+	    <form action="/productscomments/user/insert.pcmt" method="post">
 	    	<input type="hidden" name="idx" value="${pb.productsnum}"> <!-- 원글 번호 -->
-		    <input type="hidden" name="writer" value="loginid"> <!-- 작성자 아이디 -->
+		    <input type="hidden" name="writer" value="${loginId}"> <!-- 작성자 아이디 -->
+		    <input type="hidden" name="pageNumber" value="${pageNumber}"> <!-- 페이지 -->
 		    
 		    <div class="card mb-2">
 			<div class="card-header bg-light">

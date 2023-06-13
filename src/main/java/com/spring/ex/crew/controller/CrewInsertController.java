@@ -1,7 +1,11 @@
 package com.spring.ex.crew.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.security.Principal;
+import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,22 +47,55 @@ public class CrewInsertController {
 	@RequestMapping(value=command, method=RequestMethod.POST)
 	public ModelAndView doAction(@ModelAttribute("cb") @Valid CrewBean cb,
 			BindingResult result,
-			Principal principal) {
+			Principal principal, HttpServletResponse response) {
 		
 		ModelAndView mav = new ModelAndView();
 		String loginId = principal.getName();
 		mav.addObject("loginId", loginId);
 		
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = null;
+		
 		if(result.hasErrors()) { //유효성 검사 에러일때
 			mav.setViewName(getPage);
 		}else {
-			int cnt = -1;
-			cnt = cdao.insertCrew(cb);
-			if(cnt != -1) {
-				//크루 모집게시판으로 감
-				mav.setViewName(gotoPage);
-			}else {
+			/* 이미 만든 정기 크루가 있는지 확인 */
+			boolean flag = false;
+			if(cb.getLarge() == 2) { // 선택한 구분1이 정기크루라면
+				List<CrewBean> myCrew = cdao.getCrewById(loginId); // 아이디로 내가 만든 크루목록 가져옴
+				for(CrewBean crew : myCrew) {
+					if(crew.getLarge() == 2 && cb.getSmall().equals(crew.getSmall())) { // 정기크루고 선택한 구분2와 같다면
+						flag = true;
+					}
+				}
+			}
+			
+			if(flag == true) { // 이미 만든 정기 크루가 있음
+				// alert 띄우기
+				try {
+					String small = "";
+					if(cb.getSmall().equals("M")){
+						small = "등산";
+					}else {
+						small = "플로깅";
+					}
+					out = response.getWriter();
+					out.println("<script>alert('이미 등록한 정기 "+small+" 크루가 있습니다');history.go(-1);</script>");
+					out.flush();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 				mav.setViewName(getPage);
+				
+			}else {
+				int cnt = -1;
+				cnt = cdao.insertCrew(cb);
+				if(cnt != -1) {
+					//크루 모집게시판으로 감
+					mav.setViewName(gotoPage);
+				}else {
+					mav.setViewName(getPage);
+				}
 			}
 		}
 		return mav;

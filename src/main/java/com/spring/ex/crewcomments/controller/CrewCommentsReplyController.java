@@ -1,5 +1,7 @@
 package com.spring.ex.crewcomments.controller;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,12 +24,13 @@ public class CrewCommentsReplyController {
 	
 	//crewboardDetail.jsp에서 댓글 답글달기 클릭시 요청
 	@RequestMapping(value = command, method=RequestMethod.POST)
-	public ModelAndView doAction(CrewCommentsBean ccmt_bean) {
+	public ModelAndView doAction(CrewCommentsBean ccmt_bean, Principal principal) {
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("num", ccmt_bean.getIdx()); // 게시글 정보 모델설정
+		mav.addObject("pageNumber", ccmt_bean.getPageNumber()); // 페이지
 		
-		ccmt_bean.setWriter("replytest"); // 로그인 아이디 챙겨가기
+		ccmt_bean.setWriter(principal.getName()); // 로그인 아이디 값 넣기
 		
 		int cnt = ccmt_dao.replyCrewComments(ccmt_bean);
 		if(cnt != -1) {

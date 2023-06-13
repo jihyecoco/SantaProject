@@ -6,12 +6,20 @@
 <head>
 <meta charset="utf-8">
 <title>로그인</title>
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
-<meta content="" name="keywords">
-<meta content="" name="description">
 
 <%@ include file="../common/common_top.jsp"%>
-
+<script type="text/javascript">
+	function signUp(){
+		//alert(1);
+		location.href = "/login/all/signUp.lg";
+	}
+	function findUserId(){
+		alert(1);
+	}
+	function findPassword(){
+		alert(1);
+	}
+</script>
 	<!-- Login Start -->
 	<div class="container-fluid py-5">
 		<div class="container">
@@ -49,6 +57,17 @@
 										<p style="color: red">ID와 Password를 확인해주세요.</p>
 									</c:if>
 								</div>
+								<br>
+								<p>버튼 크기 동일하게</p>
+								<div class="col-12 mx-auto" align="center">
+									<input type="button" class="btn btn-primary py-3 px-4" value="회원가입" onclick="signUp()">
+								
+									<input type="button" class="btn btn-primary py-3 px-4" value="아이디찾기" onclick="findUserId()">
+								
+									<input type="button" class="btn btn-primary py-3 px-4" value="비밀번호찾기" onclick="findPassword()">
+								</div>
+								
+								
 							</form>
 					
 						</div><!-- row g-3 -->

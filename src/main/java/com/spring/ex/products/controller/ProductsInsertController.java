@@ -2,6 +2,7 @@ package com.spring.ex.products.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -49,32 +50,19 @@ public class ProductsInsertController {
 			@ModelAttribute("pb") @Valid ProductsBean pb,
 			BindingResult result,
 			MultipartHttpServletRequest mtfRequest,
-			HttpServletRequest request) {
+			HttpServletRequest request,
+			Principal principal) {
 		ModelAndView mav = new ModelAndView();
-		pb.setSeller("loginId"); // 아이디 챙겨가기
+		pb.setSeller(principal.getName()); // 아이디 챙겨가기
 		
 		if(result.hasErrors()) {
 			mav.setViewName(getPage);
 		}else {
-			/* 사용자 OS 확인 */
-			//mkdir 사용하면 더 완성도 있을 듯
-			String osName = System.getProperty("os.name").toLowerCase();
-	        System.out.println("OS name : " + osName);
-	        String str = "";
-	        if (osName.contains("win")) 
-	        {
-	        	System.out.println("사용자 OS - Window ");
-	        	str = "C:/tempUpload";
-	        } 
-	        else if (osName.contains("mac")) 
-	        {
-	        	System.out.println("사용자 OS - MAC ");
-	        	str = "/Users/ol7roeo/Documents/tempUpload"; 
-	        } 
 			/* 다중 파일 업로드 */
 			List<MultipartFile> fileList = mtfRequest.getFiles("upload");
 			String uploadpath = request.getRealPath("/resources/images/products"); // 웹 서버 폴더
-			
+			String str = "/Users/ol7roeo/Documents/tempUpload"; // 가영 임시 폴더
+			//String str = "C:/tempUpload";// 지혜 임시 폴더
 			String filename = "";
 			
 			for(int i=0 ; i<fileList.size(); i++) {
@@ -98,7 +86,7 @@ public class ProductsInsertController {
 	            File destinateion_local = new File(str + File.separator + originFileName);
 	            
 	            try {
-	            	fileList.get(i).transferTo(destination);
+	            	fileList.get(i).transferTo(destination); // 웹 서버로 업로드
 	            	
 	            	FileCopyUtils.copy(destination, destinateion_local); // 웹서버 폴더 => 임시폴더로 복사 
 	            } catch (IllegalStateException e) {

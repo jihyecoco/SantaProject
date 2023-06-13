@@ -23,11 +23,19 @@ public class CrewCommentsListController {
 	
 	@RequestMapping(value=command)
 	@ResponseBody
-	public List<CrewCommentsBean> doAction(@RequestParam("idx") int idx){
-		System.out.println("idx:"+idx);
+	public List<CrewCommentsBean> doAction(
+			@RequestParam("idx") int idx, 
+			@RequestParam("pageNumber") String pageNumber){
+		
+		//System.out.println("idx:"+idx);
 		List<CrewCommentsBean> comments = new ArrayList<CrewCommentsBean>();
 		comments = ccmt_dao.getCrewCommentsByIdx(idx);
-		System.out.println("comments size : "+comments.size());
+		//System.out.println("comments size : "+comments.size());
+		
+		for(int i=0; i<comments.size(); i++) { // 페이지 넣기
+			comments.get(i).setPageNumber(pageNumber);
+		}
+		
 		return comments;
 	}
 }

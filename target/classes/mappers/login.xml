@@ -4,7 +4,7 @@
 
 <mapper namespace="login">
 
-	<resultMap type="com.spring.ex.login.model.UsersBean" id="UserMap">
+	<resultMap type="com.spring.ex.users.model.UsersBean" id="UserMap">
 		 <result property="userNum" column="user_num"/>
 		 <result property="userId" column="user_id"/>
 		 <result property="password" column="password"/>

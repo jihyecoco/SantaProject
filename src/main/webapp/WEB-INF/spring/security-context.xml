@@ -32,25 +32,31 @@
 		<intercept-url pattern="/crew/all/**" 						access="permitAll" />
 		<intercept-url pattern="/crewboard/all/**" 					access="permitAll" />
 		<intercept-url pattern="/crewcomments/all/**" 				access="permitAll" />
-		<intercept-url pattern="/product/all/**" 					access="permitAll" />
+		<intercept-url pattern="/products/all/**" 					access="permitAll" />
+		<intercept-url pattern="/productscomments/all/**"			access="permitAll" />
 		<intercept-url pattern="/qna/all/**" 						access="permitAll" />
 		<intercept-url pattern="/mountain/all/**" 					access="permitAll" />
 		<intercept-url pattern="/board/all/**" 						access="permitAll" />
+		<intercept-url pattern="/boardcomments/all/**"  			access="permitAll" />
 		<intercept-url pattern="/notice/all/**" 					access="permitAll" />
 		<intercept-url pattern="/suppoters/all/**" 					access="permitAll" />
 		
 		<intercept-url pattern="/login/**" 							access="permitAll" />		
 		
+		<intercept-url pattern="/users/user/**" 					access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
 		<intercept-url pattern="/crew/user/**" 						access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
 		<intercept-url pattern="/crewboard/user/**" 				access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
 		<intercept-url pattern="/crewcomments/user/**" 				access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
-		<intercept-url pattern="/product/user/**" 					access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
+		<intercept-url pattern="/products/user/**" 					access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
+		<intercept-url pattern="/productscomments/user/**" 			access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
 		<intercept-url pattern="/qna/user/**" 						access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
-		<intercept-url pattern="/stamp/user/**" 					access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
+		<intercept-url pattern="/stamp/use/users/all/main.lgr/**" 					access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
 		<intercept-url pattern="/board/user/**" 					access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
+		<intercept-url pattern="/boardcomments/user/**" 			access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
 		<intercept-url pattern="/suppoters/user/**" 				access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
 		<intercept-url pattern="/stamp/user/**" 					access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
 		
+		<intercept-url pattern="/users/admin/**" 					access="hasRole('ROLE_ADMIN')" />
 		<intercept-url pattern="/qna/admin/**" 						access="hasRole('ROLE_ADMIN')" />
 		<intercept-url pattern="/mountain/admin/**" 				access="hasRole('ROLE_ADMIN')" />
 		<intercept-url pattern="/stamp/admin/**" 					access="hasRole('ROLE_ADMIN')" />
@@ -77,16 +83,16 @@
 		    - 사용자 계정 비밀번호를 어떤 파라미터명으로 받을 것인지 설정
 		    - <form> - input 태그의 비밀번호 입력 name과 동일해야한다. -->
 		<form-login 
-					login-page="/login/loginPage.lg" 
+					login-page="/login/all/loginPage.lg" 
 					login-processing-url="/login.lg"
-					authentication-failure-url="/login/loginPage.lg?err=true"
+					authentication-failure-url="/login/all/loginPage.lg?err=true"
 					
-					default-target-url="/main.lg" 
+					default-target-url="/users/all/main.lg" 
 					username-parameter="userId"
 					password-parameter="password" />
 
 		<!-- 로그아웃 성공 후 이동할 페이지를 설정 -->
-		<logout invalidate-session="true" logout-url="/logout" logout-success-url="/login/loginPage.lg" />
+		<logout invalidate-session="true" logout-url="/logout" logout-success-url="/login/all/loginPage.lg" />
 
 		<!-- 
 		<session-management> : 세션 관리 설정 

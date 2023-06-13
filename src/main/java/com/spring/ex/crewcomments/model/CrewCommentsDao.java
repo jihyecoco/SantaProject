@@ -45,4 +45,18 @@ public class CrewCommentsDao {
 		}
 		return cnt;
 	}
+
+	public int deleteCrewComments(CrewCommentsBean ccmt_bean) {
+		int cnt = -1;
+		cnt = sqlSessionTemplate.update("DeleteCrewComments", ccmt_bean); // 삭제된 댓글입니다라고 보이기
+		return cnt;
+	}
+
+	public int updateCrewComments(CrewCommentsBean ccmt_bean) {
+		int cnt = -1;
+		cnt = sqlSessionTemplate.update("UpdateCrewComments",ccmt_bean);
+		return cnt;
+	}
+
+	
 }

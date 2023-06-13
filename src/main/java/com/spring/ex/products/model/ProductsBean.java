@@ -24,7 +24,18 @@ public class ProductsBean {
 	private String seller;
 	private String inputdate;
 	private int state;
+	private int readcount;
 	
+	//crewboardList에 댓글개수 출력하기 위해서
+	private int comments;
+	
+	public int getComments() {
+		return comments;
+	}
+	public void setComments(int comments) {
+		this.comments = comments;
+	}
+
 	//////////
 	private MultipartFile upload;
 	
@@ -40,8 +51,23 @@ public class ProductsBean {
 		
 		this.image = fileName;
 	}
+	
+	private String upload2; // 수정폼을 띄울때 기존이미지를 담을 변수
+	
+	public String getUpload2() {
+		return upload2;
+	}
+	public void setUpload2(String upload2) {
+		this.upload2 = upload2;
+	}
 	/////////
 	
+	public int getReadcount() {
+		return readcount;
+	}
+	public void setReadcount(int readcount) {
+		this.readcount = readcount;
+	}
 	public String getPrice() {
 		return price;
 	}

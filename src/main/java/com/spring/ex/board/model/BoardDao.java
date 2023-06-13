@@ -31,7 +31,7 @@ public class BoardDao {
 		
 		RowBounds rowBounds = new RowBounds(pageInfo.getOffset(),pageInfo.getLimit());		
 		lists = sqlSessionTemplate.selectList(namespace+".GetAllBoard",map,rowBounds);
-		System.out.println("lists.size(): "+lists.size());
+		System.out.println("board lists.size(): "+lists.size());
 		
 		return lists;
 	}
@@ -67,6 +67,6 @@ public class BoardDao {
 		cnt = sqlSessionTemplate.update(namespace+".UpdateBoard", board);
 		return cnt;
 	}
-	
+
 	
 }

@@ -10,7 +10,17 @@ public class CrewCommentsBean {
 	private int restep;
 	private String regdate;
 	private String deleteyn;
-	
+
+	// 댓글 리스트 ajax 로딩시 필요함
+	private String pageNumber;
+
+	public String getPageNumber() {
+		return pageNumber;
+	}
+	public void setPageNumber(String pageNumber) {
+		this.pageNumber = pageNumber;
+	}
+
 	public int getRef() {
 		return ref;
 	}
@@ -65,7 +75,7 @@ public class CrewCommentsBean {
 	public void setDeleteyn(String deleteyn) {
 		this.deleteyn = deleteyn;
 	}
-	
-	
-	
+
+
+
 }

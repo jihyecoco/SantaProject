@@ -23,18 +23,20 @@
                 <p class="fs-5 fw-bold text-primary"></p>
                 <h1 class="display-5 mb-5">자유게시판 글쓰기</h1>
             </div>
-<table border="1" class="table">
+<div class="row justify-content-center"> 
+	 <div class="col-lg-9">	          
+	 	 <div class="bg-light rounded p-4 p-sm-5 wow fadeInUp" data-wow-delay="0.1s">
+<table>
 	<tr>
 		<td>이름</td>
-		<td>
-			<input type="text" name="userid" size="60" value="${board.userid}">
-			<form:errors cssClass="err" path="userid"/>
+		<td> ${userId}
+			<input type="hidden" name="userid" size="60" value="${userId}">
 		</td>
 	</tr> 
-	<tr class="col-sm-6">
+	<tr>
 		<td>카테고리</td>
 		<td>
-			<select name="category">
+			<select name="category" class="form-select" style="width:150px;">
 				<option value="">선택하세요</option>
 				<c:forEach var="cate" items="<%= cateArr%>">
 					<option value="${cate}" <c:if test="${board.category == cate}">selected</c:if>>${cate}
@@ -51,9 +53,9 @@
 		</td>
 	</tr>
 	<tr>
-		<td>내용</td>
+		<td >내용</td>
 		<td>
-			<textarea name="content" rows="20" cols="70">${board.content}</textarea>		
+			<textarea name="content" rows="20" cols="70" class="form-control border-0" placeholder="Leave a content here">${board.content}</textarea>		
 			<form:errors cssClass="err" path="content"/>
 		</td>	
 	</tr>
@@ -61,17 +63,21 @@
 		<td>이미지</td>
 		<td>
 			<input type="file" name="upload" id="upload">
-			<form:errors cssClass="err" path="image"/>
+			<%-- <form:errors cssClass="err" path="image"/> --%>
 		</td>
 	</tr>
 	<tr height="30">
-		<td colspan="2" align="center">
+		<td colspan="2" align="center" class="col-12 text-center">
 			<input type="submit" value="글쓰기" class="btn btn-success">
 			<input type="reset" value="다시작성" class="btn btn-success">
 			<input type="button" value="목록" class="btn btn-success" onclick="location.href='/board/all/list.br?pageNumber=${pageNumber}'">
 		</td>
 	</tr>
-</table>
+</table>				
+						
+					</div>
+				</div>
+			</div> 
         </div>
     </div>
 </form:form>

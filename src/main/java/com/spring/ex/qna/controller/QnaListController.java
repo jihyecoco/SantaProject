@@ -1,5 +1,6 @@
 package com.spring.ex.qna.controller;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +34,7 @@ public class QnaListController {
 			@RequestParam(value="whatColumn", required=false) String whatColumn,
 			@RequestParam(value="keyword", required=false) String keyword,
 			@RequestParam(value="pageNumber", required = false) String pageNumber,
-			HttpServletRequest request
+			HttpServletRequest request, Principal principal
 			) {
 		
 		//ModelAndView 객체 생성
@@ -51,17 +52,20 @@ public class QnaListController {
 				
 		//url을 변수에 저장
 		String url = request.getContextPath() +"/"+ command;
-
+		
 		//페이지 정보 가져오기
-		Paging pageInfo = new Paging(pageNumber, "10", totalCount, url, whatColumn, keyword, null);
+		Paging pageInfo = new Paging(pageNumber, "5", totalCount, url, whatColumn, keyword, null);
+		System.out.println("pageInfo : "+pageInfo);
+		
 		
 		//모든 Qna 목록을 list 객체에 저장, map과 pageInfo로 조건 설정
 		List<QnaBean> qnaLists = qdao.getAllQna(map, pageInfo);
 		System.out.println("qnaLists : "+qnaLists);
-
+		
 		//mav에 저장해서 넘길 값 설정
 		mav.addObject("qnaLists", qnaLists);
 		mav.addObject("pageInfo", pageInfo);
+		mav.addObject("principal", principal);
 		
 		//뷰 설정
 		mav.setViewName(getPage);

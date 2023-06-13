@@ -70,9 +70,9 @@
 	</tr>
 	<tr height="30">
 		<td colspan="2" align="center">
-			<input type="submit" value="글쓰기">
-			<input type="reset" value="다시작성">
-			<input type="button" value="목록" onclick="location.href='list.br?pageNumber=${pageNumber}'">
+			<input type="submit" value="수정하기" class="btn btn-success">
+			<input type="reset" value="다시작성" class="btn btn-success">
+			<input type="button" value="목록" class="btn btn-success" onclick="location.href='list.br?pageNumber=${pageNumber}'">
 		</td>
 	</tr>
 </table>

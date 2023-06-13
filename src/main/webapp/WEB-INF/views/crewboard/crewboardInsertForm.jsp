@@ -100,7 +100,7 @@
                             
                             <div class="col-sm-4">
                                 <div class="form-floating">
-                                	<input type="hidden" name="large" id="large" value="${cbb.large}">
+                                	<input type="text" name="large" id="large" value="${cbb.large}">
                                     <input type="text" readonly class="form-control border-0" id="large_view" placeholder="Gurdian Name"
                                     	<c:if test="${cbb.large == 1}">value="1일 크루"</c:if>
                                     	<c:if test="${cbb.large == 2}">value="정기 크루"</c:if>>
@@ -110,7 +110,7 @@
                             
                             <div class="col-sm-3">
                                 <div class="form-floating">
-                                	<input type="hidden" name="small" id="small" value="${cbb.small}">
+                                	<input type="text" name="small" id="small" value="${cbb.small}">
                                     <input type="text" readonly class="form-control border-0" id="small_view" placeholder="Gurdian Name" 
                                     	<c:if test="${cbb.small == 'M'}">value="등산"</c:if>
                                     	<c:if test="${cbb.small == 'P'}">value="플로깅"</c:if>>

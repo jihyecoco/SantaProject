@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.spring.ex.login.model.UsersBean;
-import com.spring.ex.login.model.UsersDao;
+import com.spring.ex.users.model.UsersBean;
+import com.spring.ex.users.model.UsersDao;
 
 /*
 security-context.xml에서 default-target-url="/main.do" 
@@ -25,7 +25,7 @@ security-context.xml에서 default-target-url="/main.do"
 @Controller
 public class IndexController {
 	
-	private final String command = "/main.lg";
+	private final String command = "/users/all/main.lg";
 	private String gotoPage = "index";
 	
 	private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
@@ -33,7 +33,7 @@ public class IndexController {
 	@Autowired
 	UsersDao usersDao;
 	
-	@RequestMapping(value = "/main.lg", method = RequestMethod.GET)
+	@RequestMapping(value = command, method = RequestMethod.GET)
 	public ModelAndView indexPage(Locale locale, Model model, Principal principal) {
 		logger.info("logger info입니다.", locale);
 		

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<!-- 권한에 따른 페이지 열람을 위한 라이브러리 추가 -->
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <!-- qnaList.jsp -->
 <%@ include file="../common/common_top.jsp" %>
 	<style type="text/css">
@@ -54,6 +56,9 @@
 		  /* 높이를 정해줘야지만 transition이 적용됨 */
 		  height: 300px;
 		}
+		#uploadimage{
+			width:20px;
+		}
 	</style>
 	
 	<!-- Page Header Start -->
@@ -69,7 +74,10 @@
         </div>
     </div>
     <!-- Page Header End -->
-
+	
+	<security:authorize access="hasRole('admin')">
+		<c:set var="activeflag" value="true"/>
+	</security:authorize>
     <!-- Qna Start -->
     	<!-- qna 검색 -->
     	<div class="container">
@@ -98,7 +106,7 @@
     	<!-- qna 목록 -->
 		<div class="container">
     	<br>
-		<table class="table table-bordered table-striped table-dark table-hover">
+		<table id="qna-table" class="table table-bordered table-striped table-dark table-hover">
 			<thead class="thead-light text-center">
         		<tr>
         			<th>No</th>
@@ -115,10 +123,46 @@
 				<td>${qnaLists[i].qnacategory}</td>
 				<td class="text-left" width="50%">
 				<div class="panel-faq-container">
-					<p class="panel-faq-title">${qnaLists[i].qnasubject}</p>
+					<p class="panel-faq-title">
+					
+					<!-- 비밀글이면 -->
+					<c:if test="${qnaLists[i].qnasecret==1}">
+						<!-- 자물쇠 이미지 출력 -->
+						<img src="../../resources/images/qna/lock_20x.png">
+					</c:if>
+					<!-- 비밀글 출력 end -->
+					
+					${qnaLists[i].qnasubject}</p>
 					<div class="panel-faq-answer">
 						<p>Q : ${qnaLists[i].qnaquestion}</p>
+						<c:set var="imageall" value="${fn:split((qnaLists[i].qnaimage),',')}"/>
+						<c:forEach var="multiimage" items="${imageall}">
+							<img id="uploadimage" src="${multiimage}">
+						</c:forEach>
+						<!-- 답변이 null이 아닐 때만 출력 -->
+						<c:if test="${qnaLists[i].qnaanswer != null}">
 						<p>A : ${qnaLists[i].qnaanswer}</p>
+						</c:if>
+						
+						<!-- 로그인한 id가 admin일 때 현재 글 삭제, 답변이 없을 때 답변 등록 가능-->
+						<!-- 로그인한 id가 작성자와 같을 때 현재 글 수정 가능-->
+						<c:choose>
+						<c:when test="${principal.getName() == 'admin'}">
+							<c:set var="qnanum" value="${qnaLists[i].qnanum}"/>
+							<button class="btn btn-primary" onClick="deleteQna()">질문삭제</button>
+							<c:if test="${qnaLists[i].qnaanswer == null}">
+    							<button class="btn btn-primary" onClick="location.href='/qna/admin/insertAnswer.qna?qnanum=${qnaLists[i].qnanum}&pageNumber=${pageNumber}'">답변등록/수정</button>
+							</c:if>
+						</c:when>
+						<c:when test="${principal.getName() == qnaLists[i].usersid}">
+							<c:set var="qnanum" value="${qnaLists[i].qnanum}"/>
+							<c:if test="${qnaLists[i].qnaanswer == null}">
+    							<button class="btn btn-primary" onClick="location.href='/qna/admin/update.qna'">질문수정</button>
+    							<button class="btn btn-primary" onClick="deleteQna()">질문삭제</button>
+							</c:if>
+						</c:when>
+						</c:choose>
+						
 					</div>
 				</div>
 				</td>
@@ -136,8 +180,8 @@
 			</tbody>
 		</table>
     	<!-- 모두 닫기/질문 등록 버튼 -->
-        <button id="btn-all-close">QnA ALL Close</button>
-        <button id="btn-insert" onClick="location.href='/qna/user/insertQuestion.qna'">질문 등록</button>
+        <button id="btn-all-close" style="margin-left: 5px;">QnA ALL Close</button>
+        <button id="btn-insert" onClick="location.href='/qna/user/insertQuestion.qna'">질문등록</button>
     	<!-- //모두 닫기/질문 등록 버튼 -->
 		</div>
     	<!-- //qna 목록 -->
@@ -154,10 +198,10 @@
 		  // btn-all-close
 		  const btnAllClose = document.querySelector("#btn-all-close");
 		  
-		  // 반복문 순회하면서 해당 FAQ제목 클릭시 콜백 처리
+		  // 반복문 순회하면서 해당 Qna제목 클릭시 콜백 처리
 		  for( let i=0; i < panelFaqContainer.length; i++ ) {
 		    panelFaqContainer[i].addEventListener('click', function() { // 클릭시 처리할 일
-		      // FAQ 제목 클릭시 -> 본문이 보이게끔 -> active 클래스 추가
+		    	// FAQ 제목 클릭시 -> 본문이 보이게끔 -> active 클래스 추가
 		      panelFaqAnswer[i].classList.toggle('activeList');
 		    });
 		  };
@@ -169,6 +213,21 @@
 		    };
 		  });
 		}
+			//현재 글 삭제를 눌렀을 때=>deleteqna
+			function deleteQna(){
+				var qnanum = "<c:out value='${qnanum}'/>";
+				
+				if(!confirm('해당 글을 삭제하시겠습니까?')){
+					//취소를 눌렀을 때
+					//돌아가기
+					return;
+				}else{
+					//확인을 눌렀을 때
+					//delete 컨트롤러로 이동
+					location.href="/qna/user/deleteQna.qna?qnanum="+qnanum+"&pageNumber=${pageNumber}";
+				}//if~else
+			}//deleteqna end
+		
     </script>
 <%@ include file="../common/common_bottom.jsp" %>
 </html>

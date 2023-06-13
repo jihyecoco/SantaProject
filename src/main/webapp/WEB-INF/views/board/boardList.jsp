@@ -32,7 +32,7 @@
 
 		<nav class="navbar navbar-light bg-light">
   			<div class="container" style="display:table-cell; vertical-align:middle;">
-   				<form class="d-flex" action="list.br" method="get">
+   				<form class="d-flex" action="/board/all/list.br" method="get">
    				 	<div class="col-sm-2">
 	   				 	<select name="whatColumn" class="form-select">
 							<option value="">전체검색
@@ -51,7 +51,21 @@
     			</form>
  			 </div>
 		</nav><br>
-
+	
+	<!-- select 태그를 이용한 정렬 -->
+		<form class="d-flex" action="/board/all/list.br" method="get">
+		<div class="col-sm-2" align="right">
+	   		<select name="Array" class="form-select">
+				<option value="-1">정렬
+				<option value="1">작성순
+				<option value="2">조회수순
+			 	<option value="3">댓글수순
+				<option value="4">좋아요순
+	   		</select>
+   		</div>
+   		</form><br>
+	<!-- //select 태그를 이용한 정렬 -->
+	
 <table border="1" class="table">
 	<tr>
 		<th>No</th>

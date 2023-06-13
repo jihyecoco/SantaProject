@@ -2,6 +2,8 @@ package com.spring.ex.board.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.Principal;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +12,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,8 +28,8 @@ import com.spring.ex.board.model.BoardDao;
 public class BoardInsertController {
 	
 	private final String command = "/board/user/insert.br";
-	private final String getPage = "/board/boardInsertForm";
-	private final String gotoPage = "redirect:/board/all/list.br";
+	private String getPage = "/board/boardInsertForm";
+	private String gotoPage = "redirect:/board/all/list.br";
 	
 	@Autowired
 	BoardDao bdao;
@@ -37,9 +40,16 @@ public class BoardInsertController {
 	
 	//boardList.jsp(목록에서 글쓰기 버튼 클릭) -> insert.br 요청(get방식) -> boardInsertForm.jsp로 이동
 	@RequestMapping(value=command, method = RequestMethod.GET) //폼 요청
-	public ModelAndView insert(@RequestParam("pageNumber") String pageNumber, Model model) {
+	public ModelAndView insert(@RequestParam("pageNumber") String pageNumber,
+			Principal principal) {
+		
 		ModelAndView mav = new ModelAndView();
-		model.addAttribute("pageNumber",pageNumber);
+		
+		String userId = principal.getName(); 
+		//List<BoardBean> myCrew = bdao.getBoardById(userId);
+		
+		mav.addObject("userId", userId);
+		mav.addObject("pageNumber", pageNumber);
 		mav.setViewName(getPage);
 		return mav;
 	}
@@ -48,7 +58,8 @@ public class BoardInsertController {
 	//boardInsertForm.jsp(글쓰기 버튼 클릭) -> detail.br 요청(post방식) -> 삽입성공시 boardList.jsp로 이동
 	@RequestMapping(value=command, method = RequestMethod.POST)
 	public ModelAndView insert(@ModelAttribute("board") @Valid BoardBean board,
-			BindingResult result, HttpServletRequest request) {
+			BindingResult result, HttpServletRequest request, 
+			Principal principal) {
 		
 		String uploadPath = servletContext.getRealPath("/resources");
 		System.out.println("uploadPath: "+uploadPath);
@@ -57,6 +68,12 @@ public class BoardInsertController {
 		MultipartFile multi = board.getUpload();
 		
 		ModelAndView mav = new ModelAndView();
+		board.setUserid(principal.getName());
+		//String userId = principal.getName();	
+		//mav.addObject("userId", userId);
+		
+		String str = "c:/tempUpload";
+		File destination_local = new File(str + File.separator + multi.getOriginalFilename());
 		
 		System.out.println("result.hasErrors(): "+result.hasErrors()); 
 		if(result.hasErrors()) { //에러 있음
@@ -69,6 +86,7 @@ public class BoardInsertController {
 			if(cnt != -1) { //삽입 성공
 				try {
 					multi.transferTo(destination);
+					FileCopyUtils.copy(destination, destination_local);
 					
 				} catch (IllegalStateException e) {				
 					e.printStackTrace();
