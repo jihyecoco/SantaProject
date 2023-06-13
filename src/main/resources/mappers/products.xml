@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+  <mapper namespace="products.ProductsBean">
+ 	<!-- resultMapping -->
+	<resultMap type="com.spring.ex.products.model.ProductsBean" id="productsMap">
+		 <id property="productsnum" column="products_num"/>
+	</resultMap>
+	<!-- //resultMapping -->
+	
+ 	<insert id="InsertProducts">
+ 		insert into products(products_num, kind, name, price, info, image, seller, inputdate, state)
+ 		values(prd_seq.nextval, #{kind}, #{name}, #{price}, #{info}, #{image}, #{seller}, sysdate, 0)
+ 	</insert>
+ 	
+ 	<select id="GetAllProducts" resultMap="productsMap">
+ 		select * from products
+ 	</select>
+ 	
+ 	<select id="GetProductsByNum" resultMap="productsMap">
+ 		select * from products
+ 		where products_num = #{num}
+ 	</select>
+ </mapper>
