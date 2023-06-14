@@ -1,11 +1,10 @@
 package com.spring.ex.qna.model;
 
-import java.io.File;
 import java.util.Date;
-import java.util.List;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.web.multipart.MultipartFile;
+
 
 public class QnaBean {
 	
@@ -30,8 +29,6 @@ public class QnaBean {
 	@NotBlank(message = "질문 내용은 비워둘 수 없습니다.")
 	private String qnaquestion;
 
-	//qna 답변
-	@NotBlank(message = "답변 내용은 비워둘 수 없습니다.")
 	private String qnaanswer;
 
 	//qna 이미지
@@ -42,8 +39,8 @@ public class QnaBean {
 	private String qnasecret;
 	
 	//이미지 업로드를 위한 객체, 변수 생성
-	private List<MultipartFile> upload;
-	private File upload2;
+	private MultipartFile upload;
+	private String upload2;
 	
 	//setter, getter 메서드
 	public int getQnanum() {
@@ -100,16 +97,22 @@ public class QnaBean {
 	public void setQnasecret(String qnasecret) {
 		this.qnasecret = qnasecret;
 	}
-	public List<MultipartFile> getUpload() {
+	public MultipartFile getUpload() {
 		return upload;
 	}
-	public void setUpload(List<MultipartFile> upload) {
+	public void setUpload(MultipartFile upload) {
+		System.out.println("setUpload()");
 		this.upload = upload;
+		
+		String fileName = upload.getOriginalFilename();
+		System.out.println("filename : "+fileName);
+		
+		this.qnaimage = fileName;
 	}
-	public File getUpload2() {
+	public String getUpload2() {
 		return upload2;
 	}
-	public void setUpload2(File upload2) {
+	public void setUpload2(String upload2) {
 		this.upload2 = upload2;
 	}
 

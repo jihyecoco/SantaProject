@@ -22,9 +22,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 import org.xml.sax.InputSource;
 
-import com.spring.ex.qna.model.QnaDao;
+import com.spring.ex.mountain.model.MountainBean;
+import com.spring.ex.mountain.model.MountainDao;
+import com.spring.ex.qna.model.QnaBean;
+import com.spring.ex.utility.Paging;
 
 @Controller
 public class MountainListController {
@@ -35,11 +39,13 @@ public class MountainListController {
 	private String getPage = "/mountain/mountainList";
 	
 	@Autowired
-	QnaDao qdao;
+	MountainDao mdao;
 	
 	//사용자-상단 메뉴에서 mountain 클릭 시 요청 발생=>mountainList.jsp로 이동
 	@RequestMapping(value=command)
-	public void doAPI(Model model) throws Exception {
+	public ModelAndView doAPI(Model model) throws Exception {
+		
+		ModelAndView mav = new ModelAndView();
 		
 		//인증 서비스 키
 		String serviceKey = "4Nr4EpPOmzOdPQucRWM%2BxXD2SXtgJKTe4sXKKDUnfIJYnd8dx4pJ1Bgyhppi1m%2B1iNVym8TwDikVNKTrgklj1A%3D%3D";
@@ -85,11 +91,52 @@ public class MountainListController {
         //getResultMap에 xml을 불러온 값을 저장, list 객체로 관리
         List<HashMap<String, String>> list = getResultMap(sb.toString());
         
+        //API에서 불러올 값을 map에 저장
         for(Map<String,String> tmpMap : list) {
-            map.put("price", tmpMap.get("pblntfPclnd"));
+            map.put("mountain_name", tmpMap.get("mntnnm"));
+            map.put("mountain_local", tmpMap.get("mntninfopoflc"));
+            map.put("mountain_height", tmpMap.get("mntninfohght"));
+            map.put("mountain_content", tmpMap.get("mntninfodtlinfocont"));
+            map.put("mountain_image", tmpMap.get("mntnattchimageseq"));
+            map.put("mountain_great", tmpMap.get("hndfmsmtnslctnrson"));
         }
-         
-        model.addAttribute("price", map.get("price"));
+        
+		//검색을 위해 map 객체에 검색 카테고리와 검색 키워드 값 저장
+		//Map<String, String> searchMap = new HashMap<String, String>();
+		//searchMap.put("whatColumn", whatColumn);
+		//searchMap.put("keyword", "%"+keyword+"%");
+		
+		//전체 튜플 갯수를 구해 변수에 저장, map에 저장된 조건으로도 검색
+		//int totalCount = mdao.getTotalCount(searchMap);
+		
+		//System.out.println("tc:"+totalCount);
+				
+		//url을 변수에 저장
+		//String pagingUrl = request.getContextPath() +"/"+ command;
+		
+		//페이지 정보 가져오기
+		//Paging pageInfo = new Paging(pageNumber, "5", totalCount, url, whatColumn, keyword, null);
+		//System.out.println("pageInfo : "+pageInfo);
+		
+		
+		//모든 Qna 목록을 list 객체에 저장, map과 pageInfo로 조건 설정
+		List<MountainBean> mountainLists = mdao.getAllQna(/*Searchmap, pageInfo*/);
+
+		//dao의 mountainLists가 비어있는지 테스트 출력
+		String first_mountain = mountainLists.get(0).getMountainname();
+		System.out.println("첫번째 산 이름 : "+first_mountain);
+        
+        if(map.get("mountain_name") == null) {
+        	//만약 비어있으면 api에서 불러온 값들을 insert해서 값 저장
+        	//map을 매개변수로
+        	
+        }else {
+        	//만약 비어있지 않으면 해당 값을 mav에 저장해서 list로 넘겨줌
+        }
+        mav.setViewName(getPage);
+        
+        return mav;
+        
     }//doAPI end
 	
 	//결과값을 뽑아주는 getResultMap 함수

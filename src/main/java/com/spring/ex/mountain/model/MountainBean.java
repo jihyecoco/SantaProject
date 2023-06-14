@@ -24,40 +24,36 @@ public class MountainBean {
 	
 	//mountain 사진
 	private String mountainimage;
-	
-	//mountain 국립공원 여부, 0 : 국립공원 아님, 1 : 국립공원
-	@NotBlank(message = "국립공원 여부는 비워둘 수 없습니다.")
-	private int mountainnational;
-	
-	//mountain 난이도, 초급자, 중급자, 상급자
-	private String mountaindifficulty;
-	
-	//mountain 소요시간(00시간 00분으로 표기)
-	private String mountaintime;
 
-	
+	//mountain 사진
+	private String mountaingreat;
+
 	//이미지 업로드를 위한 객체, 변수 생성
 	private MultipartFile upload;
 	private String upload2;
 	
-	
-	
 	//setter, getter 메서드
+	//업로드
 	public MultipartFile getUpload() {
 		return upload;
 	}
-	
 	public void setUpload(MultipartFile upload) {
+		System.out.println("setUpload()");
 		this.upload = upload;
+		
+		String fileName = upload.getOriginalFilename();
+		System.out.println("filename : "+fileName);
+		
+		this.mountainimage = fileName;
 	}
-	
 	public String getUpload2() {
 		return upload2;
 	}
-	
 	public void setUpload2(String upload2) {
 		this.upload2 = upload2;
 	}
+	//업로드 end
+	
 	public int getMountainnum() {
 		return mountainnum;
 	}
@@ -105,31 +101,13 @@ public class MountainBean {
 	public void setMountainimage(String mountainimage) {
 		this.mountainimage = mountainimage;
 	}
-
-	public int getMountainnational() {
-		return mountainnational;
-	}
-
-	public void setMountainnational(int mountainnational) {
-		this.mountainnational = mountainnational;
-	}
-
-	public String getMountaindifficulty() {
-		return mountaindifficulty;
-	}
-
-	public void setMountaindifficulty(String mountaindifficulty) {
-		this.mountaindifficulty = mountaindifficulty;
-	}
-
-	public String getMountaintime() {
-		return mountaintime;
-	}
-
-	public void setMountaintime(String mountaintime) {
-		this.mountaintime = mountaintime;
-	}
 	
-	
+	public String getMountaingreat() {
+		return mountaingreat;
+	}
+
+	public void setMountaingreat(String mountaingreat) {
+		this.mountaingreat = mountaingreat;
+	}
 	
 }

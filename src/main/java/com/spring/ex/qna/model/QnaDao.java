@@ -24,7 +24,7 @@ public class QnaDao {
 		System.out.println("QnaDao() 생성자");
 	}//QnaDao 생성자 end
 	
-	//튜플 전체 갯수 구하기
+	//전체 갯수 구하기
 	public int getTotalCount(Map<String, String> map) {
 		int cnt = 1;
 		//int cnt = sqlSessionTemplate.selectOne(namespace+".GetTotalCount",map);
@@ -32,7 +32,7 @@ public class QnaDao {
 		return cnt;
 	}//getTotalCount end
 
-	//튜플 전체 목록 구하기
+	//전체 목록 구하기
 	public List<QnaBean> getAllQna(Map<String, String> map, Paging pageInfo) {
 		RowBounds rowBounds = new RowBounds(pageInfo.getOffset(), pageInfo.getLimit());
 		//List<QnaBean> qnaList = sqlSessionTemplate.selectList(namespace+".GetAllQna",map,rowBounds);
@@ -41,14 +41,29 @@ public class QnaDao {
 		return qnaList;
 	}//getAllQna end
 
-	//새로운 튜플 삽입
+	//새로운 qna 삽입
 	public int insertQuestion(QnaBean qnaBean) {
 		//int cnt = sqlSessionTemplate.insert(namespace+".InsertQ",qnaBean);
-		int cnt = sqlSessionTemplate.insert("insertQuestion",qnaBean);
+		int cnt = sqlSessionTemplate.insert("InsertQuestion",qnaBean);
 		return cnt;
 	}//insertQna end
 	
+	//선택한 qna 삭제
+	public int deleteQna(int qnanum) {
+		int cnt = sqlSessionTemplate.delete("DeleteQna",qnanum);
+		return cnt;
+	}//deleteQna end
+
+	//qnanum으로 하나의 칼럼 검색
+	public QnaBean getQnaByNum(int qnanum) {
+		QnaBean qnaBean = sqlSessionTemplate.selectOne("GetQnaByNum",qnanum);
+		return qnaBean;
+	}
 	
-	
+	//답변 등록/수정
+	public int insertAnswer(Map<String, String> map) {
+		int cnt = sqlSessionTemplate.update("InsertAnswer",map);
+		return cnt;
+	}
 	
 }

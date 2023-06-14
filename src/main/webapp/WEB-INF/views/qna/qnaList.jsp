@@ -128,7 +128,7 @@
 					<!-- 비밀글이면 -->
 					<c:if test="${qnaLists[i].qnasecret==1}">
 						<!-- 자물쇠 이미지 출력 -->
-						<img src="../../resources/images/qna/lock_20x.png">
+						<img src="../../resources/images/qna/lock_16x.png">
 					</c:if>
 					<!-- 비밀글 출력 end -->
 					
