@@ -50,7 +50,7 @@
 		<intercept-url pattern="/products/user/**" 					access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
 		<intercept-url pattern="/productscomments/user/**" 			access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
 		<intercept-url pattern="/qna/user/**" 						access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
-		<intercept-url pattern="/stamp/use/users/all/main.lgr/**" 					access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
+		<intercept-url pattern="/stamp/users/**" 					access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
 		<intercept-url pattern="/board/user/**" 					access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
 		<intercept-url pattern="/boardcomments/user/**" 			access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
 		<intercept-url pattern="/suppoters/user/**" 				access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
