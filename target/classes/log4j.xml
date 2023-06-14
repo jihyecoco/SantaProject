@@ -19,6 +19,9 @@
 		<level value="info" />
 	</logger>
 	
+	<logger name="com.spring.ex.crew.*">
+		<level value="info" />
+	</logger>
 	
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">
