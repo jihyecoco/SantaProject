@@ -1,8 +1,11 @@
 package com.spring.ex.crewboard.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.security.Principal;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +33,7 @@ public class CrewBoardInsertController {
 	CrewDao cdao;
 	
 	@Autowired
-	CrewBoardDao cbdao;
+	CrewBoardDao cb_dao;
 	
 	//crewboardList.jsp에서 요청(글쓰기 버튼클릭) -> crewboardInsertForm.jsp
 	@RequestMapping(value=command, method=RequestMethod.GET)
@@ -45,7 +48,7 @@ public class CrewBoardInsertController {
 		List<CrewBean> myCrew = cdao.getCrewById(getUserId);
 		
 		
-		mav.addObject("getUserId", getUserId);
+		mav.addObject("loginId", getUserId);
 		mav.addObject("myCrew", myCrew);
 		mav.setViewName(getPage);
 		
@@ -59,7 +62,11 @@ public class CrewBoardInsertController {
 	@RequestMapping(value=command, method=RequestMethod.POST)
 	public ModelAndView doAction2(
 			@ModelAttribute("cbb") @Valid CrewBoardBean cbb
-			,BindingResult result, Principal principal) {
+			,BindingResult result, Principal principal,
+			HttpServletResponse response) {
+		
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = null;
 		
 		ModelAndView mav = new ModelAndView();
 		String getUserId = principal.getName();			
@@ -67,6 +74,7 @@ public class CrewBoardInsertController {
 		//내가 만든 크루 정보(로그인한 아이디로) 가져가야한다.
 		
 		List<CrewBean> myCrew = cdao.getCrewById(getUserId);
+		mav.addObject("loginId", getUserId);
 		mav.addObject("myCrew", myCrew);
 		
 		if(result.hasErrors()) {
@@ -74,12 +82,29 @@ public class CrewBoardInsertController {
 			
 			mav.setViewName(getPage);
 		}else {
-			int cnt = -1;
-			cnt = cbdao.insertCrewboard(cbb);
-			if(cnt != -1) { //등록 성공
-				mav.setViewName(gotoPage);
-			}else {//등록 실패
+			
+			/* 이미 크루모집 게시글을 쓴 크루라면 alert 띄우기 */
+			boolean cb_check = cb_dao.checkCrewboard(cbb.getCrewname());
+			if(cb_check == true) { // 이미 게시글을 써서 모집중인 크루였음
+				System.out.println("이미 등록된 게시글이 있는 크루");
+				//mav.addObject("cbb", cbb);
+				try {
+					out = response.getWriter();
+					out.println("<script>alert('이미 등록된 게시글이 있는 크루 입니다');history.go(-1);</script>");
+					out.flush();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 				mav.setViewName(getPage);
+				
+			}else { // 처음 등록하는 크루 모집
+				int cnt = -1;
+				cnt = cb_dao.insertCrewboard(cbb);
+				if(cnt != -1) { //등록 성공
+					mav.setViewName(gotoPage);
+				}else {//등록 실패
+					mav.setViewName(getPage);
+				}
 			}
 		}
 		return mav;
