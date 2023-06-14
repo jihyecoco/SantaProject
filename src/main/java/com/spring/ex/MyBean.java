@@ -15,7 +15,7 @@ public class MyBean implements InitializingBean {
 	ServletContext servletContext;
 
 	@PostConstruct
-	public void init() { 
+	public void init() {
 		System.out.println("------init()------");
 	}
 

@@ -24,7 +24,7 @@ import com.spring.ex.products.model.ProductsBean;
 import com.spring.ex.products.model.ProductsDao;
 
 @Controller
-public class ProductsInsertController {
+public class ProductsInsertController { 
 	
 	//private final String command = "/insert.prd";
 	private final String command = "/products/user/insert.prd";
@@ -58,13 +58,23 @@ public class ProductsInsertController {
 		if(result.hasErrors()) {
 			mav.setViewName(getPage);
 		}else {
+			/* 사용자 OS 확인 */
+			//mkdir 사용하면 더 완성도 있을 듯
+			String osName = System.getProperty("os.name").toLowerCase();
+			System.out.println("OS name : " + osName);
+			String str = "";
+			if (osName.contains("win"))  {
+			  	System.out.println("사용자 OS - Window ");
+			  	str = "C:/tempUpload";
+			}  else if (osName.contains("mac")) {
+			  	System.out.println("사용자 OS - MAC ");
+			  	str = "/Users/ol7roeo/Documents/tempUpload"; 
+			} 
 			/* 다중 파일 업로드 */
 			List<MultipartFile> fileList = mtfRequest.getFiles("upload");
 			String uploadpath = request.getRealPath("/resources/images/products"); // 웹 서버 폴더
-			String str = "/Users/ol7roeo/Documents/tempUpload"; // 가영 임시 폴더
-			//String str = "C:/tempUpload";// 지혜 임시 폴더
+
 			String filename = "";
-			
 			for(int i=0 ; i<fileList.size(); i++) {
 				// Bean 변수에 담기위해 파일명 적립
 				if(i == fileList.size()-1) { // 마지막 순서
