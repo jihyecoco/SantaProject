@@ -30,6 +30,18 @@
  		<if test="whatColumn == 'name'">
  			where name like #{keyword}
  		</if>
+ 		<if test="whatColumn == 'sell'">
+ 			where kind = 'a'
+ 		</if>
+ 		<if test="whatColumn == 'give'">
+ 			where kind = 'b'
+ 		</if>
+ 		<if test="whatColumn == 'change'">
+ 			where kind = 'c'
+ 		</if>
+ 		<if test="whatColumn == 'loginId'">
+ 			where seller = #{keyword}
+ 		</if>
  		<if test='whatColumn == "inputdate"'>
  			order by inputdate desc
  		</if>

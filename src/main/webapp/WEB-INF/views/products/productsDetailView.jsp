@@ -23,31 +23,40 @@
 			}),
 			success : function(data){
 				//alert('성공');
-				var result = "<table class='table table-hover'>";
+				var result = "<h6 class='border-bottom pb-2 mb-0'>댓글 목록</h6>";
 				$.each(data,function(index, value) { // 값이 여러개 일 때는 반복문 사용
-					result += "<tr><td>";
-	                if(value.relevel>0){ // 대댓글일 경우
-	                	var wid = value.relevel*20;
-	                	result += "<img src='../../../resources/images/comments/level.gif' width='"+wid+"' height='15'>";
-	                	result += "<img src='../../../resources/images/comments/re.gif' width='20' height='15'>";
+	                result += "<div class='d-flex text-body-secondary pt-3'>";
+					if(value.relevel>0){ // 대댓글일 경우
+	                	var wid = value.relevel*15;
+	                	result += "<img src='../../../resources/images/comments/level.gif' width='"+wid+"' height='32'>";
+						result += "<img src='../../../resources/images/comments/re.png' width='32' height='32'>";
 	                }
 	                
-                	if(value.deleteyn == 'Y'){ //삭제된 댓글일 경우
-                		result += "삭제된 댓글입니다</td><td></td></tr>";
-                	}else{ 
-	                	result += "작성자 : "+value.writer+"<br>";
-	                	result += "<span id='pcmt_update"+value.num+"'>"+value.content+" ";
-	                	result += "<input type='button' value='답글달기' ";
-	                	result += "onclick='replypcmt("+value.num+","+value.idx+","+value.ref+","+value.restep+","+value.relevel+","+value.pageNumber+")'><br>"+value.regdate+"<br>";
-	                	result += "<span id='replypcmt_area"+value.num+"'></span></td></span>";
+	               		result += "<img class='bd-placeholder-img flex-shrink-0 me-2 rounded' src='../../../resources/images/comments/member.png' width='32' height='32'>";
+	                	result += "<p class='pb-3 mb-0 small lh-sm border-bottom'>";
+	               
+	                if(value.deleteyn == 'Y'){
+	                	result += "삭제된 댓글입니다";
+	                	result += "</p>";
+	               	}else{
+	                	result += "<strong class='d-block text-gray-dark'>@"+value.writer;
+	                	
 	                	if(value.writer == loginId ){ // 댓글 작성자라면 수정, 삭제 보임
-	                		result += "<td align='right'><a href='javascript:updateComments("+value.num+","+pageNumber2+","+value.idx+")'>수정</a>/";
-	                		result += "<a href='javascript:deleteComments("+value.num+","+pageNumber2+","+value.idx+")'>삭제</a></td>";
+	                		result += "&nbsp; [<a href='javascript:updateComments("+value.num+","+pageNumber2+","+value.idx+")'>수정</a>/";
+	                		result += "<a href='javascript:deleteComments("+value.num+","+pageNumber2+","+value.idx+")'>삭제</a>]";
 	                	}
-	                	result += "</tr>";
-                	}
+	                	result += "</strong>";
+	                	
+	                	result += "<span id='pcmt_update"+value.num+"'>"+value.content+"<br>";
+	                	result += "<font color='gray' size='1px'>("+value.regdate+")</font><br>";
+	                	result += "<input type='button' class='btn btn-light' value='답글' ";
+	                	result += "onclick='replypcmt("+value.num+","+value.idx+","+value.ref+","+value.restep+","+value.relevel+","+value.pageNumber+")'>";
+	                	result += "<span id='replypcmt_area"+value.num+"'></span>";
+	                	result += "</span>";
+	                	result += "</p>";
+	               	}
+	                result += "</div>";
                 })//each
-                result += "</table>";
                 $('#comments_area').html(result);
 			},
 			error : function(request, error) {
@@ -61,7 +70,7 @@
 	/* 댓글 답글달기 버튼 클릭 */
 	function replypcmt(num, idx, ref, re_step, re_level, pageNumber){
 		//1. 댓글 입력창 보여지기
-		var replypcmt_area = "<form action='/productscomments/user/reply.pcmt' method='post'>";
+		var replypcmt_area = "<form class='form-control' action='/productscomments/user/reply.pcmt' method='post'>";
 		replypcmt_area += "<input type='hidden' name='idx' value='"+idx+"'>";
 		replypcmt_area += "<input type='hidden' name='ref' value='"+ref+"'>";
 		replypcmt_area += "<input type='hidden' name='restep' value='"+re_step+"'>";
@@ -103,7 +112,7 @@
 	/* 댓글 수정 버튼 클릭 */
 	function updateComments(pcmt_num, pageNumber, idx){
 		alert(pcmt_num);
-		var pcmt_updateform = "<form action='/productscomments/user/update.pcmt' method='post'>";
+		var pcmt_updateform = "<form class='form-control' action='/productscomments/user/update.pcmt' method='post'>";
 		pcmt_updateform += "<input type='text' name='content'>";
 		pcmt_updateform += "<input type='hidden' name='num' value='"+pcmt_num+"'>";
 		pcmt_updateform += "<input type='hidden' name='idx' value='"+idx+"'>";
@@ -247,11 +256,9 @@
 		<!-- //댓글 입력창-->
 		
 	   	<!-- 댓글 목록 -->
-	   	<div class="container">
-	   		<span id="comments_area">
-	   		
-	   		</span>
-	   	</div>
+		<div class="my-3 p-3 bg-body rounded shadow-sm" id="comments_area">
+			
+		</div>
 	   	<!-- //댓글 목록 -->
 	   	
     </div>

@@ -3,24 +3,39 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-<!--  <mapper namespace="crew.CrewBean"> -->
-
+<!-- <mapper namespace="crew.CrewBean"> -->
  <mapper namespace="crew">
-
+ 
+	<!-- resultMapping 설정 -->
+ 	<resultMap type="com.spring.ex.crew.model.CrewBean" id="crewMap">
+		 <id property="crewname" column="crew_name"/>
+		 <result property="crewnum" column="crew_num"/>
+		 <result property="crewcontents" column="crew_contents"/>
+		 <result property="crewlimit" column="crew_limit"/>
+		 <result property="crewnow" column="crew_now"/>
+		 <result property="crewmember" column="crew_member"/>
+		 <result property="crewmanager" column="crew_manager"/>
+	</resultMap>
+	<!-- //resultMapping 설정 -->
+	
+	
  	<select id="CheckCrewname" resultType="int"  >
  		select count(*) from crew
  		where crew_name = #{input_name}
  	</select> 
  	
- 	<insert id="crew/user/insert.cr">
+ 	<!-- 
+ 	점(.)쓰면 에러남
+ 	Dots are not allowed in element names, please remove it from crew/user/insert.cr -->
+ 	<insert id="InsertCrew">
  		insert into crew(large, small, crew_num, crew_name, crew_contents, crew_limit, crew_now, crew_member, crew_manager)
  		values(#{large}, #{small}, crew_seq.nextval, #{crewname}, #{crewcontents}, #{crewlimit}, 1, #{crewmember}, #{crewmanager})
  	</insert>
  	
 
- 	<select id="GetCrewById" resultType="com.spring.ex.crew.model.CrewBean" parameterType="com.spring.ex.crew.model.CrewBean">
+ 	<select id="GetCrewById" resultMap="crewMap">
  		select * from crew
- 		where crew_manager = #{loginid}
+ 		where crew_manager = #{loginId}  
  	</select> 
  	
  	<update id="UpdateCrew">
@@ -29,7 +44,7 @@
  		where crew_name = #{crewname}
  	</update>
  	
- 	<select id="GetCrewMemberCount" resultType="com.spring.ex.crew.model.CrewBean" parameterType="com.spring.ex.crew.model.CrewBean">
+ 	<select id="GetCrewMemberCount" resultMap="crewMap">
  		select crew_now, crew_limit from crew
  		where crew_name = #{crewname}
  	</select>
@@ -39,4 +54,25 @@
  		set state = 1
  		where crew_name = #{crewname}
  	</update>
+ 	
+ 	<select id="GetAllCrewCount" resultType="int">
+ 		select count(*) from crew
+ 	</select>
+ 	<select id="GetMountainCrewCount" resultType="int">
+ 		select count(*) from crew
+ 		where crew_limit>crew_now and small = 'M'
+ 	</select>
+ 	<select id="GetPloggingCrewCount" resultType="int">
+ 		select count(*) from crew
+ 		where crew_limit>crew_now and small = 'P'
+ 	</select>
+ 	<select id="GetFinishCrewCount" resultType="int">
+ 		select count(*) from crew
+ 		where crew_limit = crew_now
+ 	</select>
+ 	
+ 	<select id="GetJoinCrewById" resultMap="crewMap">
+ 		select * from crew
+ 		where crew_member like #{loginId}
+ 	</select>
  </mapper>

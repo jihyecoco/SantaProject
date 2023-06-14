@@ -1,44 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="../common/common.jsp"%>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
 <title>로그인</title>
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
-<meta content="" name="keywords">
-<meta content="" name="description">
 
-
-<!-- Favicon & Stylesheet & Font-->
-<%@ include file="../common/common_Stylesheet.jsp"%>
-<!-- //Favicon & Stylesheet & Font-->
-<body>
-	<!-- Spinner Start -->
-	<div id="spinner"
-		class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-		<div class="spinner-border text-primary" role="status"
-			style="width: 3rem; height: 3rem;"></div>
-	</div>
-	<!-- //Spinner End -->
-
-
-	<!-- Topbar Start -->
-	<%@ include file="../common/common_Topbar.jsp"%>
-	<!-- //Topbar End -->
-
-
-	<!-- Navbar Start -->
-	<%@ include file="../common/common_Navbar.jsp"%>
-	<!-- //Navbar End -->
-
-
-	<!-- Page Header Start -->
-	<%@ include file="../common/common_Header.jsp"%>
-	<!-- //Page Header End -->
-
-
+<%@ include file="../common/common_top.jsp"%>
+<script type="text/javascript">
+	function signUp(){
+		//alert(1);
+		location.href = "/login/all/signUp.lg";
+	}
+	function findUserId(){
+		alert(1);
+	}
+	function findPassword(){
+		alert(1);
+	}
+</script>
 	<!-- Login Start -->
 	<div class="container-fluid py-5">
 		<div class="container">
@@ -76,6 +57,17 @@
 										<p style="color: red">ID와 Password를 확인해주세요.</p>
 									</c:if>
 								</div>
+								<br>
+								<p>버튼 크기 동일하게</p>
+								<div class="col-12 mx-auto" align="center">
+									<input type="button" class="btn btn-primary py-3 px-4" value="회원가입" onclick="signUp()">
+								
+									<input type="button" class="btn btn-primary py-3 px-4" value="아이디찾기" onclick="findUserId()">
+								
+									<input type="button" class="btn btn-primary py-3 px-4" value="비밀번호찾기" onclick="findPassword()">
+								</div>
+								
+								
 							</form>
 					
 						</div><!-- row g-3 -->
@@ -89,23 +81,6 @@
 	<!-- //Login End -->
 
 
-	<!-- Footer Start -->
-	<%@ include file="../common/common_Footer.jsp"%>
-	<!-- //Footer End -->
-
-
-	<!-- Copyright Start -->
-	<%@ include file="../common/common_Copyright.jsp"%>
-	<!-- //Copyright End -->
-
-
-	<!-- Back to Top -->
-	<a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
-
-
-	<!-- JavaScript Libraries & Template Javascript-->
-	<%@ include file="../common/common_JS.jsp"%>
-	<!-- //JavaScript Libraries & Template Javascript-->
-</body>
+	<%@ include file="../common/common_bottom.jsp"%>
 
 </html>

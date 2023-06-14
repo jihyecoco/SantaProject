@@ -1,11 +1,14 @@
 package com.spring.ex.products.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,25 +41,44 @@ public class ProductsListController {
 			@RequestParam(value="whatColumn", required=false) String whatColumn,
 			@RequestParam(value="keyword", required=false) String keyword,
 			@RequestParam(value="pageNumber", required=false) String pageNumber,
-			HttpServletRequest request, Principal principal) {
+			HttpServletRequest request, Principal principal,
+			HttpServletResponse response) {
+
+		ModelAndView mav = new ModelAndView();
+
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = null;
+
+		//검색어 설정
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("whatColumn", whatColumn);
+		map.put("keyword", "%"+keyword+"%");
 		
-			ModelAndView mav = new ModelAndView();
-			
-			//검색어 설정
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("whatColumn", whatColumn);
-			map.put("keyword", "%"+keyword+"%");
-			
-			//페이지 설정
-			int totalCount = pdao.getProductsTotalCount(map);
-			String url = request.getContextPath()+command;
-			Paging pageInfo = new Paging(pageNumber, "9", totalCount, url, whatColumn, keyword, null);
-			
-			List<ProductsBean> plist = pdao.getAllProducts(map, pageInfo);
-			mav.addObject("plist", plist); // 상품리스트
-			mav.addObject("pageInfo", pageInfo); // 페이징
-			//mav.addObject("loginId", principal.getName()); // 로그인 아이디 -- 챙길 필요없음 DetailController에서 챙기면 가능
-			mav.setViewName(getPage);
-			return mav;
+		if(whatColumn != null && whatColumn.equals("loginId")) { // 내 판매글 보기 눌렀을때 
+			try {
+				//System.out.println("내 판매글 보기 요청");
+				map.put("keyword", principal.getName()); // keyword에 id
+			}catch(NullPointerException e) { // 로그인 하지 않은 상태
+				try {
+					out = response.getWriter();
+					out.println("<script>alert('로그인 후에 사용하실 수 있습니다.');history.go(-1);</script>");
+					out.flush();
+				} catch (IOException e2) {
+					e.printStackTrace();
+				}
+			}
 		}
+
+		//페이지 설정
+		int totalCount = pdao.getProductsTotalCount(map);
+		String url = request.getContextPath()+command;
+		Paging pageInfo = new Paging(pageNumber, "9", totalCount, url, whatColumn, keyword, null);
+
+		List<ProductsBean> plist = pdao.getAllProducts(map, pageInfo);
+		mav.addObject("plist", plist); // 상품리스트
+		mav.addObject("pageInfo", pageInfo); // 페이징
+		//mav.addObject("loginId", principal.getName()); // 로그인 아이디 -- 챙길 필요없음 DetailController에서 챙기면 가능
+		mav.setViewName(getPage);
+		return mav;
+	}
 }
