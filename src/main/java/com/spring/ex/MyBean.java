@@ -26,8 +26,20 @@ public class MyBean implements InitializingBean {
 		String uploadPath = servletContext.getRealPath("/resources/images/products/");
 		
 		File destination = new File(uploadPath); // 웹 서버 폴더
-		//String str = "/Users/ol7roeo/Documents/tempUpload"; // 가영 임시 폴더
-		String str = "C:/tempUpload";// 지혜 임시 폴더
+		/* 사용자 OS 확인 */
+		//mkdir 사용하면 더 완성도 있을 듯
+		String osName = System.getProperty("os.name").toLowerCase();
+		System.out.println("OS name : " + osName);
+		String str = "";
+		if (osName.contains("win")) 
+		{
+			System.out.println("사용자 OS - Window ");
+			str = "C:/tempUpload";
+		} 
+		else if (osName.contains("mac"))   {
+		  	System.out.println("사용자 OS - MAC ");
+		  	str = "/Users/ol7roeo/Documents/tempUpload"; 
+		} 
 		File destination_local = new File(str); // 임시 폴더
 		
 		FileUtils.copyDirectory(destination_local, destination);
