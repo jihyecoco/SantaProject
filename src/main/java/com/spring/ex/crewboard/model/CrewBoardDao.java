@@ -34,7 +34,16 @@ public class CrewBoardDao {
 	}
 
 	public CrewBoardBean getCrewboardByNum(int num) {
-		//CrewBoardBean cbb = sqlSessionTemplate.selectOne(namespace+".GetCrewboardByNum", num);
+		// 1. 조회수 증가
+		int cnt = -1;
+		cnt = sqlSessionTemplate.update("UpdateReadCount", num);
+		if(cnt != -1) {
+			System.out.println("조회수 증가 성공");
+		}else {
+			System.out.println("조회수 증가 실패");
+		}
+		
+		// 2. 게시물 가져오기
 		CrewBoardBean cbb = sqlSessionTemplate.selectOne("GetCrewboardByNum", num);
 		return cbb;
 	}
@@ -52,11 +61,34 @@ public class CrewBoardDao {
 		return cnt;
 	}
 
-	public int getTotalCount(Map<String, Object> map) {
+	public int getCrewBoardTotalCount(Map<String, Object> map) {
 		int totalCount = 0;
-		//totalCount = sqlSessionTemplate.selectOne(namespace+".GetTotalCount", map);
-		//totalCount = sqlSessionTemplate.selectOne("GetTotalCount", map);
+		totalCount = sqlSessionTemplate.selectOne("GetCrewBoardTotalCount", map);
 		return totalCount;
+	}
+
+	public int updateCrewboard(CrewBoardBean cbb) {
+		int cnt = -1;
+		cnt = sqlSessionTemplate.update("UpdateCrewboard", cbb);
+		return cnt;
+	}
+
+	public int deleteCrewboardByNum(int crewboardnum) {
+		int cnt = -1;
+		cnt = sqlSessionTemplate.delete("DeleteCrewboardByNum", crewboardnum);
+		return cnt;
+	}
+
+	public boolean checkCrewboard(String crewname) {
+		int cnt = 0;
+		boolean result = false;
+		cnt = sqlSessionTemplate.selectOne("CheckCrewboard", crewname);
+		if(cnt == 1) { // 이미 있는 게시글
+			result = true;
+		}else {
+			result = false;
+		}
+		return result;
 	}
 	
 	

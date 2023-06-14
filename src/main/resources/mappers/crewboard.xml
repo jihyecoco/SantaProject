@@ -33,6 +33,15 @@
  		<if test='whatColumn == "P"'>
  			where cb.small = 'P' and cb.crew_name like #{keyword}
  		</if>
+ 		<if test='whatColumn == "reg_date"'>
+ 			order by reg_date desc
+ 		</if>
+ 		<if test='whatColumn == "readcount"'>
+ 			order by readcount desc
+ 		</if>
+ 		<if test='whatColumn == "crew_comments"'>
+ 			order by comments desc
+ 		</if>
  	</select>
  	
  	<insert id="InsertCrewboard">
@@ -62,7 +71,7 @@
  		where crew_name = #{crewname}
  	</update>
  	
- 	<select id="GetTotalCount" resultType="int">
+ 	<select id="GetCrewBoardTotalCount" resultType="int">
  		select count(*) from crew_board
  		<if test='whatColumn == "all"'>
  			where contents like #{keyword} or subject like #{keyword}
@@ -77,4 +86,27 @@
  			where small = 'P' and crew_name like #{keyword}
  		</if>
  	</select>
+ 	
+ 	<update id="UpdateCrewboard">
+ 		update crew_board
+ 		set subject = #{subject}, contents = #{contents}
+ 		where crewboard_num = #{crewboardnum}
+ 	</update>
+ 	
+ 	<delete id="DeleteCrewboardByNum">
+ 		delete crew_board
+ 		where crewboard_num = #{crewboardnum}
+ 	</delete>
+ 	
+ 	<select id="CheckCrewboard" resultType="int">
+ 		select count(*) from crew_board
+ 		where crew_name = #{crewname}
+ 	</select>
+ 	
+ 	<update id="UpdateReadCount">
+ 		update crew_board
+ 		set readcount = readcount + 1
+ 		where crewboard_num = #{num}
+ 	</update>
+ 		
  </mapper>

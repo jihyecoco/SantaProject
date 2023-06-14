@@ -1,6 +1,7 @@
 package com.spring.ex.crewboard.controller;
 
 import java.security.Principal;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.spring.ex.crew.model.CrewBean;
+import com.spring.ex.crew.model.CrewDao;
 import com.spring.ex.crewboard.model.CrewBoardBean;
 import com.spring.ex.crewboard.model.CrewBoardDao;
 
@@ -23,22 +26,27 @@ public class CrewBoardDetailController {
 	@Autowired
 	CrewBoardDao cbdao;
 	
-	//crewboardList.jsp(제목클릭)에서 요청
-	//글의 num이 같이 넘어온다.
+	@Autowired
+	CrewDao cdao;
+	
+	//crewboardList.jsp(제목클릭)에서 요청(num, pageNumber) => crewboardDetailView.jsp
 	@RequestMapping(value=command)
 	public ModelAndView doAction(@RequestParam("num") int num, 
+			@RequestParam("pageNumber") String pageNumber,
 			Principal principal) {
 		
 		ModelAndView mav = new ModelAndView();
-		//1. 비회원일때(로그인 페이지로)
+		mav.addObject("pageNumber", pageNumber); // 페이지
+		mav.addObject("loginId", principal.getName()); // 로그인 아이디
 		
-		//2. 회원일때
-		String getUserId = principal.getName();
-		System.out.println("crewBoardDetail getUserId : " + getUserId);
+		String loginId = principal.getName();
+		List<CrewBean> join_crew = cdao.getJoinCrewById(loginId);
+		mav.addObject("join_crew", join_crew);
+			
 		CrewBoardBean cbb = cbdao.getCrewboardByNum(num);
 		mav.addObject("cbb", cbb);
-		mav.addObject("getUserId", getUserId);
 		mav.setViewName(getPage);
+		
 		return mav;
 	}
 	

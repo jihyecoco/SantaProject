@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file ="../common/common_top.jsp"%>
+
 <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/jquery.js"></script>
 <script type="text/javascript">
 	/* 신청하기 버튼 클릭 */
@@ -67,6 +68,8 @@
         </div>
     </div>
     <!-- Page Header End -->
+    
+    <%@ include file ="../common/common_nav_crewboard.jsp"%>
 
     <!-- Feature Start -->
     <!-- 검색창 -->
