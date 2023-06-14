@@ -24,7 +24,7 @@ import com.spring.ex.products.model.ProductsBean;
 import com.spring.ex.products.model.ProductsDao;
 
 @Controller
-public class ProductsInsertController {
+public class ProductsInsertController { 
 	
 	//private final String command = "/insert.prd";
 	private final String command = "/products/user/insert.prd";
