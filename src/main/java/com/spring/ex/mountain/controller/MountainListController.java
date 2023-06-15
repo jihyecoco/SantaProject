@@ -20,15 +20,12 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.xml.sax.InputSource;
 
 import com.spring.ex.mountain.model.MountainBean;
 import com.spring.ex.mountain.model.MountainDao;
-import com.spring.ex.qna.model.QnaBean;
-import com.spring.ex.utility.Paging;
 
 @Controller
 public class MountainListController {
@@ -39,11 +36,12 @@ public class MountainListController {
 	private String getPage = "/mountain/mountainList";
 	
 	@Autowired
+	static
 	MountainDao mdao;
 	
 	//사용자-상단 메뉴에서 mountain 클릭 시 요청 발생=>mountainList.jsp로 이동
 	@RequestMapping(value=command)
-	public ModelAndView doAPI(Model model) throws Exception {
+	public ModelAndView doAPI() throws Exception {
 		
 		ModelAndView mav = new ModelAndView();
 		
@@ -101,6 +99,19 @@ public class MountainListController {
             map.put("mountain_great", tmpMap.get("hndfmsmtnslctnrson"));
         }
         
+        firstApiInsert(map);
+        
+        //mav.addObject("firstApiInsert",firstApiInsert(map));
+        mav.setViewName(getPage);
+        
+        return mav;
+    }//doAPI end
+	
+	//값을 검색하고 db가 비어있으면 api값을 db에 삽입하는 firstApiInsert 함수
+	public static void firstApiInsert(Map<String, Object> map){
+		//mav 객체 생성
+		ModelAndView mav = new ModelAndView();
+		
 		//검색을 위해 map 객체에 검색 카테고리와 검색 키워드 값 저장
 		//Map<String, String> searchMap = new HashMap<String, String>();
 		//searchMap.put("whatColumn", whatColumn);
@@ -119,25 +130,31 @@ public class MountainListController {
 		//System.out.println("pageInfo : "+pageInfo);
 		
 		
-		//모든 Qna 목록을 list 객체에 저장, map과 pageInfo로 조건 설정
-		List<MountainBean> mountainLists = mdao.getAllQna(/*Searchmap, pageInfo*/);
-
+		//mountain 목록을 list 객체에 저장
+		List<MountainBean> mountainLists = mdao.getAllMountainFirst(/*Searchmap, pageInfo*/);
+		
 		//dao의 mountainLists가 비어있는지 테스트 출력
 		String first_mountain = mountainLists.get(0).getMountainname();
 		System.out.println("첫번째 산 이름 : "+first_mountain);
         
-        if(map.get("mountain_name") == null) {
+        if(first_mountain == null) {
         	//만약 비어있으면 api에서 불러온 값들을 insert해서 값 저장
         	//map을 매개변수로
-        	
+        	int cnt = mdao.insertMountainFirst(map);
+        		
+        	if(cnt > 0) {
+        		//insert 성공 시
+        		
+        	}else {
+        		//insert 실패 시
+        		
+        	}
         }else {
         	//만약 비어있지 않으면 해당 값을 mav에 저장해서 list로 넘겨줌
+        	mav.addObject("mountainLists",mountainLists);
         }
-        mav.setViewName(getPage);
-        
-        return mav;
-        
-    }//doAPI end
+		
+	}//doFirst End
 	
 	//결과값을 뽑아주는 getResultMap 함수
 	public static List<HashMap<String, String>> getResultMap(String data) throws Exception {

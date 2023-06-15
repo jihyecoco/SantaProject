@@ -1,6 +1,7 @@
 package com.spring.ex.mountain.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +22,14 @@ public class MountainDao {
 		System.out.println("MountainDao() 생성자");
 	}//MountainDao 생성자 end
 
-	public List<MountainBean> getAllQna() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<MountainBean> getAllMountainFirst() {
+		List<MountainBean> mountainLists = sqlSessionTemplate.selectList("GetAllMountainFirst");
+		return mountainLists;
+	}
+
+	public int insertMountainFirst(Map<String, Object> map) {
+		int cnt = sqlSessionTemplate.insert("InsertMountainFirst",map);
+		return cnt;
 	}
 	
 }

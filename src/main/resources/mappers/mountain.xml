@@ -3,5 +3,42 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mountain.MountainBean">
-
+	
+	<!-- 최초 목록 불러오기 -->
+		<select id="GetAllMountainFirst" resultType="hashmap">
+			SELECT
+				mountain_num,
+				mountain_name,
+				mountain_height,
+				mountain_local,
+				mountain_content,
+				mountain_image,
+				mountain_great
+			FROM
+				mountain
+		</select>
+	<!-- //최초 목록 불러오기 -->
+	
+	<!-- 최초 목록 삽입하기 -->
+		<insert id="InsertMountainFirst">
+			INSERT
+				into mountain(
+					mountain_num,
+					mountain_name,
+					mountain_height,
+					mountain_local,
+					mountain_content,
+					mountain_image,
+					mountain_great)
+			VALUES(
+				mountain_seq.nextval,
+				#{mountainname},
+				#{mountainheight},
+				#{mountainlocal},
+				#{mountaincontent},
+				#{mountainimage},
+				#{mountaingreat}
+			)
+		</insert>
+	<!-- //최초 목록 삽입하기 -->
 </mapper>
