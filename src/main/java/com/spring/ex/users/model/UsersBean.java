@@ -1,10 +1,10 @@
 package com.spring.ex.users.model;
 
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.web.multipart.MultipartFile;
 
 public class UsersBean {
 	private final String input_message = " 필수입력 사항입니다.";
@@ -12,14 +12,17 @@ public class UsersBean {
 	
 	private int userNum;
 	
-	@Pattern(regexp = "^[a-z0-9]+$", message = "아이디는 영어와 숫자룰 사용하여 6글자 이상으로 가능합니다.")
+	@Pattern(regexp = "^[a-z0-9]+$", message = "아이디의 형식이 올바르지않습니다")
 	private String userId;
 	
-	@Pattern(regexp = "^[a-z0-9]+$", message = "비밀번호는 영어와 숫자룰 사용하여 6글자 이상으로 가능합니다.")
+	@Pattern(regexp = "^[a-z0-9]+$", message = "비밀번호의 형식이 올바르지않습니다.")
 	private String password;
 
 	@NotBlank(message = "이름은" + input_message)
 	private String name;
+	
+	@NotBlank(message = "생년월일은" + input_message)
+	private String birth;
 	
 	@NotBlank(message = "성별은" + choice_message)
 	private String gender;
@@ -28,6 +31,8 @@ public class UsersBean {
 	@Email(message = "올바른 이메일 형식이 아닙니다.") //@Email Null허용
 	private String email;
 	
+	//* 정규식 및 자동 하이픈 처리 추가 할 예정
+	@NotBlank(message = "연락처는" + input_message)
 	//@Pattern(regexp = "^01(?:0|1|[6-9])-(?:d{3}|d{4})-d{4}$", message = "올바른 연락처의 형태가 아닙니다.")
 	private String phone;
 	
@@ -40,6 +45,55 @@ public class UsersBean {
 	@NotBlank(message = "상세주소는" + input_message)
 	private String addressSub;
 	private String image;
+	
+	
+	/*=======================================*/
+	//비밀번호 변경 요청 시 확인을 위한 변수 생성
+	private String passwordNew;
+	
+	public String getPasswordNew() {
+		return passwordNew;
+	}
+
+	public void setPasswordNew(String passwordNew) {
+		this.passwordNew = passwordNew;
+	}
+
+
+	/*=======================================*/
+	//Users 테이블에 존재하지않고 이미지 업로드를 위한 변수 생성
+	// upload : 이미지를 받아줄 수 있는 변수, File로 넣을 수 있도록 type을 MultipartFile 으로 설정
+	private MultipartFile upload;
+	
+	//getUpload()를 호출하면 MultipartFile객체 return
+	//정보가 upload에 객체형태로 들어감 // upload : 파일을 객체로 만든 정보가 담김 this.upload = upload;
+	public MultipartFile getUpload() {
+		return upload;
+	}
+	
+	//사용자가 업로드하려고하는 파일이 upload에 객체형태로 들어감
+	public void setUpload(MultipartFile upload) {
+		this.upload = upload;
+		// fileName : 확장자를 포함한 파일이름을 담는 변수 
+		String fileName = upload.getOriginalFilename(); 
+		// image : fileName값을 image 변수에 넣기 
+		this.image = fileName; 
+		
+	}//setUpload
+	
+	
+	// upload2 : 변경될 파일이름을 담는 변수
+	private String upload2;
+	
+	public String getUpload2() {
+		return upload2;
+	}
+	public void setUpload2(String upload2) {
+		this.upload2 = upload2;
+	}
+	
+
+	/*=======================================*/
 	
 	//getter & setter
 	public int getUserNum() {
@@ -65,6 +119,12 @@ public class UsersBean {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public String getBirth() {
+		return birth;
+	}
+	public void setBirth(String birth) {
+		this.birth = birth;
 	}
 	public String getGender() {
 		return gender;

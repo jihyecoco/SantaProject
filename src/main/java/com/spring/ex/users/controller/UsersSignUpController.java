@@ -13,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.spring.ex.users.model.UsersBean;
 import com.spring.ex.users.model.UsersDao;
 
-
+/* 회원가입 컨트롤러 */
 @Controller
 public class UsersSignUpController {
 
@@ -30,30 +30,17 @@ public class UsersSignUpController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName(getPage);// /users/signUpPage
 		return mav;
-	}
+	}//signUp - 화면 띄우기
 	
-	//signUpPage에서 submit
+	//signUpPage.jsp(status,userRole,udate,image를 제외한 모든 UsersBean) -> submit 요청
 	@RequestMapping(value = command, method = RequestMethod.POST)
-	public ModelAndView signUp(@ModelAttribute("usersBean") @Valid UsersBean usersBean, BindingResult result) {
+	public ModelAndView signUp(@ModelAttribute("usersBean") @Valid UsersBean usersBean, 
+			BindingResult result) {
+		
 		ModelAndView mav = new ModelAndView();
 		
 		//유효성검사 통과X
-		System.out.println("-------------");
-		System.out.println("usersBean.getEmail() : " + usersBean.getEmail());
-		System.out.println("usersBean.getGender() : " + usersBean.getGender());
-		System.out.println("usersBean.getImage() : " + usersBean.getImage());
-		System.out.println("usersBean.getName() : " + usersBean.getName());
-		System.out.println("usersBean.getPassword() : " + usersBean.getPassword());
-		System.out.println("usersBean.getPhone() : " + usersBean.getPhone());
-		System.out.println("usersBean.getUdate() : " + usersBean.getUdate());
-		System.out.println("usersBean.getUserId() : " + usersBean.getUserId());
-		System.out.println("usersBean.getAddress() : " + usersBean.getAddress());
-		System.out.println("usersBean.getAddressSub() : " + usersBean.getAddressSub());
-		System.out.println("-------------");
-		System.out.println("result.hasErrors() : " + result.hasErrors() );
-		
 		if(result.hasErrors()) {
-			
 			mav.setViewName(getPage);// /users/signUpPage
 			
 		}else {
@@ -70,9 +57,9 @@ public class UsersSignUpController {
 				
 			}
 			
-		}
+		}//else
 		
 		return mav;
-	}
+	}//signUp - submit 클릭
 	
 }//UsersSignUpController

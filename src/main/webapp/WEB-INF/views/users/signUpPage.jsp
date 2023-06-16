@@ -1,9 +1,69 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>회원가입</title>
+<!-- 로그인페이지(loginPage.jsp) -> 회원가입 클릭(signUp.jsp)  -->
 <%@ include file="../common/common_top.jsp"%>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script>
-    function sample6_execDaumPostcode() {
+<script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/jquery.js"></script>
+<script type="text/javascript">
+	
+	/* 아이디 중복체크 */
+	$(document).ready(function(){
+		//alert(123);
+		var isCheck = false;
+		var use = "";
+		$('#userId_check').click(function(){ // 중복체크 버튼 눌렀을 때
+			//alert(1);
+			isCheck = true;
+			$.ajax({
+				url : '/login/all/userId_check.us', //users로 경로잡으면 권한이 없기때문에 접근할 수 X
+				data : ({
+					input_UserId : $('input[name=userId]').val()
+				}),
+				success : function(data){ //가능하면 yes 불가능하면 no
+					if($('input[name=userId]').val()==""){
+						$('#userId_check_result').html("<font color='red' size='2px' font-weight='bold'>아이디를 입력하세요.</font>");
+						$('input[name=userId]').focus();
+					}else if(data == 'NO'){
+						$('#userId_check_result').html("<font color='red' size='2px' font-weight='bold'>이미 등록된 아이디입니다.</font>");
+						$('#userId_check_result').show();
+						use = "impossible";
+					}else if(data == 'YES'){
+						$('#userId_check_result').html("<font color='blue' size='2px' font-weight='bold'>사용가능한 아이디입니다.</font>");
+						$('#userId_check_result').show();
+						use = "possible";
+					}
+				}
+			});//ajax
+		});
+		
+		$('#userId').keydown(function(){
+			$('#userId_check_result').css('display', 'none');
+		});//keydown
+		
+		//회원가입(submit) 클릭 
+		$('#submit').click(function(){
+			if(!isCheck){
+				alert('아이디 중복여부를 확인해주세요.');
+				return false;
+			}else if(use == 'impossible'){
+				alert('사용중인 아이디입니다');
+				$('input[name=userId]').select();
+				return false;
+			}else if($('input[name=userId]').val() == ""){
+				alert('아이디를 입력하세요');
+				return false;
+			}
+		});//click
+	})//ready
+	/* 아이디 중복체크 */
+
+	/* 카카오 주소 API */
+    function execDaumPostcode() {
         new daum.Postcode({
             oncomplete: function(data) {
                 // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
@@ -36,20 +96,21 @@
                         extraAddr = ' (' + extraAddr + ')';
                     }
                     // 조합된 참고항목을 해당 필드에 넣는다.
-                    document.getElementById("sample6_extraAddress").value = extraAddr;
+                    document.getElementById("address_extra").value = extraAddr;
                 
                 } else {
-                    document.getElementById("sample6_extraAddress").value = '';
+                    document.getElementById("address_extra").value = '';
                 }
 
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById('sample6_postcode').value = data.zonecode;
-                document.getElementById("sample6_address").value = addr;
+                document.getElementById('postcode').value = data.zonecode;
+                document.getElementById("address").value = addr;
                 // 커서를 상세주소 필드로 이동한다.
-                document.getElementById("sample6_detailAddress").focus();
+                document.getElementById("addressSub").focus();
             }
         }).open();
     }
+	/* 카카오 주소 API */
 </script>
 <style>
 	.err{
@@ -73,26 +134,32 @@
                 <div class="col-lg-7">
                     <div class="bg-light rounded p-4 p-sm-5 wow fadeInUp" data-wow-delay="0.1s">
                         <div class="row g-3">
-                        	<!-- 아이디 -->
-                            <div class="col-9" style="float: left; width: 60%;">
-                                <div class="form-floating">
-                                    <input type="text" class="form-control border-0" id="userId" name="userId" value="${usersBean.userId}">
-                                    <label for="userId">아이디</label>
-                                </div>
-                                <form:errors cssClass="err" path="userId"/>
+                        	<!-- 아이디 & 아이디 중복체크 -->
+                        	<div class="col-12" >
+	                        	<!-- 아이디 -->
+	                            <div class="col-9" style="float: left; ">
+	                                <div class="form-floating">
+	                                    <input type="text" class="form-control border-0" id="userId" name="userId" value="${usersBean.userId}">
+	                                    <label for="userId">아이디</label>
+	                                </div>
+	                                <form:errors cssClass="err" path="userId"/>
+	                            </div>
+	                            <!-- //아이디 -->
+	                            
+	                            <!-- 아이디 중복체크 -->
+	                            <div style="float: left; margin-left:10px; display:inline-block;"  >
+		                            <input type="button" class="btn btn-secondary btn-sm" value="중복체크" id="userId_check"><br>
+	                            	
+	                            </div>
+	                            <div style="float: left; display:inline-block;"  >
+	                           		<span id="userId_check_result" style="text-align: left;">
+	                           	    	
+	                                </span>
+	                            </div>
+	                            <!-- //아이디 중복체크 -->
                             </div>
-                            <!-- //아이디 -->
+                            <!-- 아이디 & 아이디 중복체크 -->
                             
-                            <!-- 아이디 중복체크 -->
-                            <div class="col-3" style="float: left; width: 20%; display:inline-block; background-color: red; text-align: center;"  >
-	                            <input type="button" class="btn btn-secondary btn-sm" value="아이디 중복체크" id="userId_check">
-                           		<span id="userId_check_result">
-                           	     userId_check_result
-                                </span>
-                            	
-                            </div>
-                            <!-- //아이디 중복체크 -->
-                           
                             <!-- 비밀번호 -->
                             <div class="col-9">
                                 <div class="form-floating">
@@ -112,6 +179,17 @@
                                 <form:errors cssClass="err" path="name"/>
                             </div>
                             <!-- //이름 -->
+                            
+                            <!-- 생년월일 -->
+							<div class="col-9">
+							 	<div class="form-floating">
+									<input type="date" class="form-control border-0" id="birth" name="birth" value="${usersBean.birth}">
+                                    <label for="birth">생년월일</label>
+								 </div>
+							    <form:errors cssClass="err" path="birth"/>
+							</div>
+                            <!-- //생년월일 -->
+                            
                             
                             <!-- 성별 -->
 							<div class="col-9">
@@ -148,41 +226,46 @@
                             <!-- //연락처 -->
                             
                             <!-- 주소 -->
-                            <div class="col-12">
-                            <input type="text" id="sample6_postcode" placeholder="우편번호"  >
-							<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-							<input type="text" name="address" id="sample6_address" placeholder="주소" value="${usersBean.address}"><br>
-							<input type="text" name="addressSub"  id="sample6_detailAddress" placeholder="상세주소" value="${usersBean.addressSub}">
-							<input type="text" id="sample6_extraAddress" placeholder="참고항목">
-                           		<!-- <div class="col-9" style="float: left; width: 60%; display:inline-block; background-color: blue; text-align: center;"  >
-		                            <input type="text" class="form-control border-0"  id="sample6_postcode" placeholder="우편번호">
-									<input type="button" class="btn btn-secondary btn-sm" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
-								</div>	
-								<div class="form-floating">
-									<input type="text" class="form-control border-0"  id="sample6_address" >
-									<label for="address">주소</label>
-								</div>	
-								<div class="form-floating">	
-									<input type="text" class="form-control border-0"  id="sample6_detailAddress" >
-									<label for="addressSub">상세주소</label>
-									<input type="text" class="form-control border-0"  id="sample6_extraAddress" placeholder="참고항목"> 
+                            <input type="hidden" class="form-control border-0" id="postcode" name="postcode" style="width: 50%" >
+                           
+							<div class="col-12" style="margin-bottom: 0;" >
+								<div class="col-9" style="float: left;">
+									<div class="form-floating" style="margin-bottom: 0;">
+										<input type="text" class="form-control border-0" name="address" id="address" value="${usersBean.address}"><br>
+										<label for="address">주소</label>
+									</div>	
+									
 								</div>
-							 </div> -->
-							 <!-- //주소 -->
-                            </div><!--//row g-3  -->
+								<div style="float: left; margin-left:10px; display:inline-block;" >
+                                	<input type="button" class="btn btn-secondary btn-sm" onclick="execDaumPostcode()" value="주소 등록">
+                            	</div>
+                            	
+                            </div>		
+                            <form:errors cssClass="err" path="address"/>
+                            <div class="col-9" style="margin-top: 0" ><!-- style="line-height: 10px" -->	
+									<div class="form-floating">
+										<input type="text" class="form-control border-0" name="addressSub"  id="addressSub" value="${usersBean.addressSub}">
+										<label for="addressSub">상세주소</label>
+										<input type="hidden" class="form-control border-0" id="address_extra" placeholder="참고항목">
+	                           		</div>
+	                           		<form:errors cssClass="err" path="addressSub"/>
+							</div>	
+                            <!-- //주소 -->
+                            
                             <!-- reset & submit -->
                             <div class="col-12 text-center">
                                 <input type="reset" value="취소" class="btn btn-primary py-3 px-4">
-                                <input type="submit" name="submit" value="등록" class="btn btn-primary py-3 px-4">
+                                <input type="submit" id="submit" value="회원가입하기" class="btn btn-primary py-3 px-4">
                             </div>
                             <!-- //reset & submit -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+                        </div><!--//row  -->
+                    </div><!-- //bg-light -->
+                </div><!-- //col-lg-7 -->
+            </div><!-- //row justify-content-center -->
+        </div><!-- //container -->
+    </div><!-- //container-fluid -->
     </form:form>
     <!-- SignUp End -->
 
 <%@ include file="../common/common_bottom.jsp"%>
+</html>

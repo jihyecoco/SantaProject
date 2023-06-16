@@ -126,13 +126,13 @@
 				users-by-username-query="SELECT USER_ID as username, 
 		            									password,
 		            									1 as enabled
-		            							   FROM users WHERE USER_ID =?"
+		            							   FROM users WHERE USER_ID =? and status = 'Y' "
 		            							   
 				authorities-by-username-query="SELECT USER_ID as username,
 		            										  CASE WHEN USER_ROLE='r99' THEN 'ROLE_ADMIN' 
 		            										       ELSE 'ROLE_USER'
 		            										       END authority
-		            								     FROM users WHERE USER_ID=?" />
+		            								     FROM users WHERE USER_ID=?  and status = 'Y'" />
 
 
 		</authentication-provider>

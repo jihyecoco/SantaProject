@@ -102,6 +102,7 @@
 	                   <a href="/products/all/list.prd" class="dropdown-item">거래게시판</a>
 					</div><!-- //dropdown-menu -->
 				</div><!-- //nav-item -->
+				<a href="/users/user/mypage.us" class="nav-item nav-link">마이페이지</a>
 			</div><!-- //navbar-nav -->
 			
 			

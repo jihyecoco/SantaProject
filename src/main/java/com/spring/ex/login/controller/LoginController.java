@@ -1,10 +1,16 @@
 package com.spring.ex.login.controller;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.spring.ex.users.model.UsersBean;
 
 /*
 security-context.xml
@@ -38,6 +44,7 @@ public class LoginController {
 		return mav; 
 		
 	}//loginPage
+	
 	
 	//권한이 없는 페이지로 가려고할 때
 	@RequestMapping(value=commandDenied)
