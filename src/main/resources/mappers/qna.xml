@@ -102,5 +102,16 @@
 			qna_num = #{qnanum}	
 	</update>
 	<!-- //답변 등록 -->
+
+	<!-- 질문 수정 -->
+	<update id="UpdateQuestion">
+		UPDATE
+			qna
+		SET
+			qna_question = #{qnaquestion}
+		WHERE
+			qna_num = #{qnanum}
+	</update>
+	<!-- //질문 수정 -->
 	
 </mapper>

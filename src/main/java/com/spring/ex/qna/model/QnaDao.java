@@ -65,5 +65,10 @@ public class QnaDao {
 		int cnt = sqlSessionTemplate.update("InsertAnswer",map);
 		return cnt;
 	}
+
+	public int updateQuestion(QnaBean qnaBean) {
+		int cnt = sqlSessionTemplate.update("UpdateQuestion",qnaBean);
+		return cnt;
+	}
 	
 }

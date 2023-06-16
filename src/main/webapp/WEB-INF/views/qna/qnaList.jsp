@@ -67,7 +67,7 @@
             <h1 class="display-3 text-white mb-4 animated slideInDown">QnA</h1>
             <nav aria-label="breadcrumb animated slideInDown">
                 <ol class="breadcrumb justify-content-center mb-0">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/users/all/main.lg">Home</a></li>
                     <li class="breadcrumb-item" aria-current="page">QnA</li>
                 </ol>
             </nav>
@@ -75,13 +75,10 @@
     </div>
     <!-- Page Header End -->
 	
-	<security:authorize access="hasRole('admin')">
-		<c:set var="activeflag" value="true"/>
-	</security:authorize>
     <!-- Qna Start -->
     	<!-- qna 검색 -->
     	<div class="container">
-    		<form action="list.qna" method="get">
+    		<form action="/qna/all/list.qna" method="get">
     				<!-- 검색할 카테고리 -->
     				<select name="whatColumn" class="form-select btn-primary py-2 position-relative top-0 start-0 mt-2 me-2" style="width:8%;display:inline-block;">
 	    				<option value="">전체</option>
@@ -128,7 +125,7 @@
 					<!-- 비밀글이면 -->
 					<c:if test="${qnaLists[i].qnasecret==1}">
 						<!-- 자물쇠 이미지 출력 -->
-						<img src="../../resources/images/qna/lock_20x.png">
+						<img src="<%=request.getContextPath()%>/resources/images/icon/lock_16x.png">
 					</c:if>
 					<!-- 비밀글 출력 end -->
 					
@@ -155,10 +152,12 @@
 							</c:if>
 						</c:when>
 						<c:when test="${principal.getName() == qnaLists[i].usersid}">
-							<c:set var="qnanum" value="${qnaLists[i].qnanum}"/>
 							<c:if test="${qnaLists[i].qnaanswer == null}">
-    							<button class="btn btn-primary" onClick="location.href='/qna/admin/update.qna'">질문수정</button>
+							<form action="/qna/user/update.qna" method="get">
+								<input type="hidden" name="qnanum" value="${qnaLists[i].qnanum}">
+    							<input type="submit" value="질문수정" class="btn btn-primary">
     							<button class="btn btn-primary" onClick="deleteQna()">질문삭제</button>
+							</form>
 							</c:if>
 						</c:when>
 						</c:choose>

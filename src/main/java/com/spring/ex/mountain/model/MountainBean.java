@@ -20,12 +20,13 @@ public class MountainBean {
 	private String mountainlocal;
 	
 	//mountain 상세설명
+	@NotBlank(message = "상세 내용은 비워둘 수 없습니다.")
 	private String mountaincontent;
 	
 	//mountain 사진
 	private String mountainimage;
 
-	//mountain 사진
+	//mountain 100대 명산
 	private String mountaingreat;
 
 	//이미지 업로드를 위한 객체, 변수 생성

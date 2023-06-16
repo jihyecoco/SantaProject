@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!-- qnaInsertQuestionForm.jsp -->
+<!-- qnaUpdateQuestionForm.jsp -->
 <%@ include file="../common/common_top.jsp" %>
 <style type="text/css">
 	.err {
@@ -16,7 +16,7 @@
                 <ol class="breadcrumb justify-content-center mb-0">
                     <li class="breadcrumb-item"><a href="/users/all/main.lg">Home</a></li>
                     <li class="breadcrumb-item"><a href="/qna/all/list.qna">Q&A</a></li>
-                    <li class="breadcrumb-item" aria-current="page">질문등록</li>
+                    <li class="breadcrumb-item" aria-current="page">질문수정</li>
                 </ol>
             </nav>
         </div>
@@ -30,12 +30,12 @@
         	<!-- 타이틀 -->
             <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
                 <p class="fs-5 fw-bold text-primary">Q&A</p>
-                <h1 class="display-5 mb-5">질문등록</h1>
+                <h1 class="display-5 mb-5">질문수정</h1>
             </div>
             <!-- //타이틀 -->
             
             <!-- 폼 -->
-            <form:form commandName="qnaBean" action="/qna/user/insertQuestion.qna" method="post" enctype="multipart/form-data">
+            <form:form commandName="qnaBean" action="/qna/user/update.qna" method="post" enctype="multipart/form-data">
             <div class="row justify-content-center">
                 <div class="col-lg-7">
                     <div class="bg-light rounded p-4 p-sm-5 wow fadeInUp" data-wow-delay="0.1s">
@@ -104,7 +104,7 @@
                             
                             <!-- 질문하기 버튼 -->
                             <div class="col-12 text-center">
-                                <button class="btn btn-primary py-2 px-4" type="submit">질문하기</button>
+                                <button class="btn btn-primary py-2 px-4" type="submit">수정하기</button>
                             </div>
                             <!-- //질문하기 버튼 -->
                         </div>

@@ -14,8 +14,8 @@
             <h1 class="display-3 text-white mb-4 animated slideInDown">Q&A</h1>
             <nav aria-label="breadcrumb animated slideInDown">
                 <ol class="breadcrumb justify-content-center mb-0">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#">Q&A</a></li>
+                    <li class="breadcrumb-item"><a href="/users/all/main.lg">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/qna/all/list.qna">Q&A</a></li>
                     <li class="breadcrumb-item" aria-current="page">질문등록</li>
                 </ol>
             </nav>
