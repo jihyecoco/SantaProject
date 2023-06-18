@@ -174,7 +174,7 @@
     <!-- 내 크루 보기, 크루 만들기 -->
     <div class="container">
     	<div align="right">
-    		<input type="button" value="내 크루 보기" class="btn btn-success" onclick="">
+    		<input type="button" value="내 크루 보기" class="btn btn-success" onclick="location.href='/crew/user/myPage1.cr'">
     		<input type="button" value="크루 만들기" class="btn btn-success" onclick="location.href='/crew/user/insert.cr'">
     	</div>
     </div>

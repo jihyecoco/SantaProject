@@ -11,19 +11,19 @@
           <a class="nav-link" href="#">Centered nav only<span class="sr-only">(current)</span></a>
         </li> -->
         <li class="nav-item">
-          <a class="nav-link" href="#">전체</a>
+          <a class="nav-link" href="/products/all/list.prd">전체</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">판매</a>
+          <a class="nav-link" href="/products/all/list.prd?whatColumn=sell">판매</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">나눔</a>
+          <a class="nav-link" href="/products/all/list.prd?whatColumn=give">나눔</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">교환</a>
+          <a class="nav-link" href="/products/all/list.prd?whatColumn=change">교환</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">내 판매글 보기</a>
+          <a class="nav-link" href="/products/all/list.prd?whatColumn=loginId">내 판매글 보기</a> 
         </li>
        <!--  <li class="nav-item">
           <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>

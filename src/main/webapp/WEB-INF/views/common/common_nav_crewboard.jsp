@@ -28,6 +28,6 @@
             <a class="dropdown-item" href="#">플로깅</a>
           </div>
         </li>
-      </ul>
+      </ul> 
     </div>
   </nav>

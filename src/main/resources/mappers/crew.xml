@@ -75,4 +75,26 @@
  		select * from crew
  		where crew_member like #{loginId}
  	</select>
+ 	
+ 	<select id="GetMyPageCrew" resultMap="crewMap">
+ 		select * from crew
+ 		where crew_manager like #{loginId}
+ 		<if test = "large == 1">
+ 			and large = 1
+ 		</if>
+ 		<if test = "large == 2">
+ 			and large = 2
+ 		</if>
+ 	</select>
+ 	
+ 	<select id="GetMyPageJoinCrew" resultMap="crewMap">
+ 		select * from crew
+ 		where crew_manager not like #{loginId} and crew_member like #{loginId}
+ 		<if test = "large == 1"> 
+ 			and large = 1
+ 		</if>
+ 		<if test = "large == 2">
+ 			and large = 2
+ 		</if>
+ 	</select>
  </mapper>

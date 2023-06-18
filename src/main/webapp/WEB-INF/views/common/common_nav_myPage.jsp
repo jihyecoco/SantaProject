@@ -23,8 +23,8 @@
       	<li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="dropdown10" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">크루</a>
           <div class="dropdown-menu" aria-labelledby="dropdown10">
-            <a class="dropdown-item" href="#">일일크루</a>
-            <a class="dropdown-item" href="#">정기크루</a>
+            <a class="dropdown-item" href="/crew/user/myPage1.cr">일일크루</a>
+            <a class="dropdown-item" href="/crew/user/myPage2.cr">정기크루</a>
           </div>
         </li>
         <!-- //crew -->
@@ -54,7 +54,7 @@
       	<li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="dropdown10" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">거래 내역</a>
           <div class="dropdown-menu" aria-labelledby="dropdown10">
-            <a class="dropdown-item" href="#">거래내역</a>
+            <a class="dropdown-item" href="">거래내역</a>
           </div>
         </li>
         <!-- //게시글 관련 -->

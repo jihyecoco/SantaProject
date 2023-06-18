@@ -13,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.ex.crewboard.model.CrewBoardBean;
 import com.spring.ex.crewboard.model.CrewBoardDao;
-
+ 
 @Controller
 public class CrewBoardUpdateController {
 	private final String command = "/crewboard/user/update.bdcr";
@@ -48,7 +48,7 @@ public class CrewBoardUpdateController {
 	public ModelAndView doAction(@ModelAttribute("cbb") @Valid CrewBoardBean cbb,
 			BindingResult result,
 			@RequestParam("pageNumber") String pageNumber,
-			@RequestParam("crewboardnum") int num) {
+			@RequestParam("crewboardnum") int num) { 
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("pageNumber", pageNumber); // 페이지 설정

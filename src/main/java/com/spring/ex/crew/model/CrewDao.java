@@ -2,6 +2,7 @@ package com.spring.ex.crew.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,6 +82,18 @@ public class CrewDao {
 		String login_Id = "%"+loginId+"%";
 		join_crew = sqlSessionTemplate.selectList("GetJoinCrewById", login_Id);
 		return join_crew;
+	}
+
+	public List<CrewBean> getMyPageCrew(Map<String, Object> map) {
+		List<CrewBean> myCrewList = new ArrayList<CrewBean>();
+		myCrewList = sqlSessionTemplate.selectList("GetMyPageCrew", map);
+		return myCrewList;
+	}
+
+	public List<CrewBean> getMyPageJoinCrew(Map<String, Object> map) {
+		List<CrewBean> myJoinCrewList = new ArrayList<CrewBean>();
+		myJoinCrewList = sqlSessionTemplate.selectList("GetMyPageJoinCrew", map); 
+		return myJoinCrewList;
 	}
 	
 }
