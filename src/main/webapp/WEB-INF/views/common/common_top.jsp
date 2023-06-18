@@ -87,28 +87,64 @@
 			data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
 			<span class="navbar-toggler-icon"></span>
 		</button>
+		
+		<!-- collapse navbar-collapse -->
 		<div class="collapse navbar-collapse" id="navbarCollapse">
 			<div class="navbar-nav ms-auto p-4 p-lg-0">
 				<a href="/users/all/main.lg" class="nav-item nav-link">Home</a>
-	            <a href="/mountain/all/list.mnt" class="nav-item nav-link">산 별 정보</a>
-	            <a href="/crewboard/all/list.bdcr" class="nav-item nav-link">크루</a>
-	            <a href="/qna/all/list.qna" class="nav-item nav-link">QnA</a>    
-	           <div class="nav-item dropdown">
-	               <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">커뮤니티</a>
-	               <div class="dropdown-menu bg-light m-0">
-	                   <a href="/notice/all/list.no" class="dropdown-item">공지사항</a>
-	                   <a href="/board/all/list.br" class="dropdown-item">자유게시판</a>
-	                   <a href="" class="dropdown-item">서포터즈</a>
-	                   <a href="/products/all/list.prd" class="dropdown-item">거래게시판</a>
+				<a href="/mountain/all/list.mnt" class="nav-item nav-link">산 별 정보</a>
+				<a href="/crewboard/all/list.bdcr" class="nav-item nav-link">크루</a>
+				<a href="/qna/all/list.qna" class="nav-item nav-link">QnA</a>    
+				
+				<!-- 커뮤니티 -->  
+				<div class="nav-item dropdown">
+					<a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">커뮤니티</a>
+             		<div class="dropdown-menu bg-light m-0"> 
+		                <a href="/notice/all/list.no" class="dropdown-item">공지사항</a>
+		                <a href="/board/all/list.br" class="dropdown-item">자유게시판</a>
+		                <a href="" class="dropdown-item">서포터즈</a>
+		                <a href="/products/all/list.prd" class="dropdown-item">거래게시판</a>
 					</div><!-- //dropdown-menu -->
-				</div><!-- //nav-item -->
+				</div>
+				<!-- //커뮤니티 -->
+				
 				<a href="/users/user/mypage.us" class="nav-item nav-link">마이페이지</a>
-			</div><!-- //navbar-nav -->
+				
+				<!-- 관리자 -->
+				<sec:authorize access="hasRole('ROLE_ADMIN')">
+				<div class="nav-item dropdown">
+					<a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">관리자</a>
+             		<div class="dropdown-menu bg-light m-0"> 
+		                <a href="#" class="dropdown-item">회원 관리</a>
+		                <!-- 구현중임 
+		                <a href="/users/admin/usersList.us" class="dropdown-item">회원 관리</a> -->
+		                <a href="#" class="dropdown-item">크루 관리</a>
+		                <a href="#" class="dropdown-item">산 관리</a>
+		                <a href="#" class="dropdown-item">게시판 관리</a>
+					</div><!-- //dropdown-menu -->
+				</div>
+				</sec:authorize>				
+				<!-- //관리자 -->
+			</div>
+			<!-- //navbar-nav -->
 			
+			<!-- 로그인 / 비로그인 -->
+			<!-- 로그인하지 않은 상태 -->
+			<sec:authorize access="isAnonymous()">
+				<a href="/login/all/loginPage.lg" class="btn btn-primary py-4 px-lg-4 rounded-0 d-none d-lg-block">
+					로그인<i class="fa fa-arrow-right ms-3"></i>
+				</a> 
+			</sec:authorize>
+			<!-- //로그인하지 않은 상태 -->
 			
-			<a href="#" class="btn btn-primary py-4 px-lg-4 rounded-0 d-none d-lg-block">
-				로그인<i class="fa fa-arrow-right ms-3"></i>
-			</a> 
+			<!-- 로그인한 상태 -->
+			<sec:authorize access="isAuthenticated()">
+				<a href="/logout" class="btn btn-primary py-4 px-lg-4 rounded-0 d-none d-lg-block">
+					로그아웃<i class="fa fa-arrow-right ms-3"></i>
+				</a> 
+			</sec:authorize>
+			<!-- //로그인한 상태 -->
+			<!-- //로그인 / 비로그인 -->
 		</div><!-- //collapse navbar-collapse -->
 	</nav><!-- //navbar -->
 	<!-- //Navbar End -->
