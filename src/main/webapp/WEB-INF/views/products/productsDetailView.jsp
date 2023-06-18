@@ -6,7 +6,28 @@
 	$(document).ready(function(){
 		//alert('1');
 		getAllComments();
-	})
+		
+		/* 구매하기 버튼 클릭 */
+		$('#apibtn').click(function(){
+			$.ajax({
+				url : '/pay/user/kakaopay.pay',
+				data : ({
+					num : $('input[name=idx]').val(),
+					pageNumber : $('input[name=pageNumber]').val()
+				}),
+				dataType : 'json' ,
+				success : function(data){
+					//alert(data.tid);
+					var url = data.next_redirect_pc_url;
+					window.open(url);
+										
+				},
+				error : function(error){
+					alert(error);
+				}
+			}); //ajax
+		});//click
+	});//ready
 	
 	/* 댓글 목록 가져오기 */
 	function getAllComments(){
@@ -209,7 +230,7 @@
            		</tr>
            		<tr>
            			<td colspan="4" align="right">
-           				<input type="button" value="구매하기">
+           				<input type="button" id="apibtn" value="구매하기">
            				<input type="button" value="목록보기" onclick="location.href='/products/all/list.prd?pageNumber=${pageNumber}'">
            			</td>
            		</tr>

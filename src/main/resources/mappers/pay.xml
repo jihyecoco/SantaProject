@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="pay">
+ 	<!-- resultMapping -->
+	<resultMap type="com.spring.ex.products.model.ProductsBean" id="productsMap">
+		 <id property="productsnum" column="products_num"/>
+	</resultMap>
+	
+	<resultMap type="com.spring.ex.pay.model.PayBean" id="payMap">
+		 <id property="paynum" column="pay_num"/>
+		 <result property="prdnum" column="prd_num"/>
+		 <result property="regdate" column="reg_date"/>
+	</resultMap>
+	<!-- //resultMapping -->
+	
+	<insert id="InsertPay">
+		insert into pay(pay_num, prd_num, buyer, price, reg_date, payment)
+		values(pay_seq.nextval, #{prdnum}, #{buyer},
+		(select price from products where products_num = #{prdnum})
+		, sysdate, 'kakaopay')
+	</insert>
+	
+	<select id="GetPayByPrdnum" resultMap="payMap">
+		select * from pay
+		where prd_num = #{prdnum}
+	</select>
+ </mapper>
