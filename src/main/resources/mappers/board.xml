@@ -18,6 +18,7 @@
 		<result property="regdate" column="reg_date"/>
 		<result property="readcount" column="readcount"/>
 		<result property="image" column="image"/>
+		<result property="boardcommentscount" column="boardcomments_count"/>
 	</resultMap>
 	<!--  //resultMapping 설정  -->
 	
@@ -26,15 +27,18 @@
 		<if test="whatColumn == 'user_id'">
 			where user_id like #{keyword}
 		</if>
-		<if test="whatColumn == 'category'">
-			where category like #{keyword}
-		</if>
 		<if test="whatColumn == 'subject'">
 			where subject like #{keyword}
 		</if>
 		<if test="whatColumn == 'content'">
 			where content like #{keyword}
 		</if>
+		<if test="whatColumn == 'reg_date'">
+ 			order by reg_date desc
+ 		</if>
+ 		<if test="whatColumn == 'readcount'">
+ 			order by readcount desc
+ 		</if>
 	</select>
 	
 	<select id="GetAllBoard" resultMap="boardMap">
@@ -42,15 +46,18 @@
 		<if test="whatColumn == 'user_id'">
 			where user_id like #{keyword}
 		</if>
-		<if test="whatColumn == 'category'">
-			where category like #{keyword}
-		</if>
 		<if test="whatColumn == 'subject'">
 			where subject like #{keyword}
 		</if>
 		<if test="whatColumn == 'content'">
 			where content like #{keyword}
 		</if>
+		<if test="whatColumn == 'reg_date'">
+ 			order by reg_date desc
+ 		</if>
+ 		<if test="whatColumn == 'readcount'">
+ 			order by readcount desc
+ 		</if>
 		order by num desc
 	</select>
 	

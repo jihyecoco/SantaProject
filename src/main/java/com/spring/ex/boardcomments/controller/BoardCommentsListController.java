@@ -25,15 +25,15 @@ public class BoardCommentsListController {
 	
 	
 	//댓글 작성하면 insert.bcmt를 거쳐 페이지번호와 bean을 가지고 이곳으로 이동함
-	@RequestMapping(value=command)
+	@RequestMapping(value=command, method=RequestMethod.POST)
 	@ResponseBody
 	public List<BoardCommentsBean> doAction(
-			@RequestParam("bnum") int bnum, 
+			@RequestParam("idx") int idx,
 			@RequestParam("pageNumber") String pageNumber){
 		
-		System.out.println("bnum:"+bnum);
+		System.out.println("bnum:"+ idx);
 		List<BoardCommentsBean> boardcomments = new ArrayList<BoardCommentsBean>();
-		boardcomments = bcmt_dao.getBoardCommentsByBnum(bnum);
+		boardcomments = bcmt_dao.getBoardCommentsByBnum(idx);
 		System.out.println("boardcomments size: "+boardcomments.size());
 		
 		for(int i=0; i<boardcomments.size(); i++) { // 페이지 넣기

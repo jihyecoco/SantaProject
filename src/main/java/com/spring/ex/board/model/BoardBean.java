@@ -23,6 +23,8 @@ public class BoardBean {
 	//@NotEmpty(message="파일을 선택하세요.")
 	private String image;
 	
+	private int boardcommentscount; //댓글수 출력하기위한 칼럼
+	
 	//////////	
 	private MultipartFile upload;
 	
@@ -48,27 +50,18 @@ public class BoardBean {
 	}
 	
 	//////////
-	
-	public BoardBean() {
-		super();
-	}
-	
-	public BoardBean(int num, String userid, String category, String subject, String content, String regdate,
-			String readcount, String image) {
-		super();
-		this.num = num;
-		this.userid = userid;
-		this.category = category;
-		this.subject = subject;
-		this.content = content;
-		this.regdate = regdate;
-		this.readcount = readcount;
-		this.image = image;
-	}
 
 	
 	public int getNum() {
 		return num;
+	}
+
+	public int getBoardcommentscount() {
+		return boardcommentscount;
+	}
+
+	public void setBoardcommentscount(int boardcommentscount) {
+		this.boardcommentscount = boardcommentscount;
 	}
 
 	public void setNum(int num) {

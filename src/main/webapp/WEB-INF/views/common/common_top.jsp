@@ -102,7 +102,7 @@
              		<div class="dropdown-menu bg-light m-0"> 
 		                <a href="/notice/all/list.no" class="dropdown-item">공지사항</a>
 		                <a href="/board/all/list.br" class="dropdown-item">자유게시판</a>
-		                <a href="" class="dropdown-item">서포터즈</a>
+		                <a href="/supporters/all/list.su" class="dropdown-item">서포터즈</a>
 		                <a href="/products/all/list.prd" class="dropdown-item">거래게시판</a>
 					</div><!-- //dropdown-menu -->
 				</div>

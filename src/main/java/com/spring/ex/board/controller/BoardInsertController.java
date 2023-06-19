@@ -46,7 +46,7 @@ public class BoardInsertController {
 		ModelAndView mav = new ModelAndView();
 		
 		String userId = principal.getName(); 
-		//List<BoardBean> myCrew = bdao.getBoardById(userId);
+		//List<BoardBean> board = bdao.getBoardById(userId);
 		
 		mav.addObject("userId", userId);
 		mav.addObject("pageNumber", pageNumber);
@@ -69,8 +69,8 @@ public class BoardInsertController {
 		
 		ModelAndView mav = new ModelAndView();
 		board.setUserid(principal.getName());
-		//String userId = principal.getName();	
-		//mav.addObject("userId", userId);
+		String userId = principal.getName();	
+		mav.addObject("userId", userId);
 		
 		String str = "c:/tempUpload";
 		File destination_local = new File(str + File.separator + multi.getOriginalFilename());

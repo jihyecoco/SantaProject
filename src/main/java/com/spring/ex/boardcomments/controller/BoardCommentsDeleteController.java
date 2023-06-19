@@ -31,10 +31,10 @@ public class BoardCommentsDeleteController {
 		
 		// 댓글의 num, deleteyn='Y' 담아가기
 		BoardCommentsBean boardcomments = new BoardCommentsBean();
-		boardcomments.setNum(num); //게시글 번호 담는것??
+		boardcomments.setNum(num); //게시글 번호 담는것
 		boardcomments.setIsdeleted("Y");
 		
-		int cnt = bcmt_dao.deleteBoardComments(boardcomments); //been을 넘기고 삭제하기
+		int cnt = bcmt_dao.deleteBoardComments(boardcomments); //bean을 넘기고 삭제하기
 		if(cnt != -1) {
 			System.out.println("댓글 삭제 성공");
 			mav.setViewName(gotoPage);

@@ -41,6 +41,27 @@ public class BoardCommentsDao {
 		cnt = sqlSessionTemplate.update("DeleteBoardComments", boardcomments);
 		return cnt;
 	}
+
+	public int replyBoardComments(BoardCommentsBean boardcomments) {
+		//1. 원래 댓글 re_step을 수정
+		int cnt = -1;
+		cnt = sqlSessionTemplate.update("UpdateOrginComments", boardcomments);
+		if(cnt != -1) { // 수정 성공
+			//2. 답 댓글 insert
+			int re_step = boardcomments.getRestep()+1;
+			boardcomments.setRestep(re_step);
+			int re_level = boardcomments.getRelevel()+1;
+			boardcomments.setRelevel(re_level);
+			cnt = sqlSessionTemplate.insert("InsertReplyBoardComments", boardcomments);
+		}
+		return cnt;
+	}
+
+	public int updateBoardComments(BoardCommentsBean boardcomments) {
+		int cnt = -1;
+		cnt = sqlSessionTemplate.update("UpdateBoardComments",boardcomments);
+		return cnt;
+	}
 	
 	
 	

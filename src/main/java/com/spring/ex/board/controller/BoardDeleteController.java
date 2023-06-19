@@ -17,7 +17,7 @@ import com.spring.ex.board.model.BoardDao;
 @Controller
 public class BoardDeleteController {
 	
-	//private final String command = "delete.br";
+	//private final String command =   "delete.br";
 	private final String command = "/board/user/delete.br";
 	private final String gotoPage = "redirect:/board/all/list.br";
 	

@@ -7,6 +7,67 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="supporters.SupportersBean">
-  
-  
+	
+	<!-- resultMapping 설정 -->
+ 	<resultMap type="com.spring.ex.supporters.model.SupportersBean" id="supportersMap">
+		 <id property="num" column="num"/>
+		 <result property="supportersname" column="supporters_name"/>
+		 <result property="startdate" column="start_date"/>
+		 <result property="enddate" column="end_date"/>
+		 <result property="regdate" column="reg_date"/>
+	</resultMap>
+	<!-- //resultMapping 설정 -->
+	
+	<select id="GetTotalSupportersCount" resultType="int">
+ 		select count(*) from supporters
+		<if test="whatColumn == 'supporters_name'">
+			where supporters_name like #{keyword}
+		</if>
+		<if test="whatColumn == 'content'">
+			where content like #{keyword}
+		</if>
+ 	</select>
+	
+	<select id="GetAllSupporters" resultMap="supportersMap">
+		select * from supporters
+		<if test="whatColumn == 'supporters_name'">
+			where supporters_name like #{keyword}
+		</if>
+		<if test="whatColumn == 'content'">
+			where content like #{keyword}
+		</if>
+		order by num desc
+	</select>
+	
+	<insert id="InsertSupporters">
+ 		insert into supporters(num, writer, supporters_name, state, deadline, target, limit, applicant, start_date, end_date, content, reg_date)
+ 		values(supo_seq.nextval, #{writer}, #{supportersname}, #{state}, #{deadline}, #{target}, #{limit}, #{applicant}, #{startdate}, #{enddate}, #{content}, sysdate)
+ 	</insert>
+	
+	<select id="CheckSupportersname" resultType="int">
+ 		select count(*) from supporters
+ 		where supportersname = #{input_name}
+ 	</select>
+ 	
+ 	<update id="UpdateSupoCount">
+        update supporters 
+        set readcount = readcount+1 
+        where num=#{num}
+    </update>
+    
+    <select id="GetSupportersByNum"  resultMap="supportersMap">
+		select * from supporters where num = #{num}
+	</select>
+ 	
+ 	<delete id="DeleteSupporters">
+		delete supporters where num = #{num}
+	</delete>
+ 	
+ 	<update id="UpdateSupporters">
+		update supporters 
+		set supporters_name=#{supportersname}, state=#{state}, deadline=#{deadline}, target=#{target}, 
+		limit=#{limit}, applicant=#{applicant}, start_date=#{startdate}, end_date=#{enddate}, content=#{content}
+		where num = #{num}
+	</update>
+	
 </mapper>

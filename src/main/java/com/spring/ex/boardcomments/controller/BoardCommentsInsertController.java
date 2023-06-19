@@ -1,5 +1,7 @@
 package com.spring.ex.boardcomments.controller;
 
+import java.security.Principal;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,27 +33,27 @@ public class BoardCommentsInsertController {
 	//boardDetailView.jsp에서 댓글등록 클릭시 요청(내용, 게시글번호, 아이디, 페이지번호 4개를 챙겨서 옴)
 	@RequestMapping(value=command, method=RequestMethod.POST)
 	public ModelAndView doAction(@ModelAttribute("boardcomments") @Valid BoardCommentsBean boardcomments, BindingResult result,
-			@RequestParam("pageNumber") String pageNumber) {
+			@RequestParam("pageNumber") String pageNumber,
+			Principal principal) {
 		
 		System.out.println("boardcomments.getBoardnum(): "+boardcomments.getBnum()); //11
 		System.out.println("boardcomments.getUserid(): "+boardcomments.getUserid()); //admin
 		System.out.println("boardcomments.regdate(): "+boardcomments.getRegdate()); //null 
+		System.out.println("boardcomments.getContent(): "+boardcomments.getContent());
+		System.out.println("boardcomments.isSecret(): "+boardcomments.getIsSecret()); //N or Y
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("pageNumber", pageNumber);
 		mav.addObject("num", boardcomments.getBnum()); //게시글의 번호(bnum) 11을 num으로 보낸다.
-		//detail.br에서는 게시글 번호를 num으로 받고 있기 때문이다.
+		//왜냐하면 detail.br에서는 게시글 번호를 num으로 받고 있기 때문이다.
 		
 		System.out.println("result.hasErrors(): "+result.hasErrors()); 
 		if(result.hasErrors()) { //에러 있음
-			//mav.setViewName(getPage);
+			mav.setViewName(getPage);
 		}
 		else {//유효성검사 통과
 			int cnt = -1;
 			cnt = bcmt_dao.insertBoardComments(boardcomments);
-			
-			System.out.println("삽입후 boardcomments의 userid: "+boardcomments.getUserid()); //admin
-			System.out.println("삽입후 boardcomments의 regdate: "+boardcomments.getRegdate());//null
 			System.out.println("cnt: "+cnt); //1 
 			
 			if(cnt != -1) { //댓글 insert 성공

@@ -14,6 +14,7 @@ public class BoardCommentsBean {
 	@NotBlank(message="댓글내용을 입력해야합니다.")
 	private String content;
 	private String regdate;
+	private String isSecret;
 	
 	// 댓글 목록의 ajax에서 필요
 	private String pageNumber;
@@ -99,7 +100,14 @@ public class BoardCommentsBean {
 	public void setRegdate(String regdate) {
 		this.regdate = regdate;
 	}
-	
+
+	public String getIsSecret() {
+		return isSecret;
+	}
+
+	public void setIsSecret(String isSecret) {
+		this.isSecret = isSecret;
+	}	
 	
 	
 }

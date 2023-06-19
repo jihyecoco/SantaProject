@@ -17,7 +17,7 @@
 <!-- Page Header End -->    
     
 
-<center>
+
 <!-- Projects Start -->
 <div class="container-xxl py-5">
 	<div class="container">
@@ -25,7 +25,8 @@
 			<p class="fs-5 fw-bold text-primary"></p>
             <h3 class="display-5 mb-5">공지사항 게시판</h3>
         </div> 
-
+		
+		<!-- 검색 창 -->
 		<nav class="navbar navbar-light bg-light">
   			<div class="container" style="display:table-cell; vertical-align:middle;">
    				<form class="d-flex" action="/notice/all/list.no" method="post">
@@ -45,6 +46,8 @@
     			</form>
  			 </div>
 		</nav><br>
+		<!-- //검색 창 -->
+		
 <table border="1" class="table">
 	<tr>
 		<th>글번호</th>
@@ -76,15 +79,28 @@
 			</td>		
 		</tr>
 	</c:forEach>
+	</c:if>	
+	<!-- 로그인한 아이디가 관리자(admin)일때만 글쓰기 버튼이 보임 -->
+	<c:if test="${loginId eq 'admin'}">
+		<tr>
+			<td colspan="5" align="right">
+				<input type="button" value="글쓰기" class="btn btn-success" onclick="location.href='/notice/admin/insert.no?pageNumber=${pageInfo.pageNumber}'">
+			</td>
+		</tr>
 	</c:if>
-	<tr>
-		<td colspan="5" align="right">
-			<input type="button" value="글쓰기" class="btn btn-success" onclick="location.href='/notice/admin/insert.no?pageNumber=${pageInfo.pageNumber}'">
-		</td>
-	</tr>
-</table><br>
-${pageInfo.pagingHtml}
-</center>    
+	<!-- //로그인한 아이디가 관리자일때만 글쓰기 버튼이 보임 -->
+	<!-- 로그인 안했을때는 에러가 난다 -->
+	<c:if test="${ loginId == null }">
+		
+	</c:if>	
+</table>
      </div>
 </div>
+
+<!-- 페이지 표시 -->
+<div align="center">
+	${pageInfo.pagingHtml}
+</div>
+<!-- //페이지 표시 -->
+
 <%@ include file="../common/common_bottom.jsp"%>

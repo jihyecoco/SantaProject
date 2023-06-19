@@ -58,6 +58,19 @@
           </div>
         </li>
         <!-- //게시글 관련 -->
+        
+        <!-- 서포터즈 -->
+      	<li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="dropdown10" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">내 서포터즈</a>
+          <div class="dropdown-menu" aria-labelledby="dropdown10">
+            <a class="dropdown-item" href="#">전체</a>
+            <a class="dropdown-item" href="#">활동중</a>
+            <a class="dropdown-item" href="#">활동 종료</a>
+          </div>
+        </li>
+        <!-- //서포터즈 -->
+        
+        
       </ul>
     </div>
   </nav>

@@ -1,6 +1,5 @@
-package com.spring.ex.notice.controller;
+package com.spring.ex.supporters.controller;
 
-import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,51 +12,50 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.spring.ex.notice.model.NoticeBean;
-import com.spring.ex.notice.model.NoticeDao;
+import com.spring.ex.supporters.model.SupportersBean;
+import com.spring.ex.supporters.model.SupportersDao;
 import com.spring.ex.utility.Paging;
 
 @Controller
-public class NoticeListController {
+public class SupportersListController {
 	
-	private final String command = "/notice/all/list.no";
-	private final String getPage = "/notice/noticeList";
+	private final String command = "/supporters/all/list.su";
+	private String getPage = "supporters/supportersList"; 
+	
 	
 	@Autowired
-	NoticeDao ndao;
+	SupportersDao sdao;
 	
-	
+
 	@RequestMapping(value=command)
 	public ModelAndView doAction(HttpServletRequest request,
 			@RequestParam(value="whatColumn",required = false) String whatColumn,
 			@RequestParam(value="keyword",required = false) String keyword,
-			@RequestParam(value="pageNumber",required = false) String pageNumber,
-			Principal principal) {
+			@RequestParam(value="pageNumber",required = false) String pageNumber) {
 		
 		System.out.println("whatColumn: "+whatColumn);
 		System.out.println("keyword: "+keyword);
 		System.out.println("pageNumber: "+pageNumber);
 		
 		Map<String, String> map = new HashMap<String, String>();
-		map.put("whatColumn",whatColumn);
+		map.put("whatColumn", whatColumn);
 		map.put("keyword","%"+keyword+"%");
 		
-		int totalcount = ndao.getTotalCount(map);
+		int totalcount = sdao.getTotalSupportersCount(map);
 		String url = request.getContextPath()+command;
 		
 		Paging pageInfo = new Paging(pageNumber,"5",totalcount,url,whatColumn,keyword,null);
 		
-		List<NoticeBean> lists = ndao.getAllNotice(map,pageInfo);
+		List<SupportersBean> lists = sdao.getAllSupporters(map,pageInfo);
 		
 		ModelAndView mav = new ModelAndView();
-		String loginId = principal.getName();
-		mav.addObject("loginId", loginId);
 		mav.addObject("lists", lists);
 		mav.addObject("pageInfo", pageInfo);
-		mav.addObject("pageNumber", pageNumber);
 		mav.setViewName(getPage);
 		
 		return mav;
 	}
+	
+	
 	
 }
