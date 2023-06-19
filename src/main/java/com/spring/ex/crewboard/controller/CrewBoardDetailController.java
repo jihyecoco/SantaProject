@@ -16,7 +16,7 @@ import com.spring.ex.crewboard.model.CrewBoardDao;
 
 
 @Controller
-public class CrewBoardDetailController {
+public class CrewBoardDetailController { 
 	
 	//private final String command = "/detail.bdcr";
 	
@@ -31,8 +31,9 @@ public class CrewBoardDetailController {
 	
 	//crewboardList.jsp(제목클릭)에서 요청(num, pageNumber) => crewboardDetailView.jsp
 	@RequestMapping(value=command)
-	public ModelAndView doAction(@RequestParam("num") int num, 
-			@RequestParam("pageNumber") String pageNumber,
+	public ModelAndView doAction(@RequestParam(value="num") int num, 
+			@RequestParam(value="pageNumber", required=false) String pageNumber,
+			@RequestParam(value="crewname", required=false) String crewname,
 			Principal principal) {
 		
 		ModelAndView mav = new ModelAndView();
@@ -44,6 +45,9 @@ public class CrewBoardDetailController {
 		mav.addObject("join_crew", join_crew);
 			
 		CrewBoardBean cbb = cbdao.getCrewboardByNum(num);
+		if(num == 0) { // 마이페이지에서 모집글 눌렀을때
+			cbb = cbdao.getCrewboardByCrewname(crewname);
+		}
 		mav.addObject("cbb", cbb);
 		mav.setViewName(getPage);
 		

@@ -29,7 +29,7 @@ public class CrewBoardDeleteController {
 		mav.addObject("num", crewboardnum); // 게시글 num 설정
 		
 		int cnt = -1;
-		cnt = cb_dao.deleteCrewboardByNum(crewboardnum);
+		cnt = cb_dao.deleteCrewboardByNum(crewboardnum); 
 		if(cnt != -1) {
 			System.out.println("크루보드 게시글 삭제 성공");
 		}else {
