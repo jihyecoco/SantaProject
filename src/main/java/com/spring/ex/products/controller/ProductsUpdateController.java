@@ -116,8 +116,23 @@ public class ProductsUpdateController {
 
 				// 1. 기존 파일 삭제
 				String uploadpath = request.getRealPath("/resources/images/products"); // 웹 서버 폴더
-				String str = "/Users/ol7roeo/Documents/tempUpload"; // 가영 임시 폴더
-				//String str = "C:/tempUpload";// 지혜 임시 폴더
+				
+				/* 사용자 OS 확인 */
+				String osName = System.getProperty("os.name").toLowerCase();
+				System.out.println("OS name : " + osName);
+		    
+				String str = "";
+				if (osName.contains("win")) 
+				{
+					System.out.println("사용자 OS - Window ");
+					str = "C:/tempUpload";
+				} 
+
+				else if (osName.contains("mac"))   {
+				  	System.out.println("사용자 OS - MAC ");
+				  	str = "/Users/ol7roeo/Documents/tempUpload"; 
+				} 
+				
 				String filePath = servletContext.getRealPath("/resources/images/products");
 				String[] delete_image = pb.getUpload2().split(","); // 여러개 파일 이름 배열로 만들기
 

@@ -16,7 +16,8 @@
                 <div class="col-lg-7 mx-auto">
                     <div class="bg-light rounded p-4 p-sm-5 wow fadeInUp" data-wow-delay="0.1s">
                         <div class="row g-3 mx-auto" >
-                         		<table class="table table-hover">
+                         		<table class="table table-hover table-borded align-middle">
+                         			<thead>
                          			<tr align="center">
                          				<th>크루명</th>
                          				<th>현재 인원</th>
@@ -24,6 +25,7 @@
                          				<th>크루 소개</th>
                          				<th>모집글 보러가기</th>
                          			</tr>
+                         			</thead>
                          			<c:if test="${myCrewList.size() == 0}">
                          				<tr align="center">
                          					<td colspan="5"> 만든 크루가 없습니다. </td>
@@ -65,7 +67,8 @@
                 <div class="col-lg-7 mx-auto">
                     <div class="bg-light rounded p-4 p-sm-5 wow fadeInUp" data-wow-delay="0.1s">
                         <div class="row g-3 mx-auto" >
-                         		<table class="table table-hover">
+                         		<table class="table table-hover table-borded align-middle">
+                         			<thead>
                          			<tr align="center">
                          				<th>크루명</th>
                          				<th>현재 인원</th>
@@ -73,6 +76,7 @@
                          				<th>크루 소개</th>
                          				<th>모집글 보러가기</th>
                          			</tr>
+                         			</thead>
                          			<c:if test="${myJoinCrewList.size() == 0}">
                          				<tr align="center">
                          					<td colspan="5"> 가입한 크루가 없습니다. </td>

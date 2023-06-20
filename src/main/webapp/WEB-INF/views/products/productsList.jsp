@@ -2,15 +2,11 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="../common/common_top.jsp"%>
 <!-- Page Header Start -->
-<div class="container-fluid page-header py-5 mb-5 wow fadeIn"
-	data-wow-delay="0.1s">
+<div class="container-fluid page-header py-5 mb-5">
 	<div class="container text-center py-5">
 		<h1 class="display-3 text-white mb-4 animated slideInDown">거래 게시판</h1>
 		<nav aria-label="breadcrumb animated slideInDown">
 			<ol class="breadcrumb justify-content-center mb-0">
-				<li class="breadcrumb-item"><a href="#">판매</a></li>
-				<li class="breadcrumb-item"><a href="#">나눔</a></li>
-				<li class="breadcrumb-item active" aria-current="page">교환</li>
 			</ol>
 		</nav>
 	</div>
@@ -22,13 +18,11 @@
 <!-- Projects Start -->
 <div class="container-xxl py-5">
 	<div class="container">
+		<div class="text-center mx-auto" style="max-width: 500px;">
+				<p class="fs-5 fw-bold text-primary"></p>
+            	<h3 class="display-5 mb-5">거래 게시판</h3>
+        	</div> 
 		
-		<div align="right">
-			<input type="button" class="btn btn-success" value="글쓰기"
-				onclick="location.href='/products/user/insert.prd'"> <br>
-			<br>
-		</div>
-
 		<div class="col-12 text-center">
 			<nav class="navbar navbar-light bg-light">
 				<div class="container" style="display: table-cell; vertical-align: middle;">
@@ -57,9 +51,7 @@
     		<a href="/products/all/list.prd?whatColumn=products_comments">댓글순</a>
     	</div>
 		<!-- //정렬 -->
-		<hr>
 		<br>
-		
 		
 		<div class="row g-4 portfolio-container">
 			<c:forEach var="plist" items="${plist}">
@@ -69,6 +61,7 @@
 
 				<div class="col-lg-4 col-md-6 portfolio-item">
 					<div class="portfolio-inner rounded">
+						<!-- 상품 대표 이미지 -->
 						<img src="<%=request.getContextPath()%>/resources/images/products/${thumbnail[0]}"
 							alt="로딩중" width="100%" height="300px">
 						<div class="portfolio-text">
@@ -79,9 +72,12 @@
 								<a class="btn btn-lg-square rounded-circle mx-2" href="/products/user/detail.prd?num=${plist.productsnum}&pageNumber=${pageInfo.pageNumber}"><i class="fa fa-eye"></i></a>
 							</div>
 						</div>
+						<!-- //상품 대표 이미지 -->
 					</div>
 					<br>
-					<table border="1" width="100%">
+					
+					<!-- 상품이름 가격 -->
+					<table class="table table-borded align-middle" width="100%">
 						<tr>
 							<td width="30%" align="center">
 								<c:if test="${plist.kind == 'a'}"><font color="blue">[판매]</font></c:if> 
@@ -99,8 +95,12 @@
 							</td>
 						</tr>
 					</table>
+					<!-- //상품이름 가격 -->
 				</div>
 			</c:forEach>
+			
+			
+			
 
 			<%--   <div class="col-lg-4 col-md-6 portfolio-item second wow fadeInUp" data-wow-delay="0.3s">
                     <div class="portfolio-inner rounded">
@@ -175,9 +175,17 @@
                     </div>
                 </div> --%>
 		</div>
+		
+		<!-- 글쓰기 -->
+			<div align="right">
+			<input type="button" class="btn btn-success" value="글쓰기"
+				onclick="location.href='/products/user/insert.prd'"> <br>
+			<br>
+			</div>
+		<!-- //글쓰기 -->
+		
 		<!-- 페이지 설정 -->
 		<div align="center">
-			<hr>
 			${pageInfo.pagingHtml}
 		</div>
 		<!-- //페이지 설정 -->

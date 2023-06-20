@@ -59,12 +59,16 @@
  		select count(*) from crew
  	</select>
  	<select id="GetMountainCrewCount" resultType="int">
- 		select count(*) from crew
- 		where crew_limit>crew_now and small = 'M'
+ 		select count(*) 
+		from crew_board a inner join 
+		(select * from crew where crew_limit>crew_now and small = 'M') b
+		on a.crew_name = b.crew_name
  	</select>
  	<select id="GetPloggingCrewCount" resultType="int">
- 		select count(*) from crew
- 		where crew_limit>crew_now and small = 'P'
+ 		select count(*) 
+ 		from crew_board a inner join
+ 		(select * from crew where crew_limit>crew_now and small = 'P') b
+ 		on a.crew_name = b.crew_name
  	</select>
  	<select id="GetFinishCrewCount" resultType="int">
  		select count(*) from crew

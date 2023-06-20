@@ -20,7 +20,7 @@ public class CrewBean {
 	@NotBlank(message = "크루설명을 입력하세요")
 	private String crewcontents;
 	
-	@Range(min=2, max=20, message="2명 ~ 20명 가능합니다.")
+	@Range(min=2, max=20, message="2명 ~ 20명만 가능합니다.")
 	private String crewlimit;
 	private int crewnow;
 	private String crewmember;

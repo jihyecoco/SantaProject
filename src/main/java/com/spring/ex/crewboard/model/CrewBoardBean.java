@@ -1,5 +1,7 @@
 package com.spring.ex.crewboard.model;
 
+import java.sql.Date;
+
 import org.hibernate.validator.constraints.NotBlank;
 
 public class CrewBoardBean {
@@ -17,7 +19,7 @@ public class CrewBoardBean {
 	
 	@NotBlank(message = "글 내용을 입력하세요")
 	private String contents;
-	private String regdate;
+	private Date regdate;
 	private int readcount;
 	
 	//crewboardList에 현재인원/전체인원 출력하기 위해 crew 테이블과 조인 하기 위해서
@@ -94,10 +96,10 @@ public class CrewBoardBean {
 	public void setContents(String contents) {
 		this.contents = contents;
 	}
-	public String getRegdate() {
+	public Date getRegdate() {
 		return regdate;
 	}
-	public void setRegdate(String regdate) {
+	public void setRegdate(Date regdate) {
 		this.regdate = regdate;
 	}
 	public int getReadcount() {

@@ -43,6 +43,11 @@
 	}
 	
 </script>
+<style>
+	.subject{
+		background-color:white;
+	}
+</style>
 	<!-- Page Header Start -->
     <div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container text-center py-5">
@@ -75,9 +80,11 @@
     <!-- 검색창 -->
     <div class="container-fluid py-5">
         <div class="container" style="display:table">
-        	<div align="right">
-		    	<input type="button" class="btn btn-success" value="글쓰기" onclick="location.href='/crewboard/user/insert.bdcr'">
-        	</div>
+        	<div class="text-center mx-auto" style="max-width: 500px;">
+				<p class="fs-5 fw-bold text-primary"></p>
+            	<h3 class="display-5 mb-5">크루 모집 게시판</h3>
+        	</div>    
+        
         	<br>
             <nav class="navbar navbar-light bg-light">
   				<div class="container" style="display:table-cell; vertical-align:middle;">
@@ -114,25 +121,31 @@
     	</div>
     	<!-- //정렬 -->
     	
-	    <table border="1" class="table table-hover">
-	    	<tr align="center">
-	    		<th>모집상태</th>
-	    		<th>구분1/구분2</th>
-	    		<th>제목</th>
-	    		<th>작성자</th>
-	    		<th>크루명</th>
-	    		<th>현재인원/전체인원</th>
-	    		<th>신청하기</th>
-			</tr>
+	    <table class="table table-hover table-borded align-middle">
+	    	<thead>
+		    	<tr align="center">
+		    		<th>번호</th>
+		    		<th>모집상태</th>
+		    		<th>구분1/구분2</th>
+		    		<th>제목</th>
+		    		<th>작성자</th>
+		    		<th>크루명</th>
+		    		<th>현재인원/전체인원</th>
+		    		<th>신청하기</th>
+				</tr>
+			</thead>
 	    	<c:if test="${crewboard_list.size() == 0 }">
 	    		<tr>
-	    			<td colspan="7" align="center">등록된 게시물이 없습니다.</td>
+	    			<td colspan="8" align="center">등록된 게시물이 없습니다.</td>
 	    		</tr>
 	    	</c:if>
 	    	
 	    	<c:if test="${crewboard_list.size() != 0 }">
-	    		<c:forEach var="lists" items="${crewboard_list}">
+	    		<c:forEach var="lists" items="${crewboard_list}" varStatus="status">
 	    			<tr align="center">
+	    				<td>
+	    					${(1-pageInfo.pageNumber)*pageInfo.limit+status.count}
+	    				</td>
 	    				<td>
 	    					<c:if test="${lists.state == 0}"><font color="blue">[모집중]</font></c:if>
 	    					<c:if test="${lists.state == 1}"><font color="red">[모집완료]</font></c:if>
@@ -143,7 +156,7 @@
 	    					<c:if test="${lists.small == 'M'}">등산</c:if>
 	    					<c:if test="${lists.small == 'P'}">플로깅</c:if>
 	    				</td>
-	    				<td width="50%">
+	    				<td width="40%">
 	    					<a href="/crewboard/user/detail.bdcr?num=${lists.crewboardnum}&pageNumber=${pageInfo.pageNumber}">${lists.subject} (${lists.comments})</a>
 	    				</td>
 	    				<td>
@@ -160,7 +173,7 @@
 		    					<input type="hidden" name="crewname" value="${lists.crewname}">
 		    					<input type="hidden" name="state" value="${lists.state}">
 		    					<input type="hidden" name="pageNumber" value="${pageInfo.pageNumber}">
-		    					<input type="submit" value="신청하기" onclick="return signUp('${lists.crewname}','${lists.state}', '${loginId}')">
+		    					<input type="submit" class="btn btn-secondary btn-sm" value="신청하기" onclick="return signUp('${lists.crewname}','${lists.state}', '${loginId}')">
 	    					</form>
 	    				</td>
 	    			</tr>
@@ -168,17 +181,15 @@
 	    	</c:if>
 	    </table>
     </div>
-    <hr>
     <!-- //크루 게시판 목록  -->
     
-    <!-- 내 크루 보기, 크루 만들기 -->
+    <!-- 글쓰기 -->
     <div class="container">
     	<div align="right">
-    		<input type="button" value="내 크루 보기" class="btn btn-success" onclick="location.href='/crew/user/myPage1.cr'">
-    		<input type="button" value="크루 만들기" class="btn btn-success" onclick="location.href='/crew/user/insert.cr'">
+    		<input type="button" class="btn btn-success" value="글쓰기" onclick="location.href='/crewboard/user/insert.bdcr'">
     	</div>
     </div>
-    <!-- //내 크루 보기, 크루 만들기 -->
+    <!-- //글쓰기 -->
     
      <!-- 페이지 표시 -->
 	 <div align="center">

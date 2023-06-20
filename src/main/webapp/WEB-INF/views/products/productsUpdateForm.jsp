@@ -61,29 +61,109 @@
 </script>
 <style>
 	.err{
-		font-size : 3px;
+		font-size : 7px;
 		color: red;
 		font-weight : bold;
 	}
 </style>
 
-<!-- Page Header Start -->
-    <div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
-        <div class="container text-center py-5">
-            <h1 class="display-3 text-white mb-4 animated slideInDown">Contact Us</h1>
-            <nav aria-label="breadcrumb animated slideInDown">
-                <ol class="breadcrumb justify-content-center mb-0">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#">Pages</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Contact</li>
-                </ol>
-            </nav>
-        </div>
-    </div>
-    <!-- Page Header End -->
+<!-- SignUp Start -->
+    <form:form name="prdform" commandName="pb" action="update.prd" method="post" enctype="multipart/form-data">
+    
+    	<!-- prdnum & 페이지 hidden -->
+    	<input type="hidden" name="productsnum" value="${pb.productsnum}">
+    	<input type="hidden" name="pageNumber" value="${pageNumber}">
+    	<!-- //prdnum & 페이지 hidden -->
+    	
+    <div class="container-fluid py-5">
+        <div class="container">
+            <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+                <h1 class="display-5 mb-5">거래 게시글 등록</h1>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-7">
+                    <div class="bg-light rounded p-4 p-sm-5 wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="row g-3">
+                        	
+                        	<!-- 구분 -->
+                        		<div class="col-9">
+                        			<div class="form-floating">
+			                        	<select name="kind" id="kind" class="form-select border-0" onchange="kind_change(prdform)">
+			                                <option value="">판매/나눔/교환</option>
+			                                <option value="a" <c:if test="${pb.kind == 'a'}">selected</c:if>>판매</option>
+			                                <option value="b" <c:if test="${pb.kind == 'b'}">selected</c:if>>나눔</option>
+			                                <option value="c" <c:if test="${pb.kind == 'c'}">selected</c:if>>교환</option>
+			                            </select>
+			                            <label for="kind">판매/나눔/교환</label>
+			                        </div>
+		                           	<form:errors cssClass="err" path="kind"/>
+		                        </div>
+                        	<!-- //구분 -->
+                        	
+                        	<!-- 상품명 -->
+                        	<div class="col-9">
+                        		<div class="form-floating">
+	                                <input type="text" class="form-control border-0" name="name" id="name" placeholder="name" value="${pb.name}">
+	                                <label for="name">상품명</label>
+	                            </div>
+	                            <form:errors cssClass="err" path="name"/>
+                        	</div>
+                        	<!-- 상품명 -->
+                        	
+                        	<!-- 가격 -->
+                        	<div class="col-9">
+                        		<div class="form-floating">
+	                                <input type="text" class="form-control border-0" name="price" id="price" value="${pb.price}">
+	                                <label for="price">가격</label>
+	                            </div>
+	                            <form:errors cssClass="err" path="price"/>
+	                        </div>
+                        	<!-- //가격 -->
+                        	
+                        	<!-- 상품설명 -->
+                        	<div class="col-12">
+	                            <div class="form-floating">
+	                                  <textarea class="form-control border-0" placeholder="Leave a message here" name="info" id="info" style="height: 150px">${pb.info}</textarea>
+	                                  <label for="info">상품 설명</label>
+	                            </div>
+	                           	<form:errors cssClass="err" path="info"/>
+	                        </div>
+                        	<!-- //상품설명 -->
+                        	
+                        	<!-- 이미지업로드 -->
+                        	<div class="col-12">
+		                    		<div class="mb-2 mx-1"><b>상품 사진 </b></div>
+		                    		<input type="file" class="form-control" multiple="multiple" name="upload" value="${pb.upload}" onchange="filechange()"><br>
+		                    		<input type="hidden" name="upload2" value="${pb.image}"/> <!-- 기존 이미지 -->
+		                    		<form:errors cssClass="err" path="image"/>
+	                    		
+		                    		<!-- 이미지 미리보기 -->
+		                    		<div id="img_preview" style="height:300">
+		                    	
+		                    		</div>
+		                    		<!-- //이미지 미리보기 -->
+	                		</div>
+                        	<!-- //이미지업로드 -->
+                        	
+                        	<!-- 버튼 -->
+                        	<div class="col-12 text-center">
+                        		<input type="submit" class="btn btn-success" value="수정하기">
+                            	<input type="reset" class="btn btn-success" value="다시작성">
+                            	<input type="button" class="btn btn-success" value="목록" onclick="location.href='/products/all/list.prd'">
+	                        </div>
+	                        <!-- //버튼 -->
+	                        
+                        </div><!--//row  -->
+                    </div><!-- //bg-light -->
+                </div><!-- //col-lg-7 -->
+            </div><!-- //row justify-content-center -->
+        </div><!-- //container -->
+    </div><!-- //container-fluid -->
+    </form:form>
+    <!-- SignUp End -->
 
 
-    <!-- Contact Start -->
+    <%-- <!-- Contact Start -->
     <form:form name="prdform" commandName="pb" action="update.prd" method="post" enctype="multipart/form-data">
     	<input type="hidden" name="productsnum" value="${pb.productsnum}">
     	<input type="hidden" name="pageNumber" value="${pageNumber}">
@@ -149,6 +229,6 @@
 	        </div>
 	    </div>
     </form:form>
-    <!-- Contact End -->
+    <!-- Contact End --> --%>
 
 <%@ include file="../common/common_bottom.jsp"%>

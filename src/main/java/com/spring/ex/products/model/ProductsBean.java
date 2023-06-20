@@ -1,5 +1,7 @@
 package com.spring.ex.products.model;
 
+import java.sql.Date;
+
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,7 +24,7 @@ public class ProductsBean {
 	@NotEmpty(message = "이미지는 한 개 이상 업로드 해야합니다.")
 	private String image;
 	private String seller;
-	private String inputdate;
+	private Date inputdate;
 	private int state;
 	private int readcount;
 	
@@ -110,10 +112,10 @@ public class ProductsBean {
 	public void setSeller(String seller) {
 		this.seller = seller;
 	}
-	public String getInputdate() {
+	public Date getInputdate() {
 		return inputdate;
 	}
-	public void setInputdate(String inputdate) {
+	public void setInputdate(Date inputdate) {
 		this.inputdate = inputdate;
 	}
 	public int getState() {

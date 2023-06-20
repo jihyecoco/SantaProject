@@ -33,6 +33,25 @@
  		<if test='whatColumn == "P"'>
  			where cb.small = 'P' and cb.crew_name like #{keyword}
  		</if>
+ 		<if test='whatColumn == "1M"'>
+	 		where cb.large = 1 and cb.small = 'M'
+ 		</if>
+ 		<if test='whatColumn == "2M"'>
+	 		where cb.large = 2 and cb.small = 'M'
+ 		</if>
+ 		<if test='whatColumn == "1P"'>
+	 		where cb.large = 1 and cb.small = 'P'
+ 		</if>
+ 		<if test='whatColumn == "2P"'>
+	 		where cb.large = 2 and cb.small = 'P'
+ 		</if>
+ 		<if test='whatColumn == "ING"'>
+	 		where cb.state = 0
+ 		</if>
+ 		<if test='whatColumn == "Finish"'>
+	 		where cb.state = 1
+ 		</if>
+ 		
  		<if test='whatColumn == "reg_date"'>
  			order by reg_date desc
  		</if>

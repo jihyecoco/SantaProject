@@ -37,23 +37,36 @@ public class CrewBoardInsertController {
 	
 	//crewboardList.jsp에서 요청(글쓰기 버튼클릭) -> crewboardInsertForm.jsp
 	@RequestMapping(value=command, method=RequestMethod.GET)
-	public ModelAndView doAction(Principal principal) {
+	public ModelAndView doAction(Principal principal, HttpServletResponse response) {
+		
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = null;
 		
 		ModelAndView mav = new ModelAndView();
-		//1. 비회원 일때 (로그인 페이지로 가야함)
 		
-		//2. 회원 일때
 		//내가 만든 크루 정보(로그인한 아이디로) 가져가야한다.
 		String getUserId = principal.getName(); 
 		List<CrewBean> myCrew = cdao.getCrewById(getUserId);
+		
+		if(myCrew.size()==0) { // 만든 크루가 없다면
+			try {
+				out = response.getWriter();
+				String alert = "<script>alert('만든 크루가 없습니다'); ";
+				alert += "var insertcrew = confirm('크루를 만드시겠습니까?'); ";
+				alert += "if(insertcrew == true){location.href='/crew/user/insert.cr'}";
+				alert += "else{history.go(-1)};";
+				alert += "</script>";
+				out.println(alert);
+				out.flush();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 		
 		
 		mav.addObject("loginId", getUserId);
 		mav.addObject("myCrew", myCrew);
 		mav.setViewName(getPage);
-		
-		//2-1. 만든크루가 없을때(크루 등록페이지로 가야함)
-		//2-2. 이미 크루모집 게시글을 등록했을때(내가 쓴 게시글로)
 		
 		return mav;
 	}

@@ -15,14 +15,14 @@
 	<!-- //resultMapping 설정 -->
  	
  	<insert id="InsertCrewComments">
- 		insert into crew_comments(num, idx, writer, content, ref, re_level, re_step, reg_date, delete_yn)
- 		values(ccmt_seq.nextval, #{idx}, #{writer}, #{content}, ccmt_seq.currval, 0, 0, sysdate, 'N')
+ 		insert into crew_comments(num, idx, writer, content, ref, re_level, re_step, reg_date, delete_yn, isSecret)
+ 		values(ccmt_seq.nextval, #{idx}, #{writer}, #{content}, ccmt_seq.currval, 0, 0, sysdate, 'N', #{isSecret})
  	</insert>
  	
  	<select id="GetCrewCommentsByIdx" resultMap="crewcommentsMap">
- 		select num, idx, writer, content, ref, re_level, re_step, reg_date, delete_yn	        
-		from (select rownum as rank, num, idx, writer, content, ref, re_level, re_step, reg_date, delete_yn
-		from (select num, idx, writer, content, ref, re_level, re_step, reg_date, delete_yn
+ 		select num, idx, writer, content, ref, re_level, re_step, reg_date, delete_yn, isSecret	        
+		from (select rownum as rank, num, idx, writer, content, ref, re_level, re_step, reg_date, delete_yn, isSecret
+		from (select num, idx, writer, content, ref, re_level, re_step, reg_date, delete_yn, isSecret
 		from crew_comments
 		order by ref desc, re_step asc ))
 		where idx = #{idx}
@@ -35,8 +35,8 @@
  	</update>
  	
  	<insert id="InsertReplyCrewComments">
- 		insert into crew_comments(num, idx, writer, content, ref, re_level, re_step, reg_date, delete_yn)
- 		values(ccmt_seq.nextval, #{idx}, #{writer}, #{content}, #{ref}, #{relevel}, #{restep}, sysdate, 'N')
+ 		insert into crew_comments(num, idx, writer, content, ref, re_level, re_step, reg_date, delete_yn, isSecret)
+ 		values(ccmt_seq.nextval, #{idx}, #{writer}, #{content}, #{ref}, #{relevel}, #{restep}, sysdate, 'N', #{isSecret})
  	</insert>
  	
  	<update id="DeleteCrewComments">

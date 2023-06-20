@@ -1,7 +1,11 @@
 package com.spring.ex.crewboard.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.security.Principal;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,7 +38,11 @@ public class CrewBoardDetailController {
 	public ModelAndView doAction(@RequestParam(value="num") int num, 
 			@RequestParam(value="pageNumber", required=false) String pageNumber,
 			@RequestParam(value="crewname", required=false) String crewname,
-			Principal principal) {
+			Principal principal,
+			HttpServletResponse response) {
+		
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = null;
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("pageNumber", pageNumber); // 페이지
@@ -47,6 +55,15 @@ public class CrewBoardDetailController {
 		CrewBoardBean cbb = cbdao.getCrewboardByNum(num);
 		if(num == 0) { // 마이페이지에서 모집글 눌렀을때
 			cbb = cbdao.getCrewboardByCrewname(crewname);
+			if(cbb == null) { // 모집글 작성 안했을때
+				try {
+					out = response.getWriter();
+					out.println("<script>alert('작성된 모집글이 없습니다');history.go(-1);</script>");
+					out.flush();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		mav.addObject("cbb", cbb);
 		mav.setViewName(getPage);

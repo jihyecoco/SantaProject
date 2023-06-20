@@ -10,7 +10,14 @@ public class CrewCommentsBean {
 	private int restep;
 	private String regdate;
 	private String deleteyn;
+	private String isSecret;
 
+	public String getIsSecret() {
+		return isSecret;
+	}
+	public void setIsSecret(String isSecret) {
+		this.isSecret = isSecret;
+	}
 	// 댓글 리스트 ajax 로딩시 필요함
 	private String pageNumber;
 

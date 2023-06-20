@@ -15,17 +15,17 @@
 	<!-- //resultMapping 설정 -->
  	
  	<select id="GetProductsCommentsByIdx" resultMap="productscommentsMap">
- 		select num, idx, writer, content, ref, re_level, re_step, reg_date, delete_yn	        
-		from (select rownum as rank, num, idx, writer, content, ref, re_level, re_step, reg_date, delete_yn
-		from (select num, idx, writer, content, ref, re_level, re_step, reg_date, delete_yn
+ 		select num, idx, writer, content, ref, re_level, re_step, reg_date, delete_yn, isSecret	        
+		from (select rownum as rank, num, idx, writer, content, ref, re_level, re_step, reg_date, delete_yn, isSecret
+		from (select num, idx, writer, content, ref, re_level, re_step, reg_date, delete_yn, isSecret
 		from products_comments
 		order by ref desc, re_step asc ))
 		where idx = #{idx}
  	</select>
  	
  	<insert id="InsertProductsComments">
- 		insert into products_comments(num, idx, writer, content, ref, re_level, re_step, reg_date, delete_yn)
- 		values(pcmt_seq.nextval, #{idx}, #{writer}, #{content}, pcmt_seq.currval, 0, 0, sysdate, 'N')
+ 		insert into products_comments(num, idx, writer, content, ref, re_level, re_step, reg_date, delete_yn, isSecret)
+ 		values(pcmt_seq.nextval, #{idx}, #{writer}, #{content}, pcmt_seq.currval, 0, 0, sysdate, 'N', #{isSecret})
  	</insert>
  	
  	<update id="UpdateOrginProductsComment">
@@ -35,8 +35,8 @@
  	</update>
  	
  	<insert id="InsertReplyProductsComments">
- 		insert into products_comments(num, idx, writer, content, ref, re_level, re_step, reg_date, delete_yn)
- 		values(pcmt_seq.nextval, #{idx}, #{writer}, #{content}, #{ref}, #{relevel}, #{restep}, sysdate, 'N')
+ 		insert into products_comments(num, idx, writer, content, ref, re_level, re_step, reg_date, delete_yn, isSecret)
+ 		values(pcmt_seq.nextval, #{idx}, #{writer}, #{content}, #{ref}, #{relevel}, #{restep}, sysdate, 'N', #{isSecret})
  	</insert>
  	
  	<update id="DeleteProductsComments">
