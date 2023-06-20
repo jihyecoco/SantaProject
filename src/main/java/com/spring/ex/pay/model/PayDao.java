@@ -1,5 +1,8 @@
 package com.spring.ex.pay.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,5 +21,22 @@ public class PayDao {
 	public PayBean getPayByPrdnum(PayBean pay_bean) {
 		PayBean pay_result = sqlSessionTemplate.selectOne("GetPayByPrdnum", pay_bean);
 		return pay_result;
+	}
+	
+	public PayBean getPayByPaynum(int paynum) {
+		PayBean pay_result = sqlSessionTemplate.selectOne("GetPayByPaynum", paynum);
+		return pay_result;
+	}
+
+	public List<PayBean> getMyPagePay(String loginId) {
+		List<PayBean> myPayList = new ArrayList<PayBean>();
+		myPayList = sqlSessionTemplate.selectList("GetMyPagePay", loginId);
+		return myPayList;
+	}
+
+	public int deletePay(int paynum) {
+		int cnt = -1;
+		cnt = sqlSessionTemplate.delete("DeletePay", paynum);
+		return cnt;
 	}
 }

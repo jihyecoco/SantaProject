@@ -54,7 +54,8 @@
       	<li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="dropdown10" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">거래 내역</a>
           <div class="dropdown-menu" aria-labelledby="dropdown10">
-            <a class="dropdown-item" href="">거래내역</a>
+            <a class="dropdown-item" href="/pay/user/myPage.pay">구매 거래내역</a>
+            <a class="dropdown-item" href="/pay/user/myPage_sell.pay">판매 거래내역</a>
           </div>
         </li>
         <!-- //게시글 관련 -->

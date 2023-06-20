@@ -58,5 +58,11 @@ public class CrewCommentsDao {
 		return cnt;
 	}
 
+	public String getCrewCommentsOrgWriter(int ref) {
+		String orgwriter = "";
+		orgwriter = sqlSessionTemplate.selectOne("GetCrewCommentsOrgWriter", ref);
+		return orgwriter;
+	}
+
 	
 }

@@ -23,6 +23,11 @@
 		where idx = #{idx}
  	</select>
  	
+ 	<select id="GetProductsCommentsOrgWriter" resultType="String">
+ 		select writer from products_comments
+ 		where ref=#{ref} and re_level=0
+ 	</select>
+ 	
  	<insert id="InsertProductsComments">
  		insert into products_comments(num, idx, writer, content, ref, re_level, re_step, reg_date, delete_yn, isSecret)
  		values(pcmt_seq.nextval, #{idx}, #{writer}, #{content}, pcmt_seq.currval, 0, 0, sysdate, 'N', #{isSecret})
@@ -50,4 +55,6 @@
  		set content = #{content}
  		where num = #{num}
  	</update>
+ 	
+ 	
  </mapper>

@@ -55,6 +55,12 @@ public class ProductsCommentsDao {
 		cnt = sqlSessionTemplate.update("UpdateProductsComments",pcmt_bean);
 		return cnt;
 	}
+
+	public String getProductsCommentsOrgWriter(int ref) {
+		String orgwriter = "";
+		orgwriter = sqlSessionTemplate.selectOne("GetProductsCommentsOrgWriter", ref);
+		return orgwriter;
+	}
 	
 	
 	

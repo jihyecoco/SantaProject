@@ -12,14 +12,21 @@ import java.net.URL;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.spring.ex.products.model.ProductsBean;
+import com.spring.ex.products.model.ProductsDao;
+
 @Controller
 public class PayController {
 	private final String command = "/pay/user/kakaopay.pay";
+	
+	@Autowired
+	ProductsDao prd_dao;
 	
 	//productsDetailView.jsp 구매하기 버튼 클릭 
 	@RequestMapping(value=command)
@@ -44,10 +51,13 @@ public class PayController {
 			String port = String.valueOf(request.getServerPort());
 			System.out.println("port번호 : "+port);
 			
+			ProductsBean pb = prd_dao.getProductsByNum(products_num);
+			String name = pb.getName(); // 구매하려는 상품명
+			String price = pb.getPrice(); // 가격
 			
 			// 파라미터 설정 localhost:xx 자신의 port번호 입력
 			String param = "cid=TC0ONETIME&partner_order_id=partner_order_id&partner_user_id=partner_user_id";
-			param += "&item_name=초코파이&quantity=1&total_amount=2200&vat_amount=200&tax_free_amount=0";
+			param += "&item_name="+name+"&quantity=1&total_amount="+price+"&vat_amount=200&tax_free_amount=0";
 			param += "&approval_url=http://localhost:"+port+"/pay/user/approval.pay?num="+products_num+","+pageNumber; // 정상적으로 승인
 			param += "&fail_url=http://localhost:"+port+"/pay/user/fail.pay?num="+products_num+","+pageNumber; // 결제 실패
 			param += "&cancel_url=http://localhost:"+port+"/pay/user/cancel.pay?num="+products_num+","+pageNumber; // 로딩으로 인한 결제 취소

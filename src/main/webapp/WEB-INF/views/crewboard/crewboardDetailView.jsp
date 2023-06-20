@@ -14,16 +14,6 @@
 				$('input[name=isSecret]').val('N');
 			}
 		});
-		
-		/* //대댓글창의 비밀 체크 박스를 클릭하면 이곳으로 와서 isSecret을 'N'에서 'Y'로 바꿈
-		$('#reply_secret2').change(function(){
-			alert('비밀');
-			if($(this).prop("checked")){
-				$('#isSecret2').attr('value','Y');
-			}else{
-				$('#isSecret2').attr('value', 'N');
-			} 
-		}); */
 	})
 	
 	/* 댓글 목록 가져오기 */
@@ -67,8 +57,8 @@
 	                	}
 	                	result += "</strong>";
 	                	
-	                	//1.댓글 작성자 본인일때 2. 해당 게시글의 작성자일때 3. 관리자일때 => 댓글 비밀설정해도 볼 수 있음
-	                	if(value.writer == loginId || "${cbb.writer}" == loginId || "admin" == loginId){
+	                	//1.댓글 작성자 본인일때 2. 해당 게시글의 작성자일때 3. 관리자일때 4.댓글 원작성자 => 댓글 비밀설정해도 볼 수 있음
+	                	if(value.writer == loginId || "${cbb.writer}" == loginId || "admin" == loginId || value.orgwriter == loginId){
 	                		result += "<span id='ccmt_update" + value.num + "'><img src='../../../resources/images/icon/comments_lock.png' width='15' height='15'>" + value.content + "<br>";
 
 	                	}else{ //위 3가지 경우에 해당되지 않는다면, 내용 대신 "비밀 댓글입니다."가 보임
@@ -201,7 +191,7 @@
 	
 	/* 댓글 수정 버튼 클릭 */
 	function updateComments(ccmt_num, pageNumber, idx){
-		alert(ccmt_num);
+		//alert(ccmt_num);
 		var cmt_updateform = "<form class='form-control' action='/crewcomments/user/update.ccmt' method='post'>";
 		cmt_updateform += "<input type='text' name='content'>";
 		cmt_updateform += "<input type='hidden' name='num' value='"+ccmt_num+"'>";

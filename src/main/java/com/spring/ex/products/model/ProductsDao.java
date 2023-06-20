@@ -72,5 +72,17 @@ public class ProductsDao {
 		cnt = sqlSessionTemplate.delete("DeleteProductsByNum", productsnum);
 		return cnt;
 	}
+
+	public int reUpdateProductsState(int productsnum) {
+		int cnt = -1;
+		cnt = sqlSessionTemplate.update("REUpdateProducts", productsnum);
+		return cnt;
+	}
+
+	public List<ProductsBean> getSellProductsById(String loginId) {
+		List<ProductsBean> sell_prd_list = new ArrayList<ProductsBean>();
+		sell_prd_list = sqlSessionTemplate.selectList("GetSellProductsById", loginId);
+		return sell_prd_list;
+	}
 	
 }

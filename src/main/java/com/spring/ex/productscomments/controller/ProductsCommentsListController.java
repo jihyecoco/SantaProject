@@ -31,6 +31,11 @@ public class ProductsCommentsListController {
 		
 		for(int i=0; i<comments.size(); i++) { // 페이지 넣기
 			comments.get(i).setPageNumber(pageNumber);
+			
+			// 비밀댓글 열람을 위해 원댓글자
+			int ref = comments.get(i).getRef();
+			String orgwriter = pcmt_dao.getProductsCommentsOrgWriter(ref);
+			comments.get(i).setOrgwriter(orgwriter);
 		}
 		
 		return comments;

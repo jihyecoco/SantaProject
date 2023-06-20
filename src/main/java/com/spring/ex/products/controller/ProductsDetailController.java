@@ -23,7 +23,7 @@ public class ProductsDetailController {
 	//productsList.jsp에서 제목 클릭시 요청
 	@RequestMapping(value=command)
 	public ModelAndView doAction(@RequestParam("num") int num,
-			@RequestParam("pageNumber") String pageNumber,
+			@RequestParam(value="pageNumber", required=false) String pageNumber,
 			Principal principal) {
 		
 		ModelAndView mav = new ModelAndView();

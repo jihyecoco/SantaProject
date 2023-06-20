@@ -28,6 +28,23 @@ public class ProductsBean {
 	private int state;
 	private int readcount;
 	
+	// 마이페이지에 승인결제여부, 구매자(DB 컬럼엔 없음)
+	private int paystate;
+	private String buyer;
+	
+	public String getBuyer() {
+		return buyer;
+	}
+	public void setBuyer(String buyer) {
+		this.buyer = buyer;
+	}
+	public int getPaystate() {
+		return paystate;
+	}
+	public void setPaystate(int paystate) {
+		this.paystate = paystate;
+	}
+
 	//crewboardList에 댓글개수 출력하기 위해서
 	private int comments;
 	
@@ -37,8 +54,11 @@ public class ProductsBean {
 	public void setComments(int comments) {
 		this.comments = comments;
 	}
-
+	
 	//////////
+	
+	
+	
 	private MultipartFile upload;
 	
 	public MultipartFile getUpload() {

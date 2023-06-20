@@ -28,6 +28,11 @@
 		where idx = #{idx}
  	</select>
  	
+ 	<select id="GetCrewCommentsOrgWriter" resultType="String">
+ 		select writer from crew_comments
+ 		where ref=#{ref} and re_level=0
+ 	</select>
+ 	
  	<update id="UpdateOrginComment">
  		update crew_comments
  		set re_step=#{restep}+1 

@@ -79,8 +79,8 @@
 	                	}
 	                	result += "</strong>";
 	                	
-	                	//1.댓글 작성자 본인일때 2. 해당 게시글의 작성자일때 3. 관리자일때 => 댓글 비밀설정해도 볼 수 있음
-	                	if(value.writer == loginId || "${pb.seller}" == loginId || "admin" == loginId){
+	                	//1.댓글 작성자 본인일때 2. 해당 게시글의 작성자일때 3. 관리자일때 4.원댓글 작성자=> 댓글 비밀설정해도 볼 수 있음
+	                	if(value.writer == loginId || "${pb.seller}" == loginId || "admin" == loginId || value.orgwriter == loginId){
 	                		result += "<span id='pcmt_update" + value.num + "'><img src='../../../resources/images/icon/comments_lock.png' width='15' height='15'>" + value.content + "<br>";
 
 	                	}else{ //위 3가지 경우에 해당되지 않는다면, 내용 대신 "비밀 댓글입니다."가 보임
@@ -192,7 +192,7 @@
 	
 	/* 댓글 수정 버튼 클릭 */
 	function updateComments(pcmt_num, pageNumber, idx){
-		alert(pcmt_num);
+		//alert(pcmt_num);
 		var pcmt_updateform = "<form class='form-control' action='/productscomments/user/update.pcmt' method='post'>";
 		pcmt_updateform += "<input type='text' name='content'>";
 		pcmt_updateform += "<input type='hidden' name='num' value='"+pcmt_num+"'>";
@@ -243,7 +243,7 @@
 						</tr>
 						<tr>
 							<th scope="col">가격</th>
-							<td>${pb.price}</td>
+							<td><fmt:formatNumber value="${pb.price}" pattern="###,###" />원</td>
 						</tr>
 						<tr>
 							<th scope="col">판매자<br>
@@ -268,7 +268,7 @@
                     <!-- 해당 글 작성자만 보이게 설정 -->
                     <div align="right">
            			<c:if test="${pb.seller == loginId}">
-           				<c:if test="${pb.state == 0}"> <input type="button" class="btn btn-success" value="판매완료" onclick="changeState(${pb.productsnum},${pageNumber})"> </c:if>
+           				<c:if test="${pb.state == 0}"> <input type="button" class="btn btn-success" value="거래완료" onclick="changeState(${pb.productsnum},${pageNumber})"> </c:if>
            				<input type="button" class="btn btn-success" value="수정" onclick="location.href='/products/user/update.prd?num=${pb.productsnum}&pageNumber=${pageNumber}'">
            				<input type="button" class="btn btn-success" value="삭제" onclick="deleteProducts(${pb.productsnum}, ${pageNumber})">
            			</c:if>
@@ -285,10 +285,13 @@
            				</c:forEach> 
                     </div>
                     <!-- //상품이미지-->
-	               <!-- 구매하기 버튼 -->
+                    
+	               <!-- 구매하기 버튼 (1.판매글 2.거래상태가 판매중 3.판매자가 아니면 보임) -->
+	               <c:if test="${pb.kind == 'a' && pb.state == 0 && pb.seller != loginId}">
 	               <div align="center">
 	               		<input type="button" class="btn btn-success" id="apibtn" value="구매하기">
 	               </div>
+	               </c:if>
 	               <!-- //구매하기 버튼 -->
                	</div>
                	

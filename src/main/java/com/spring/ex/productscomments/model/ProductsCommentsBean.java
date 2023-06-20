@@ -11,7 +11,14 @@ public class ProductsCommentsBean {
 	private String regdate;
 	private String deleteyn;
 	private String isSecret;
+	private String orgwriter; // 최상위 원댓글 작성자 (DB에는 작성 필요 없음, 비밀댓글 열람시 필요)
 	
+	public String getOrgwriter() {
+		return orgwriter;
+	}
+	public void setOrgwriter(String orgwriter) {
+		this.orgwriter = orgwriter;
+	}
 	public String getIsSecret() {
 		return isSecret;
 	}

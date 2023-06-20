@@ -1,6 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../common/common_top.jsp" %>
+<script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/jquery.js"></script>
+<script type="text/javascript">
+	/* 결제 취소 버튼 눌렀을때 */
+	function payCancel(paynum){
+		//alert(paynum);
+		var result = confirm('결제를 취소하시겠습니까?');
+		if(result == true){
+			location.href="/pay/user/cancel2.pay?paynum="+paynum;
+		}
+	}
+</script>
 <!-- Service Start -->
     <div class="container-xxl py-5">
         <div class="container">
@@ -28,15 +39,25 @@
             			</a>
             		</td>
             		<td>${pb.name}</td>
-            		<td>${pay_result.regdate}</td>
-            		<td>${pay_result.price}원</td>
+            		<td><fmt:formatDate value="${pay_result.regdate}" type="date" dateStyle="medium" timeStyle="medium" pattern="yyyy-MM-dd hh:mm:ss"/></td>
+            		<td><fmt:formatNumber value="${pay_result.price}" pattern="###,###" />원</td>
             		<td>${pay_result.payment}</td>
             	</tr>
             </table>
             
             <div class="container">
-            	<input type="button" value="홈">
-            	<input type="button" value="계속 보기" onclick="location.href='/products/all/list.prd'">
+            	<div class="text-center">
+            		<!-- 관리자 결제 승인전에 취소가능함 -->
+	            	<c:if test="${pay_result.state == 0}">
+	            		<input type="button" class="btn btn-success" value="결제취소" onclick="javascript:payCancel(${pay_result.paynum})">
+	            		<hr>
+	            	</c:if>
+	            	<!-- //관리자 결제 승인전에 취소가능함 -->
+            	</div>
+            	<div class="text-center">
+            		<input type="button" class="btn btn-success" value="마이페이지" onclick="location.href='/pay/user/myPage.pay'">
+            		<input type="button" class="btn btn-success" value="상품 목록보기" onclick="location.href='/products/all/list.prd'">
+            	</div>
             </div>
         </div>
     </div>

@@ -53,7 +53,13 @@ public class PayApprovalController {
 		if(cnt != -1) {
 			System.out.println("pay DB 삽입 성공");
 			
-			//1. 판매완료로 상태바꾸기(관리자 승인 할지말지 미정)
+			// 판매 완료로 바꾸기
+			int state_result = prd_dao.updateProductsState(prdnum);
+			if(state_result != -1) {
+				System.out.println("판매완료로 변경됨");
+			}else {
+				System.out.println("판매완료로 변경실패");
+			}
 			
 			// 결제 내역 & 상품 정보 가져오기
 			PayBean pay_result = pay_dao.getPayByPrdnum(pay_bean);

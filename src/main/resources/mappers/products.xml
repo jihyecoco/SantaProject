@@ -16,6 +16,13 @@
 		 <result property="regdate" column="reg_date"/>
 		 <result property="deleteyn" column="delete_yn"/>
 	</resultMap>
+	
+	<resultMap type="com.spring.ex.pay.model.PayBean" id="payMap">
+		 <id property="paynum" column="pay_num"/>
+		 <result property="prdnum" column="prd_num"/>
+		 <result property="regdate" column="reg_date"/>
+		 <result property="aprvdate" column="aprv_date"/>
+	</resultMap>
 	<!-- //resultMapping -->
 	
  	<insert id="InsertProducts">
@@ -87,5 +94,18 @@
  		delete products
  		where products_num = #{productsnum}
  	</delete>
+ 	
+ 	<update id="REUpdateProducts">
+ 		update products
+ 		set state = 0
+ 		where products_num = #{productsnum}
+ 	</update>
+ 	
+ 	<select id="GetSellProductsById" resultMap="productsMap">
+ 		select A.products_num, A.kind, A.name, A.info, A.price, A.image, A.seller, A.inputdate, A.state, A.readcount, B.state as paystate, B.buyer
+ 		from products A inner join pay B
+ 		on A.products_num = B.prd_num
+ 		where A.kind = 'a' and A.state = 1 and A.seller=#{loginId}
+ 	</select>
  	
  </mapper>

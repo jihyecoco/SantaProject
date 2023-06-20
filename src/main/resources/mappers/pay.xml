@@ -14,18 +14,37 @@
 		 <id property="paynum" column="pay_num"/>
 		 <result property="prdnum" column="prd_num"/>
 		 <result property="regdate" column="reg_date"/>
+		 <result property="aprvdate" column="aprv_date"/>
 	</resultMap>
 	<!-- //resultMapping -->
 	
 	<insert id="InsertPay">
-		insert into pay(pay_num, prd_num, buyer, price, reg_date, payment)
+		insert into pay(pay_num, prd_num, buyer, price, reg_date, payment, state)
 		values(pay_seq.nextval, #{prdnum}, #{buyer},
 		(select price from products where products_num = #{prdnum})
-		, sysdate, 'kakaopay')
+		, sysdate, 'kakaopay', 0)
 	</insert>
 	
 	<select id="GetPayByPrdnum" resultMap="payMap">
 		select * from pay
 		where prd_num = #{prdnum}
 	</select>
+	
+	<select id="GetPayByPaynum" resultMap="payMap">
+		select * from pay
+		where pay_num = #{paynum}
+	</select>
+	
+	<select id="GetMyPagePay" resultMap="payMap">
+		select pay_num, prd_num, buyer, name as prdname, A.price, A.reg_date, aprv_date, A.state
+		from pay A inner join products B
+		on A.prd_num = B.products_num
+		where buyer = #{loginId}
+		order by reg_date desc
+	</select>
+	
+	<delete id="DeletePay">
+		delete pay
+		where pay_num = #{paynum}
+	</delete>
  </mapper>
