@@ -47,4 +47,18 @@
 		delete pay
 		where pay_num = #{paynum}
 	</delete>
+	
+	<select id="GetWaitPay" resultMap="payMap">
+		select pay_num, prd_num, buyer, name as prdname, A.price, A.reg_date, aprv_date, A.state
+		from pay A inner join products B
+		on A.prd_num = B.products_num
+		where A.state = 0
+		order by A.reg_date desc
+	</select>
+	
+	<update id="UpdatePayState">
+		update pay
+		set state = 1
+		where pay_num = #{paynum}
+	</update>
  </mapper>

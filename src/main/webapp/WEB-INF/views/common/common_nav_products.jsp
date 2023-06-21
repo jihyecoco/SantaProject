@@ -23,19 +23,19 @@
           <a class="nav-link" href="/products/all/list.prd?whatColumn=change">교환</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link" href="/products/all/list.prd?whatColumn=state0">거래중</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/products/all/list.prd?whatColumn=state1">거래완료</a>
+        </li>
+         
+         <!-- 로그인한 상태만 보여짐 -->
+		<sec:authorize access="isAuthenticated()">
+        <li class="nav-item">
           <a class="nav-link" href="/products/all/list.prd?whatColumn=loginId">내 판매글 보기</a> 
         </li>
-       <!--  <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="dropdown10" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-          <div class="dropdown-menu" aria-labelledby="dropdown10">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
-        </li> -->
+        </sec:authorize>
+         <!-- //로그인한 상태만 보여짐 -->
       </ul>
     </div>
   </nav>

@@ -92,8 +92,22 @@ public class CrewDao {
 
 	public List<CrewBean> getMyPageJoinCrew(Map<String, Object> map) {
 		List<CrewBean> myJoinCrewList = new ArrayList<CrewBean>();
+		String loginId = (String)map.get("loginId");
+		map.put("loginId", "%"+loginId+"%");
 		myJoinCrewList = sqlSessionTemplate.selectList("GetMyPageJoinCrew", map); 
 		return myJoinCrewList;
+	}
+
+	public List<CrewBean> get1DayCrew(Map<String, Object> map) {
+		List<CrewBean> crewList = new ArrayList<CrewBean>();
+		crewList = sqlSessionTemplate.selectList("Get1DayCrew", map);
+		return crewList;
+	}
+
+	public List<CrewBean> getRegularCrew(Map<String, Object> map) {
+		List<CrewBean> crewList = new ArrayList<CrewBean>();
+		crewList = sqlSessionTemplate.selectList("GetRegularCrew", map);
+		return crewList;
 	}
 	
 }

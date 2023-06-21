@@ -28,8 +28,9 @@
 					크루
 				</a>
 				<div class="dropdown-menu" aria-labelledby="dropdown10">
-					<a class="dropdown-item" href="#">일일크루</a> 
-					<a class="dropdown-item" href="#">정기크루</a>
+					<a class="dropdown-item" href="/crew/admin/list.cr">크루통계</a> 
+					<a class="dropdown-item" href="/crew/admin/list1.cr">일일크루</a> 
+					<a class="dropdown-item" href="/crew/admin/list2.cr">정기크루</a>
 				</div>
 			</li>
 			<!-- //crew -->
@@ -64,10 +65,12 @@
 			<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="#" id="dropdown10"
 					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					거래 내역
+					결제
 				</a>
 				<div class="dropdown-menu" aria-labelledby="dropdown10">
-					<a class="dropdown-item" href="#">거래내역</a>
+					<a class="dropdown-item" href="/pay/admin/waitlist.pay">결제 승인 대기내역</a>
+					<a class="dropdown-item" href="/pay/admin/finishlist.pay">결제 승인 완료내역</a>
+					<a class="dropdown-item" href="/pay/admin/cancellist.pay">결제 취소 내역</a>
 				</div>
 			</li><!-- //게시글 관련 -->
 		</ul><!-- //navbar-nav -->
