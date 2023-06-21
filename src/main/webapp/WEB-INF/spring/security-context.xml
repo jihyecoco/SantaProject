@@ -55,7 +55,10 @@
 		<intercept-url pattern="/boardcomments/user/**" 			access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
 		<intercept-url pattern="/suppoters/user/**" 				access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
 		<intercept-url pattern="/stamp/user/**" 					access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
+		<intercept-url pattern="/heart/user/**" 					access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
+		<intercept-url pattern="/bookmark/user/**" 					access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
 		
+		<intercept-url pattern="/admin/admin/**" 					access="hasRole('ROLE_ADMIN')" />
 		<intercept-url pattern="/users/admin/**" 					access="hasRole('ROLE_ADMIN')" />
 		<intercept-url pattern="/qna/admin/**" 						access="hasRole('ROLE_ADMIN')" />
 		<intercept-url pattern="/mountain/admin/**" 				access="hasRole('ROLE_ADMIN')" />

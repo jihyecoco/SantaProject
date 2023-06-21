@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="crewboardBookmark">
+ 	
+ 	<!-- resultMapping 설정 -->
+ 	<resultMap type="com.spring.ex.bookmark.crewboard.model.CrewBoardBookmarkBean" id="crewboardBookmarkMap">
+		 <id property="BookmarkId" column="BookmarkId"/>
+		 <result property="BookmarkId" column="Bookmark_id"/>
+		 <result property="crewboardNum" column="crewboard_num"/>
+		 <result property="userId" column="user_id"/>
+		 <result property="BookmarkDate" column="Bookmark_date"/>
+	</resultMap>
+	<!-- //resultMapping 설정 -->
+ 
+ 	<!-- 북마크 클릭 여부 확인 -->
+ 	<select id="checkBookmark" resultType="int">
+		SELECT COUNT(*) 
+		FROM crew_board_bookmark   	
+		WHERE crewboard_num = #{crewboardNum} AND user_id = #{userId}
+ 	</select>
+ 	<!-- //북마크 클릭 여부 확인 -->
+ 	
+ 	<!-- 북마크 -->
+ 	<insert id="insertBookmark">
+ 		insert into crew_board_bookmark(
+	 		bookmark_id,
+		    crewboard_num,
+		    user_id,
+		    bookmark_date
+		 )
+		 values (
+		 	crew_board_bookmark_seq.nextval,
+		 	#{crewboardNum},
+		 	#{userId},
+		 	sysdate
+		 )   
+ 	</insert>
+ 	<!-- //북마크 -->
+ 	
+ 	<!-- 북마크 취소 -->
+	<delete id="deleteBookmark">
+		delete from crew_board_bookmark
+ 		where user_id = #{userId} and crewboard_num = #{crewboardNum}
+ 	</delete>
+ 	<!-- //북마크 취소 -->
+ 	
+ 	<!-- 게시글의 북마크 수 count -->
+ 	<select id="getcrewBoardBookmarkTotal" resultType="int">
+ 		select count(bookmark_id) 
+		from crew_board_bookmark
+		WHERE crewboard_num = #{crewboardNum}
+ 	</select>
+ 	<!-- //게시글의 북마크 수 count -->
+ 	
+ </mapper>

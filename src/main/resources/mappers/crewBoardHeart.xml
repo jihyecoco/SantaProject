@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="crewboardHeart">
+ 	
+ 	<!-- resultMapping 설정 -->
+ 	<resultMap type="com.spring.ex.heart.crewboard.model.CrewBoardHeartBean" id="crewboardHeartMap">
+		 <id property="heartId" column="heartId"/>
+		 <result property="heartId" column="heart_id"/>
+		 <result property="crewboardNum" column="crewboard_num"/>
+		 <result property="userId" column="user_id"/>
+		 <result property="heartDate" column="heart_date"/>
+	</resultMap>
+	<!-- //resultMapping 설정 -->
+ 
+ 	<!-- 좋아요 클릭 여부 확인 -->
+ 	<select id="checkHeart" resultType="int">
+		SELECT COUNT(*) 
+		FROM crew_board_heart
+    	WHERE crewboard_num = #{crewboardNum} AND user_id = #{userId}
+ 	</select>
+ 	<!-- //좋아요 클릭 여부 확인 -->
+ 	
+ 	<!-- 좋아요 -->
+ 	<insert id="insertHeart">
+ 		insert into crew_board_heart(
+	 		heart_id,
+		    crewboard_num,
+		    user_id,
+		    heart_date
+		 )
+		 values (
+		 	crew_board_heart_seq.nextval,
+		 	#{crewboardNum},
+		 	#{userId},
+		 	sysdate
+		 )   
+ 	</insert>
+ 	<!-- //좋아요 -->
+ 	
+ 	<!-- 좋아요 취소 -->
+	<delete id="deleteHeart">
+		delete from crew_board_heart
+ 		where user_id = #{userId} and crewboard_num = #{crewboardNum}
+ 	</delete>
+ 	<!-- //좋아요 취소 -->
+ 	
+ 	<!-- 게시글의 좋아요 수 count -->
+ 	<select id="getcrewBoardHeartTotal" resultType="int">
+ 		select count(heart_id) 
+		from crew_board_heart
+		WHERE crewboard_num = #{crewboardNum}
+ 	</select>
+ 	<!-- //게시글의 좋아요 수 count -->
+ </mapper>

@@ -11,7 +11,11 @@
 
 <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/jquery.js"></script>
 <script type="text/javascript">
-	
+		
+	function myPage(){
+		location.href = "/users/user/mypage.us"; 
+	}
+
 	/* 비밀번호 동일여부 확인하기 위한 param 값 aJax로 확인 */
 	$(document).ready(function(){
 		
@@ -84,8 +88,9 @@
 						</div><!--//row g-3  -->
 						<!-- submit -->
 						<div class="col-12 text-center" style="margin-top: 30px;">
-							<input type="submit" id="submit"
-								class="btn btn-primary btn" value="확인">
+							<input type="submit" id="submit" class="btn btn-success" value="확인">
+							<input type="reset" class="btn btn-success" value="다시작성" >
+							<input type="button" class="btn btn-success" value="목록" onclick="myPage()">
 						</div>
 						<!-- //submit -->
 						

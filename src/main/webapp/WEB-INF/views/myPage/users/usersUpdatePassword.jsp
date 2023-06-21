@@ -11,6 +11,9 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/jquery.js"></script>
 <script type="text/javascript">
 	
+	function myPage(){
+		location.href = "/users/user/mypage.us"; 
+	}	
 	/* 비밀번호 동일여부 확인하기 위한 param 값 aJax로 확인 */
 	$(document).ready(function(){
 		
@@ -32,7 +35,7 @@
 			
 			if(	($('input[name=password]').val()) ==
 				($('input[name=password_new]').val())	){
-				alert('기존과 동일한 비밀번호 입니다');
+				alert('기존과 동일한 비밀번호입니다.');
 				return false;
 			}
 			
@@ -45,8 +48,8 @@
 				url : '/users/user/usersPasswordUpdate.us', 
 				type : 'post',
 				data : ({
-					input_password				: $('input[name=password]').val(),
-					input_password_new			: $('input[name=password_new]').val(),
+					input_password		: $('input[name=password]').val(),
+					input_password_new	: $('input[name=password_new]').val(),
 				}),
 				success : function(data){ 4
 					if(data == "NO" || data != "YES"){
@@ -59,8 +62,14 @@
 			});//ajax 
 		
 		});//submit - click
-		/* 비밀번호 동일여부 확인하기 위한 param 값 aJax로 확인 */
+		
+		$('#reset').click(function(){ // 확인(reset) 버튼 눌렀을 때(초기화)
+			$('input[name=password]').val("");
+		
+			$('input[name=password_new]').val("");
 			
+			$('input[name=password_new_check]').val("");
+		});//reset - click
 	})//ready
 </script>
 	<div class="container-fluid py-5">
@@ -114,8 +123,9 @@
 						</div><!--//row g-3  -->
 						<!-- submit -->
 						<div class="col-12 text-center" style="margin-top: 30px;">
-							<input type="submit" id="submit"
-								class="btn btn-primary btn" value="확인">
+							<input type="submit" id="submit" class="btn btn-success" value="확인">
+							<input type="reset"  id="reset"  class="btn btn-success" value="다시작성" >
+							<input type="button" class="btn btn-success" value="목록" onclick="myPage()">
 						</div>
 						<!-- //submit -->
 						

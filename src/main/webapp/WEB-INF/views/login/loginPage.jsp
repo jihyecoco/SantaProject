@@ -22,6 +22,7 @@
 	function findPassword(){
 		location.href = "/login/all/findPassword.lg";
 	}
+	
 </script>
 	<!-- Login Start -->
 	<div class="container-fluid py-5">
@@ -55,18 +56,18 @@
 								</div>
 								<br>
 								<div class="col-12 text-center">
-									<button class="btn btn-primary py-3 px-4" type="submit">로그인</button>
+									<button class="btn btn-success" type="submit" id="submit">로그인</button>
 									<c:if test="${param.err == true}">
 										<p style="color: red">ID와 Password를 확인해주세요.</p>
 									</c:if>
 								</div>
 								<br>
 								<div class="col-12 mx-auto" align="center">
-									<input type="button" class="btn btn-primary py-3 px-4" value="회원가입" onclick="signUp()">
+									<input type="button" class="btn btn-success" value="회원가입" onclick="signUp()">
 								
-									<input type="button" class="btn btn-primary py-3 px-4" value="아이디찾기" onclick="findUserId()">
+									<input type="button" class="btn btn-success" value="아이디찾기" onclick="findUserId()">
 								
-									<input type="button" class="btn btn-primary py-3 px-4" value="비밀번호찾기" onclick="findPassword()">
+									<input type="button" class="btn btn-success" value="비밀번호찾기" onclick="findPassword()">
 								</div>
 								
 								
