@@ -78,7 +78,7 @@
 						<!-- submit -->
 						<div class="col-12 text-center" style="margin-top: 30px;">
 							<input type="submit" id="submit"
-								class="btn btn-primary btn" value="확인">
+								class="btn btn-success" value="확인">
 						</div>
 						<!-- //submit -->
 						

@@ -6,7 +6,9 @@
 <meta charset="utf-8">
 <title>회원가입</title>
 <!-- 로그인페이지(loginPage.jsp) -> 회원가입 클릭(signUp.jsp)  -->
-<%@ include file="../common/common_top.jsp"%>
+<%@ include file="../../common/common_top.jsp"%>
+<%@ include file="../../common/common_nav_admin.jsp"%>
+
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/jquery.js"></script>
 <script type="text/javascript">
@@ -127,20 +129,19 @@
 	String[] genderArr = {"남자", "여자"};
 %>
     <!-- SignUp Start -->
-    <form:form name="signUp" commandName="usersBean" action="/login/all/signUp.lg" method="post">
+    <form:form name="adminInsertForm" commandName="usersBean" action="/admin/admin/adminInsertForm.us" method="post">
     	
     <div class="container-fluid py-5">
         <div class="container">
             <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-                <h1 class="display-5 mb-5">회원가입</h1>
+                <h1 class="display-5 mb-5">관리자 등록</h1>
             </div>
             <div class="row justify-content-center">
                 <div class="col-lg-7">
                     <div class="bg-light rounded p-4 p-sm-5 wow fadeInUp" data-wow-delay="0.1s">
                         <div class="row g-3">
                         	<!-- hidden -->
-                        	<input type="hidden" id="userRole" name="userRole" value="r01">
-                        	<input type="hidden" id="image" name="image" value="user_basic_box.png">
+                        	<input type="hidden" id="userRole" name="userRole" value="r99">
                         	<!-- //hidden -->
                         	<!-- 아이디 & 아이디 중복체크 -->
                         	<div class="col-12" >
@@ -286,5 +287,5 @@
     </form:form>
     <!-- SignUp End -->
 
-<%@ include file="../common/common_bottom.jsp"%>
+<%@ include file="../../common/common_bottom.jsp"%>
 </html>

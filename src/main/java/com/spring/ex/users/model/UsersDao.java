@@ -1,10 +1,17 @@
 package com.spring.ex.users.model;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.spring.ex.utility.Paging;
 
 @Component("UsersDao")
 public class UsersDao {
@@ -71,6 +78,7 @@ private static final Logger logger = LoggerFactory.getLogger(UsersDao.class);
 		UsersBean usersBean = null;
 	    usersBean = sqlSessionTemplate.selectOne("users.getUsersByUserId", getUserId);
 		return usersBean;
+		
 	}//getUsersByUserId
 
 	//getUsersByPassword : 마이페이지에서 수정 클릭 시 사용자의 비밀번호를 다시 확인
@@ -80,6 +88,7 @@ private static final Logger logger = LoggerFactory.getLogger(UsersDao.class);
 		//입력한 비밀번호와 DB의 비밀번호가 동일하면 1, 동일하지않으면 0 return
 		System.out.println("getUsersByPassword cnt : "+cnt);
 		return cnt;
+		
 	}//getUsersByPassword
 
 	//usersUpdate : 사용자 비밀번호를 확인 후 마이페이지수정페이지에서 사용자가 수정요청한 값 update
@@ -88,6 +97,7 @@ private static final Logger logger = LoggerFactory.getLogger(UsersDao.class);
 		cnt = sqlSessionTemplate.update("users.usersUpdate", usersBean);
 		System.out.println("usersUpdate cnt : "+cnt);
 		return cnt;
+		
 	}//usersUpdate
 
 	//usersUpdatePassword : 사용자 기존 비밀번호 확인 후 새로운 비밀번호로 update
@@ -99,6 +109,7 @@ private static final Logger logger = LoggerFactory.getLogger(UsersDao.class);
 		cnt = sqlSessionTemplate.update("users.usersUpdatePassword", usersBean);
 		System.out.println("usersUpdatePassword cnt : "+cnt);
 		return cnt;
+		
 	}//usersUpdatePassword
 
 	//usersWithdrawal : 사용자 탈퇴(status Y -> N) update
@@ -107,7 +118,63 @@ private static final Logger logger = LoggerFactory.getLogger(UsersDao.class);
 		cnt = sqlSessionTemplate.update("users.usersWithdrawal", getUserId);
 		System.out.println("usersWithdrawal cnt : "+cnt);
 		return cnt;
+		
 	}//usersWithdrawal
+
+	//getUserTotalCount : 관리자를 제외한 상태값이 Y인 회원 검색결과
+	public int getUserTotalCount(Map<String, String> map) {
+		int totalCount = sqlSessionTemplate.selectOne("users.getUserTotalCount", map);
+		return totalCount;
+	}//getUserTotalCount
+
+	
+	//getAllUsers : users 전체 조회(관리자X, 상태값Y인 회원의 목록)
+	public List<UsersBean> getAllUsers(Map<String, String> map, Paging pageInfo) {
+		List<UsersBean> userList = new ArrayList<UsersBean>();
+		RowBounds rowBounds = new RowBounds(pageInfo.getOffset(), pageInfo.getLimit());
+		userList = sqlSessionTemplate.selectList("users.getAllUsers", map, rowBounds);
+		return userList;
+		
+	}//getAllUsers
+
+	//getUserWithdrawalTotalCount : 관리자를 제외한 상태값이 N인 회원 검색결과
+	public int getUserWithdrawalTotalCount(Map<String, String> map) {
+		int totalCount = sqlSessionTemplate.selectOne("users.getUserWithdrawalTotalCount", map);
+		return totalCount;
+		
+	}//getUserWithdrawalTotalCount
+
+		
+	//getAllUserWithdrawalList : 탈퇴 회원 목록(상태값N인 회원의 목록)
+	public List<UsersBean> getAllUserWithdrawalList(Map<String, String> map, Paging pageInfo) {
+		List<UsersBean> usersWithdrawalList = new ArrayList<UsersBean>();
+		RowBounds rowBounds = new RowBounds(pageInfo.getOffset(), pageInfo.getLimit());
+		usersWithdrawalList = sqlSessionTemplate.selectList("users.getAllUserWithdrawalList", map, rowBounds);
+		return usersWithdrawalList;
+		
+	}//getAllUserWithdrawalList
+	
+	//getAdminTotalCount : 관리자 검색결과
+	public int getAdminTotalCount(Map<String, String> map) {
+		int totalCount = sqlSessionTemplate.selectOne("users.getAdminTotalCount", map);
+		return totalCount;
+	}//getAdminTotalCount
+	
+	//getAllAdminList : 탈퇴 회원 목록(상태값N인 회원의 목록)
+	public List<UsersBean> getAllAdminList(Map<String, String> map, Paging pageInfo) {
+		List<UsersBean> adminList = new ArrayList<UsersBean>();
+		RowBounds rowBounds = new RowBounds(pageInfo.getOffset(), pageInfo.getLimit());
+		adminList = sqlSessionTemplate.selectList("users.getAllAdminList", map, rowBounds);
+		return adminList;
+	}//getAllAdminList
+	
+	//adminInsert : 관리자페이지에서 관리자등록
+	public int adminInsert(UsersBean usersBean) {
+		int cnt = -1;
+		cnt = sqlSessionTemplate.insert("users.adminInsert", usersBean);
+		return cnt;
+		
+	}//adminInsert
 
 
 }//UsersDAO

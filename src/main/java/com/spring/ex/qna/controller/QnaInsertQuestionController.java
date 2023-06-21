@@ -31,7 +31,7 @@ public class QnaInsertQuestionController {
 	
 	//요청 값을 담은 변수
 	private final String command = "/qna/user/insertQuestion.qna";
-	//이동할 jsp 페이지 변수
+	//이동할 jsp 페이지 변수 
 	private String getPage = "/qna/qnaInsertQuestionForm";
 	//redirect할 요청 변수
 	private String gotoPage = "redirect:/qna/all/list.qna";

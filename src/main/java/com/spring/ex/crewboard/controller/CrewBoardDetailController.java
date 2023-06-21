@@ -13,10 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.spring.ex.bookmark.crewboard.model.CrewBoardBookmarkBean;
+import com.spring.ex.bookmark.crewboard.model.CrewBoardBookmarkDao;
 import com.spring.ex.crew.model.CrewBean;
 import com.spring.ex.crew.model.CrewDao;
 import com.spring.ex.crewboard.model.CrewBoardBean;
 import com.spring.ex.crewboard.model.CrewBoardDao;
+import com.spring.ex.heart.crewboard.model.CrewBoardHeartBean;
+import com.spring.ex.heart.crewboard.model.CrewBoardHeartDao;
 
 
 @Controller
@@ -33,6 +37,14 @@ public class CrewBoardDetailController {
 	@Autowired
 	CrewDao cdao;
 	
+	//좋아요
+	@Autowired
+	CrewBoardHeartDao cbhdao;
+	
+	//북마크
+	@Autowired
+	CrewBoardBookmarkDao cbbdao;
+	
 	//crewboardList.jsp(제목클릭)에서 요청(num, pageNumber) => crewboardDetailView.jsp
 	@RequestMapping(value=command)
 	public ModelAndView doAction(@RequestParam(value="num") int num, 
@@ -45,13 +57,14 @@ public class CrewBoardDetailController {
 		PrintWriter out = null;
 		
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("pageNumber", pageNumber); // 페이지
+	
+		mav.addObject("pageNumber", pageNumber); 		// 페이지
 		mav.addObject("loginId", principal.getName()); // 로그인 아이디
 		
 		String loginId = principal.getName();
 		List<CrewBean> join_crew = cdao.getJoinCrewById(loginId);
 		mav.addObject("join_crew", join_crew);
-			
+		
 		CrewBoardBean cbb = cbdao.getCrewboardByNum(num);
 		if(num == 0) { // 마이페이지에서 모집글 눌렀을때
 			cbb = cbdao.getCrewboardByCrewname(crewname);
@@ -65,9 +78,51 @@ public class CrewBoardDetailController {
 				}
 			}
 		}
-		mav.addObject("cbb", cbb);
-		mav.setViewName(getPage);
+		/* 좋아요 */
+		int getHeartCnt = 0;
+		int getHeartTotal = 0;
+		try {
+			CrewBoardHeartBean cbhBean = new CrewBoardHeartBean();
+			cbhBean.setCrewboardNum(num);	//게시글번호
+			cbhBean.setUserId(loginId);		//사용자아이디
+			
+			//crewBoardCheckHeart : 현재 로그인한 사용자(loginId)의 해당 게시글(num) 좋아요 클릭여부
+			//getHeartCnt : 좋아요 여부 전달 1:좋아요클릭, 0:좋아요클릭X
+			getHeartCnt = cbhdao.crewBoardCheckHeart(cbhBean);
+			
+			//현재 게시글의 좋아요 수 확인
+			getHeartTotal = cbhdao.getcrewBoardHeartTotal(cbhBean);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 		
+		/* 북마크 */
+		int getBookmarkCnt = 0;
+		int getBookmarkTotal = 0;
+		try {
+			CrewBoardBookmarkBean cbbBean = new CrewBoardBookmarkBean();
+			cbbBean.setCrewboardNum(num);	//게시글번호
+			cbbBean.setUserId(loginId);		//사용자아이디
+			
+			//crewBoardCheckBookmark : 현재 로그인한 사용자(loginId)의 해당 게시글(num) 북마크 클릭여부
+			//getBookmarkCnt : 북마크 여부 전달 1:북마크클릭, 0:북마크클릭X
+			getBookmarkCnt = cbbdao.crewBoardCheckBookmark(cbbBean);
+			
+			//현재 게시글의 북마크 수 확인
+			getBookmarkTotal = cbbdao.getcrewBoardBookmarkTotal(cbbBean);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		mav.addObject("cbb", cbb);
+		//좋아요
+		mav.addObject("getHeartCnt",getHeartCnt);
+		mav.addObject("getHeartTotal",getHeartTotal);
+		//북마크
+		mav.addObject("getBookmarkCnt",getBookmarkCnt);
+		mav.addObject("getBookmarkTotal",getBookmarkTotal);
+		mav.setViewName(getPage);
 		return mav;
 	}
 	

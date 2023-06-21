@@ -65,6 +65,42 @@
 	function userRole_info(){
 		window.open('userRole_info.us','등급안내','width=550,height=500');       
 	}
+	function myPage(){
+		location.href = "/users/user/mypage.us"; 
+	}
+	
+	/* 이미지 미리보기 */
+	function previewImage(f){
+
+	var file = f.files;
+
+	// 확장자 체크
+	if(!/\.(gif|jpg|jpeg|png)$/i.test(file[0].name)){
+		alert('gif, jpg, png 파일만 선택해 주세요.\n\n현재 파일 : ' + file[0].name);
+
+		// 선택한 파일 초기화
+		f.outerHTML = f.outerHTML;
+
+		document.getElementById('preview').innerHTML = '';
+
+	}
+	else {
+
+		// FileReader 객체 사용
+		var reader = new FileReader();
+
+		// 파일 읽기가 완료되었을때 실행
+		reader.onload = function(rst){
+			document.getElementById('preview').innerHTML = '<h6>이미지 미리보기</h6><img src="' + rst.target.result + '"style="max-width: 300px;  max-height: 300px;">';
+		}
+
+		// 파일을 읽는다
+		reader.readAsDataURL(file[0]);
+
+	}
+}
+
+
 </script>
 <style>
 	.err{
@@ -91,31 +127,29 @@
                         	<!-- hidden -->
                         	<input type="hidden" name="userNum" 	value="${usersBean.userNum}">
                         	<input type="hidden" name="password" 	value="${usersBean.password}">
-                        	<input type="hidden" name="status" 	value="${usersBean.status}">
-                        	<input type="hidden" name="udate" 	value="${usersBean.udate}"> 
+                        	<input type="hidden" name="status" 		value="${usersBean.status}">
+                        	<input type="hidden" name="udate" 		value="${usersBean.udate}"> 
                         	<!-- //hidden -->
-                        	<!-- 이미지 -->
-                        	<div class="col-12">
-	                        	<div class="col-5" style="float: left; display: inline-block;">
-	                        	 	<c:if test="${usersBean.image eq null || usersBean.image == null}">
-	                                	<img width="100" height="100" src ="<%=request.getContextPath()%>/resources/images/users/user_basic.png"><br>
-	                                </c:if>
-	                                <c:if test="${! usersBean.image eq null || usersBean.image != null}">
-	                                	<img 
-	                                		alt="${usersBean.image}"
-	                                		src="<%=request.getContextPath() %>/resources/images/users/${usersBean.image}"  
-	                                		width="100" height="100" >
-	                                </c:if>
-                                </div> 
-							
-                            	<div class="col-4" style="float: left; display: inline-block;">
-	                                <div class="form-floating">
-	                                    <input type="file" name="upload" id="upload" value="${usersBean.upload}">
-	                                    <input type="hidden" name="upload2" value="${usersBean.image}">
-	                                </div>
-                            	</div>
+                        	<!-- 등록된 이미지 -->
+                        	<div class="col-9">
+								<img 
+                            		alt="${usersBean.image}"
+                            		src="<%=request.getContextPath() %>/resources/images/users/${usersBean.image}" 
+                            		style="max-width: 300px; max-height: 300px;"  >
                              </div>	
-                            <!-- //이미지 -->
+                            <!-- //등록된 이미지 -->
+                            <!-- 변경할 이미지 등록 -->
+                            <div class="col-9">
+                                <div class="form-floating">
+                                	<input type="file" class="form-control border-0" name="upload" id="upload"
+                                		value="${usersBean.upload}"
+                                	 	accept="image/*" onchange="previewImage(this)" />
+									<div id="preview" style="margin: 10px;">
+									</div>
+									<input type="hidden" name="upload2" value="${usersBean.image}">
+                                </div>
+                            </div>
+                            <!-- //변경할 이미지 등록 -->	
                             
                             <!-- 아이디 -->
 							<div class="col-9">
@@ -153,14 +187,21 @@
                             <div class="col-12" >
 								<div class="col-9" style="float: left"> 
 									<div class="form-floating">
-									    <input type="text" class="form-control border-0" id="userRole" name="userRole"
-									     readonly="readonly"
-									     value= ${usersBean.userRole }>
-								       <label for="userRole">등급</label>
-								   </div>
+										<c:choose>
+										    <c:when test='${usersBean.userRole eq "r01"}'>
+										    	<c:set var="userRole" value="일반회원"/>
+										    </c:when>
+										    <c:when test='${usersBean.userRole eq "r02"}'>
+										   		<c:set var="userRole" value="우수회원"/>
+										 	</c:when>
+										  </c:choose>
+									  <input type="text" class="form-control border-0" readonly="readonly" value="${userRole}">
+									  <label for="userRole">등급</label>
+									</div>
+
 								</div>
 								<div style="float: left; display:inline-block; margin-left:10px;" >
-									<button target="_blank" class="btn btn-primary btn" onclick ="userRole_info()">
+									<button target="_blank" class="btn btn-secondary btn-sm" onclick ="userRole_info()">
 										등급 안내
 									</button>
 								</div>
@@ -219,7 +260,7 @@
                             
                             <div class="col-9" style="margin-top: 0" ><!-- style="line-height: 10px" -->	
 									<div class="form-floating">
-										<input type="text" class="form-control border-0" name="addressSub"  id="addressSub" value="${usersBean.addressSub}">
+										<form:input  path="addressSub" class="form-control border-0" name="addressSub"  id="addressSub" value="${usersBean.addressSub}"/>
 										<label for="addressSub">상세주소</label>
 										<input type="hidden" class="form-control border-0" id="address_extra" placeholder="참고항목">
 	                           		</div>
@@ -229,8 +270,9 @@
                            
                             <!-- submit -->
                             <div class="col-12 text-center" style="line-height: 10px">
-								<input type="reset" class="btn btn-primary py-3 px-4" value="취소" >
-								<input type="submit" id="submit" class="btn btn-primary py-3 px-4" value="수정하기" >
+								<input type="submit" id="submit" class="btn btn-success" value="수정하기" >
+								<input type="reset" class="btn btn-success" value="다시작성" >
+								<input type="button" class="btn btn-success" value="목록" onclick="myPage()">
 							</div>
                             <!-- //submit -->
                          </div><!--//row g-3  -->
