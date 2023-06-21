@@ -9,18 +9,19 @@ public class MountainBean {
 	private int mountainnum;
 	
 	//mountain 이름
-	@NotBlank(message = "산 이름은 비워둘 수 없습니다.")
+	@NotBlank(message = "산 이름을 입력하세요.")
 	private String mountainname;
 	
 	//mountain 높이(단위 m)
-	private int mountainheight;
+	@NotBlank(message = "산 높이를 입력하세요.")
+	private String mountainheight;
 	
 	//mountain 지역(목록에서는 동까지 표시)
-	@NotBlank(message = "산 지역은 비워둘 수 없습니다.")
+	@NotBlank(message = "산 지역을 입력하세요.")
 	private String mountainlocal;
 	
 	//mountain 상세설명
-	@NotBlank(message = "상세 내용은 비워둘 수 없습니다.")
+	@NotBlank(message = "상세 내용을 입력하세요.")
 	private String mountaincontent;
 	
 	//mountain 사진
@@ -71,11 +72,11 @@ public class MountainBean {
 		this.mountainname = mountainname;
 	}
 
-	public int getMountainheight() {
+	public String getMountainheight() {
 		return mountainheight;
 	}
 
-	public void setMountainheight(int mountainheight) {
+	public void setMountainheight(String mountainheight) {
 		this.mountainheight = mountainheight;
 	}
 

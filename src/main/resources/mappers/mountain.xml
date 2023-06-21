@@ -47,22 +47,15 @@
 				#{mountainlocal},
 				#{mountaincontent},
 				#{mountainimage},
-				#{mountaingreat}
+				#{mountaingreat, jdbcType=VARCHAR}
 			)
 		</insert>
 	<!-- //최초 목록 삽입하기 -->
 	
 	<!-- 전체 갯수-->
-	<select id="GetTotalCount" resultType="int" resultMap="mountainMap">
+	<select id="GetMountainTotalCount" resultType="int">
 		SELECT
-			count(
-			mountain_num,
-			mountain_name,
-			mountain_height,
-			mountain_local,
-			mountain_content,
-			mountain_image,
-			mountain_great)
+			count(*)
 		FROM mountain
 		<choose>
 			<when test="whatColumn == '이름'">
@@ -161,7 +154,7 @@
 	<!-- 선택한 산 삭제 -->
 	<delete id="DeleteMountain">
 		DELETE
-			mountain
+			from mountain
 		WHERE
 			mountain_num = #{deleteNum}
 	</delete>

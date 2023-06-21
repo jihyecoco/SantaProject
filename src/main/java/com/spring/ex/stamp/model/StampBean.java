@@ -8,14 +8,13 @@ public class StampBean {
 	//stamp 인증 신청 식별번호
 	private int stampnum;
 	
+	private int mountainnum;
+	
 	//users table 외래키
 	private String usersid;
 	
-	//stamp 갯수
-	private int stampcount;
-	
 	//stamp 인증 신청 이미지
-	@NotBlank(message = "인증 이미지는 비워둘 수 없습니다.")
+	@NotBlank(message = "인증 이미지를 선택하세요.")
 	private String stampimage;
 	
 	//stamp 인증 상태, default 0, 0 : 인증 대기, 1 : 인증 완료, 2 : 인증 실패
@@ -28,12 +27,27 @@ public class StampBean {
 	
 	
 	//setter, getter 메서드
+	
+	public int getMountainnum() {
+		return mountainnum;
+	}
+	
+	public void setMountainnum(int mountainnum) {
+		this.mountainnum = mountainnum;
+	}
+	
 	public MultipartFile getUpload() {
 		return upload;
 	}
-	
+
 	public void setUpload(MultipartFile upload) {
+		System.out.println("setUpload()");
 		this.upload = upload;
+		
+		String fileName = upload.getOriginalFilename();
+		System.out.println("filename : "+fileName);
+		
+		this.stampimage = fileName;
 	}
 	
 	public String getUpload2() {
@@ -57,14 +71,6 @@ public class StampBean {
 
 	public void setUsersid(String usersid) {
 		this.usersid = usersid;
-	}
-
-	public int getStampcount() {
-		return stampcount;
-	}
-
-	public void setStampcount(int stampcount) {
-		this.stampcount = stampcount;
 	}
 
 	public String getStampimage() {

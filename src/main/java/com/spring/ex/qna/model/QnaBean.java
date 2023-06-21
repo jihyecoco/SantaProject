@@ -15,18 +15,18 @@ public class QnaBean {
 	private String usersid;
 	
 	//qna 카테고리
-	@NotBlank(message = "카테고리는 비워둘 수 없습니다.")
+	@NotBlank(message = "카테고리를 선택하세요.")
 	private String qnacategory;
 	
 	//qna 작성일자, default sysdate
 	private Date qnadate;
 	
 	//qna 제목
-	@NotBlank(message = "제목은 비워둘 수 없습니다.")
+	@NotBlank(message = "제목을 입력하세요.")
 	private String qnasubject;
 
 	//qna 질문
-	@NotBlank(message = "질문 내용은 비워둘 수 없습니다.")
+	@NotBlank(message = "질문 내용을 입력하세요.")
 	private String qnaquestion;
 
 	private String qnaanswer;
@@ -35,7 +35,7 @@ public class QnaBean {
 	private String qnaimage;
 	
 	//qna 비밀글, 0 : 일반, 1 : 비밀
-	@NotBlank(message = "글의 공개범위를 선택해주세요.")
+	@NotBlank(message = "글의 공개범위를 선택세요.")
 	private String qnasecret;
 	
 	//이미지 업로드를 위한 객체, 변수 생성

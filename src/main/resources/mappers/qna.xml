@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="qna.model.QnaBean">
+<mapper namespace="qna.QnaBean">
 
 	<resultMap type="com.spring.ex.qna.model.QnaBean" id="qnaMap">
 		<id property="qnanum" column="qna_num"/>
@@ -17,48 +17,51 @@
 	</resultMap>
 	
 	<!-- 전체 갯수-->
-	<select id="GetTotalCount" resultType="int" resultMap="qnaMap">
+	<select id="GetQnaTotalCount" resultType="int">
 		SELECT
 			count(*)
-			from qna
-		<choose>
-			<when test="whatColumn != null and keyword != null">
-				WHERE
-					qna_category = #{whatColumn}
-					and qna_subject like #{keyword}
-			</when>
-			<when test="whatColumn != null and keyword == null">
-				WHERE
-					qna_category = #{whatColumn}
-			</when>
-			<when test="whatColumn == null and keyword == null">
-				WHERE
-					qna_subject like #{keyword}
-			</when>
-		</choose>
+		FROM qna
+		<if test="whatColumn == '제목'">
+			WHERE
+				qna_subject like #{keyword}
+		</if>
+		<if test="whatColumn == '카테고리'">
+			WHERE
+				qna_category like #{keyword}
+		</if>
+		<if test="whatColumn == '아이디'">
+			WHERE
+				users_id like #{keyword}
+		</if>
 	</select>
 	<!-- //전체 갯수-->
 	
 	<!-- 전체 목록 -->
 	<select id="GetAllQna" resultType="com.spring.ex.qna.model.QnaBean" resultMap="qnaMap">
 		SELECT
-			 *
-			 from qna
-		<choose>
-			<when test="whatColumn != null and keyword != null">
-				WHERE
-					qna_category = #{whatColumn}
-					and qna_subject like #{keyword}
-			</when>
-			<when test="whatColumn != null and keyword == null">
-				WHERE
-					qna_category = #{whatColumn}
-			</when>
-			<when test="whatColumn == null and keyword == null">
-				WHERE
-					qna_subject like #{keyword}
-			</when>
-		</choose>
+			qna_num,
+			users_id,
+			qna_category,
+			qna_date,
+			qna_subject,
+			qna_question,
+			qna_answer,
+			qna_image,
+			qna_secret
+		FROM
+			 qna
+		<if test="whatColumn == '제목'">
+			WHERE
+				qna_subject like #{keyword}
+		</if>
+		<if test="whatColumn == '카테고리'">
+			WHERE
+				qna_category like #{keyword}
+		</if>
+		<if test="whatColumn == '아이디'">
+			WHERE
+				users_id like #{keyword}
+		</if>
 	</select>
 	<!-- //전체 목록 -->
 	

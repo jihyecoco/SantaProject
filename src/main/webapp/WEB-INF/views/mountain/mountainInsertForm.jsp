@@ -6,19 +6,13 @@
 	.err {
 		font-weight: bold;
 		color: red;
+		font-size: 7px;
 	}
 </style>
     <!-- Page Header Start -->
     <div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container text-center py-5">
             <h1 class="display-3 text-white mb-4 animated slideInDown">산 정보 등록</h1>
-            <nav aria-label="breadcrumb animated slideInDown">
-                <ol class="breadcrumb justify-content-center mb-0">
-                    <li class="breadcrumb-item"><a href="/users/all/main.lg">Home</a></li>
-                    <li class="breadcrumb-item"><a href="/mountain/all/list.mnt">산별정보</a></li>
-                    <li class="breadcrumb-item" aria-current="page">산 정보 등록</li>
-                </ol>
-            </nav>
         </div>
     </div>
     <!-- Page Header End -->
@@ -28,8 +22,7 @@
     <div class="container-fluid py-5">
         <div class="container">
         	<!-- 타이틀 -->
-            <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-                <p class="fs-5 fw-bold text-primary">산별정보</p>
+            <div class="text-center mx-auto" style="max-width: 500px;">
                 <h1 class="display-5 mb-5">산 정보 등록</h1>
             </div>
             <!-- //타이틀 -->
@@ -38,15 +31,17 @@
             <form:form commandName="mountainBean" action="/mountain/admin/insert.mnt" method="post" enctype="multipart/form-data">
             <div class="row justify-content-center">
                 <div class="col-lg-7">
-                    <div class="bg-light rounded p-4 p-sm-5 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="bg-light rounded p-4 p-sm-5">
                         <div class="row g-3" style="margin-bottom:-10px;">
                         	
                         	<!-- 제목 입력 -->
-                            <div class="col-sm-9" style="margin-bottom:-10px;">
-                                <div class="mb-2 mx-1"><b>*산 이름 : </b></div>
-                                    <input type="text" value="${mountainBean.mountainname}" class="form-control border-0" name="mountainname"><br>
-                            </div>
-                        	<span class="col-12" style="margin-top:-3px;margin-bottom:-3px;"><form:errors cssClass="err" path="mountainname"/></span>
+                        	<div class="col-6" style="float: left; ">
+	                                <div class="form-floating">
+	                                    <input type="text" class="form-control border-0" id="mountainname" name="mountainname" value="${mountainBean.mountainname}">
+	                                    <label for="mountainname">*산 이름</label>
+	                                </div>
+	                                <form:errors cssClass="err" path="mountainname"/>
+	                        </div>
                         	<!-- //제목 입력 -->
                         	
                             <!-- 사진 첨부 -->
@@ -57,30 +52,33 @@
                             <!-- //사진 첨부 -->
                             
                             <!-- 높이 입력 -->
-                            <div class="col-sm-5" style="margin-bottom:-10px;">
-                                <div class="mb-2 mx-1"><b>산 높이 : </b></div>
-                                    <input type="text" value="${mountainBean.mountainheight}" class="form-control border-0" name="mountainheight"><br>
-                            </div>
-                            
-                        	<span class="col-12" style="margin-top:-3px;margin-bottom:-3px;"><form:errors cssClass="err" path="mountainheight"/></span>
+                            <div class="col-5" style="float: left; ">
+	                                <div class="form-floating">
+	                                    <input type="text" class="form-control border-0" id="mountainheight" name="mountainheight" value="${mountainBean.mountainheight}">
+	                                    <label for="mountainheight">*산 높이</label>
+	                                </div>
+	                                <form:errors cssClass="err" path="mountainheight"/>
+	                        </div>
                         	<!-- //높이 입력 -->
 
                             <!-- 지역 입력 -->
-                            <div class="col-12" style="margin-bottom:-10px;">
-                                <div class="mb-2 mx-1"><b>*산 지역 : </b></div>
-                                    <input type="text" value="${mountainBean.mountainlocal}" class="form-control border-0" name="mountainlocal"><br>
-                            </div>
-                            
-                        	<span class="col-12" style="margin-top:-3px;margin-bottom:-3px;"><form:errors cssClass="err" path="mountainlocal"/></span>
-                        	<!-- //지역 입력 -->
+                            <div class="col-8" style="float: left; ">
+	                                <div class="form-floating">
+	                                    <input type="text" class="form-control border-0" id="mountainlocal" name="mountainlocal" value="${mountainBean.mountainlocal}">
+	                                    <label for="mountainlocal">*산 지역</label>
+	                                </div>
+	                                <form:errors cssClass="err" path="mountainlocal"/>
+	                        </div>
+							<!-- //지역 입력 -->
                         	
                         	<!-- 상세 정보 입력 -->
-                            <div class="col-12">
-                            	<div class="mb-2 mx-1"><b>*상세 정보 : </b></div>
-                            	<textarea name="mountaincontent" class="form-control border-0" placeholder="산 상세 정보" id="message" style="height: 200px">${mountainBean.mountaincontent}</textarea>
+                             <div class="col-12" style="float: left; ">
+                             	<div class="form-floating">
+                            	<textarea name="mountaincontent" class="form-control border-0" placeholder="*산 상세 정보" id="message" style="height: 200px">${mountainBean.mountaincontent}</textarea>
+								<label for="mountaincontent" style="font-size:13px;opacity: 60%;">*산 상세정보</label>
+								</div>
                             </div>
-                        	
-                            <span class="col-12"><form:errors cssClass="err" path="mountaincontent"/></span>
+                            <form:errors cssClass="err" path="mountaincontent"/>
                         	<!-- //상세 정보 입력 -->
 
                         	<!-- 100대 명산 입력 -->
@@ -88,25 +86,32 @@
                             	<div class="mb-2 mx-1"><b>특이사항 : </b></div>
                             	
                             	<div class="form-check form-check-inline mb-3">
-								  <input name="mountaincheck" value="0" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
+								  <input name="mountaincheck" value="0" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" <c:if test="${mountainBean.mountaingreat == null}">checked</c:if>>
 								  <label class="form-check-label" for="flexRadioDefault1">
 								    없음
 								  </label>
 								</div>
 								<div class="form-check form-check-inline">
-								  <input name="mountaincheck" value="1" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+								  <input name="mountaincheck" value="1" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" <c:if test="${mountainBean.mountaingreat != null}">checked</c:if>>
 								  <label class="form-check-label" for="flexRadioDefault2">
 								    100대 명산
 								  </label>
 								</div>
-								<textarea name="mountaingreat" id="mountaingreat" class="form-control border-0" placeholder="100대 명산 선정 이유를 입력해주세요." style="height: 100px" disabled>${mountainBean.mountaingreat}</textarea>
-                            	<span id="mountaingreatdanger" style="font-size:10px; color: gray;">※선정 이유를 입력해주셔야 100대명산으로 등록됩니다.</span>
+							<div class="col-12" style="float: left; ">
+                             	<div class="form-floating">
+                            	<textarea name="mountaingreat" id="mountaingreat" class="form-control border-0" placeholder="*100대 명산 선정 이유" id="message" style="height: 130px" <c:if test="${mountainBean.mountaingreat == null}">disabled</c:if>>${mountainBean.mountaingreat}</textarea>
+								<label for="mountaingreat" style="font-size:13px;opacity: 60%;">*100대 명산 선정 이유</label>
+								</div>
+                            </div>
+                            <span style="font-size:7px;color:grey;">※선정 이유를 입력해주셔야 100대명산으로 등록됩니다.</span>
                             </div>
                         	<!-- //100대 명산 입력 -->
                             
                             <!-- 등록하기 버튼 -->
                             <div class="col-12 text-center">
-                                <button class="btn btn-primary py-2 px-4" type="submit">등록하기</button>
+                                <button class="btn btn-success" type="submit">등록하기</button>
+                                <button class="btn btn-success" type="reset">다시작성</button>
+                                <button class="btn btn-success" onClick="location.href='/mountain/all/list.mnt'">목록</button>
                             </div>
                             <!-- //등록하기 버튼 -->
                         </div>
@@ -124,14 +129,13 @@
 	    var value = $(this).val();
 	    var checked = $(this).prop('checked');
 	    if(value=='1'){
-	            document.getElementById('mountaingreat').disabled=false;
-	            document.getElementById('mountaingreatdanger').disabled=false;
+	           document.getElementById('mountaingreat').disabled=false;
+	           document.getElementById('mountaingreatdanger').disabled=false;
 	    }else{
-	            document.getElementById('mountaingreat').disabled=true;
-	            document.getElementById('mountaingreatdanger').disabled=true;
+	           document.getElementById('mountaingreat').disabled=true;
+	           document.getElementById('mountaingreatdanger').disabled=true;
 	    }
-
-       document.getElementById('mountaingreat').value='';
+	    document.getElementById('mountaingreat').value='';
 	});
 </script>
 <%@ include file="../common/common_bottom.jsp" %>

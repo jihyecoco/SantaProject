@@ -33,8 +33,8 @@
       	<li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="dropdown10" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">완등 내역</a>
           <div class="dropdown-menu" aria-labelledby="dropdown10">
-            <a class="dropdown-item" href="#">스탬프 신청</a>
-            <a class="dropdown-item" href="#">완등 내역</a>
+            <a class="dropdown-item" href="/stamp/user/insert.stp">스탬프 신청</a>
+            <a class="dropdown-item" href="/stamp/user/list.stp">완등 내역</a>
           </div>
         </li>
         <!-- //stamp -->

@@ -37,9 +37,8 @@ public class MountainDao {
 	}
 
 	public int getTotalCount(Map<String, String> searchMap) {
-		int cnt = 1;
-		//int cnt = sqlSessionTemplate.selectOne(namespace+".GetTotalCount",map);
-		//cnt = sqlSessionTemplate.selectOne("GetTotalCount",map);
+		int cnt = 0;
+		cnt = sqlSessionTemplate.selectOne("GetMountainTotalCount",searchMap);
 		return cnt;
 	}
 

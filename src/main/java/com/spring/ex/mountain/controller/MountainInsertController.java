@@ -76,11 +76,17 @@ public class MountainInsertController {
 		//mountainInsert에서 => 등록 버튼 클릭시
 		@RequestMapping(value=command, method=RequestMethod.POST)
 		public ModelAndView doAction(
+				@RequestParam(value="mountaincheck") int mountaincheck,
 				@RequestParam(value="pageNumber", required = false) String pageNumber,
 				@ModelAttribute("mountainBean") @Valid MountainBean mountainBean,
 				BindingResult result, HttpServletRequest request,HttpSession session,
 				Principal principal
 				) {
+			
+			//만약 넘어온 체크 값이 1이 아니면 bean의 명산 정보 삭제
+			if(mountaincheck != 1) {
+				mountainBean.setMountaingreat(null);
+			}
 			
 			//ModelAndView 객체 생성
 			ModelAndView mav = new ModelAndView(); 
@@ -101,7 +107,8 @@ public class MountainInsertController {
 				//유효성 검사에 에러가 있으면
 				System.out.println("유효성 검사 에러");
 				
-				//입력했던 정보가 남아있도록 Bean 정보 넘기기
+				//입력했던 정보가 남아있도록 정보 넘기기
+				mav.addObject("mountaincheck",mountaincheck);
 				mav.addObject("mountainBean",mountainBean);
 				//뷰 설정, 다시 mountainInsertForm으로 돌아감
 				mav.setViewName(getPage);
@@ -133,6 +140,7 @@ public class MountainInsertController {
 
 					//다시 원래 페이지로 돌아가기 위해 정보 넘기기
 					mav.addObject("pageNumber",pageNumber);				
+					mav.addObject("mountaincheck",mountaincheck);
 					mav.addObject("mountainBean",mountainBean);
 					
 					//뷰 설정, 다시 mountainInsertForm으로 돌아감

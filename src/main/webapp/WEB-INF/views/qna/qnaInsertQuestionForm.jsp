@@ -6,19 +6,13 @@
 	.err {
 		font-weight: bold;
 		color: red;
+		font-sizr:7px;
 	}
 </style>
     <!-- Page Header Start -->
     <div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container text-center py-5">
             <h1 class="display-3 text-white mb-4 animated slideInDown">Q&A</h1>
-            <nav aria-label="breadcrumb animated slideInDown">
-                <ol class="breadcrumb justify-content-center mb-0">
-                    <li class="breadcrumb-item"><a href="/users/all/main.lg">Home</a></li>
-                    <li class="breadcrumb-item"><a href="/qna/all/list.qna">Q&A</a></li>
-                    <li class="breadcrumb-item" aria-current="page">질문등록</li>
-                </ol>
-            </nav>
         </div>
     </div>
     <!-- Page Header End -->
@@ -28,8 +22,7 @@
     <div class="container-fluid py-5">
         <div class="container">
         	<!-- 타이틀 -->
-            <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-                <p class="fs-5 fw-bold text-primary">Q&A</p>
+            <div class="text-center mx-auto" style="max-width: 500px;">
                 <h1 class="display-5 mb-5">질문등록</h1>
             </div>
             <!-- //타이틀 -->
@@ -38,20 +31,22 @@
             <form:form commandName="qnaBean" action="/qna/user/insertQuestion.qna" method="post" enctype="multipart/form-data">
             <div class="row justify-content-center">
                 <div class="col-lg-7">
-                    <div class="bg-light rounded p-4 p-sm-5 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="bg-light rounded p-4 p-sm-5">
                         <div class="row g-3" style="margin-bottom:-10px;">
                         	
                         	<!-- 제목 입력 -->
-                            <div class="col-sm-9" style="margin-bottom:-10px;">
-                                <div class="mb-2 mx-1"><b>제목 : </b></div>
-                                    <input type="text" value="${qnaBean.qnasubject}" class="form-control border-0" id="subject" name="qnasubject"><br>
-                            </div>
-                        	<span class="col-12" style="margin-top:-3px;margin-bottom:-3px;"><form:errors cssClass="err" path="qnasubject"/></span>
+                        	<div class="col-6" style="float: left; ">
+	                                <div class="form-floating">
+	                                    <input type="text" class="form-control border-0" id="qnasubject" name="qnasubject" value="${qnaBean.qnasubject}">
+	                                    <label for="qnasubject">*질문 제목</label>
+	                                </div>
+	                                <form:errors cssClass="err" path="qnasubject"/>
+	                        </div>
                         	<!-- //제목 입력 -->
                         	
                         	<!-- 카테고리 입력 -->
                             <div class="col-sm-3" style="margin-bottom:-10px;">
-                                	<div class="mb-2 mx-1"><b>카테고리 : </b></div>
+                                	<div class="form-floating">
                                 	<select name="qnacategory" class="form-select border-0">
                                 		<option value="">선택</option>
 	    								<option value="계정" <c:if test="${qnaBean.qnacategory=='계정'}">selected</c:if>>계정</option>
@@ -60,8 +55,10 @@
 					    				<option value="거래/나눔" <c:if test="${qnaBean.qnacategory=='거래/나눔'}">selected</c:if>>거래/나눔</option>
 					    				<option value="기타" <c:if test="${qnaBean.qnacategory=='기타'}">selected</c:if>>기타</option>
                                 	</select>
+                                	<label for="qnasubject">*카테고리</label>
+                                	</div>
                             </div>
-                            <span class="col-12" style="margin-bottom:-3px;"><form:errors cssClass="err" path="qnacategory"/></span>
+                            <form:errors cssClass="err" path="qnacategory"/>
                         	<!-- //카테고리 입력 -->
                             
                             <!-- 사진 첨부 -->
@@ -73,15 +70,14 @@
                             <!-- //사진 첨부 -->
                             
                         	<!-- 질문 내용 입력 -->
-                            <div class="col-12">
-                            	<div class="mb-2 mx-1"><b>질문 내용 : </b></div>
-                            	<textarea name="qnaquestion" class="form-control border-0" placeholder="질문 내용" id="message" style="height: 200px">${qnaBean.qnaquestion}</textarea>
+                            <div class="col-12" style="float: left; ">
+                             	<div class="form-floating">
+                            	<textarea name="qnaquestion" class="form-control border-0" placeholder="*질문 내용" id="message" style="height: 200px">${qnaBean.qnaquestion}</textarea>
+								<label for="qnaquestion" style="font-size:13px;opacity: 60%;">*질문 내용</label>
+								</div>
                             </div>
+                            <form:errors cssClass="err" path="qnaquestion"/>
                         	<!-- //질문 내용 입력 -->
-                        	
-                            <!-- 질문 내용 오류 메세지 출력 -->
-                            <span class="col-12"><form:errors cssClass="err" path="qnaquestion"/></span>
-                            <!-- //질문 내용 오류 메세지 출력 -->
                             
                             <!-- 비밀글 설정 출력 -->
                             <div class="col-12">
@@ -104,7 +100,9 @@
                             
                             <!-- 질문하기 버튼 -->
                             <div class="col-12 text-center">
-                                <button class="btn btn-primary py-2 px-4" type="submit">질문하기</button>
+                                <button class="btn btn-success" type="submit">질문하기</button>
+                                <button class="btn btn-success" type="reset">다시작성</button>
+                                <button class="btn btn-success" onClick="location.href='/mountain/all/list.qna'">목록</button>
                             </div>
                             <!-- //질문하기 버튼 -->
                         </div>

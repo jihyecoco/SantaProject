@@ -69,7 +69,7 @@ public class MountainUpdateController {
 					
 					MountainBean mountainBean = mdao.getMountainByNum(mountainnum);
 					
-					//다시 원래 페이지로 돌아가기 위해 페이지 정보 넘기기
+					//수정으로 가기 위해 페이지 정보 넘기기
 					mav.addObject("pageNumber",pageNumber);
 					mav.addObject("mountainnum",mountainnum);
 					mav.addObject("mountainBean",mountainBean);
@@ -82,12 +82,18 @@ public class MountainUpdateController {
 			//mountainUpdateForm에서 => 수정 버튼 클릭시
 			@RequestMapping(value=command, method=RequestMethod.POST)
 			public ModelAndView doAction(
+					@RequestParam(value="mountaincheck") int mountaincheck,
 					@RequestParam(value="mountainnum") int mountainnum,
 					@RequestParam(value="pageNumber", required = false) String pageNumber,
 					@ModelAttribute("mountainBean") @Valid MountainBean mountainBean,
 					BindingResult result, HttpServletRequest request,HttpSession session,
 					Principal principal
 					) {
+				
+				//만약 넘어온 체크 값이 1이 아니면 bean의 명산 정보 삭제
+				if(mountaincheck != 1) {
+					mountainBean.setMountaingreat(null);
+				}
 				
 				//ModelAndView 객체 생성
 				ModelAndView mav = new ModelAndView(); 
@@ -108,7 +114,8 @@ public class MountainUpdateController {
 					//유효성 검사에 에러가 있으면
 					System.out.println("유효성 검사 에러");
 					
-					//입력했던 정보가 남아있도록 Bean 정보 넘기기
+					//입력했던 정보가 남아있도록 정보 넘기기
+					mav.addObject("mountaincheck",mountaincheck);
 					mav.addObject("mountainBean",mountainBean);
 					mav.addObject("mountainnum",mountainnum);
 					
@@ -123,7 +130,7 @@ public class MountainUpdateController {
 					
 					if(cnt > 0) {
 						//insert 성공 시
-						System.out.println("insert성공");
+						System.out.println("update성공");
 						
 						try {
 							multi.transferTo(destination);
@@ -134,15 +141,16 @@ public class MountainUpdateController {
 							e.printStackTrace();
 						}
 						
-						//다시 상세 정보로 가기 위해 정보 넘기기
+						//다시 목록으로 가기 위해 정보 넘기기
 						mav.addObject("pageNumber",pageNumber);				
 						mav.addObject("mountainnum",mountainnum);				
 						//뷰 설정, list.mnt를 다시 요청
 						mav.setViewName(gotoPage);
 					} else {
 						//insert 실패 시
-						System.out.println("insert실패");
+						System.out.println("update실패");
 						//다시 원래 페이지로 돌아가기 위해 정보 넘기기
+						mav.addObject("mountaincheck",mountaincheck);
 						mav.addObject("pageNumber",pageNumber);				
 						mav.addObject("mountainBean",mountainBean);
 						mav.addObject("mountainnum",mountainnum);

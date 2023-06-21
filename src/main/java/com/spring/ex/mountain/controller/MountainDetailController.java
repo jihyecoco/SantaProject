@@ -45,7 +45,7 @@ public class MountainDetailController {
 				
 				int total=0;
 				for(MountainBean result : allMountain) {
-					total = total + result.getMountainheight();
+					total = total + Integer.parseInt(result.getMountainheight());
 					System.out.println("total 누적 : "+total);
 				}
 				int avg = total/allMountain.size();

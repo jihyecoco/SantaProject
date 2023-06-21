@@ -119,7 +119,7 @@
 		                <!-- 구현중임 
 		                <a href="/users/admin/usersList.us" class="dropdown-item">회원 관리</a> -->
 		                <a href="#" class="dropdown-item">크루 관리</a>
-		                <a href="#" class="dropdown-item">산 관리</a>
+		                <a href="/stamp/admin/adminlist.stp" class="dropdown-item">완등내역 관리</a>
 		                <a href="#" class="dropdown-item">게시판 관리</a>
 					</div><!-- //dropdown-menu -->
 				</div>

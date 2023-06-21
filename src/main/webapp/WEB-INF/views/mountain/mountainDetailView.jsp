@@ -6,32 +6,11 @@
 	th, td {
 	  text-align: center;
 	}
-	#btn-insert {
-		  margin-bottom: 10px;
-		  background-color: #348e38;
-		  border: none;
-		  color: #fff;
-		  cursor: pointer;
-		  padding: 10px 25px;
-		  float: right;
-		}
-		#btn-insert:hover {
-		  background-color: yellow;
-		  color: #000;
-		  transition: all 0.35s;
-		}
 </style>
     <!-- Page Header Start -->
     <div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container text-center py-5">
             <h1 class="display-3 text-white mb-4 animated slideInDown">산 상세 정보</h1>
-            <nav aria-label="breadcrumb animated slideInDown">
-                <ol class="breadcrumb justify-content-center mb-0">
-                    <li class="breadcrumb-item"><a href="/users/all/main.lg">Home</a></li>
-                    <li class="breadcrumb-item"><a href="/mountain/all/list.mnt">산별정보</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">산 상세 정보</li>
-                </ol>
-            </nav>
         </div>
     </div>
     <!-- Page Header End -->
@@ -41,8 +20,8 @@
 	<div class="container-xxl py-5">
         <div class="container">
             <div class="row g-5">
-                <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
-                    <h1 class="display-5 mb-5" style="margin-left:250px;">${mountainBean.mountainname}</h1>
+                <div class="col-lg-6">
+                    <h1 class="display-5 mb-5" align="center">${mountainBean.mountainname}</h1>
                     <!-- 산 목록 Start -->
 							<table class="table table-hover table-borded align-middle">
 							    <tr>
@@ -110,11 +89,15 @@
                     </div>
                 <!-- 정보 등록 버튼(관리자만 볼 수 있음) -->
                 <c:if test="${principal.getName() == 'admin'}">
+                	<div class="container">
+    				<div align="right">
                 <form action="/mountain/admin/update.mnt" method="get">
                 	<input type="hidden" name="mountainnum" value="${mountainBean.mountainnum}">
-                    <input type="submit" id="btn-insert" value="산 정보 수정" onClick="location.href='/mountain/admin/update.mnt'" style="margin-right:-45px;">
-                    <button id="btn-insert" onclick="deleteOne()" style="margin-right:15px;">현재 정보 삭제</button>
+                    <input type="submit" class="btn btn-success" value="산 정보 수정" onClick="location.href='/mountain/admin/update.mnt'">
                 </form>
+                    <button class="btn btn-success" onclick="deleteOne()">현재 정보 삭제</button>
+                	</div>
+                	</div>
                 </c:if>
                <!-- //정보 등록 버튼 end -->
                 </div>
@@ -125,10 +108,20 @@
 
 <script src="../../../resources/js/jquery.js"></script>
 <script  type="text/javascript">
-	//선택된 값 넘기기
-	function deleteOne(){
-        var chkArray = "<c:out value='${mountainBean.mountainnum}'/>"
-        alert(chkArray);
+//선택된 값 넘기기
+function deleteOne(){
+
+	var chkArray = "<c:out value='${mountainBean.mountainnum}'/>"
+	
+	if(!confirm('정말 삭제하시겠습니까?')){
+		//취소를 눌렀을 때
+		//돌아가기
+		return;
+	}else{
+		//확인을 눌렀을 때
+		//delete 컨트롤러로 이동한 후 새로고침
+
+        //alert(chkArray);
         
         //배열을 넘기는 ajax
         $.ajax({
@@ -145,7 +138,8 @@
         	  }
         	});
         window.location.replace("/mountain/all/list.mnt");
-    }
+    }//if~else
+}
 	
 </script>
 <%@ include file="../common/common_bottom.jsp" %>

@@ -46,7 +46,7 @@ public class QnaListController {
 		map.put("keyword", "%"+keyword+"%");
 		
 		//전체 튜플 갯수를 구해 변수에 저장, map에 저장된 조건으로도 검색
-		int totalCount = qdao.getTotalCount(map);
+		int totalCount = qdao.getQnaTotalCount(map);
 		
 		System.out.println("tc:"+totalCount);
 				

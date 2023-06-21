@@ -24,22 +24,21 @@ public class QnaDao {
 		System.out.println("QnaDao() 생성자");
 	}//QnaDao 생성자 end
 	
-	//전체 갯수 구하기
-	public int getTotalCount(Map<String, String> map) {
-		int cnt = 1;
-		//int cnt = sqlSessionTemplate.selectOne(namespace+".GetTotalCount",map);
-		//cnt = sqlSessionTemplate.selectOne("GetTotalCount",map);
-		return cnt;
-	}//getTotalCount end
-
 	//전체 목록 구하기
 	public List<QnaBean> getAllQna(Map<String, String> map, Paging pageInfo) {
 		RowBounds rowBounds = new RowBounds(pageInfo.getOffset(), pageInfo.getLimit());
-		//List<QnaBean> qnaList = sqlSessionTemplate.selectList(namespace+".GetAllQna",map,rowBounds);
 		List<QnaBean> qnaList = sqlSessionTemplate.selectList("GetAllQna",map,rowBounds);
 		System.out.println("dao qnsList : "+qnaList);
 		return qnaList;
 	}//getAllQna end
+	
+	//전체 갯수 구하기
+	public int getQnaTotalCount(Map<String, String> map) {
+		int cnt = 0;
+		cnt = sqlSessionTemplate.selectOne("GetQnaTotalCount",map);
+		System.out.println("cnt : "+cnt);
+		return cnt;
+	}//getQnaTotalCount end
 
 	//새로운 qna 삽입
 	public int insertQuestion(QnaBean qnaBean) {

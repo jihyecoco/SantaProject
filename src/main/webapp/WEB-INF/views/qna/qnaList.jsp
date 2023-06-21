@@ -13,7 +13,6 @@
 		  margin-bottom: -16px;
 		}
 		.panel-faq-title {
-		  color: #00eaea;
 		  cursor: pointer;
 		}
 		.panel-faq-answer {
@@ -22,34 +21,6 @@
 		  /* 변화가 시작되는 쪽에다가 transition 적용해준다 0 -> 300px 
 		  왜? 닫기 버튼을 누를 때 변화가 티남 */
 		  transition: all 1s;
-		}
-		#btn-all-close {
-		  margin-bottom: 10px;
-		  background-color: #726996;
-		  border: none;
-		  color: #fff;
-		  cursor: pointer;
-		  padding: 10px 25px;
-		  float: right;
-		}
-		#btn-all-close:hover {
-		  background-color: yellow;
-		  color: #000;
-		  transition: all 0.35s;
-		}
-		#btn-insert {
-		  margin-bottom: 10px;
-		  background-color: #726996;
-		  border: none;
-		  color: #fff;
-		  cursor: pointer;
-		  padding: 10px 25px;
-		  float: right;
-		}
-		#btn-insert:hover {
-		  background-color: yellow;
-		  color: #000;
-		  transition: all 0.35s;
 		}
 		.activeList {
 		  display: block;
@@ -65,71 +36,58 @@
     <div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container text-center py-5">
             <h1 class="display-3 text-white mb-4 animated slideInDown">QnA</h1>
-            <nav aria-label="breadcrumb animated slideInDown">
-                <ol class="breadcrumb justify-content-center mb-0">
-                    <li class="breadcrumb-item"><a href="/users/all/main.lg">Home</a></li>
-                    <li class="breadcrumb-item" aria-current="page">QnA</li>
-                </ol>
-            </nav>
         </div>
     </div>
     <!-- Page Header End -->
-	
-    <!-- Qna Start -->
-    	<!-- qna 검색 -->
-    	<div class="container">
-    		<form action="/qna/all/list.qna" method="get">
-    				<!-- 검색할 카테고리 -->
-    				<select name="whatColumn" class="form-select btn-primary py-2 position-relative top-0 start-0 mt-2 me-2" style="width:8%;display:inline-block;">
-	    				<option value="">전체</option>
-	    				<option value="계정">계정</option>
-	    				<option value="크루">크루</option>
-	    				<option value="게시판">게시판</option>
-	    				<option value="거래/나눔">거래/나눔</option>
-	    				<option value="기타">기타</option>
-    				</select>
-    				<!-- //검색할 카테고리 -->
-    				<!-- 검색할 키워드 -->
-    				<div class="position-relative w-25" style="display:inline-block;">
-                	<input name="keyword" type="text" class="form-control bg-light border-light w-100 py-2 ps-4 pe-5">
-                	<input value="검색" type="submit" class="btn btn-primary py-1 position-absolute top-0 end-0 mt-1 me-2">
-                	<!-- <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">검색</button> -->
-                	</div>
-    				<!-- //검색할 키워드 -->
-    		</form>
-    	</div>
-    	<!-- //qna 검색 -->
     	
     	<!-- qna 목록 -->
-		<div class="container">
-    	<br>
-		<table id="qna-table" class="table table-bordered table-striped table-dark table-hover">
-			<thead class="thead-light text-center">
-        		<tr>
-        			<th>No</th>
-        			<th>Category</th>
-        			<th>QnA Title</th>
-        			<th>ID</th>
-        			<th>Date</th>
+	    <div class="container-fluid py-5">
+	        <div class="container">
+	            <div class="text-center mx-auto" style="max-width: 500px;">
+	                <h1 class="display-5 mb-5">Q&A</h1>
+	            </div>
+		 				<!-- 검색창 -->
+				            <nav class="navbar navbar-light bg-light">
+				  				<div class="container" style="display:table-cell; vertical-align:middle;">
+				   				 	<form class="d-flex" action="/qna/all/list.qna" method="get">
+				   				 		<div class="col-sm-2">
+					   				 		<select name="whatColumn" class="form-select">
+							    				<option value="">전체</option>
+							    				<option value="제목">제목</option>
+							    				<option value="카테고리">카테고리</option>
+							    				<option value="아이디">아이디</option>
+					   				 		</select>
+				   				 		</div>
+				   				 		<div class="col-sm-8">
+				     						<input class="form-control me-2" type="text" name="keyword">
+				      					</div>
+				      					<div class="col-sm-2" align="center">
+				      						<button class="btn btn-outline-success" type="submit">Search</button>
+				      					</div>
+				    				</form>
+				 			 	</div>
+							</nav>
+							<br>
+				 <!-- //검색창 -->
+		
+		<table id="qna-table" class="table table-hover table-borded" border="1">
+			<thead>
+        		<tr align="center">
+        			<th>번호</th>
+        			<th>카테고리</th>
+        			<th>질문 제목</th>
+        			<th>작성자</th>
+        			<th>날짜</th>
         		</tr>
 			</thead>
-			<tbody class="text-center">
+			<tbody>
 			<c:forEach var="i" begin="0" end="${fn:length(qnaLists)-1}">
 			<tr>
 				<td>${qnaLists[i].qnanum}</td>
 				<td>${qnaLists[i].qnacategory}</td>
 				<td class="text-left" width="50%">
 				<div class="panel-faq-container">
-					<p class="panel-faq-title">
-					
-					<!-- 비밀글이면 -->
-					<c:if test="${qnaLists[i].qnasecret==1}">
-						<!-- 자물쇠 이미지 출력 -->
-						<img src="<%=request.getContextPath()%>/resources/images/icon/lock_16x.png">
-					</c:if>
-					<!-- 비밀글 출력 end -->
-					
-					${qnaLists[i].qnasubject}</p>
+					<p class="panel-faq-title">${qnaLists[i].qnasubject}</p>
 					<div class="panel-faq-answer">
 						<p>Q : ${qnaLists[i].qnaquestion}</p>
 						<c:set var="imageall" value="${fn:split((qnaLists[i].qnaimage),',')}"/>
@@ -146,17 +104,17 @@
 						<c:choose>
 						<c:when test="${principal.getName() == 'admin'}">
 							<c:set var="qnanum" value="${qnaLists[i].qnanum}"/>
-							<button class="btn btn-primary" onClick="deleteQna()">질문삭제</button>
+							<button class="btn btn-success" onClick="deleteQna()">질문삭제</button>
 							<c:if test="${qnaLists[i].qnaanswer == null}">
-    							<button class="btn btn-primary" onClick="location.href='/qna/admin/insertAnswer.qna?qnanum=${qnaLists[i].qnanum}&pageNumber=${pageNumber}'">답변등록/수정</button>
+    							<button class="btn btn-success" onClick="location.href='/qna/admin/insertAnswer.qna?qnanum=${qnaLists[i].qnanum}&pageNumber=${pageNumber}'">답변등록/수정</button>
 							</c:if>
 						</c:when>
 						<c:when test="${principal.getName() == qnaLists[i].usersid}">
 							<c:if test="${qnaLists[i].qnaanswer == null}">
 							<form action="/qna/user/update.qna" method="get">
 								<input type="hidden" name="qnanum" value="${qnaLists[i].qnanum}">
-    							<input type="submit" value="질문수정" class="btn btn-primary">
-    							<button class="btn btn-primary" onClick="deleteQna()">질문삭제</button>
+    							<input type="submit" value="질문수정" class="btn btn-success">
+    							<button class="btn btn-success" onClick="deleteQna()">질문삭제</button>
 							</form>
 							</c:if>
 						</c:when>
@@ -167,26 +125,35 @@
 				</td>
           		<td>${qnaLists[i].usersid}</td>
           		<td>
-          			<fmt:formatDate var="fdate" value="${qnaLists[i].qnadate}" pattern="yyyy-MM-dd HH:mm"/>
+          			<fmt:formatDate var="fdate" value="${qnaLists[i].qnadate}" pattern="yyyy-MM-dd"/>
           			${fdate }
           		</td>
         	</tr>
 			</c:forEach>
-			<tr class="bg-info">
+			<tr>
 				<td colspan=4 class="text-left">QnA 총 합계</td>
 				<td>${pageInfo.totalCount }</td>
 			</tr>
 			</tbody>
 		</table>
+		<!-- 페이지 표시 -->
+		<div align="center">
+		 	${pageInfo.pagingHtml}
+		</div>
+		<!-- //페이지 표시 -->
     	<!-- 모두 닫기/질문 등록 버튼 -->
-        <button id="btn-all-close" style="margin-left: 5px;">QnA ALL Close</button>
-        <button id="btn-insert" onClick="location.href='/qna/user/insertQuestion.qna'">질문등록</button>
+    	<div class="container">
+    	<div align="right">
+        <button id="btn-all-close" class="btn btn-success">Q&A 모두 닫기</button>
+        <button class="btn btn-success" onClick="location.href='/qna/user/insertQuestion.qna'">질문등록</button>
+        </div>
+        </div>
     	<!-- //모두 닫기/질문 등록 버튼 -->
 		</div>
     	<!-- //qna 목록 -->
-    	<!-- Qna End -->
-    	
-		<script type="text/javascript">
+    	</div>
+
+<script type="text/javascript">
 			window.onload = () => {
 		  // panel-faq-container
 		  const panelFaqContainer = document.querySelectorAll(".panel-faq-container"); // NodeList 객체
@@ -216,7 +183,7 @@
 			function deleteQna(){
 				var qnanum = "<c:out value='${qnanum}'/>";
 				
-				if(!confirm('해당 글을 삭제하시겠습니까?')){
+				if(!confirm('정말 삭제하시겠습니까?')){
 					//취소를 눌렀을 때
 					//돌아가기
 					return;
@@ -226,7 +193,7 @@
 					location.href="/qna/user/deleteQna.qna?qnanum="+qnanum+"&pageNumber=${pageNumber}";
 				}//if~else
 			}//deleteqna end
-		
-    </script>
+
+</script>
 <%@ include file="../common/common_bottom.jsp" %>
 </html>

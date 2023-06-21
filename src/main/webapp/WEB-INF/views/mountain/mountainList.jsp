@@ -6,31 +6,11 @@
 	th, td {
 	  text-align: center;
 	}
-	#btn-insert {
-		  margin-bottom: 10px;
-		  background-color: #348e38;
-		  border: none;
-		  color: #fff;
-		  cursor: pointer;
-		  padding: 10px 25px;
-		  float: right;
-		}
-		#btn-insert:hover {
-		  background-color: yellow;
-		  color: #000;
-		  transition: all 0.35s;
-		}
 </style>
     <!-- Page Header Start -->
     <div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container text-center py-5">
             <h1 class="display-3 text-white mb-4 animated slideInDown">산별정보</h1>
-            <nav aria-label="breadcrumb animated slideInDown">
-                <ol class="breadcrumb justify-content-center mb-0">
-                    <li class="breadcrumb-item"><a href="/users/all/main.lg">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">산별정보</li>
-                </ol>
-            </nav>
         </div>
     </div>
     <!-- Page Header End -->
@@ -41,43 +21,39 @@
     <!-- 산 목록 Start -->
     <div class="container-fluid py-5">
         <div class="container">
-            <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-                <p class="fs-5 fw-bold text-primary">산별정보</p>
+            <div class="text-center mx-auto" style="max-width: 500px;">
                 <h1 class="display-5 mb-5">산 목록</h1>
             </div>
             
-            <div class="row justify-content-center">
-                <div class="col-lg-10">
-                
-                <!-- mountain 검색 Start -->
-			    <div class="container wow fadeInUp">
-			    	<form action="list.mnt" method="get">
-			    		<!-- 검색할 카테고리 -->
-			    		<select name="whatColumn" class="form-select btn-primary py-2 position-relative top-0 start-0 mt-2 me-2 mb-3" style="width:8%;margin-left:-20px;display:inline-block;">
-				    		<option value="">전체</option>
-				    		<option value="이름">이름</option>
-				    		<option value="내용">내용</option>
-				    		<option value="지역">지역</option>
-			    		</select>
-			    		<!-- //검색할 카테고리 -->
-			    		<!-- 검색할 키워드 -->
-			    		<div class="position-relative w-25" style="display:inline-block;">
-			                <input name="keyword" type="text" class="form-control bg-light border-light w-100 py-2 ps-4 pe-5">
-			                <input value="검색" type="submit" class="btn btn-primary py-1 position-absolute top-0 end-0 mt-1 me-2">
-			                <!-- <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">검색</button> -->
-			            </div>
-			    		<!-- //검색할 키워드 -->
-			    	</form>
-			    </div>
-			    <!-- //mountain 검색 End -->
+                <!-- 검색창 -->
+				            <nav class="navbar navbar-light bg-light">
+				  				<div class="container" style="display:table-cell; vertical-align:middle;">
+				   				 	<form class="d-flex" action="/mountain/all/list.mnt" method="get">
+				   				 		<div class="col-sm-2">
+					   				 		<select name="whatColumn" class="form-select">
+					   				 			<option value="">전체</option>
+					   				 			<option value="이름">이름</option>
+					   				 			<option value="내용">내용</option>
+					   				 			<option value="지역">지역</option>
+					   				 		</select>
+				   				 		</div>
+				   				 		<div class="col-sm-8">
+				     						<input class="form-control me-2" type="text" name="keyword">
+				      					</div>
+				      					<div class="col-sm-2" align="center">
+				      						<button class="btn btn-outline-success" type="submit">Search</button>
+				      					</div>
+				    				</form>
+				 			 	</div>
+							</nav>
+							<br>
+				 <!-- //검색창 -->
 			    
-                    <div class="bg-light rounded p-4 p-sm-5 wow fadeInUp" id="reloadpart" data-wow-delay="0.1s">
-                        <div class="row g-3">
-							
                             <!-- 산 목록 Start -->
-							<table class="table table-hover table-borded align-middle">
-							  <thead class="table-light">
-							    <tr>
+                            <div class="container">
+							<table class="table table-hover table-borded" border="1">
+							  <thead>
+							    <tr align="center">
 			                      <c:if test="${principal.getName() == 'admin'}">
 			                      <th><input type="checkbox" class="form-check-input" id="success-outlined" name="selected_all"></th>
 			                      </c:if>
@@ -136,23 +112,28 @@
 							  	</c:forEach>
 							  </tbody>
 							</table>
-                            <!-- //산 목록 End -->
-                            ${pageinfo.pageHtml}
+							</div>
+                            <!-- 페이지 표시 -->
+							<div align="center">
+							 	${pageInfo.pagingHtml}
+							</div>
+							<!-- //페이지 표시 -->
                         </div>
                     <!-- 체크박스의 값을 넘기는 hidden input -->
                     <input type="hidden" name="hiddenValue" id="hiddenValue" value=""/>
                     
                     <!-- 정보 등록 버튼(관리자만 볼 수 있음) -->
                     <c:if test="${principal.getName() == 'admin'}">
-                    	<button id="btn-insert" onClick="location.href='/mountain/admin/insert.mnt'" style="margin-right:-45px;margin-top:67px;">산 정보 등록</button>
-                    	<button id="btn-insert" onclick="fnGetdata()" style="margin-right:15px;margin-top:67px;">선택 정보 삭제</button>
+                    <div class="container">
+    				<div align="right">
+                    	<button class="btn btn-success" onClick="location.href='/mountain/admin/insert.mnt'">산 정보 등록</button>
+                    	<button class="btn btn-success" onclick="fnGetdata()">선택 정보 삭제</button>
+                    </div>
+                    </div>
                     </c:if>
                     <!-- //정보 등록 버튼 end -->
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
+                
     <!-- //산 목록 End -->
 <script src="../../../resources/js/jquery.js"></script>
 <script  type="text/javascript">
@@ -161,7 +142,6 @@
 		$('input[name=selected_one]').prop('checked', this.checked);
 	});
 	
-	//선택된 값 넘기기
 	function fnGetdata(){
         var obj = $("[name=selected_one]");
         var chkArray = new Array(); // 배열 선언
@@ -171,8 +151,13 @@
         });
         $('#hiddenValue').val(chkArray);
         
-        alert($('#hiddenValue').val()); // 아래 체크박스가 모두 체크되어 있다면 1,2,3,4 가 출력 된다.
-        
+        //alert($('#hiddenValue').val()); // 아래 체크박스가 모두 체크되어 있다면 1,2,3,4 가 출력 된다.
+       
+        if(!confirm('정말 삭제하시겠습니까?')){
+    		//취소를 눌렀을 때
+    		//돌아가기
+    		return;
+    	}else{
         //배열을 넘기는 ajax
         $.ajax({
         	  type : 'post',
@@ -188,6 +173,7 @@
         	  }
         	});
         window.location.replace("/mountain/all/list.mnt");
+    	}//if~else
     }
 </script>
 <%@ include file="../common/common_bottom.jsp" %>
