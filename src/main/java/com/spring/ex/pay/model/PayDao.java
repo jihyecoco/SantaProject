@@ -39,4 +39,16 @@ public class PayDao {
 		cnt = sqlSessionTemplate.delete("DeletePay", paynum);
 		return cnt;
 	}
+
+	public List<PayBean> getWaitPay() {
+		List<PayBean> waitPayList = new ArrayList<PayBean>();
+		waitPayList = sqlSessionTemplate.selectList("GetWaitPay");
+		return waitPayList;
+	}
+
+	public int updatePayState(int paynum) {
+		int cnt = -1;
+		cnt = sqlSessionTemplate.update("UpdatePayState", paynum);
+		return cnt;
+	}
 }

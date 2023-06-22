@@ -30,7 +30,7 @@
 		}
 	}
 	
-	/*----------------------------------------------*/
+	/* ---------------------------------------------- */
 	
 	/* 크루이름 중복체크 */
 	$(document).ready(function(){
@@ -188,7 +188,7 @@
                             <!-- 크루설명 -->
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <textarea class="form-control border-0" name="crewcontents" id="crewcontents" placeholder="Gurdian Name" style="height: 100px">${cb.crewcontents}</textarea>
+                                    <textarea class="form-control border-0" name="crewcontents" id="crewcontents" style="height: 100px">${cb.crewcontents}</textarea>
                                     <label for="crewcontents">크루 설명</label>
                                      <form:errors cssClass="err" path="crewcontents"/>
                                 </div>

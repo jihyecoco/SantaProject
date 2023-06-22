@@ -28,12 +28,17 @@
             <a class="dropdown-item" href="/crewboard/all/list.bdcr?whatColumn=1P">플로깅</a>
           </div>
         </li>
+        
+        <!-- 로그인한 상태만 보여짐 -->
+		<sec:authorize access="isAuthenticated()">
       	 <li class="nav-item">
           <a class="nav-link" href="/crew/user/myPage1.cr">내 크루 보기</a>
         </li>
       	 <li class="nav-item">
           <a class="nav-link" href="/crew/user/insert.cr">크루 만들기</a>
         </li>
+        </sec:authorize>
+        <!-- //로그인한 상태만 보여짐 -->
       </ul> 
     </div>
   </nav>

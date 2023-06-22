@@ -15,6 +15,7 @@
 		 <result property="crewnow" column="crew_now"/>
 		 <result property="crewmember" column="crew_member"/>
 		 <result property="crewmanager" column="crew_manager"/>
+		 <result property="regdate" column="reg_date"/>
 	</resultMap>
 	<!-- //resultMapping 설정 -->
 	
@@ -28,8 +29,8 @@
  	점(.)쓰면 에러남
  	Dots are not allowed in element names, please remove it from crew/user/insert.cr -->
  	<insert id="InsertCrew">
- 		insert into crew(large, small, crew_num, crew_name, crew_contents, crew_limit, crew_now, crew_member, crew_manager)
- 		values(#{large}, #{small}, crew_seq.nextval, #{crewname}, #{crewcontents}, #{crewlimit}, 1, #{crewmember}, #{crewmanager})
+ 		insert into crew(large, small, crew_num, crew_name, crew_contents, crew_limit, crew_now, crew_member, crew_manager, reg_date, state)
+ 		values(#{large}, #{small}, crew_seq.nextval, #{crewname}, #{crewcontents}, #{crewlimit}, 1, #{crewmember}, #{crewmanager}, sysdate, 0)
  	</insert>
  	
 
@@ -82,7 +83,7 @@
  	
  	<select id="GetMyPageCrew" resultMap="crewMap">
  		select * from crew
- 		where crew_manager like #{loginId}
+ 		where crew_manager = #{loginId}
  		<if test = "large == 1">
  			and large = 1
  		</if>
@@ -100,5 +101,66 @@
  		<if test = "large == 2">
  			and large = 2
  		</if>
+ 	</select>
+ 	
+ 	<select id="Get1DayCrew" resultMap="crewMap">
+ 		select * from crew where large = 1
+ 		<if test='small == "M"'>
+ 			and small = 'M'
+	 		<if test='whatColumn == "crewname"'>
+	 			and crew_name like #{keyword}
+	 		</if>
+	 		<if test='whatColumn == "crewmanager"'>
+	 			and crew_manager like #{keyword}
+	 		</if>
+ 		</if>
+ 		
+ 		<if test='small == "P"'>
+ 			and small = 'P'
+	 		<if test='whatColumn == "crewname"'>
+		 		and crew_name like #{keyword}
+		 	</if>
+		 	<if test='whatColumn == "crewmanager"'>
+		 		and crew_manager like #{keyword}
+		 	</if>
+ 		</if>
+ 		
+ 		<if test='whatColumn == "crewname"'>
+		 	and crew_name like #{keyword}
+		</if>
+		<if test='whatColumn == "crewmanager"'>
+		 	and crew_manager like #{keyword}
+		</if>
+ 	</select>
+ 	
+ 	
+ 	<select id="GetRegularCrew" resultMap="crewMap">
+ 		select * from crew where large = 2
+ 		<if test='small == "M"'>
+ 			and small = 'M'
+	 		<if test='whatColumn == "crewname"'>
+	 			and crew_name like #{keyword}
+	 		</if>
+	 		<if test='whatColumn == "crewmanager"'>
+	 			and crew_manager like #{keyword}
+	 		</if>
+ 		</if>
+ 		
+ 		<if test='small == "P"'>
+ 			and small = 'P'
+	 		<if test='whatColumn == "crewname"'>
+		 		and crew_name like #{keyword}
+		 	</if>
+		 	<if test='whatColumn == "crewmanager"'>
+		 		and crew_manager like #{keyword}
+		 	</if>
+ 		</if>
+ 		
+ 		<if test='whatColumn == "crewname"'>
+		 	and crew_name like #{keyword}
+		</if>
+		<if test='whatColumn == "crewmanager"'>
+		 	and crew_manager like #{keyword}
+		</if>
  	</select>
  </mapper>

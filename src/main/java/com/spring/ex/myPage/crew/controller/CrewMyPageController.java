@@ -31,7 +31,8 @@ public class CrewMyPageController {
 		String loginId = principal.getName(); // 내 아이디
 		
 		Map<String, Object> map = new HashMap<String,Object>();
-		map.put("loginId","%"+loginId+"%");
+		map.put("loginId",loginId);
+		//map.put("loginId","%"+loginId+"%");
 		map.put("large",1); // 1일 크루임을 분류
 		
 		
@@ -54,7 +55,8 @@ public class CrewMyPageController {
 		String loginId = principal.getName(); // 내 아이디
 		
 		Map<String, Object> map = new HashMap<String,Object>();
-		map.put("loginId","%"+loginId+"%");
+		map.put("loginId",loginId);
+		//map.put("loginId","%"+loginId+"%");
 		map.put("large",2); // 정기 크루임을 분류
 		
 		List<CrewBean> myCrewList = cdao.getMyPageCrew(map); // 내가 만든 크루 목록

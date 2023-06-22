@@ -1,5 +1,7 @@
 package com.spring.ex.crew.model;
 
+import java.sql.Date;
+
 import javax.validation.constraints.Min;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -25,7 +27,21 @@ public class CrewBean {
 	private int crewnow;
 	private String crewmember;
 	private String crewmanager;
+	private Date regdate;
+	private int state;
 	
+	public Date getRegdate() {
+		return regdate;
+	}
+	public void setRegdate(Date regdate) {
+		this.regdate = regdate;
+	}
+	public int getState() {
+		return state;
+	}
+	public void setState(int state) {
+		this.state = state;
+	}
 	public int getLarge() {
 		return large;
 	}

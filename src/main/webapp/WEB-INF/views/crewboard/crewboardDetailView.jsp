@@ -435,7 +435,7 @@
 		    
 		    <div class="card mb-2">
 			<div class="card-header bg-light">
-			        <i class="fa fa-comment fa"></i> REPLY
+			        <i class="fa fa-comment fa"></i> Comments
 			</div>
 			<div class="card-body">
 				<ul class="list-group list-group-flush">
@@ -455,7 +455,7 @@
 					</div>
 					<!-- //비밀댓글 -->
 					
-					<input type="submit" class="btn btn-success" value="post reply" onclick="javascript:return comments_check(comments_form)">
+					<input type="submit" class='btn btn-light' value="댓글달기" onclick="javascript:return comments_check(comments_form)">
 				    </li>
 				</ul>
 			</div>

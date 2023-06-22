@@ -156,7 +156,7 @@
 	    					<c:if test="${lists.small == 'M'}">등산</c:if>
 	    					<c:if test="${lists.small == 'P'}">플로깅</c:if>
 	    				</td>
-	    				<td width="40%">
+	    				<td width="40%" align="left">
 	    					<a href="/crewboard/user/detail.bdcr?num=${lists.crewboardnum}&pageNumber=${pageInfo.pageNumber}">${lists.subject} (${lists.comments})</a>
 	    				</td>
 	    				<td>
