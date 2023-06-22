@@ -10,6 +10,16 @@
 
 	<div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample10">
 		<ul class="navbar-nav">
+			<!-- admin -->
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="dropdown10"
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">관리자 관리</a>
+				<div class="dropdown-menu" aria-labelledby="dropdown10">
+					<a class="dropdown-item" href="/admin/admin/adminList.us">관리자 조회</a>
+					<a class="dropdown-item" href="/admin/admin/adminInsertForm.us">관리자 등록</a>
+				</div>
+			</li>
+			<!-- //admin -->
 			<!-- users -->
 			<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="#" id="dropdown10"
