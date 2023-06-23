@@ -34,12 +34,6 @@ public class PayDao {
 		return myPayList;
 	}
 
-	public int deletePay(int paynum) {
-		int cnt = -1;
-		cnt = sqlSessionTemplate.delete("DeletePay", paynum);
-		return cnt;
-	}
-
 	public List<PayBean> getWaitPay() {
 		List<PayBean> waitPayList = new ArrayList<PayBean>();
 		waitPayList = sqlSessionTemplate.selectList("GetWaitPay");
@@ -50,5 +44,29 @@ public class PayDao {
 		int cnt = -1;
 		cnt = sqlSessionTemplate.update("UpdatePayState", paynum);
 		return cnt;
+	}
+
+	public List<PayBean> getFinishPay() {
+		List<PayBean> finishPayList = new ArrayList<PayBean>();
+		finishPayList = sqlSessionTemplate.selectList("GetFinishPay");
+		return finishPayList;
+	}
+
+	public int updatePayStateByMySelf(int paynum) {
+		int cnt = -1;
+		cnt = sqlSessionTemplate.update("UpdatePayStateByMySelf", paynum);
+		return cnt;
+	}
+
+	public int updatePayStateByAdmin(int paynum) {
+		int cnt = -1;
+		cnt = sqlSessionTemplate.update("UpdatePayStateByAdmin", paynum);
+		return cnt;
+	}
+
+	public List<PayBean> getCancelPay() {
+		List<PayBean> cancelPayList = new ArrayList<PayBean>();
+		cancelPayList = sqlSessionTemplate.selectList("GetCancelPay");
+		return cancelPayList;
 	}
 }

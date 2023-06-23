@@ -8,6 +8,8 @@
         <div class="container">
             <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
                 <h1 class="display-5 mb-5">나의 판매 거래 내역</h1>
+                <h5>내 포인트 : <fmt:formatNumber value="${Mypoint}" pattern="###,###"/> point</h5>
+                <br><br><br>
             </div>
             <div class="row justify-content-center">
                 <div class="col-lg-7 mx-auto">
@@ -37,7 +39,7 @@
 	                         					<td><a href="/products/user/detail.prd?num=${sell_prd_list.productsnum}">${sell_prd_list.name}</a></td>
 	                         					<td><fmt:formatNumber value="${sell_prd_list.price}" pattern="###,###" />원</td>
 	                         					<td>${sell_prd_list.buyer}</td>
-	                         					<td>
+	                         					<td align="left">
 	                         						<c:if test="${sell_prd_list.paystate == 0}">
 	                         							승인 대기중
 	                         						</c:if>

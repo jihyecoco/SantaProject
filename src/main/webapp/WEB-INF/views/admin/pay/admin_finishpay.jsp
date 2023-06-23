@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file ="../../common/common_top.jsp" %>
 <%@ include file ="../../common/common_nav_admin.jsp" %>
+
 	<div class="container-fluid py-5">
         <div class="container">
             <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
@@ -15,31 +16,28 @@
                          	<table class="table table-hover table-borded align-middle">
                          		<thead>
                          			<tr align="center">
-                         				<th>결제일</th>
+                         				<th>구매자 결제일</th>
+                         				<th>관리자 결제 승인일</th>
                          				<th>상품명</th>
                          				<th>가격</th>
+                         				<th>결제방법</th>
                          				<th>구매자 아이디</th>
-                         				<th>판매자 아이디</th>
-                         				<th>판매자 포인트 지급여부</th>
                          			</tr>
                          		</thead>
-                         			<c:if test="${paylist.size() == 0}">
-                         				<td colspan="5" align="center">
+                         			<c:if test="${finish_paylist.size() == 0}">
+                         				<td colspan="6" align="center">
                          					결과가 없습니다.
                          				</td>
                          			</c:if>
-                         			<c:if test="${paylist.size() != 0}">
-                         				<c:forEach var="paylist" items="${paylist}">
+                         			<c:if test="${finish_paylist.size() != 0}">
+                         				<c:forEach var="finish_paylist" items="${finish_paylist}">
                          					<tr align="center">
-	                         					<td>${paylist.regdate}</td>
-	                         					<td>${paylist.prdname}</td>
-	                         					<td>${paylist.price}</td>
-	                         					<td>${paylist.buyer}</td>
-	                         					<td>
-	                         						<input type="button" class="btn btn-secondary btn-sm" value="승인" 
-	                         							onclick="javascript:approval('${paylist.buyer}', '${paylist.prdname}', '${paylist.paynum}')">
-	                         						<input type="button" class="btn btn-secondary btn-sm" value="취소" onclick="javascript:cancel()">
-	                         					</td>
+                         						<td>${finish_paylist.regdate}</td>
+	                         					<td>${finish_paylist.aprvdate}</td>
+	                         					<td>${finish_paylist.prdname}</td>
+	                         					<td><fmt:formatNumber value="${finish_paylist.price}" pattern="###,###"/>원</td>
+	                         					<td>${finish_paylist.payment}</td>
+	                         					<td>${finish_paylist.buyer}</td>
                          					</tr>
                          				</c:forEach>
                          			</c:if>

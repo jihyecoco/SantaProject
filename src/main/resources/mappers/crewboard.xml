@@ -128,4 +128,8 @@
  		where crewboard_num = #{num}
  	</update>
  		
+ 	<delete id="DeleteCrewBoardByAdmin">
+ 		delete crew_board
+ 		where crewboard_num = #{num}
+ 	</delete>
  </mapper>

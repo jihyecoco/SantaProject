@@ -92,9 +92,22 @@ public class UsersBean {
 		this.upload2 = upload2;
 	}
 	
+	
+	// 포인트 적립 관련 추가
+	private int point;
+	
+	public int getPoint() {
+		return point;
+	}
+	
+	public void setPoint(int point) {
+		this.point = point;
+	}
+	
 
 	/*=======================================*/
 	
+
 	//getter & setter
 	public int getUserNum() {
 		return userNum;

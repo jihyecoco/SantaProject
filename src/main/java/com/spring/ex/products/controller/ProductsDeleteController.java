@@ -30,7 +30,7 @@ public class ProductsDeleteController {
 	 */
 	@RequestMapping(value=command, method=RequestMethod.GET)
 	public ModelAndView doAction(@RequestParam("num") int productsnum,
-			@RequestParam("pageNumber") String pageNumber) {
+			@RequestParam(value="pageNumber", required=false) String pageNumber) {
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("pageNumber", pageNumber); // 페이지

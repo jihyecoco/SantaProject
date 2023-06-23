@@ -37,12 +37,18 @@
 	                         					<td>${myPayList.regdate}</td>
 	                         					<td><a href="/products/user/detail.prd?num=${myPayList.prdnum}">${myPayList.prdname}</a></td>
 	                         					<td><fmt:formatNumber value="${myPayList.price}" pattern="###,###" />원</td>
-	                         					<td>
+	                         					<td align="left">
 	                         						<c:if test="${myPayList.state == 0}">
-	                         							<a href="/pay/user/myPage2.pay?num=${myPayList.prdnum}">승인 대기중</a>
+	                         							<a href="/pay/user/myPage2.pay?prdnum=${myPayList.prdnum}&paynum=${myPayList.paynum}">승인 대기중</a>
 	                         						</c:if>
 	                         						<c:if test="${myPayList.state == 1}">
-	                         							<a href="/pay/user/myPage2.pay?num=${myPayList.prdnum}">승인완료 (${myPayList.aprvdate})</a>
+	                         							<a href="/pay/user/myPage2.pay?prdnum=${myPayList.prdnum}&paynum=${myPayList.paynum}">승인완료 (${myPayList.aprvdate})</a>
+	                         						</c:if>
+	                         						<c:if test="${myPayList.state == 2}">
+	                         							<a href="/pay/user/myPage2.pay?prdnum=${myPayList.prdnum}&paynum=${myPayList.paynum}">본인 결제취소 (${myPayList.aprvdate})</a>
+	                         						</c:if>
+	                         						<c:if test="${myPayList.state == 3}">
+	                         							<a href="/pay/user/myPage2.pay?prdnum=${myPayList.prdnum}&paynum=${myPayList.paynum}">관리자 결제취소 (${myPayList.aprvdate})</a>
 	                         						</c:if>
 	                         					</td>
 	                         				</tr>

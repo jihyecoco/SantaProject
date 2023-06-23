@@ -13,6 +13,7 @@ import com.spring.ex.pay.model.PayBean;
 import com.spring.ex.pay.model.PayDao;
 import com.spring.ex.products.model.ProductsBean;
 import com.spring.ex.products.model.ProductsDao;
+import com.spring.ex.users.model.UsersDao;
 
 @Controller
 public class PayMyPageController {
@@ -24,6 +25,9 @@ public class PayMyPageController {
 	
 	@Autowired
 	ProductsDao prd_dao;
+	
+	@Autowired
+	UsersDao u_dao;
 	
 	//마이페이지 nav에서 구매 결제내역 클릭
 	@RequestMapping(command)
@@ -45,14 +49,15 @@ public class PayMyPageController {
 	
 	// 마이페이지 나의 구매 결제내역에서 승인여부 눌렀을때 => pay/payApproval.jsp
 	@RequestMapping(command2)
-	public ModelAndView doAction2(@RequestParam("num") int prd_num) {
+	public ModelAndView doAction2(@RequestParam("prdnum") int prd_num,
+			@RequestParam("paynum") int pay_num) {
 		
 		ModelAndView mav = new ModelAndView();
 		
 		// 결제 내역 & 상품 정보 가져오기
 		PayBean payb = new PayBean();
 		payb.setPrdnum(prd_num);
-		PayBean pay_result = pay_dao.getPayByPrdnum(payb);
+		PayBean pay_result = pay_dao.getPayByPaynum(pay_num);
 		ProductsBean pb = prd_dao.getProductsByNum(prd_num);
 					
 		mav.addObject("pay_result", pay_result);
@@ -77,6 +82,10 @@ public class PayMyPageController {
 		String loginId = principal.getName();
 		List<ProductsBean> sell_prd_list = prd_dao.getSellProductsById(loginId);
 		
+		//내 포인트 가져오기
+		int point = u_dao.getPointByUserId(loginId);
+		
+		mav.addObject("Mypoint", point);
 		mav.addObject("sell_prd_list", sell_prd_list);
 		mav.setViewName(getPage3);
 		

@@ -13,6 +13,16 @@
 			location.href = "/pay/admin/approval.pay?paynum="+paynum;
 		}
 	}
+	
+	/* 취소 버튼 클릭시 */
+	function cancel(id, paynum){
+		var msg = id + "님의 결제를 취소하시겠습니까?";
+		
+		var result = confirm(msg);
+		if(result == true){
+			location.href = "/pay/admin/cancel.pay?paynum="+paynum;
+		}
+	}
 </script>
 <div class="container-fluid py-5">
         <div class="container">
@@ -44,12 +54,12 @@
                          					<tr align="center">
 	                         					<td>${paylist.regdate}</td>
 	                         					<td>${paylist.prdname}</td>
-	                         					<td>${paylist.price}</td>
+	                         					<td><fmt:formatNumber value="${paylist.price}" pattern="###,###"/>원</td>
 	                         					<td>${paylist.buyer}</td>
 	                         					<td>
 	                         						<input type="button" class="btn btn-secondary btn-sm" value="승인" 
 	                         							onclick="javascript:approval('${paylist.buyer}', '${paylist.prdname}', '${paylist.paynum}')">
-	                         						<input type="button" class="btn btn-secondary btn-sm" value="취소" onclick="javascript:cancel()">
+	                         						<input type="button" class="btn btn-secondary btn-sm" value="취소" onclick="javascript:cancel('${paylist.buyer}', '${paylist.paynum}')">
 	                         					</td>
                          					</tr>
                          				</c:forEach>

@@ -265,15 +265,22 @@
 					</table>
                     <!-- //이미지제외 설명 Start -->
                     
-                    <!-- 해당 글 작성자만 보이게 설정 -->
+                    <!-- 해당 글 작성자와 관리자만 보이게 설정 -->
                     <div align="right">
-           			<c:if test="${pb.seller == loginId}">
+           			<c:if test="${pb.seller == loginId || loginId == 'admin'}">
            				<c:if test="${pb.state == 0}"> <input type="button" class="btn btn-success" value="거래완료" onclick="changeState(${pb.productsnum},${pageNumber})"> </c:if>
            				<input type="button" class="btn btn-success" value="수정" onclick="location.href='/products/user/update.prd?num=${pb.productsnum}&pageNumber=${pageNumber}'">
            				<input type="button" class="btn btn-success" value="삭제" onclick="deleteProducts(${pb.productsnum}, ${pageNumber})">
            			</c:if>
-           			<!-- //해당 글 작성자만 보이게 설정 -->
+           			<!-- //해당 글 해당 글 작성자와 관리자 보이게 설정 -->
+           			
            			<input type="button" class="btn btn-success" value="목록" onclick="location.href='/products/all/list.prd?pageNumber=${pageNumber}'">
+           			<!-- 관리자 페이지 목록으로 돌아갈때 -->
+           			<c:if test="${loginId == 'admin'}">
+           				<br><br>
+           				<input type="button" class="btn btn-success" value="관리자 페이지 목록" onclick="location.href='/products/admin/list.prd?pageNumber=${pageNumber}'">
+           			</c:if>
+           			<!-- // 관리자 페이지 목록으로 돌아갈때 -->
                     </div>
                 </div>
                 

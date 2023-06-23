@@ -28,7 +28,7 @@ public class ProductsBean {
 	private int state;
 	private int readcount;
 	
-	// 마이페이지에 승인결제여부, 구매자(DB 컬럼엔 없음)
+	// 마이페이지에 승인결제여부, 구매자(products DB 컬럼엔 없음)
 	private int paystate;
 	private String buyer;
 	
@@ -65,13 +65,19 @@ public class ProductsBean {
 		return upload;
 	}
 	public void setUpload(MultipartFile upload) {
-		System.out.println("setUpload()");
-		this.upload = upload;
-		
-		String fileName = upload.getOriginalFilename();
-		System.out.println("fileName : "+fileName);
-		
-		this.image = fileName;
+		if(upload.isEmpty()) { // 수정시 파일 선택을 안했을때 (기존이미지 그대로 업로드)
+			System.out.println("uploadEmpty()");
+			this.upload = upload;
+			this.image = this.getUpload2();
+		}else {
+			System.out.println("setUpload()");
+			this.upload = upload;
+			
+			String fileName = upload.getOriginalFilename();
+			System.out.println("fileName : "+fileName);
+			
+			this.image = fileName;
+		}
 	}
 	
 	private String upload2; // 수정폼을 띄울때 기존이미지를 담을 변수

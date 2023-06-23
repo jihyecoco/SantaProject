@@ -29,34 +29,40 @@
 		if (parseInt($fileUpload.get(0).files.length) > 4) {
 			alert("이미지는 4개 이하만 올릴 수 있습니다");
 			$("input[type='file']").val('');
+			
+		}else{ // 업로드 개수 제한과 상관없을 때
+			
+			/* 업로드한 이미지 미리보기*/
+			var fileTag = document.querySelector('input[name=upload]');
+			var divTag = document.querySelector('#img_preview');
+			
+			if(fileTag.files.length>0){ // 파일을 올렸을 때
+				
+				divTag.innerHTML = ""; // 원래 이미지 미리보기 삭제하기
+			
+				for(var i=0; i<fileTag.files.length; i++){
+					var reader = new FileReader();
+					reader.onload = function(data){
+						//1. 이미지 태그 만들기
+						var imgTag = document.createElement('img');
+						
+						//2. 이미지 태그에 속성 넣기
+						imgTag.setAttribute('src', data.target.result);
+						imgTag.setAttribute('width', '250');
+						imgTag.setAttribute('height', '150');
+						
+						//3. 이미지 태그 div에 추가하기
+						divTag.appendChild(imgTag);
+					}
+					reader.readAsDataURL(fileTag.files[i]);
+				}//for
+			}//if
+			else{ //취소버튼을 눌렀을 때
+				//div안에 내용 비우기
+				divTag.innerHTML = "";
+			}
 		}
 		
-		/* 업로드한 이미지 미리보기*/
-		var fileTag = document.querySelector('input[name=upload]');
-		var divTag = document.querySelector('#img_preview');
-		
-		if(fileTag.files.length>0){ // 파일을 올렸을 때
-			for(var i=0; i<fileTag.files.length; i++){
-				var reader = new FileReader();
-				reader.onload = function(data){
-					//1. 이미지 태그 만들기
-					var imgTag = document.createElement('img');
-					
-					//2. 이미지 태그에 속성 넣기
-					imgTag.setAttribute('src', data.target.result);
-					imgTag.setAttribute('width', '250');
-					imgTag.setAttribute('height', '150');
-					
-					//3. 이미지 태그 div에 추가하기
-					divTag.appendChild(imgTag);
-				}
-				reader.readAsDataURL(fileTag.files[i]);
-			}//for
-		}//if
-		else{ //취소버튼을 눌렀을 때
-			//div안에 내용 비우기
-			divTag.innerHTML = "";
-		}
 	}
 </script>
 <style>
@@ -134,12 +140,17 @@
                         	<div class="col-12">
 		                    		<div class="mb-2 mx-1"><b>상품 사진 </b></div>
 		                    		<input type="file" class="form-control" multiple="multiple" name="upload" value="${pb.upload}" onchange="filechange()"><br>
-		                    		<input type="hidden" name="upload2" value="${pb.image}"/> <!-- 기존 이미지 -->
+		                    		<input type="hidden" name="upload2" value="${pb.upload2}"/> <!-- 기존 이미지 -->
 		                    		<form:errors cssClass="err" path="image"/>
 	                    		
+		                    		<input type="text" value="${pb.image}">
 		                    		<!-- 이미지 미리보기 -->
 		                    		<div id="img_preview" style="height:300">
-		                    	
+		                    			<!-- 원래 업로드 이미지 보여지기 -->
+		                    			<c:set var="array" value="${fn:split(pb.upload2, ',')}" />
+		                    			<c:forEach var="org_img" items="${array}">
+		                    				<img src="<%=request.getContextPath()%>/resources/images/products/${org_img}" width="250" height="150">
+		                    			</c:forEach>
 		                    		</div>
 		                    		<!-- //이미지 미리보기 -->
 	                		</div>

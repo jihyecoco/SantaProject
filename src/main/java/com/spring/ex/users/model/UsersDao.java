@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.spring.ex.products.model.ProductsBean;
 import com.spring.ex.utility.Paging;
 
 @Component("UsersDao")
@@ -175,6 +176,21 @@ private static final Logger logger = LoggerFactory.getLogger(UsersDao.class);
 		return cnt;
 		
 	}//adminInsert
+	
+	/* 가영 입력 */
+	//updatePoint : 관리자 결제 승인시 판매자 포인트 적립
+	public int updatePoint(ProductsBean prd_bean) {
+		int cnt = -1;
+		cnt = sqlSessionTemplate.update("users.updatePoint", prd_bean);
+		return cnt;
+	}//updatePoint
+
+	//getPoingByUserId : 마이페이지 내 포인트
+	public int getPointByUserId(String UserId) {
+		int point = -1;
+		point = sqlSessionTemplate.selectOne("users.getPointByUserId", UserId);
+		return point;
+	}
 
 
 }//UsersDAO

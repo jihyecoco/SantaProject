@@ -8,7 +8,7 @@ public class PayBean {
 	private String buyer;
 	private String prdname; // 상품명 (DB컬럼에는 없음)
 	private int price;
-	private String state; // 0:승인대기 1:승인완료
+	private String state; // 0:승인대기 1:관리자 승인완료 2:본인 결제취소 3:관리자 결제취소
 	private Date regdate; // 결제일
 	private Date aprvdate; // 관리자 결제승인일
 	private String payment; // 결제 방식

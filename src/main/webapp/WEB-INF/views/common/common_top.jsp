@@ -126,9 +126,10 @@
 					<a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">관리자</a>
              		<div class="dropdown-menu bg-light m-0"> 
 		                <a href="/users/admin/usersList.us" class="dropdown-item">회원 관리</a> 
-		                <a href="#" class="dropdown-item">크루 관리</a>
+		                <a href="/crew/admin/list.cr" class="dropdown-item">크루 관리</a>
 		                <a href="#" class="dropdown-item">산 관리</a>
 		                <a href="#" class="dropdown-item">게시판 관리</a>
+		                <a href="/pay/admin/waitlist.pay" class="dropdown-item">거래 관리</a>
 					</div><!-- //dropdown-menu -->
 				</div>
 				</sec:authorize>				

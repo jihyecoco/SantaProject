@@ -16,7 +16,12 @@
     <div class="container-xxl py-5">
         <div class="container">
             <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-                <p class="fs-5 fw-bold text-primary">정상적으로 결제 완료됐습니다.</p>
+                <p class="fs-5 fw-bold text-primary">
+                	<c:if test="${pay_result.state == 0}">정상적으로 결제 완료됐습니다.</c:if>
+                	<c:if test="${pay_result.state == 1}">정상적으로 결제 승인완료 됐습니다.</c:if>
+                	<c:if test="${pay_result.state == 2}">정상적으로 결제 취소됐습니다.</c:if>
+                	<c:if test="${pay_result.state == 3}">관리자 요청에 따라 결제 취소됐습니다.</c:if>
+                </p>
                 <h1 class="display-5 mb-5">결제 내역</h1>
             </div>
             

@@ -60,8 +60,8 @@ public class PayCancelController {
 		PayBean pay_bean = pay_dao.getPayByPaynum(paynum);
 		int prdnum = pay_bean.getPrdnum(); // 상품번호
 		
-		//pay 삭제
-		int cnt = pay_dao.deletePay(paynum);
+		//pay state 값 변경 (본인취소는 2)
+		int cnt = pay_dao.updatePayStateByMySelf(paynum);
 		if(cnt != -1) { // DB삭제 성공
 			
 			int result = prd_dao.reUpdateProductsState(prdnum); 

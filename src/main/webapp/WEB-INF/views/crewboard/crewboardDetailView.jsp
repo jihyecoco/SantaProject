@@ -349,33 +349,33 @@
            	<!-- 게시글 상세보기 -->
            	<table class="table">
            		<tr>
-           			<td>글 제목</td>
+           			<th width="30%">글 제목</th>
            			<td>${cbb.subject}</td>
            		</tr>
            		<tr>
-           			<td>작성자</td>
+           			<th>작성자</th>
            			<td>${cbb.writer}</td>
            		</tr>
            		<tr>
-           			<td>작성일</td>
+           			<th>작성일</th>
            			<td>
            				<fmt:formatDate value="${cbb.regdate}" type="date" dateStyle="medium" timeStyle="medium" pattern="yyyy-MM-dd hh:mm:ss"/>
            			</td>
            		</tr>
            		<tr>
-           			<td>조회수</td>
+           			<th>조회수</th>
            			<td>${cbb.readcount}</td>
            		</tr>
            		<tr>
-           			<td>크루명</td>
+           			<th>크루명</th>
            			<td>${cbb.crewname}</td>
            		</tr>
            		<tr>
-           			<td>현재 가입인원/정원</td>
+           			<th>현재 가입인원/정원</th>
            			<td>${cbb.crewnow}/${cbb.crewlimit}</td>
            		</tr>
            		<tr align="center">
-           			<td colspan="2">글 내용</td>
+           			<th colspan="2">글 내용</th>
            		</tr>
            		<tr>
            			<td colspan="2" align="center" height="200">

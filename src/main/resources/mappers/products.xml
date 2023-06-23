@@ -49,6 +49,12 @@
  		<if test="whatColumn == 'loginId'">
  			where seller = #{keyword}
  		</if>
+ 		<if test="whatColumn == 'state0'">
+ 			where state = 0
+ 		</if>
+ 		<if test="whatColumn == 'state1'">
+ 			where state = 1
+ 		</if>
  		<if test='whatColumn == "inputdate"'>
  			order by inputdate desc
  		</if>
@@ -106,6 +112,76 @@
  		from products A inner join pay B
  		on A.products_num = B.prd_num
  		where A.kind = 'a' and A.state = 1 and A.seller=#{loginId}
+ 	</select>
+ 	
+ 	<delete id="DeleteProductsByAdmin">
+ 		delete products
+ 		where products_num = #{productsnum}
+ 	</delete>
+ 	
+ 	<select id="GetAllProductsByAdmin" resultMap="productsMap">
+ 		select products_num, kind, name, info, price, image, seller, inputdate, state, readcount,
+ 		(select count(*) from products_comments where idx = products_num) as comments
+		from products
+		<if test='kind == "sell"'>
+			where kind = 'a'
+			<if test="whatColumn == 'name'">
+ 				and name like #{keyword}
+ 			</if>
+ 			<if test="whatColumn == 'seller'">
+ 				and seller = #{keyword}
+ 			</if>
+ 			<if test="whatColumn == 'state0'">
+ 				and state = 0
+ 			</if>
+ 			<if test="whatColumn == 'state1'">
+ 				and state = 1
+ 			</if>
+		</if>
+		<if test='kind == "give"'>
+			where kind = 'b'
+			<if test="whatColumn == 'name'">
+ 				and name like #{keyword}
+ 			</if>
+ 			<if test="whatColumn == 'seller'">
+ 				and seller = #{keyword}
+ 			</if>
+ 			<if test="whatColumn == 'state0'">
+ 				and state = 0
+ 			</if>
+ 			<if test="whatColumn == 'state1'">
+ 				and state = 1
+ 			</if>
+		</if>
+		<if test='kind == "change"'>
+			where kind = 'c'
+			<if test="whatColumn == 'name'">
+ 				and name like #{keyword}
+ 			</if>
+ 			<if test="whatColumn == 'seller'">
+ 				and seller = #{keyword}
+ 			</if>
+ 			<if test="whatColumn == 'state0'">
+ 				and state = 0
+ 			</if>
+ 			<if test="whatColumn == 'state1'">
+ 				and state = 1
+ 			</if>
+		</if>
+		<if test='kind == ""'>
+			<if test="whatColumn == 'name'">
+	 			where name like #{keyword}
+	 		</if>
+			<if test="whatColumn == 'seller'">
+	 			where seller = #{keyword}
+	 		</if>
+	 		<if test="whatColumn == 'state0'">
+	 			where state = 0
+	 		</if>
+	 		<if test="whatColumn == 'state1'">
+	 			where state = 1
+	 		</if>
+		</if>
  	</select>
  	
  </mapper>

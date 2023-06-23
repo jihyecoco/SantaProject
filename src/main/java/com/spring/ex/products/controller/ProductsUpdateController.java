@@ -44,13 +44,14 @@ public class ProductsUpdateController {
 			@RequestParam("num") int productsnum,
 			@RequestParam(value="state", required=false) String state,
 			@RequestParam("pageNumber") String pageNumber) {
-		
+
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("pageNumber", pageNumber); // 페이지
-		
+
 		if(state == null) {
 			System.out.println("글 수정 요청");
 			ProductsBean pb = pdao.getProductsByNum(productsnum); // 해당 products 정보 가져오기
+			pb.setUpload2(pb.getImage()); // 기존이미지 upload2 변수에 넣어놓고 pb 모델설정 하기
 			mav.addObject("pb", pb);
 			mav.setViewName(getPage);
 		}else {
@@ -94,93 +95,107 @@ public class ProductsUpdateController {
 
 		}else { //에러 없음
 			mav.setViewName(gotoPage);
-
-			/* 새로 업로드한 파일명 담기 */
-			List<MultipartFile> fileList = mtfRequest.getFiles("upload");
-			String filename = "";
-
-			for(int i=0 ; i<fileList.size(); i++) {
-				// Bean 변수에 담기위해 파일명 적립
-				if(i == fileList.size()-1) { // 마지막 순서
-					filename += fileList.get(i).getOriginalFilename();
+			/* 이미지 수정안했을 때 */
+			if(pb.getUpload().isEmpty()) {
+				/* 글 수정 */
+				int cnt = pdao.updateProducts(pb); // 글 DB 수정 
+				if(cnt == 1) { // DB 수정 성공
+					System.out.println("거래글 수정 성공");
 				}else {
-					filename += fileList.get(i).getOriginalFilename()+","; 
-				} 
-			}
-			pb.setImage(filename);
-
-			/* 글 수정 */
-			int cnt = pdao.updateProducts(pb); // 글 DB 수정 
-			if(cnt == 1) { // DB 수정 성공
-				System.out.println("거래글 수정 성공");
-
-				// 1. 기존 파일 삭제
-				String uploadpath = request.getRealPath("/resources/images/products"); // 웹 서버 폴더
-				
-				/* 사용자 OS 확인 */
-				String osName = System.getProperty("os.name").toLowerCase();
-				System.out.println("OS name : " + osName);
-		    
-				String str = "";
-				if (osName.contains("win")) 
-				{
-					System.out.println("사용자 OS - Window ");
-					str = "C:/tempUpload";
-				} 
-
-				else if (osName.contains("mac"))   {
-				  	System.out.println("사용자 OS - MAC ");
-				  	str = "/Users/ol7roeo/Documents/tempUpload"; 
-				} 
-				
-				String filePath = servletContext.getRealPath("/resources/images/products");
-				String[] delete_image = pb.getUpload2().split(","); // 여러개 파일 이름 배열로 만들기
-
-				// 파일 삭제 반복문
-				for(int i=0; i<delete_image.length; i++) {
-					File delete_img = new File(filePath + File.separator + delete_image[i]); // 웹서버 폴더 파일 삭제
-					File delete_img_local = new File(str + File.separator + delete_image[i]); // 임시폴더 파일 삭제
-					boolean flag = delete_img.delete();
-					boolean flag2 = delete_img_local.delete();
-					if(flag == true) {
-						System.out.println("웹서버 폴더 파일 삭제성공 ");
-					}else if(flag2 == true) {
-						System.out.println("임시 폴더 파일 삭제성공 ");
-					}
+					System.out.println("거래글 수정 실패");
 				}
-
-
-				//2. 새로운 이미지 업로드 반복문
-				for(int i=0 ; i<fileList.size(); i++) {
-					String originFileName = fileList.get(i).getOriginalFilename(); // 원본 파일 명
-
-					long fileSize = fileList.get(i).getSize(); // 파일 사이즈
-
-					System.out.println("originFileName : " + originFileName);
-					System.out.println("fileSize : " + fileSize);
-
-					String safeFile = uploadpath + File.separator + originFileName;
-
-					File destination = new File(safeFile);
-					File destinateion_local = new File(str + File.separator + originFileName);
-
-					try {
-						fileList.get(i).transferTo(destination); // 웹 서버로 업로드
-
-						FileCopyUtils.copy(destination, destinateion_local); // 웹서버 폴더 => 임시폴더로 복사
-						System.out.println("새로운 이미지 업로드");
-					} catch (IllegalStateException e) {
-						e.printStackTrace();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}// for
-			}// 글 수정 if 끝
-			else { // 글 수정 실패
-				System.out.println("거래글 수정 실패");
-				mav.setViewName(getPage);
 			}
+			
+			/* 이미지 수정했을 때 */
+			else { 
+				/* 새로 업로드한 파일명 담기 */
+				List<MultipartFile> fileList = mtfRequest.getFiles("upload");
+				String filename = "";
+
+				for(int i=0 ; i<fileList.size(); i++) {
+					// Bean 변수에 담기위해 파일명 적립
+					if(i == fileList.size()-1) { // 마지막 순서
+						filename += fileList.get(i).getOriginalFilename();
+					}else {
+						filename += fileList.get(i).getOriginalFilename()+","; 
+					} 
+				}
+				pb.setImage(filename);
+
+				/* 글 수정 */
+				int cnt = pdao.updateProducts(pb); // 글 DB 수정 
+				if(cnt == 1) { // DB 수정 성공
+					System.out.println("거래글 수정 성공");
+
+					// 1. 기존 파일 삭제
+					String uploadpath = request.getRealPath("/resources/images/products"); // 웹 서버 폴더
+
+					/* 사용자 OS 확인 */
+					String osName = System.getProperty("os.name").toLowerCase();
+					System.out.println("OS name : " + osName);
+
+					String str = "";
+					if (osName.contains("win")) 
+					{
+						System.out.println("사용자 OS - Window ");
+						str = "C:/tempUpload";
+					} 
+
+					else if (osName.contains("mac"))   {
+						System.out.println("사용자 OS - MAC ");
+						str = "/Users/ol7roeo/Documents/tempUpload"; 
+					} 
+
+					String filePath = servletContext.getRealPath("/resources/images/products");
+					String[] delete_image = pb.getUpload2().split(","); // 여러개 파일 이름 배열로 만들기
+
+					// 파일 삭제 반복문
+					for(int i=0; i<delete_image.length; i++) {
+						File delete_img = new File(filePath + File.separator + delete_image[i]); // 웹서버 폴더 파일 삭제
+						File delete_img_local = new File(str + File.separator + delete_image[i]); // 임시폴더 파일 삭제
+						boolean flag = delete_img.delete();
+						boolean flag2 = delete_img_local.delete();
+						if(flag == true) {
+							System.out.println("웹서버 폴더 파일 삭제성공 ");
+						}else if(flag2 == true) {
+							System.out.println("임시 폴더 파일 삭제성공 ");
+						}
+					}
+
+
+					//2. 새로운 이미지 업로드 반복문
+					for(int i=0 ; i<fileList.size(); i++) {
+						String originFileName = fileList.get(i).getOriginalFilename(); // 원본 파일 명
+
+						long fileSize = fileList.get(i).getSize(); // 파일 사이즈
+
+						System.out.println("originFileName : " + originFileName);
+						System.out.println("fileSize : " + fileSize);
+
+						String safeFile = uploadpath + File.separator + originFileName;
+
+						File destination = new File(safeFile);
+						File destinateion_local = new File(str + File.separator + originFileName);
+
+						try {
+							fileList.get(i).transferTo(destination); // 웹 서버로 업로드
+
+							FileCopyUtils.copy(destination, destinateion_local); // 웹서버 폴더 => 임시폴더로 복사
+							System.out.println("새로운 이미지 업로드");
+						} catch (IllegalStateException e) {
+							e.printStackTrace();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}// for
+				}// 글 수정 if 끝
+				else { // 글 수정 실패
+					System.out.println("거래글 수정 실패");
+					mav.setViewName(getPage);
+				}
+			}// 이미지 수정안함 else
 		}// 에러없음 else
+
 		return mav;
 	}
 }

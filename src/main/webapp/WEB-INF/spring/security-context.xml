@@ -40,6 +40,7 @@
 		<intercept-url pattern="/boardcomments/all/**"  			access="permitAll" />
 		<intercept-url pattern="/notice/all/**" 					access="permitAll" />
 		<intercept-url pattern="/suppoters/all/**" 					access="permitAll" />
+		<intercept-url pattern="/pay/all/**" 						access="permitAll" />
 		
 		<intercept-url pattern="/login/**" 							access="permitAll" />		
 		
@@ -57,6 +58,7 @@
 		<intercept-url pattern="/stamp/user/**" 					access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
 		<intercept-url pattern="/heart/user/**" 					access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
 		<intercept-url pattern="/bookmark/user/**" 					access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
+		<intercept-url pattern="/pay/user/**" 						access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
 		
 		<intercept-url pattern="/admin/admin/**" 					access="hasRole('ROLE_ADMIN')" />
 		<intercept-url pattern="/users/admin/**" 					access="hasRole('ROLE_ADMIN')" />
@@ -66,6 +68,7 @@
 		<intercept-url pattern="/board/admin/**" 					access="hasRole('ROLE_ADMIN')" />
 		<intercept-url pattern="/notice/admin/**" 					access="hasRole('ROLE_ADMIN')" />
 		<intercept-url pattern="/suppoters/admin/**" 				access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/pay/admin/**" 						access="hasRole('ROLE_ADMIN')" />
 		
 		<intercept-url pattern="/**" 								access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
 		

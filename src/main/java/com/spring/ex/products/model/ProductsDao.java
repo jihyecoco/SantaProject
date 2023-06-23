@@ -85,4 +85,21 @@ public class ProductsDao {
 		return sell_prd_list;
 	}
 	
+	// 관리자 페이지에서 다중삭제
+	public int deleteProductsByAdmin(String[] productsnum) {
+		int cnt = -1;
+		for(int i=0; i<productsnum.length; i++) {
+			cnt += sqlSessionTemplate.delete("DeleteProductsByAdmin", productsnum[i]);
+		}
+		return cnt;
+	}
+
+	public List<ProductsBean> getAllProductsByAdmin(Map<String, Object> map, Paging pageInfo) {
+		List<ProductsBean> plist = new ArrayList<ProductsBean>();
+		//plist = sqlSessionTemplate.selectList(namespace+".GetAllProducts");
+		RowBounds rowBounds = new RowBounds(pageInfo.getOffset(), pageInfo.getLimit());
+		plist = sqlSessionTemplate.selectList("GetAllProductsByAdmin", map , rowBounds);
+		return plist;
+	}
+	
 }

@@ -90,6 +90,14 @@ public class CrewBoardDao {
 		}
 		return result;
 	}
+
+	public int deleteCrewboardByAdmin(String[] num) {
+		int cnt = -1;
+		for(int i=0; i<num.length; i++) {
+			cnt += sqlSessionTemplate.delete("DeleteCrewBoardByAdmin", num[i]);
+		}
+		return cnt;
+	}
 	
 	
 }
