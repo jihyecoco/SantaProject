@@ -1,24 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!-- stampCertList.jsp -->
-<%@ include file="../common/common_top.jsp" %>
+	pageEncoding="UTF-8"%>
+<%@ include file="../common/common_top.jsp"%>
+<%@ include file="../common/common_nav_admin.jsp"%>
+<script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/jquery.js"></script>
+<script type="text/javascript">
+</script>
 <style>
 	th, td {
 	  text-align: center;
 	}
 </style>
-	<!-- Page Header Start -->
-    <div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
-        <div class="container text-center py-5">
-            <h1 class="display-3 text-white mb-4 animated slideInDown">완등내역 관리</h1>
-        </div>
-    </div>
-    <!-- Page Header End -->
     
     <!-- 산 목록 Start -->
         <div class="container">
             <div class="text-center mx-auto" style="max-width: 500px;">
-                <h1 class="display-5 mb-5">완등내역 관리</h1>
+                <h1 class="display-5 mt-5 mb-5">완등내역 관리</h1>
             </div>
             
                  <!-- 검색창 -->
@@ -54,6 +50,7 @@
 							      <th scope="col">인증신청 산 번호</th>
 							      <th scope="col">인증사진 확인</th>
 							      <th scope="col">인증상태</th>
+							      <th scope="col">거절사유</th>
 							    </tr>
 							  </thead>
 							  <tbody>
@@ -74,13 +71,23 @@
 							    	${applyCount}</td>
 							      <td>${sl.mountainnum}</td>
 							      <td>
-							      <a href="#"><img alt="돋보기" src="<%=request.getContextPath()%>/resources/images/icon/detailview.png"></a>
+							      <a href="/stamp/admin/admincertimage.stp?stampnum=${sl.stampnum}" target="_blank" onClick="window.open(this.href, '_blank', 'width=800, height=600'); return false;">
+							      <img alt="돋보기" src="<%=request.getContextPath()%>/resources/images/icon/detailview.png">
+							      </a>
 							      </td>
 							      <td>
-									<select id="stampapply" class="form-select" onChange="updateApply('${sl.stampnum}')">
+									<select id="stampapply${sl.stampnum}" class="form-select" onChange="updateApply('${sl.stampnum}')">
 										<option value="0" <c:if test="${sl.stampapply == 0}">selected</c:if>>대기</option>
 										<option value="1" <c:if test="${sl.stampapply == 1}">selected</c:if>>승인</option>
 										<option value="2" <c:if test="${sl.stampapply == 2}">selected</c:if>>거절</option>
+									</select>
+								  </td>
+								  <td>
+								  	<select id="stampreject${sl.stampnum}" class="form-select" onChange="updateReject('${sl.stampnum}')" <c:if test="${sl.stampapply != 2}">disabled</c:if>>
+										<option value="0" <c:if test="${sl.stampreject == 0}">selected</c:if>>거절사유 선택</option>
+										<option value="1" <c:if test="${sl.stampreject == 1}">selected</c:if>>사진 부적합</option>
+										<option value="2" <c:if test="${sl.stampreject == 2}">selected</c:if>>존재하지 않는 산 이름</option>
+										<option value="3" <c:if test="${sl.stampreject == 3}">selected</c:if>>기타</option>
 									</select>
 								  </td>
 							    </tr>
@@ -97,13 +104,37 @@
     <!-- //완등내역 End -->
     <script>
     	function updateApply(stampnum){
-    		var selector = document.getElementById('stampapply');
-    		
+
+    		var selector = document.getElementById('stampapply'+stampnum);
     		var selectItem = selector.options[selector.selectedIndex].value;
-    		
+
     		console.log(selectItem+","+stampnum);
     		
-    		location.href='/stamp/admin/update.stp?stampapply='+selectItem+'&stampnum='+stampnum;
+    		if(confirm('인증 상태를 정말 바꾸시겠습니까?')){
+	    		location.href='/stamp/admin/updateapply.stp?stampapply='+selectItem+'&stampnum='+stampnum;	
+    		}else{
+    			return;
+    		}
+    		
+    	}
+
+    	function updateReject(stampnum){
+    		
+    		var selector = document.getElementById('stampreject'+stampnum);
+    		var selectItem = selector.options[selector.selectedIndex].value;
+
+    		console.log(selectItem+","+stampnum);
+    		
+    		if(selectItem == 0){
+    			alert('거절사유를 선택하세요.');
+    			return;
+    		}
+    		
+    		if(confirm('거절 사유를 정말 바꾸시겠습니까?')){
+    		location.href='/stamp/admin/updatereject.stp?stampreject='+selectItem+'&stampnum='+stampnu;
+    		}else{
+    			return;
+    		}
     	}
     </script>
 <%@ include file="../common/common_bottom.jsp" %>

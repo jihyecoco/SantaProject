@@ -31,7 +31,7 @@ public class QnaInsertQuestionController {
 	
 	//요청 값을 담은 변수
 	private final String command = "/qna/user/insertQuestion.qna";
-	//이동할 jsp 페이지 변수 
+	//이동할 jsp 페이지 변수
 	private String getPage = "/qna/qnaInsertQuestionForm";
 	//redirect할 요청 변수
 	private String gotoPage = "redirect:/qna/all/list.qna";
@@ -107,52 +107,59 @@ public class QnaInsertQuestionController {
 			
 			//웹서버 폴더
 			String uploadPath = request.getRealPath("/resources/images/qna");
-			//민지_임시폴더
-			String str = "C:/tempUpload";
+
+			/* 사용자 OS 확인 */
+			String osName = System.getProperty("os.name").toLowerCase();
+			System.out.println("OS name : " + osName);
+	    
+			String str = "";
+			if (osName.contains("win")) 
+			{
+				System.out.println("사용자 OS - Window ");
+				str = "C:/tempUpload";
+			} 
+
+			else if (osName.contains("mac"))   {
+			  	System.out.println("사용자 OS - MAC ");
+			  	str = "/Users/ol7roeo/Documents/tempUpload"; 
+			} 
 			
 			String filename = "";
 			int cnt = 0;
 			
-			for(int i=0; i<fileList.size(); i++) {
-				// Bean에 담기 위해 파일명 적립
-				if(i == fileList.size()-1) {
-					//마지막이면 쉼표 생략
+			for(int i=0 ; i<fileList.size(); i++) {
+				// Bean 변수에 담기위해 파일명 적립
+				if(i == fileList.size()-1) { // 마지막 순서
 					filename += fileList.get(i).getOriginalFilename();
 				}else {
-					filename += fileList.get(i).getOriginalFilename()+",";
+					filename += fileList.get(i).getOriginalFilename()+","; 
 				}
 				
-				//반복해서 원본 파일명 받아옴
-				String originalFileName = fileList.get(i).getOriginalFilename();
-				//반복해서 파일 사이즈 받아옴
-				long fileSize = fileList.get(i).getSize();
-				
-				//테스트 출력
-				System.out.println("originalFileName : "+originalFileName);
-				System.out.println("fileSize : "+fileSize);
-				
-				//저장할 경로
-				String safeFile = uploadPath + File.separator +originalFileName;
-				
-				File destination = new File(safeFile);
-				File destination_local = new File(str + File.separator +originalFileName);
-				
-				try {
-					//웹서버로 업로드
-					fileList.get(i).transferTo(destination);
-					
-					//웹서버 폴더 => 임시 폴더로 복사
-					FileCopyUtils.copy(destination, destination_local);
-				} catch(IllegalStateException e) {
-					e.printStackTrace();
-				} catch(IOException e) {
-					e.printStackTrace();
-				}//try~catch end
-				
+	            String originFileName = fileList.get(i).getOriginalFilename(); // 원본 파일 명
+	           
+	            long fileSize = fileList.get(i).getSize(); // 파일 사이즈
+
+	            System.out.println("originFileName : " + originFileName);
+	            System.out.println("fileSize : " + fileSize);
+
+	            String safeFile = uploadPath + File.separator + originFileName;
+	            
+	            File destination = new File(safeFile);
+	            File destinateion_local = new File(str + File.separator + originFileName);
+	            
+	            try {
+	            	fileList.get(i).transferTo(destination); // 웹 서버로 업로드
+	            	
+	            	FileCopyUtils.copy(destination, destinateion_local); // 웹서버 폴더 => 임시폴더로 복사 
+	            } catch (IllegalStateException e) {
+	                e.printStackTrace();
+	            } catch (IOException e) {
+	                e.printStackTrace();
+	            }
+	        }//for end
 				//현재 로그인한 아이디과 파일명 setter로 Bean에 저장
 				qnaBean.setUsersid(principal.getName());
 				qnaBean.setQnaimage(filename);
-			}//for end
 			
 			//qdao의 insertQuestion 메서드 결과를 cnt에 저장
 			cnt = qdao.insertQuestion(qnaBean);

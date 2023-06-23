@@ -39,7 +39,7 @@
                         	<div class="col-6" style="float: left; ">
 	                                <div class="form-floating">
 	                                    <input type="text" class="form-control border-0" id="mountainname" name="mountainname" value="${mountainBean.mountainname}">
-	                                    <label for="mountainname">*산 이름</label>
+	                                    <label for="mountainname">산 이름</label>
 	                                </div>
 	                                <form:errors cssClass="err" path="mountainname"/>
 	                        </div>
@@ -56,7 +56,7 @@
                             <div class="col-5" style="float: left; ">
 	                                <div class="form-floating">
 	                                    <input type="text" class="form-control border-0" id="mountainheight" name="mountainheight" value="${mountainBean.mountainheight}">
-	                                    <label for="mountainheight">*산 높이</label>
+	                                    <label for="mountainheight">산 높이</label>
 	                                </div>
 	                                <form:errors cssClass="err" path="mountainheight"/>
 	                        </div>
@@ -66,7 +66,7 @@
                             <div class="col-8" style="float: left; ">
 	                                <div class="form-floating">
 	                                    <input type="text" class="form-control border-0" id="mountainlocal" name="mountainlocal" value="${mountainBean.mountainlocal}">
-	                                    <label for="mountainlocal">*산 지역</label>
+	                                    <label for="mountainlocal">산 지역</label>
 	                                </div>
 	                                <form:errors cssClass="err" path="mountainlocal"/>
 	                        </div>

@@ -84,9 +84,9 @@
                             <!-- //산 목록 End -->
                 </div>
                 <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s" style="min-height: 450px;">
-                    <div class="position-relative rounded overflow-hidden h-100">
-                    <img class="rounded mx-auto d-block col-10" src="${mountainBean.mountainimage}" alt="${mountainBean.mountainname}">
-                    </div>
+						<!-- 산 이미지 -->
+           				<img src="<%=request.getContextPath()%>/resources/images/mountain/${mountainBean.mountainimage}"><br>
+                    	<!-- //산이미지-->
                 <!-- 정보 등록 버튼(관리자만 볼 수 있음) -->
                 <c:if test="${principal.getName() == 'admin'}">
                 	<div class="container">

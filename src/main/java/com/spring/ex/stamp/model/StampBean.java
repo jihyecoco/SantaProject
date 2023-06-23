@@ -20,6 +20,9 @@ public class StampBean {
 	//stamp 인증 상태, default 0, 0 : 인증 대기, 1 : 인증 완료, 2 : 인증 실패
 	private int stampapply;
 	
+	//stamp 인증 거절사유, 0: 사진 부적합, 1:존재하지 않는 산 이름, 2:기타
+	private int stampreject;
+	
 	//이미지 업로드를 위한 객체, 변수 생성
 	private MultipartFile upload;
 	private String upload2;
@@ -32,6 +35,14 @@ public class StampBean {
 		return mountainnum;
 	}
 	
+	public int getStampreject() {
+		return stampreject;
+	}
+
+	public void setStampreject(int stampreject) {
+		this.stampreject = stampreject;
+	}
+
 	public void setMountainnum(int mountainnum) {
 		this.mountainnum = mountainnum;
 	}

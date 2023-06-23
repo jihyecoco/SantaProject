@@ -28,9 +28,41 @@
 			mountain
 	</select>
 	<!-- //최초 목록 불러오기 -->
+
+	<!-- 최초 목록 불러오기 -->
+	<select id="GetAllMountainNames" resultType="com.spring.ex.mountain.model.MountainBean" resultMap="mountainMap">
+		SELECT
+			mountain_name
+		FROM
+			mountain
+	</select>
+	<!-- //최초 목록 불러오기 -->
 	
-	<!-- 최초 목록 삽입하기 -->
-		<insert id="InsertMountainFirst">
+	<!-- api 목록 삽입하기 -->
+		<insert id="InsertApi">
+			INSERT
+				into mountain(
+					mountain_num,
+					mountain_name,
+					mountain_height,
+					mountain_local,
+					mountain_content,
+					mountain_image,
+					mountain_great)
+			VALUES(
+				#{mountainnum},
+				#{mountainname},
+				#{mountainheight},
+				#{mountainlocal},
+				#{mountaincontent},
+				#{mountainimage},
+				#{mountaingreat}
+			)
+		</insert>
+	<!-- //api 목록 삽입하기 -->
+
+	<!-- 목록 삽입하기 -->
+		<insert id="InsertMountain">
 			INSERT
 				into mountain(
 					mountain_num,
@@ -50,7 +82,7 @@
 				#{mountaingreat, jdbcType=VARCHAR}
 			)
 		</insert>
-	<!-- //최초 목록 삽입하기 -->
+	<!-- //목록 삽입하기 -->
 	
 	<!-- 전체 갯수-->
 	<select id="GetMountainTotalCount" resultType="int">

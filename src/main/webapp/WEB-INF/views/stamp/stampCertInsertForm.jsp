@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
+<!-- 마이페이지-완등내역-스탬프 신청 클릭했을 때 -->
+<%@ include file="../common/common_top.jsp"%>
+<%@ include file="../common/common_nav_myPage.jsp"%>
 <!-- stampCertInsertForm.jsp -->
-<%@ include file="../common/common_top.jsp" %>
 <style type="text/css">
 	.err {
 		font-weight: bold;
@@ -9,14 +11,6 @@
 		font-size:7px;
 	}
 </style>
-    <!-- Page Header Start -->
-    <div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
-        <div class="container text-center py-5">
-            <h1 class="display-3 text-white mb-4 animated slideInDown">스탬프 신청</h1>
-        </div>
-    </div>
-    <!-- Page Header End -->
-
 
     <!-- stampCert Insert Form Start -->
     <div class="container-fluid py-5">
@@ -37,8 +31,8 @@
                         	<!-- 제목 입력 -->
                             <div class="col-6" style="float: left; ">
 	                                <div class="form-floating">
-	                                    <input type="text" class="form-control border-0" id="mountainname" name="mountainname" value="${mountainname}">
-	                                    <label for="mountainname">*산 이름</label>
+	                                    <input type="text" class="form-control border-0" id="searchInput" name="mountainname" value="${mountainname}">
+	                                    <label for="mountainname">산 이름</label>
 	                                </div>
 	                                <form:errors cssClass="err" path="mountainname"/>
 	                        </div>
@@ -46,7 +40,7 @@
                         	
                             <!-- 사진 첨부 -->
                             <div class="mb-1">
-                                <div class="mb-2 mx-1"><b>*완등 사진 : </b></div>
+                                <div class="mb-2 mx-1"><b>완등 사진 : </b></div>
   								<input class="form-control" type="file" name="upload">
 							</div>
 							<form:errors cssClass="err" path="stampimage"/>
@@ -68,4 +62,6 @@
         </div>
     </div>
     <!-- stampCert Insert Form End -->
+<script type="text/javascript">
+</script>
 <%@ include file="../common/common_bottom.jsp" %>

@@ -38,7 +38,7 @@
                         	<div class="col-6" style="float: left; ">
 	                                <div class="form-floating">
 	                                    <input type="text" class="form-control border-0" id="qnasubject" name="qnasubject" value="${qnaBean.qnasubject}">
-	                                    <label for="qnasubject">*질문 제목</label>
+	                                    <label for="qnasubject">질문 제목</label>
 	                                </div>
 	                                <form:errors cssClass="err" path="qnasubject"/>
 	                        </div>
@@ -72,8 +72,8 @@
                         	<!-- 질문 내용 입력 -->
                             <div class="col-12" style="float: left; ">
                              	<div class="form-floating">
-                            	<textarea name="qnaquestion" class="form-control border-0" placeholder="*질문 내용" id="message" style="height: 200px">${qnaBean.qnaquestion}</textarea>
-								<label for="qnaquestion" style="font-size:13px;opacity: 60%;">*질문 내용</label>
+                            	<textarea name="qnaquestion" class="form-control border-0" placeholder="질문 내용" id="message" style="height: 200px">${qnaBean.qnaquestion}</textarea>
+								<label for="qnaquestion" style="font-size:13px;opacity: 60%;">질문 내용</label>
 								</div>
                             </div>
                             <form:errors cssClass="err" path="qnaquestion"/>

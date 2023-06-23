@@ -23,7 +23,7 @@ public class StampAdminListController {
 	//요청 값을 담은 변수
 		private final static String command = "/stamp/admin/adminlist.stp";
 		//이동할 jsp 페이지 변수
-		private String getPage = "/stamp/stampCertList";
+		private String getPage = "/stamp/stampAdminList";
 		
 		@Autowired
 		StampDao sdao;

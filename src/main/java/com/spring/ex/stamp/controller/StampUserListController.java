@@ -22,7 +22,7 @@ public class StampUserListController {
 		//요청 값을 담은 변수
 		private final static String command = "/stamp/user/list.stp";
 		//이동할 jsp 페이지 변수
-		private String getPage = "/stamp/stampList";
+		private String getPage = "/stamp/stampUserList";
 		
 		@Autowired
 		StampDao sdao;
@@ -50,7 +50,15 @@ public class StampUserListController {
 				
 				//userid를 이용해서 등급 불러오기
 				List<CertBean> certList = sdao.getCertListById(userid);
-				System.out.println("certList.mountainame : "+certList.get(0).getMountainname());
+				
+				//*null인 컬럼은 일단 조회되지 않음.
+				//필요 시 api성공 여부에 따라 mountain_num = null인 컬럼 해결하기
+//				for(int i=0;i<stampList.size();i++) {
+//					if(stampList.get(i).getMountainnum() == 0) {
+//						
+//					}
+//				}
+				
 				//mav에 저장해서 넘길 값 설정
 				mav.addObject("stampList", stampList); // 현재 유저의 스탬프 테이블
 				mav.addObject("certList", certList); //현재 유저의 인증 신청 목록(산 이름, 인증 사진, 인증 상태)

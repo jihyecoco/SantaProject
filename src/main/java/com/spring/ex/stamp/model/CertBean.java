@@ -6,7 +6,14 @@ public class CertBean {
 	private int stampapply;
 	private String stampimage;
 	private String usersid;
+	private int stampreject;
 	
+	public int getStampreject() {
+		return stampreject;
+	}
+	public void setStampreject(int stampreject) {
+		this.stampreject = stampreject;
+	}
 	public String getStampnum() {
 		return stampnum;
 	}

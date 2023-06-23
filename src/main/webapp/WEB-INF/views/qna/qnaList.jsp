@@ -82,18 +82,20 @@
 			</thead>
 			<tbody>
 			<c:forEach var="i" begin="0" end="${fn:length(qnaLists)-1}">
-			<tr>
+			<tr align="center">
 				<td>${qnaLists[i].qnanum}</td>
 				<td>${qnaLists[i].qnacategory}</td>
-				<td class="text-left" width="50%">
+				<td align="left" width="50%" >
 				<div class="panel-faq-container">
 					<p class="panel-faq-title">${qnaLists[i].qnasubject}</p>
 					<div class="panel-faq-answer">
 						<p>Q : ${qnaLists[i].qnaquestion}</p>
-						<c:set var="imageall" value="${fn:split((qnaLists[i].qnaimage),',')}"/>
-						<c:forEach var="multiimage" items="${imageall}">
-							<img id="uploadimage" src="${multiimage}">
-						</c:forEach>
+						<!-- 상품 이미지 -->
+                    	<c:forEach var="qna_img" items="${fn:split(qnaLists[i].qnaimage, ',')}">
+           					<img src="<%=request.getContextPath()%>/resources/images/qna/${qna_img}" width="100px" height="100px"><br>
+           				</c:forEach> 
+                    	<!-- //상품이미지-->
+						<br><br>
 						<!-- 답변이 null이 아닐 때만 출력 -->
 						<c:if test="${qnaLists[i].qnaanswer != null}">
 						<p>A : ${qnaLists[i].qnaanswer}</p>
@@ -105,9 +107,7 @@
 						<c:when test="${principal.getName() == 'admin'}">
 							<c:set var="qnanum" value="${qnaLists[i].qnanum}"/>
 							<button class="btn btn-success" onClick="deleteQna()">질문삭제</button>
-							<c:if test="${qnaLists[i].qnaanswer == null}">
-    							<button class="btn btn-success" onClick="location.href='/qna/admin/insertAnswer.qna?qnanum=${qnaLists[i].qnanum}&pageNumber=${pageNumber}'">답변등록/수정</button>
-							</c:if>
+    						<button class="btn btn-success" onClick="location.href='/qna/admin/insertAnswer.qna?qnanum=${qnaLists[i].qnanum}&pageNumber=${pageNumber}'">답변등록/수정</button>
 						</c:when>
 						<c:when test="${principal.getName() == qnaLists[i].usersid}">
 							<c:if test="${qnaLists[i].qnaanswer == null}">
@@ -130,10 +130,6 @@
           		</td>
         	</tr>
 			</c:forEach>
-			<tr>
-				<td colspan=4 class="text-left">QnA 총 합계</td>
-				<td>${pageInfo.totalCount }</td>
-			</tr>
 			</tbody>
 		</table>
 		<!-- 페이지 표시 -->
@@ -196,4 +192,3 @@
 
 </script>
 <%@ include file="../common/common_bottom.jsp" %>
-</html>

@@ -11,6 +11,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -91,17 +92,31 @@ public class MountainInsertController {
 			//ModelAndView 객체 생성
 			ModelAndView mav = new ModelAndView(); 
 			
-			String uploadPath = servletContext.getRealPath("/resources");
+			String uploadPath = servletContext.getRealPath("/resources/images/mountain");
 			System.out.println("uploadPath:"+uploadPath);
-			//uploadPath:C:\\Users\\user\Downloads\spring-tool-suite-3.9.17.RELEASE\sts-bundle\pivotal-tc-server\instances\Spring3\wtpwebapps\20_Spring_MyBatis_Products\resources
-			// C:\\Users~~~\resources\lemon.jpg
-			
-			System.out.println("*:"+uploadPath+File.separator+mountainBean.getUpload().getOriginalFilename());
-			
 			
 			File destination = new File(uploadPath+File.separator+mountainBean.getUpload().getOriginalFilename());
+			System.out.println("destination: "+destination);
 			
 			MultipartFile multi = mountainBean.getUpload();
+			
+			/* 사용자 OS 확인 */
+			String osName = System.getProperty("os.name").toLowerCase();
+			System.out.println("OS name : " + osName);
+	    
+			String str = "";
+			if (osName.contains("win")) 
+			{
+				System.out.println("사용자 OS - Window ");
+				str = "C:/tempUpload";
+			} 
+
+			else if (osName.contains("mac"))   {
+			  	System.out.println("사용자 OS - MAC ");
+			  	str = "/Users/ol7roeo/Documents/tempUpload"; 
+			} 
+			
+			File destination_local = new File(str + File.separator + multi.getOriginalFilename());
 			
 			if(result.hasErrors()) {
 				//유효성 검사에 에러가 있으면
@@ -124,7 +139,7 @@ public class MountainInsertController {
 					
 					try {
 						multi.transferTo(destination);
-						
+						FileCopyUtils.copy(destination, destination_local);
 					} catch (IllegalStateException e) {
 						e.printStackTrace();
 					} catch (IOException e) {

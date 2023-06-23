@@ -8,7 +8,6 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.spring.ex.mountain.model.MountainBean;
 import com.spring.ex.utility.Paging;
 
 @Component
@@ -43,6 +42,7 @@ public class StampDao {
 
 	public int GetNumByName(String mountainname) {
 		String mountainnum = sqlSessionTemplate.selectOne("GetNumByName",mountainname);
+		System.out.println("mountainnum : "+mountainnum);
 		return Integer.parseInt(mountainnum);
 	}
 
@@ -63,8 +63,18 @@ public class StampDao {
 		return stampList;
 	}
 
-	public int updateStamp(Map<String, Object> map) {
-		int cnt = sqlSessionTemplate.update("UpdateStamp", map);
+	public int updateApply(Map<String, Object> map) {
+		int cnt = sqlSessionTemplate.update("UpdateApply", map);
+		return cnt;
+	}
+
+	public CertBean getCertByNum(String stampnum) {
+		CertBean certBean = sqlSessionTemplate.selectOne("GetCertByNum",stampnum);
+		return certBean;
+	}
+
+	public int updateReject(Map<String, Object> map) {
+		int cnt = sqlSessionTemplate.update("UpdateReject", map);
 		return cnt;
 	}
 

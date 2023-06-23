@@ -38,7 +38,7 @@
                         	<div class="col-6" style="float: left; ">
 	                                <div class="form-floating">
 	                                    <input type="text" class="form-control border-0" id="qnasubject" name="qnasubject" value="${qnaBean.qnasubject}">
-	                                    <label for="qnasubject">*질문 제목</label>
+	                                    <label for="qnasubject">질문 제목</label>
 	                                </div>
 	                                <form:errors cssClass="err" path="qnasubject"/>
 	                        </div>
@@ -55,7 +55,7 @@
 					    				<option value="거래/나눔" <c:if test="${qnaBean.qnacategory=='거래/나눔'}">selected</c:if>>거래/나눔</option>
 					    				<option value="기타" <c:if test="${qnaBean.qnacategory=='기타'}">selected</c:if>>기타</option>
                                 	</select>
-                                	<label for="qnasubject">*카테고리</label>
+                                	<label for="qnasubject">카테고리</label>
                                 	</div>
                             </div>
                             <form:errors cssClass="err" path="qnacategory"/>
@@ -72,8 +72,8 @@
                         	<!-- 질문 내용 입력 -->
                             <div class="col-12" style="float: left; ">
                              	<div class="form-floating">
-                            	<textarea name="qnaquestion" class="form-control border-0" placeholder="*질문 내용" id="message" style="height: 200px">${qnaBean.qnaquestion}</textarea>
-								<label for="qnaquestion" style="font-size:13px;opacity: 60%;">*질문 내용</label>
+                            	<textarea name="qnaquestion" class="form-control border-0" placeholder="질문 내용" id="message" style="height: 200px">${qnaBean.qnaquestion}</textarea>
+								<label for="qnaquestion" style="font-size:13px;opacity: 60%;">질문 내용</label>
 								</div>
                             </div>
                             <form:errors cssClass="err" path="qnaquestion"/>

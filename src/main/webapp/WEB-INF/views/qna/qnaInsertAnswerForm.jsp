@@ -48,8 +48,8 @@
                         <!-- 답변 내용 입력 -->
                         <div class="col-12 mb-5">
                              	<div class="form-floating">
-                            	<textarea name="qnaanswer" class="form-control border-0" placeholder="*답변 내용" id="message" style="height: 200px">${qnaBean.qnaanswer}</textarea>
-								<label for="qnaquestion" style="font-size:13px;opacity: 60%;">*답변 내용</label>
+                            	<textarea name="qnaanswer" class="form-control border-0" placeholder="답변 내용" id="message" style="height: 200px">${qnaBean.qnaanswer}</textarea>
+								<label for="qnaquestion" style="font-size:13px;opacity: 60%;">답변 내용</label>
 								</div>
                         </div>
                         <form:errors cssClass="err" path="qnaanswer"/>

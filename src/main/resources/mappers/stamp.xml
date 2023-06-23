@@ -10,6 +10,7 @@
 		<result property="usersid" column="users_id"/>
 		<result property="stampimage" column="stamp_image"/>
 		<result property="stampapply" column="stamp_apply"/>
+		<result property="stampreject" column="stamp_reject"/>
 	</resultMap>
 
 	<resultMap type="com.spring.ex.stamp.model.CertBean" id="certMap">
@@ -17,6 +18,7 @@
 		<result property="stampapply" column="stamp_apply"/>
 		<result property="stampimage" column="stamp_image"/>
 		<result property="usersid" column="users_id"/>
+		<result property="stampreject" column="stamp_reject"/>
 	</resultMap>
 
 	<select id="GetAllStampById" resultType="com.spring.ex.stamp.model.StampBean" resultMap="stampMap">
@@ -25,7 +27,8 @@
 			mountain_num,
 			users_id,
 			stamp_image,
-			stamp_apply
+			stamp_apply,
+			stamp_reject
 		FROM
 			stamp
 		WHERE
@@ -38,7 +41,8 @@
 			mountain_num,
 			users_id,
 			stamp_image,
-			stamp_apply
+			stamp_apply,
+			stamp_reject
 		FROM
 			stamp
 		<if test="whatColumn == '아이디'">
@@ -60,7 +64,8 @@
 		SELECT
 			mountain_name,
 			stamp_apply,
-			users_id
+			users_id,
+			stamp_reject
 		FROM
 			stamp NATURAL JOIN mountain
 		WHERE
@@ -70,7 +75,7 @@
 	<select id="GetNumByName" resultType="String">
 	SELECT
 		mountain_num
-	FROM
+ 	FROM
 		mountain
 	WHERE
 		mountain_name = #{mountainname}
@@ -83,12 +88,14 @@
 			mountain_num,
 			users_id,
 			stamp_image,
-			stamp_apply)
+			stamp_apply,
+			stamp_reject)
 		VALUES(
 			stamp_seq.nextval,
 			#{mountainnum},
 			#{usersid},
 			#{stampimage},
+			0,
 			0)
 	</insert>
 	
@@ -101,12 +108,36 @@
  			where users_id like #{keyword}
  		</if>
 	</select>
+
+	<select id="GetCertByNum" resultType="com.spring.ex.stamp.model.CertBean" resultMap="certMap">
+		SELECT
+			mountain_name,
+			stamp_apply,
+			users_id,
+			stamp_reject
+		FROM
+			stamp NATURAL JOIN mountain
+		WHERE
+			stamp_num = #{stampnum}
+	</select>
 	
-	<update id="UpdateStamp">
+	<update id="UpdateApply">
 		UPDATE
 			stamp
 		SET
 			stamp_apply = #{stampapply}
+			<if test="stampapply != 2">
+				, stamp_reject = null
+			</if>
+		WHERE
+			stamp_num = #{stampnum}
+	</update>
+
+	<update id="UpdateReject">
+		UPDATE
+			stamp
+		SET
+			stamp_reject = #{stampreject}
 		WHERE
 			stamp_num = #{stampnum}
 	</update>

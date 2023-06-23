@@ -16,9 +16,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.spring.ex.stamp.model.StampDao;
 
 @Controller
-public class StampUpdateCotroller {
+public class StampUpdateRejectController {
 	//요청 값을 담은 변수
-		private final String command = "/stamp/admin/update.stp";
+		private final String command = "/stamp/admin/updatereject.stp";
 		
 		//redirect할 요청 변수
 		private String gotoPage = "redirect:/stamp/admin/adminlist.stp";
@@ -29,18 +29,18 @@ public class StampUpdateCotroller {
 		@RequestMapping(value=command)
 		public ModelAndView doAction(
 				@RequestParam(value="stampnum") String stampnum,
-				@RequestParam(value="stampapply") String stampapply,
+				@RequestParam(value="stampreject") int stampreject,
 				@RequestParam(value="pageNumber", required = false) String pageNumber,
 				HttpSession session, Principal principal, HttpServletRequest request
 				) {
 			
-			System.out.println("넘어온 apply 값 : "+stampapply);
+			System.out.println("넘어온 reject 값 : "+stampreject);
 			
 			ModelAndView mav = new ModelAndView();
 			
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("stampnum", stampnum);
-			map.put("stampapply", stampapply);
+			map.put("stampreject", stampreject);
 			
 			if(principal.getName() == null) {
 				//로그인 정보가 없으면
@@ -53,16 +53,16 @@ public class StampUpdateCotroller {
 				mav.setViewName("redirect:/loginForm");
 			}else {
 				//로그인 정보가 있으면
-				int cnt = sdao.updateStamp(map);
+				int cnt = sdao.updateReject(map);
 				if(cnt > 0) {
-					System.out.println(stampapply+" : 업데이트 성공");
+					System.out.println(stampreject+" : 업데이트 성공");
 					
 					//다시 원래 페이지로 돌아가기 위해 페이지 정보 넘기기
 					mav.addObject("pageNumber",pageNumber);
 					//목록으로 이동
 					mav.setViewName(gotoPage);
 				}else {
-					System.out.println(stampapply+" : 업데이트 실패");
+					System.out.println(stampreject+" : 업데이트 실패");
 					
 
 					//다시 원래 페이지로 돌아가기 위해 페이지 정보 넘기기

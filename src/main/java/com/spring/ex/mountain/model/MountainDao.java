@@ -31,11 +31,6 @@ public class MountainDao {
 		return mountainLists;
 	}
 
-	public int insertMountainFirst(Map<String, Object> map) {
-		int cnt = sqlSessionTemplate.insert("InsertMountainFirst",map);
-		return cnt;
-	}
-
 	public int getTotalCount(Map<String, String> searchMap) {
 		int cnt = 0;
 		cnt = sqlSessionTemplate.selectOne("GetMountainTotalCount",searchMap);
@@ -55,7 +50,7 @@ public class MountainDao {
 	}
 
 	public int insertMountain(MountainBean mountainBean) {
-		int cnt = sqlSessionTemplate.insert("InsertMountainFirst",mountainBean);
+		int cnt = sqlSessionTemplate.insert("InsertMountain",mountainBean);
 		return cnt;
 	}
 
@@ -67,6 +62,11 @@ public class MountainDao {
 	public MountainBean getMountainByNum(int mountainnum) {
 		MountainBean mountainBean = sqlSessionTemplate.selectOne("GetMountainByNum", mountainnum);
 		return mountainBean;
+	}
+
+	public int insertApi(Map<String, Object> map) {
+		int cnt = sqlSessionTemplate.update("InsertApi",map);
+		return cnt;
 	}
 	
 }

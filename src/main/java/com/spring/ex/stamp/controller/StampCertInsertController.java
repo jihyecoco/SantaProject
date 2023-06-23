@@ -3,8 +3,7 @@ package com.spring.ex.stamp.controller;
 import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.spring.ex.mountain.model.MountainBean;
+import com.spring.ex.mountain.model.MountainDao;
 import com.spring.ex.stamp.model.StampBean;
 import com.spring.ex.stamp.model.StampDao;
 
@@ -37,6 +38,9 @@ public class StampCertInsertController {
 			//MountainDao 객체 생성
 			@Autowired
 			StampDao sdao;
+
+			@Autowired
+			MountainDao mdao;
 			
 			//uploadPath를 가져오기 위한 ServletContext 객체 생성
 			@Autowired
@@ -63,7 +67,8 @@ public class StampCertInsertController {
 					mav.setViewName("redirect:/loginForm");
 				}else {
 					//로그인 정보가 있으면
-
+					
+					
 					//qna 작성 페이지로 이동
 					mav.setViewName(getPage);
 				}
@@ -79,6 +84,7 @@ public class StampCertInsertController {
 					Principal principal
 					) {
 				
+				System.out.println("mountainname : "+mountainname);
 				//ModelAndView 객체 생성
 				ModelAndView mav = new ModelAndView(); 
 				
@@ -101,7 +107,7 @@ public class StampCertInsertController {
 					//유효성 검사에 에러가 있으면
 					System.out.println("유효성 검사 에러");
 					
-					//입력했던 정보가 남아있도록 Bean 정보 넘기기
+					//입력했던 정보가 남아있도록 정보 넘기기
 					mav.addObject("mountainname",mountainname);
 					//뷰 설정, 다시 mountainInsertForm으로 돌아감
 					mav.setViewName(getPage);
@@ -143,5 +149,5 @@ public class StampCertInsertController {
 				//mav 반환
 				return mav;
 			}
-	
 }
+ 
