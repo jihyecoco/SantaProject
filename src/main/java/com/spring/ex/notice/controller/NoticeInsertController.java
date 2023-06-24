@@ -45,13 +45,13 @@ public class NoticeInsertController {
 	//noticeInsertForm.jsp(글쓰기 버튼 클릭) -> detail.no 요청(post방식) -> 삽입성공시 list.no 요청
 	@RequestMapping(value=command, method=RequestMethod.POST)
 	public ModelAndView insert(@ModelAttribute("notice") @Valid NoticeBean notice, BindingResult result,
-			Principal principal, @RequestParam("pageNumber") int pageNumber) {
+			Principal principal) {
 
 		ModelAndView mav = new ModelAndView();
 		notice.setUserid(principal.getName());
 		String userId = principal.getName();	
 		mav.addObject("userId", userId);
-		mav.addObject("pageNumber", pageNumber);
+		//mav.addObject("pageNumber", pageNumber);
 
 		System.out.println("result.hasErrors(): "+result.hasErrors());
 		if(result.hasErrors()) { //에러 있음

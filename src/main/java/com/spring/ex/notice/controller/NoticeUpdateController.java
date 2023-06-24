@@ -20,7 +20,7 @@ public class NoticeUpdateController {
 
 	private final String command = "/notice/admin/update.no";
 	private final String getPage = "/notice/noticeUpdateForm";
-	private final String gotoPage = "redirect:/notice/all/list.no";
+	private final String gotoPage = "redirect:/notice/all/detail.no";
 
 	@Autowired
 	NoticeDao ndao;
@@ -42,13 +42,15 @@ public class NoticeUpdateController {
 	}
 	
 	
-	//noticeUpdateForm.jsp(수정 버튼 클릭) -> detail.no (post방식)요청 -> 수정 성공 -> list.no 재요청
+	//noticeUpdateForm.jsp(수정 버튼 클릭) -> detail.no (post방식)요청 -> 수정 성공 -> detail.no 재요청
 	@RequestMapping(value=command, method = RequestMethod.POST)
 	public ModelAndView update(@ModelAttribute("notice") @Valid NoticeBean notice, BindingResult result,
-			@RequestParam("pageNumber") String pageNumber) {
+			@RequestParam("pageNumber") String pageNumber,
+			@RequestParam("num") String num) {
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("pageNumber", pageNumber);
+		mav.addObject("num", num); // 게시글 num 넘기기
 		
 		System.out.println("result.hasErrors(): "+result.hasErrors());
 		if(result.hasErrors()) { //에러 있음

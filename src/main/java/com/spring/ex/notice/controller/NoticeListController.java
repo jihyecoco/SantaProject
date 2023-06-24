@@ -50,8 +50,8 @@ public class NoticeListController {
 		List<NoticeBean> lists = ndao.getAllNotice(map,pageInfo);
 		
 		ModelAndView mav = new ModelAndView();
-		String loginId = principal.getName();
-		mav.addObject("loginId", loginId);
+		//String loginId = principal.getName();
+		//mav.addObject("loginId", loginId);
 		mav.addObject("lists", lists);
 		mav.addObject("pageInfo", pageInfo);
 		mav.addObject("pageNumber", pageNumber);

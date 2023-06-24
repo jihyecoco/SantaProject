@@ -22,43 +22,101 @@
 	</resultMap>
 	<!--  //resultMapping 설정  -->
 	
+	<!-- where 1=1 and -->
 	<select id="GetTotalCount" resultType="int">
-		select count(*) from board
+		select count(*) from board board
+		LEFT JOIN (
+			SELECT bnum, count(bnum) reply_cnt
+			FROM board_comments
+			WHERE is_deleted = 'N' 
+			GROUP BY bnum
+		) cmt ON board.num = cmt.bnum
 		<if test="whatColumn == 'user_id'">
-			where user_id like #{keyword}
+			where board.user_id like '%' || #{keyword} || '%'
 		</if>
 		<if test="whatColumn == 'subject'">
-			where subject like #{keyword}
+			where supporters_name like #{keyword}
+			where board.subject like '%' || #{keyword} || '%'
 		</if>
 		<if test="whatColumn == 'content'">
-			where content like #{keyword}
+			where board.content like '%' || #{keyword} || '%'
 		</if>
+		<if test="whatColumn == 'information'">
+ 			where board.category = '정보'
+ 		</if>
+ 		<if test="whatColumn == 'review'">
+ 			where board.category = '후기'
+ 		</if>
+ 		<if test="whatColumn == 'recommend'">
+ 			where board.category = '추천'
+ 		</if>
+ 		<if test="whatColumn == 'free'">
+ 			where board.category = '잡담'
+ 		</if>
 		<if test="whatColumn == 'reg_date'">
- 			order by reg_date desc
+ 			order by board.reg_date desc
  		</if>
  		<if test="whatColumn == 'readcount'">
- 			order by readcount desc
+ 			order by board.readcount desc
+ 		</if>
+ 		<if test="whatColumn == 'reply'">
+ 			order by cmt.reply_cnt desc
+ 		</if>
+ 		<if test="whatColumn == 'like'">
+ 			order by board.num desc
+ 		</if>
+ 		<if test="whatColumn == ''">
+ 			order by board.num desc
  		</if>
 	</select>
 	
 	<select id="GetAllBoard" resultMap="boardMap">
-		select * from board
+		SELECT 
+			board.*,
+			cmt.reply_cnt boardcomments_count
+		FROM board board
+		LEFT JOIN (
+			SELECT bnum, count(bnum) reply_cnt
+			FROM board_comments
+			WHERE is_deleted = 'N' 
+			GROUP BY bnum
+		) cmt ON board.num = cmt.bnum
 		<if test="whatColumn == 'user_id'">
-			where user_id like #{keyword}
+			where board.user_id like '%' || #{keyword} || '%'
 		</if>
 		<if test="whatColumn == 'subject'">
-			where subject like #{keyword}
+			where board.subject like '%' || #{keyword} || '%'
 		</if>
 		<if test="whatColumn == 'content'">
-			where content like #{keyword}
+			where board.content like '%' || #{keyword} || '%'
 		</if>
+		<if test="whatColumn == 'information'">
+ 			where board.category = '정보'
+ 		</if>
+ 		<if test="whatColumn == 'review'">
+ 			where board.category = '후기'
+ 		</if>
+ 		<if test="whatColumn == 'recommend'">
+ 			where board.category = '추천'
+ 		</if>
+ 		<if test="whatColumn == 'free'">
+ 			where board.category = '잡담'
+ 		</if>
 		<if test="whatColumn == 'reg_date'">
- 			order by reg_date desc
+ 			order by board.reg_date desc
  		</if>
  		<if test="whatColumn == 'readcount'">
- 			order by readcount desc
+ 			order by board.readcount desc
  		</if>
-		order by num desc
+ 		<if test="whatColumn == 'reply'">
+ 			order by cmt.reply_cnt desc
+ 		</if>
+ 		<if test="whatColumn == 'like'">
+ 			order by board.num desc
+ 		</if>
+ 		<if test="whatColumn == ''">
+ 			order by board.num desc
+ 		</if>
 	</select>
 	
 	<insert id="InsertBoard">

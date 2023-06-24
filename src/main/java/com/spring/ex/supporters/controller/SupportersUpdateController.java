@@ -1,7 +1,6 @@
 package com.spring.ex.supporters.controller;
 
-import java.io.File;
-import java.io.IOException;
+import java.text.SimpleDateFormat;
 
 import javax.validation.Valid;
 
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -24,8 +22,8 @@ import com.spring.ex.supporters.model.SupportersDao;
 public class SupportersUpdateController {
 	
 	private final String command = "/supporters/admin/update.su";
-	private final String getPage = "/supporters/supportersUpdateForm";
-	private final String gotoPage = "redirect:/supporters/all/list.su";
+	private String getPage = "/supporters/supportersUpdateForm";
+	private String gotoPage = "redirect:/supporters/user/detail.su"; //detail로 이동
 	
 	@Autowired
 	SupportersDao sdao;
@@ -37,9 +35,12 @@ public class SupportersUpdateController {
 			@RequestParam("pageNumber") int pageNumber) {
 
 		System.out.println("수정 서포터즈 num: "+num);
+		
 
 		SupportersBean supporters = sdao.getSupportersByNum(num);
-
+		//System.out.println("수정 서포터즈 deadline: "+supporters.getDeadline()); //2023-06-24 00:00:00.0		
+		//System.out.println("수정 서포터즈 startdate: "+supporters.getStartdate()); //2023-06-27 00:00:00.0
+		
 		model.addAttribute("supporters", supporters);
 		model.addAttribute("pageNumber",pageNumber);
 
@@ -47,12 +48,20 @@ public class SupportersUpdateController {
 	}
 	
 	
-	//supportersUpdateForm.jsp(수정 버튼 클릭) -> detail.su 요청(post방식) -> 수정 성공하면 -> list.br 재요청
+	//서포터즈 객체와 페이지번호를 받음
+	//supportersUpdateForm.jsp(수정 버튼 클릭) -> detail.su 요청(post방식) -> 수정 성공하면 -> detail.su 재요청
 	@RequestMapping(value=command, method = RequestMethod.POST)
 	public ModelAndView update(@RequestParam("pageNumber") int pageNumber,
 			@ModelAttribute("supporters") @Valid SupportersBean supporters, BindingResult result) {
 
+		//System.out.println("수정 num: "+supporters.getNum());
+		//System.out.println("수정 서포터즈명: "+supporters.getSupportersname());
+		//System.out.println("수정 모집마감일(deadline): "+supporters.getDeadline());
+		//System.out.println("수정 활동시작일(startdate): "+supporters.getStartdate());
+		//System.out.println("수정 활동종료일(enddate): "+supporters.getEnddate());
+		
 		ModelAndView mav = new ModelAndView();
+		mav.addObject("num", supporters.getNum()); //번호도 보내줘야함!
 		mav.addObject("pageNumber", pageNumber);
 
 		System.out.println("result.hasErrors(): "+result.hasErrors());
@@ -63,10 +72,10 @@ public class SupportersUpdateController {
 			int cnt = sdao.updateSupporter(supporters);
 			System.out.println("수정 cnt: "+ cnt);
 
-			if(cnt > -1) {  // DB 테이블에서 수정 성공
-				mav.setViewName(gotoPage);
+			if(cnt > 0) {  // DB 테이블에서 수정 성공
+				mav.setViewName(gotoPage); //상세보기 페이지로
 			}else { //수정 실패
-				mav.setViewName(getPage);
+				mav.setViewName(getPage); //수정폼으로
 			}			
 		}		
 		return mav;	

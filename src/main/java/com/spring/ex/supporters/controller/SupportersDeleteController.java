@@ -29,8 +29,6 @@ public class SupportersDeleteController {
 		ModelAndView mav = new ModelAndView();
 		System.out.println("삭제할 서포터즈 num: "+num);		
 		
-		//SupportersBean supporters = sdao.getSupportersByNum(num);
-		
 		int cnt = sdao.deleteSupporters(num);
 		
 		if(cnt != -1) {

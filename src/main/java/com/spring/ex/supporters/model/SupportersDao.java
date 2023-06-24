@@ -9,11 +9,11 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.spring.ex.board.model.BoardBean;
 import com.spring.ex.utility.Paging;
 
 @Component
 public class SupportersDao {
+	
 	
 	@Autowired
 	SqlSessionTemplate sqlSessionTemplate;
@@ -42,9 +42,7 @@ public class SupportersDao {
 	}
 
 	public int checkSupportersname(String input_name) {
-		int cnt = -1;
-		cnt = sqlSessionTemplate.selectOne("CheckSupportersname", input_name);
-		return cnt;
+		return sqlSessionTemplate.selectOne("CheckSupportersname", input_name);
 	}
 
 	public int updateSupoCount(int num) { //조회수 1 중기
@@ -55,7 +53,7 @@ public class SupportersDao {
 
 	public SupportersBean getSupportersByNum(int num) {
 		SupportersBean supporters = null;
-		supporters = sqlSessionTemplate.selectOne("GetSupportersByNum", num);		
+		supporters = sqlSessionTemplate.selectOne("GetSupportersByNum", num);
 		return supporters;
 	}
 
@@ -70,8 +68,6 @@ public class SupportersDao {
 		cnt = sqlSessionTemplate.update("UpdateSupporters", supporters);
 		return cnt;
 	}
-	
-	
 	
 	
 }

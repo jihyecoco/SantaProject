@@ -28,48 +28,56 @@
 <!-- Page Header End -->
 
 
-<center>
-<h2>글내용 보기</h2>    
-<table border="1" class="table">
-	<tr>
-		<td>글번호</td>
-		<td>${notice.num }</td>		
-	</tr>
-	<tr>
-		<td>작성자</td>
-		<td>${notice.userid}</td>
-	</tr>	
-	<tr>
-		<td>작성일</td>
-		<td>
-			<fmt:parseDate var="newDay" value="${notice.regdate}" pattern="yyyy-MM-dd"/>				
-			<fmt:formatDate var="fNewDay" value="${newDay}" pattern="yyyy-MM-dd"/>
-			${fNewDay }
-		</td>
-	</tr>
-		<tr>
-		<td>조회수</td>
-		<td>${notice.readcount }</td>
-	</tr>
-	<tr>
-		<td>글제목</td>
-		<td>${notice.subject }</td>
-	</tr>
-	<tr>
-		<td>글내용</td>
-		<td><pre>${notice.content }</pre></td>
-	</tr>
-	<tr>
-		<td colspan="2" align="center">
-			<!-- 수정, 삭제 버튼은 관리자에게만 보이도록 -->
-			<c:if test="${loginId == 'admin'}">
-				<input type="button" value="수정" class="btn btn-success" onClick="location.href='/notice/admin/update.no?num=${notice.num}&pageNumber=${pageNumber}'">
-				<input type="button" value="삭제" class="btn btn-success" onClick="deletenotice('${notice.num}','${pageNumber}')">
-			</c:if>				
-			<input type="button" value="목록" class="btn btn-success" onclick="location.href='/notice/all/list.no?pageNumber=${pageNumber}'">
-		</td>
-	</tr>
-</table>
-</center>  
+<div class="container-xxl py-5">
+        <div class="container">
+        <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+        	<h2 class="display-5 mb-5">글내용 보기</h2>
+        </div>
 
-<%@ include file="../common/common_bottom.jsp"%>  
+		<!-- 게시글 상세보기 -->
+		<table class="table">
+			<tr>
+				<td>글번호</td>
+				<td>${notice.num }</td>
+			</tr>
+			<tr>
+				<td>작성자</td>
+				<td>${notice.userid}</td>
+			</tr>
+			<tr>
+				<td>작성일</td>
+				<td><%-- <fmt:parseDate var="newDay" value="${notice.regdate}" pattern="yyyy-MM-dd hh:mm:ss" /> 
+					<fmt:formatDate var="fNewDay" value="${newDay}" pattern="yyyy-MM-dd hh:mm:ss" /> ${fNewDay }</td> --%>
+					<fmt:formatDate value="${notice.regdate}" type="date" dateStyle="medium" timeStyle="medium" pattern="yyyy-MM-dd hh:mm:ss"/>
+			</tr>
+			<tr>
+				<td>조회수</td>
+				<td>${notice.readcount }</td>
+			</tr>
+			<tr>
+				<td>글제목</td>
+				<td>${notice.subject }</td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center">글내용</td>
+			</tr>
+			<tr>
+				<td colspan="2" height="230">${notice.content }</td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center">
+					<!-- 수정, 삭제 버튼은 관리자에게만 보이도록 -->
+					<sec:authorize access="hasRole('ROLE_ADMIN')">
+					<%-- <c:if test="${loginId == 'admin'}"> --%>
+						<input type="button" value="수정" class="btn btn-success" onClick="location.href='/notice/admin/update.no?num=${notice.num}&pageNumber=${pageNumber}'">
+						<input type="button" value="삭제" class="btn btn-success" onClick="deletenotice('${notice.num}','${pageNumber}')">
+					</sec:authorize>
+					<input type="button" value="목록" class="btn btn-success" onclick="location.href='/notice/all/list.no?pageNumber=${pageNumber}'">
+				</td>
+			</tr>
+		</table>
+		<!-- //게시글 상세보기 -->
+	</div>
+</div>
+
+		<%@ include file="../common/common_bottom.jsp"%>  

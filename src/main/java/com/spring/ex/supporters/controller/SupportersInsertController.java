@@ -42,9 +42,10 @@ public class SupportersInsertController {
 	}
 	
 	
+	//supportersInsertForm.jsp(글쓰기 버튼) -> detail.su 요청(post방식) -> 삽입성공시 supportersList.jsp로 이동
 	@RequestMapping(value=command, method = RequestMethod.POST)
 	public ModelAndView insert(@ModelAttribute("supporters") @Valid SupportersBean supporters,
-			BindingResult result, HttpServletRequest request, 
+			BindingResult result, HttpServletRequest request,
 			Principal principal) {
 		
 		ModelAndView mav = new ModelAndView();

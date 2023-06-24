@@ -8,7 +8,7 @@
   
 <mapper namespace="supporters.SupportersBean">
 	
-	<!-- resultMapping 설정 -->
+	<!-- resultMapping 설정 꿀팁 -->
  	<resultMap type="com.spring.ex.supporters.model.SupportersBean" id="supportersMap">
 		 <id property="num" column="num"/>
 		 <result property="supportersname" column="supporters_name"/>
@@ -18,6 +18,10 @@
 	</resultMap>
 	<!-- //resultMapping 설정 -->
 	
+	<!-- 
+	<if test="whatColumn == 'board_comments'">
+ 		order by readcount desc
+ 	</if> -->
 	<select id="GetTotalSupportersCount" resultType="int">
  		select count(*) from supporters
 		<if test="whatColumn == 'supporters_name'">
@@ -26,27 +30,99 @@
 		<if test="whatColumn == 'content'">
 			where content like #{keyword}
 		</if>
+		<if test="whatColumn == 'ing'">
+			<![CDATA[
+	 			where applicant < "LIMIT" AND deadline > TO_CHAR(SYSDATE,'YYYY-MM-DD')
+			]]>
+ 		</if>
+ 		<if test="whatColumn == 'complete'">
+	 		<![CDATA[
+	 			where applicant >= "LIMIT"
+ 			]]>
+ 		</if>
+ 		<if test="whatColumn == 'closed'">
+	 		<![CDATA[
+	 			where deadline < TO_CHAR(SYSDATE,'YYYY-MM-DD')
+ 			]]>
+ 		</if>
+ 		<if test="whatColumn == 'allMember'">
+ 			where target = '0'
+ 		</if>
+ 		<if test="whatColumn == 'bestMember'">
+ 			where target = '1'
+ 		</if>
+		<if test="whatColumn == 'reg_date'">
+ 			order by reg_date desc
+ 		</if>
+ 		<if test="whatColumn == 'readcount'">
+ 			order by readcount desc
+ 		</if> 		
  	</select>
 	
+	<!--  
+   1. TO_CHAR(start_date, 'YYYY-MM-DD') 함수를 사용해 문자열로 변환함
+   2. deadline이 sysdate(오늘날짜)보다 이전인 경우, state(모집상태)는 2(=모집기한 마감)를 반환하고
+   applicant(신첟인원)이 limit(모집인원)을 초과하는 경우 1(=모집완료)을 반환하고
+   둘 다 아닌 경우엔 0(=모집중)을 반환한다. 
+   3. <![CDATA[ ]]> : mybatis에서는 CDATA을 자주 사용한다. 
+   왜냐하면 xml에서는 <,>,&,|| 같은 부등호를 태그로 인식하기 때문이다.
+   그런데 이렇게 <![CDATA[  ]]> 안에 쿼리를 넣으면 부등호를 태그가 아니라 "문자열"로 인식해서 이제 오류가 안난다!!!
+   4. "LIMIT"는 이렇게 대문자로 써야한다. "limit"로 쓰면 에러가 난다.
+   왜냐하면 "LIMIT"는 SQL 예약어이기 때문.
+   -->
 	<select id="GetAllSupporters" resultMap="supportersMap">
-		select * from supporters
+		select 
+			num, writer, supporters_name,deadline, target, limit, applicant,
+			start_date, end_date,content, reg_date, readcount,
+			<![CDATA[
+			CASE WHEN deadline < TO_CHAR(SYSDATE,'YYYY-MM-DD') then 2
+				WHEN applicant >= "LIMIT" then 1
+				ELSE 0
+				END AS state
+			]]> from supporters
 		<if test="whatColumn == 'supporters_name'">
 			where supporters_name like #{keyword}
 		</if>
 		<if test="whatColumn == 'content'">
 			where content like #{keyword}
 		</if>
-		order by num desc
+		<if test="whatColumn == 'ing'">
+			<![CDATA[
+	 			where applicant < "LIMIT" AND deadline > TO_CHAR(SYSDATE,'YYYY-MM-DD')
+			]]>
+ 		</if>
+ 		<if test="whatColumn == 'complete'">
+	 		<![CDATA[
+	 			where applicant >= "LIMIT"
+ 			]]>
+ 		</if>
+ 		<if test="whatColumn == 'closed'">
+	 		<![CDATA[
+	 			where deadline < TO_CHAR(SYSDATE,'YYYY-MM-DD')
+ 			]]>
+ 		</if>
+ 		<if test="whatColumn == 'allMember'">
+ 			where target = '0'
+ 		</if>
+ 		<if test="whatColumn == 'bestMember'">
+ 			where target = '1'
+ 		</if>
+		<if test="whatColumn == 'reg_date'">
+ 			order by reg_date desc
+ 		</if>
+ 		<if test="whatColumn == 'readcount'">
+ 			order by readcount desc
+ 		</if>
 	</select>
 	
 	<insert id="InsertSupporters">
- 		insert into supporters(num, writer, supporters_name, state, deadline, target, limit, applicant, start_date, end_date, content, reg_date)
- 		values(supo_seq.nextval, #{writer}, #{supportersname}, #{state}, #{deadline}, #{target}, #{limit}, #{applicant}, #{startdate}, #{enddate}, #{content}, sysdate)
+ 		insert into supporters(num, writer, supporters_name, deadline, target, limit, applicant, start_date, end_date, content, reg_date)
+ 		values(supo_seq.nextval, #{writer}, #{supportersname}, #{deadline}, #{target}, #{limit}, #{applicant}, #{startdate}, #{enddate}, #{content}, sysdate)
  	</insert>
 	
 	<select id="CheckSupportersname" resultType="int">
  		select count(*) from supporters
- 		where supportersname = #{input_name}
+ 		where supporters_name = #{input_name}
  	</select>
  	
  	<update id="UpdateSupoCount">
@@ -55,8 +131,28 @@
         where num=#{num}
     </update>
     
+   <!--  
+   1. TO_CHAR(start_date, 'YYYY-MM-DD') 함수를 사용해 문자열로 변환함
+   2. deadline이 sysdate(오늘날짜)보다 이전인 경우, state(모집상태)는 2(=모집기한 마감)를 반환하고
+   applicant(신첟인원)이 limit(모집인원)을 초과하는 경우 1(=모집완료)을 반환하고
+   둘 다 아닌 경우엔 0(=모집중)을 반환한다. 
+   3. <![CDATA[ ]]> : mybatis에서는 CDATA을 자주 사용한다. 
+   왜냐하면 xml에서는 <,>,&,|| 같은 부등호를 태그로 인식하기 때문이다.
+   그런데 이렇게 <![CDATA[  ]]> 안에 쿼리를 넣으면 부등호를 태그가 아니라 "문자열"로 인식해서 이제 오류가 안난다!!!
+   4. "LIMIT"는 이렇게 대문자로 써야한다. "limit"로 쓰면 에러가 난다.
+   왜냐하면 "LIMIT"는 SQL 예약어이기 때문.
+   -->
     <select id="GetSupportersByNum"  resultMap="supportersMap">
-		select * from supporters where num = #{num}
+		select num, writer, supporters_name,deadline, target, limit, applicant,
+			TO_CHAR(start_date, 'YYYY-MM-DD')start_date, TO_CHAR(end_date, 'YYYY-MM-DD')end_date,content, reg_date, readcount,
+			<![CDATA[
+			CASE WHEN deadline < TO_CHAR(sysdate,'YYYY-MM-DD') then 2
+				WHEN applicant >= "LIMIT" then 1
+				ELSE 0
+				END AS state
+			]]>
+		from supporters 
+		where num = #{num}
 	</select>
  	
  	<delete id="DeleteSupporters">
@@ -65,7 +161,7 @@
  	
  	<update id="UpdateSupporters">
 		update supporters 
-		set supporters_name=#{supportersname}, state=#{state}, deadline=#{deadline}, target=#{target}, 
+		set supporters_name=#{supportersname}, deadline=#{deadline}, target=#{target}, 
 		limit=#{limit}, applicant=#{applicant}, start_date=#{startdate}, end_date=#{enddate}, content=#{content}
 		where num = #{num}
 	</update>

@@ -130,6 +130,7 @@
 		                <a href="#" class="dropdown-item">산 관리</a>
 		                <a href="#" class="dropdown-item">게시판 관리</a>
 		                <a href="/pay/admin/waitlist.pay" class="dropdown-item">거래 관리</a>
+		                <a href="#" class="dropdown-item">서포터즈 관리</a>
 					</div><!-- //dropdown-menu -->
 				</div>
 				</sec:authorize>				

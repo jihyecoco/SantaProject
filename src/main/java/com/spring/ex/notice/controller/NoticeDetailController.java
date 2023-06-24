@@ -23,7 +23,8 @@ public class NoticeDetailController {
 	NoticeDao ndao;
 	
 	
-	//noticeList.jsp(글제목 클릭) -> detail.no 요청 -> noticeDetailView.jsp로 이동
+	//1. noticeList.jsp(글제목 클릭) -> detail.no 요청 -> noticeDetailView.jsp로 이동
+	//2. 수정하면 UpdateController을 통해 재요청함
 	@RequestMapping(value=command, method=RequestMethod.GET)
 	public ModelAndView detail(@RequestParam("num") int num, 
 			@RequestParam("pageNumber") int pageNumber, Model model, Principal principal) {		
@@ -33,8 +34,8 @@ public class NoticeDetailController {
 		NoticeBean notice = ndao.getNoticeByNum(num);
 		
 		ModelAndView mav = new ModelAndView();
-		String loginId = principal.getName();
-		mav.addObject("loginId", loginId);
+		//String loginId = principal.getName();
+		//mav.addObject("loginId", loginId);
 		mav.addObject("notice", notice);
 		mav.addObject("pageNumber", pageNumber);
 		mav.setViewName(getPage);

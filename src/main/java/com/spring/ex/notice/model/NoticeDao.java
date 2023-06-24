@@ -30,7 +30,7 @@ public class NoticeDao {
 		List<NoticeBean> lists = new ArrayList<NoticeBean>();
 		
 		RowBounds rowBounds = new RowBounds(pageInfo.getOffset(),pageInfo.getLimit());		
-		lists = sqlSessionTemplate.selectList(namespace+".GetAllNotice",map,rowBounds);
+		lists = sqlSessionTemplate.selectList("GetAllNotice",map,rowBounds);
 		System.out.println("lists.size(): "+lists.size());
 		
 		return lists;

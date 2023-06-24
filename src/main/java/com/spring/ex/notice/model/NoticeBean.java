@@ -1,5 +1,7 @@
 package com.spring.ex.notice.model;
 
+import java.sql.Date;
+
 import org.hibernate.validator.constraints.NotBlank;
 
 public class NoticeBean {
@@ -12,7 +14,7 @@ public class NoticeBean {
 	
 	@NotBlank(message="내용을 입력하세요")
 	private String content;
-	private String regdate;
+	private Date regdate;
 	private String readcount;
 	
 	
@@ -20,7 +22,7 @@ public class NoticeBean {
 		super();
 	}
 	
-	public NoticeBean(int num, String userid, String subject, String content, String regdate, String readcount) {
+	public NoticeBean(int num, String userid, String subject, String content, Date regdate, String readcount) {
 		super();
 		this.num = num;
 		this.userid = userid;
@@ -55,10 +57,10 @@ public class NoticeBean {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getRegdate() {
+	public Date getRegdate() {
 		return regdate;
 	}
-	public void setRegdate(String regdate) {
+	public void setRegdate(Date regdate) {
 		this.regdate = regdate;
 	}
 	public String getReadcount() {

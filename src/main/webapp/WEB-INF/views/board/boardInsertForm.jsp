@@ -5,7 +5,7 @@
 	.err{
 		color:red;
 		font-weight: bold;
-		font-size: 9px;
+		font-size: 7px;
 	}
 </style>
 
@@ -40,51 +40,61 @@
 				<div class="col-lg-9">
 					<div class="bg-light rounded p-4 p-sm-5 wow fadeInUp" data-wow-delay="0.1s">
 						<div class="row g-3">
-							
-							<div class="col-12">                     		
+								                       
+                            <!-- 작성자 -->
+                            <!-- <div class="col-11" style="float: left;"> -->
+							<div class="col-10">                     		
                                 <div class="form-floating">
-                                	<h5>작성자</h5>
-                                	${userId}
-                                    <input type="hidden" class="form-control border-0" name="userid" id="userid" value="${userId}">
+                                    <input type="text" class="form-control border-0" name="userid" id="userid" value="${userId}" readonly>
+                                	<label for="userid">작성자</label>
                                 </div>
-                            </div> 
-							
-							<div class="col-sm-5">               		                  		
-                                <div class="form-floating">
-                                <h5>카테고리</h5>      
-                                	<select name="category" class="form-select">
+                            </div>
+                            <!-- //작성자 -->
+														
+							<!-- 카테고리 -->
+							<div class="col-10">              		                  		
+                                <div class="form-floating">  
+                                	<select name="category" id="category" class="form-select">
 										<option value="">선택하세요</option>
 										<c:forEach var="cate" items="<%=cateArr%>">
 											<option value="${cate}" <c:if test="${board.category == cate}">selected</c:if>>${cate}
 										</c:forEach>
-									</select> 
+									</select>
+								<label for="category">카테고리</label>
 								<form:errors cssClass="err" path="category" />
                                 </div>
                             </div>       
+                            <!-- //카테고리 -->
                             
-                            <div class="col-12">
-                        		<h5>글 제목</h5>
+                            <!-- 글제목 -->
+                            <div class="col-10">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control border-0" name="subject" style="width:600px;" value="${board.subject}"> 
+                                    <input type="text" class="form-control border-0" name="subject" id="subject" value="${board.subject}"> 
 									<form:errors cssClass="err" path="subject" />
+									<label for="subject">글 제목</label>
                                 </div>
                             </div>
-                            <div class="col-12">
-                            	<h5>내용</h5>
+                            <!-- //글제목 -->
+                            
+                            <!-- 글내용 -->
+                            <div class="col-10">
                                	<div class="form-floating">
-                                    <textarea name="content" class="form-control border-0" style="height:400px">${board.content}</textarea>
-                                    <label for="content">content</label>
+                                    <textarea name="content" class="form-control border-0" id="content" style="height:300px">${board.content}</textarea>
+                                    <label for="content">글 내용</label>
                                     <form:errors cssClass="err" path="content" />
                                 </div>
                             </div>
+                            <!-- //글내용 -->
                             
-                            <div>
-                            	<h5>이미지 첨부</h5>
-                            	<input type="file" name="upload" id="upload">
+                            <!-- 이미지 -->
+                            <div class="col-10">
+                            	<h6>이미지 첨부</h6>
+                            	<input type="file" class="form-control" name="upload" id="upload">
                             	<%-- <form:errors cssClass="err" path="image"/> --%>                          	
-                            </div>
+                            </div><br>
+                            <!-- //이미지 -->
 
-							<div class="col-12 text-center">                          	
+							<div class="col-10 text-center">                          	
                             	<input type="submit" value="글쓰기" class="btn btn-success">
                             	<input type="reset" value="다시작성" class="btn btn-success"> 
                             	<input type="button" value="목록" class="btn btn-success" onclick="location.href='/board/all/list.br?pageNumber=${pageNumber}'">

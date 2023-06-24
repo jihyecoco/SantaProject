@@ -13,7 +13,7 @@
 </style>
 
 <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/jquery.js"></script> 
-<script type="text/javascript">
+<script type="text/javascript"> 
 	
 	$(document).ready(function(){ 
 		

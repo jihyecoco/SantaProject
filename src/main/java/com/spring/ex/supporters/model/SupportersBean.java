@@ -1,6 +1,7 @@
 package com.spring.ex.supporters.model;
 
-import javax.validation.constraints.Min;
+import java.sql.Date;
+import java.time.LocalDate;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
@@ -12,37 +13,33 @@ public class SupportersBean {
 	
 	@NotBlank(message="서포터즈명을 입력하세요")
 	private String supportersname;
-	private int state;
 	
-	//오늘보다 이전 날짜를 선택할 수 없음
-	private String deadline;
+	private int state; //(DB)테이블에는 없는 변수, 0:모집중 1:모집완료 2:모집기한 마감을 의미함
 	
-	@NotBlank(message="모집대상 선택해야 합니다.")
+	private String deadline; //모집마감일 : 오늘보다 이전 날짜를 선택할 수 없음
+	
+	@NotBlank(message="모집대상을 선택하세요.")
 	private String target;
 	
-	//@Min(value=5, message="최소 인원은 5명입니다.")
-	@Range(min=2, max=20, message="5명 ~ 50명만 가능합니다.")
-	private int limit;
+	@Range(min=5, max=50, message="5명 ~ 50명만 가능합니다.")
+	private String limit; //모집인원
 	
-	private int applicant;
+	private int applicant; //신청인원
 	
-	//모집마감일(deadline)보다 이전 날짜를 선택할 수 없음
-	private String startdate;
+	private String startdate; //활동 시작일 : 모집마감일(deadline)보다 이전 날짜를 선택할 수 없음
 	
-	//활동시작일(startdate)보다 이전 날짜를 선택할 수 없음
-	private String enddate;
+	private String enddate; //활동 종료일 : 활동시작일(startdate)보다 이전 날짜를 선택할 수 없음
 	
 	@NotBlank(message="내용을 입력하세요")
 	private String content;
-	private String regdate;
+	private Date regdate;
 	private int readcount;
 	
 	
-	
-	public int getLimit() {
+	public String getLimit() {
 		return limit;
 	}
-	public void setLimit(int limit) {
+	public void setLimit(String limit) {
 		this.limit = limit;
 	}
 	public int getApplicant() {
@@ -105,10 +102,10 @@ public class SupportersBean {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getRegdate() {
+	public Date getRegdate() {
 		return regdate;
 	}
-	public void setRegdate(String regdate) {
+	public void setRegdate(Date regdate) {
 		this.regdate = regdate;
 	}
 	public int getReadcount() {
@@ -117,9 +114,4 @@ public class SupportersBean {
 	public void setReadcount(int readcount) {
 		this.readcount = readcount;
 	}
-	
-	
-	
-	
-	
 }

@@ -5,7 +5,7 @@
 	.err{
 		color:red;
 		font-weight: bold;
-		font-size: 9px;
+		font-size: 7px;
 	}
 </style>
 
@@ -38,32 +38,37 @@
                 <div class="col-lg-7">
                     <div class="bg-light rounded p-4 p-sm-5 wow fadeInUp" data-wow-delay="0.1s">
                         <div class="row g-3">
-                        	                     	
-                        	<div class="col-12">
-                        		<h5>작성자</h5>
+                        
+                            <!-- 작성자 -->                     	
+                        	<div class="col-11">
                                 <div class="form-floating">
-                                	${notice.userid}
-									<input type="hidden"  class="form-control border-0" name="userid" id="userid" value="${notice.userid}">
-                                	<%-- ${userId}
-                                    <input type="hidden" class="form-control border-0" name="userid" id="userid" value="${userId}"> --%>
+                                	<%-- <input type="text" class="form-control border-0" name="userid" id="userid" value="${userId}" readonly> --%>
+                                	<input type="text" class="form-control border-0" name="userid" id="userid" value="${notice.userid}" readonly>
+                                	<label for="userid">작성자</label>
                                 </div>
-                            </div>              	
-							<div class="col-12">
+                            </div>
+                            <!-- //작성자 -->
+                            
+                            <!-- 글제목 -->  	
+							<div class="col-11">
                         		<h5>글 제목</h5>
                                 <div class="form-floating">
                                 	<input type="text" class="form-control border-0" name="subject" id="subject" value="${notice.subject}">
 									<form:errors cssClass="err" path="subject"/>
                                 </div>
                             </div>
-							<div class="col-12">
-                            	<h5>내용</h5>
+                            <!-- //글제목 -->
+                            
+                            <!-- 글내용 -->
+							<div class="col-11">
                                	<div class="form-floating">
-                                    <textarea class="form-control border-0" id="content" name="content" style="height: 200px">${notice.content}</textarea>
-                                    <label for="content">content</label>
+                                    <textarea class="form-control border-0" id="content" name="content" style="height: 220px">${notice.content}</textarea>
+                                    <label for="content">글 내용</label>
                                     <form:errors cssClass="err" path="content"/>
                                 </div>
                             </div>
-                            <div class="col-12 text-center">                          	
+                            <!-- //글내용 -->
+                            <div class="col-11 text-center">                          	
                             	<input type="submit" value="수정" class="btn btn-success">
                             	<input type="reset" value="다시작성" class="btn btn-success"> 
                             	<input type="button" value="목록" class="btn btn-success" onclick="location.href='list.no?pageNumber=${pageNumber}'">

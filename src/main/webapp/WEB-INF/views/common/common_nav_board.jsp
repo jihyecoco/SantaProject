@@ -11,19 +11,19 @@
     <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample10">
       <ul class="navbar-nav">
       	<li class="nav-item">
-          <a class="nav-link" href="#">전체</a>
+          <a class="nav-link" href="/board/all/list.br">전체</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">정보</a>
+          <a class="nav-link" href="/board/all/list.br?whatColumn=information">정보</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">후기</a>
+          <a class="nav-link" href="/board/all/list.br?whatColumn=review">후기</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">추천</a>
+          <a class="nav-link" href="/board/all/list.br?whatColumn=recommend">추천</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">잡담</a>
+          <a class="nav-link" href="/board/all/list.br?whatColumn=free">잡담</a>
         </li>
       </ul>
     </div>

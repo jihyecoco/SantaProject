@@ -78,7 +78,15 @@
 					<a class="dropdown-item" href="/pay/admin/finishlist.pay">결제 승인 완료내역</a>
 					<a class="dropdown-item" href="/pay/admin/cancellist.pay">결제 취소 내역</a>
 				</div>
-			</li><!-- //게시글 관련 -->
+			</li>
+			<!-- //게시글 관련 -->
+			<!-- 서포터즈 관련 -->		 
+			<li class="nav-item dropdown">
+				<a class="nav-link" href="/supportersapply/admin/list.sua">
+				서포터즈 관리
+				</a>
+			</li>
+			<!-- //서포터즈 관련 -->
 		</ul><!-- //navbar-nav -->
 	</div><!-- //collapse navbar -->
 </nav><!-- //navbar -->

@@ -46,17 +46,28 @@
     			</form>
  			 </div>
 		</nav><br>
+	</div>	
 		<!-- //검색 창 -->
-		
-<table border="1" class="table">
-	<tr>
-		<th>글번호</th>
-		<th>작성자</th>
-		<th>제목</th>
-		<th>조회수</th>
-		<th>작성일</th>		
-	</tr>
 	
+	<div class="container">	
+		<!-- 정렬 -->
+    	<div align="right">
+    		<a href="/notice/all/list.no?whatColumn=reg_date">최신순</a> / 
+    		<a href="/notice/all/list.no?whatColumn=readcount">조회순</a>
+    		<br>
+    	</div>
+    	<!-- //정렬 -->
+    	
+<table class="table table-hover table-borded align-middle">
+	<thead>
+		<tr align="center">
+			<th>번호</th>
+			<th>작성자</th>
+			<th>제목</th>
+			<th>조회수</th>
+			<th>작성일</th>		
+		</tr>
+	</thead>
 	<c:if test="${fn:length(lists) == 0}">
 		<tr>
 			<td colspan="5" align="center">
@@ -67,10 +78,10 @@
 	
 	<c:if test="${not empty lists}">
 	<c:forEach var="notice" items="${lists}">
-		<tr>
+		<tr align="center">
 			<td>${notice.num}</td>
 			<td>${notice.userid}</td>
-			<td><a href="detail.no?num=${notice.num}&pageNumber=${pageInfo.pageNumber}">${notice.subject}</a></td>
+			<td align="left"><a href="/notice/all/detail.no?num=${notice.num}&pageNumber=${pageInfo.pageNumber}">${notice.subject}</a></td>
 			<td>${notice.readcount}</td>
 			<td>
 				<fmt:parseDate var="newDay" value="${notice.regdate}" pattern="yyyy-MM-dd"/>				
@@ -79,28 +90,25 @@
 			</td>		
 		</tr>
 	</c:forEach>
-	</c:if>	
-	<!-- 로그인한 아이디가 관리자(admin)일때만 글쓰기 버튼이 보임 -->
-	<c:if test="${loginId eq 'admin'}">
-		<tr>
-			<td colspan="5" align="right">
-				<input type="button" value="글쓰기" class="btn btn-success" onclick="location.href='/notice/admin/insert.no?pageNumber=${pageInfo.pageNumber}'">
-			</td>
-		</tr>
-	</c:if>
-	<!-- //로그인한 아이디가 관리자일때만 글쓰기 버튼이 보임 -->
-	<!-- 로그인 안했을때는 에러가 난다 -->
-	<c:if test="${ loginId == null }">
-		
-	</c:if>	
+	</c:if>		
 </table>
-     </div>
+	
+	<!-- 로그인한 아이디가 관리자(admin)일때만 글쓰기 버튼이 보임 -->
+	<sec:authorize access="hasRole('ROLE_ADMIN')">
+		<div align="right">
+			<input type="button" value="글쓰기" class="btn btn-success" onclick="location.href='/notice/admin/insert.no?pageNumber=${pageInfo.pageNumber}'">
+		</div><br>
+	</sec:authorize>
+	<!-- //로그인한 아이디가 관리자일때만 글쓰기 버튼이 보임 -->		
+    </div>
+     
+     <!-- 페이지 표시 -->
+	<div align="center">
+		${pageInfo.pagingHtml}
+	</div>
+	<!-- //페이지 표시 -->    
 </div>
 
-<!-- 페이지 표시 -->
-<div align="center">
-	${pageInfo.pagingHtml}
-</div>
-<!-- //페이지 표시 -->
+
 
 <%@ include file="../common/common_bottom.jsp"%>

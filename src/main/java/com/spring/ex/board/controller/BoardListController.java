@@ -36,9 +36,10 @@ public class BoardListController {
 		System.out.println("keyword: "+keyword);
 		System.out.println("pageNumber: "+pageNumber);
 		
+		
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("whatColumn",whatColumn);
-		map.put("keyword","%"+keyword+"%");
+		map.put("keyword", keyword);
 		
 		int totalcount = bdao.getTotalCount(map);
 		String url = request.getContextPath()+command;
@@ -50,6 +51,8 @@ public class BoardListController {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("lists", lists);
 		mav.addObject("pageInfo", pageInfo);
+		mav.addObject("pageNumber", pageNumber);
+		mav.addObject("paramMap", map);
 		mav.setViewName(getPage);
 		
 		return mav;

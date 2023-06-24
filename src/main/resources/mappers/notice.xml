@@ -22,22 +22,33 @@
 	<select id="GetTotalCount" resultType="int">
 		select count(*) from notice
 		<if test="whatColumn == 'subject'">
-			where subject like #{keyword}
+			where subject like #{keyword} order by num
 		</if>
 		<if test="whatColumn == 'content'">
-			where content like #{keyword}
+			where content like #{keyword} order by num
 		</if>
+		<if test="whatColumn == 'reg_date'">
+ 			order by reg_date desc
+ 		</if>
+ 		<if test="whatColumn == 'readcount'">
+ 			order by readcount desc
+ 		</if>
 	</select>
 	
 	<select id="GetAllNotice" resultMap="noticeMap">
 		select * from notice
 		<if test="whatColumn == 'subject'">
-			where subject like #{keyword}
+			where subject like #{keyword} order by num
 		</if>
 		<if test="whatColumn == 'content'">
-			where content like #{keyword}
+			where content like #{keyword} order by num
 		</if>
-		order by num desc
+		<if test='whatColumn == "reg_date"'>
+ 			order by reg_date desc 
+ 		</if>
+ 		<if test='whatColumn == "readcount"'>
+ 			order by readcount desc 
+ 		</if>
 	</select>
 	
 	<update id="UpdateCount">

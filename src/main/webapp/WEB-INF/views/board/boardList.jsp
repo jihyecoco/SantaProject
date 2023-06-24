@@ -8,9 +8,8 @@
 
 	//정렬 select-option에서 클릭할때
 	function clickSelect(){ //get방식 요청
-		
-		document.array.submit();
-		
+		var form = document.list_form;
+        form.submit();		
 	}
 		
 </script>
@@ -28,6 +27,7 @@
     </div>
 <!-- Page Header End -->
 
+
  <%@ include file ="../common/common_nav_board.jsp"%>
  
 
@@ -37,57 +37,37 @@
 		<div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
 			<p class="fs-5 fw-bold text-primary"></p>
             <h3 class="display-5 mb-5">자유 게시판</h3>
-        </div>           
-		<!-- 검색창 -->
-		<nav class="navbar navbar-light bg-light">
-  			<div class="container" style="display:table-cell; vertical-align:middle;">
-   				<form class="d-flex" action="/board/all/list.br" method="get">
-   				 	<div class="col-sm-2">
-	   				 	<select name="whatColumn" class="form-select">
-							<option value="">전체검색
-							<option value="user_id">작성자
-							<option value="subject">제목
-							<option value="content">내용
-	   				 	</select>
-   				 	</div>
-   				 	<div class="col-sm-8">
-     					<input class="form-control me-2" type="text" name="keyword">
-      				</div>
-      				<div class="col-sm-2" align="center">
-      					<button class="btn btn-outline-success" type="submit">Search</button>
-      				</div>
-    			</form>
- 			 </div>
+        </div>                  
+		<!-- 정렬&검색창 -->			
+		<nav class="navbar navbar-light bg-light">		
+	  			<div class="container" style="display:table-cell; vertical-align:middle;">
+	  			<form class="d-block" name="list_form" action="/board/all/list.br" method="get">
+   				 	<div class="row">
+						<!-- 검색 주제 -->
+   				 		<div class="col-sm-2">
+		   				 	<select name="whatColumn" class="form-select">
+								<option value="">전체검색
+								<option value="user_id" <c:if test="${paramMap.whatColumn eq 'user_id'}"> selected</c:if>>작성자
+								<option value="subject" <c:if test="${paramMap.whatColumn eq 'subject'}"> selected</c:if>>제목
+								<option value="content" <c:if test="${paramMap.whatColumn eq 'content'}"> selected</c:if>>내용
+		   				 	</select>
+	   				 	</div>
+	   				 	<!-- //검색 주제 --> 	
+	   				 	<!-- 검색창 -->
+	   				 	<div class="col-sm-8">
+	     					<input class="form-control me-2" type="text" name="keyword">
+	      				</div>
+	      				<!-- //검색창 -->	      				
+	      				<!-- Search 버튼 -->
+	      				<div class="col-sm-2" align="center">
+	      					<button class="btn btn-outline-success" type="submit">Search</button>
+	      				</div>
+   				 	   	<!-- //Search 버튼 -->			 	
+   				 	</div>     				
+      			</form>
+	 		</div>			
 		</nav><br>
-		<!-- //검색창 -->
-		
-		<!-- select-option 태그를 이용한 정렬 
-		<form class="d-flex" action="/board/all/list.br" method="get">
-		<div class="col-sm-2" align="right">
-	   		<select name="whatColumn" class="form-select">
-				<option value="">정렬
-				<option value="reg_date">최신순
-				<option value="readcount">조회수순
-			 	<option value="#">댓글수순
-				<option value="#">좋아요순
-	   		</select>
-   		</div>
-   		</form>
-		 //select-option 태그를 이용한 정렬 -->
-		
-		<!-- select-option 태그를 이용한 정렬 -->
-		<form class="d-flex" action="/board/all/list.br" method="get" name="keyword">
-			<div class="col-sm-2" align="right">
-				<select name="whatColumn" class="form-select" onchange="clickSelect()">
-					<option value="">--정렬--</option>
-					<option value="reg_date">최신순</option>
-					<option value="readcount">조회수순</option>
-					<option value="#">댓글수순</option>
-					<option value="#">좋아요순</option>
-				</select>
-			</div>
-		</form>		
-		<!-- //select-option 태그를 이용한 정렬 -->		
+		<!-- //정렬&검색창 -->			
 	</div>
 </div>
 <!-- //Projects Start -->	
@@ -95,35 +75,46 @@
 
 <!-- 자유게시판 글 목록 출력 -->
 <div class="container">
-<table border="1" class="table">
-	<tr align="center">
-		<th>No</th>
-		<th>카테고리</th>	
-		<th>이미지</th>	
-		<th>제목</th>
-		<th>작성자</th>
-		<th>조회수</th>
-		<th>작성일</th>
-	</tr>
+
+	<!-- 정렬 -->
+    <div align="right">
+    	<a href="/board/all/list.br?whatColumn=reg_date">최신순</a> / 
+    	<a href="/board/all/list.br?whatColumn=readcount">조회순</a> / 
+    	<a href="/board/all/list.br?whatColumn=board_comments">댓글순</a>
+    	<br>
+    </div>
+    <!-- //정렬 -->
 	
+<table class="table table-hover table-borded align-middle">
+	<thead>
+		<tr align="center">
+			<th>번호</th>
+			<th>카테고리</th>	
+			<th>이미지</th>	
+			<th>제목</th>
+			<th>작성자</th>
+			<th>조회수</th>
+			<th>작성일</th>
+		</tr>
+	</thead>
 	<c:if test="${fn:length(lists) == 0}">
 		<tr>
 			<td colspan="7" align="center">
-				등록된 게시글이 없습니다.
+				등록된 게시물이 없습니다.
 			</td>
 		</tr>
 	</c:if>
 	
 	<c:if test="${not empty lists}">
 	<c:forEach var="board" items="${lists}">
-		<tr align="center">
+		<tr align="center"> <!-- width="40%" -->
 			<td>${board.num}</td>
 			<td>[${board.category}]</td>
 			<td>
 				<img src="<%=request.getContextPath() %>/resources/${board.image}" width="100" height="100">
 			</td>		
 			<td align="left">
-				<a href="/board/user/detail.br?num=${board.num}&pageNumber=${pageInfo.pageNumber}">${board.subject}</a>
+				<a href="/board/user/detail.br?num=${board.num}&pageNumber=${pageInfo.pageNumber}">${board.subject}(${board.boardcommentscount})</a>
 			</td>
 			<td>${board.userid}</td>
 			<td>${board.readcount}</td>
@@ -135,14 +126,15 @@
 		</tr>
 	</c:forEach>
 	</c:if>		
-	<tr>
-		<td colspan="7" align="right">
-			<input type="button" value="글쓰기" class="btn btn-success" onclick="location.href='/board/user/insert.br?pageNumber=${pageInfo.pageNumber}'">
-		</td>
-	</tr>
 </table>
+	<!-- 글쓰기 버튼 -->
+	<div align="right">
+		<input type="button" value="글쓰기" class="btn btn-success" onclick="location.href='/board/user/insert.br?pageNumber=${pageInfo.pageNumber}'">
+	</div>
+	<!-- //글쓰기 버튼 -->
 </div>
 <!-- //자유게시판 글 목록 출력 -->
+
 
 <!-- 페이지 표시 -->
 <div align="center">
@@ -151,5 +143,5 @@
 <!-- //페이지 표시 -->
   
 
-
 <%@ include file="../common/common_bottom.jsp"%>
+
