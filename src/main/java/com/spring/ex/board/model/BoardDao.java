@@ -67,6 +67,15 @@ public class BoardDao {
 		cnt = sqlSessionTemplate.update(namespace+".UpdateBoard", board);
 		return cnt;
 	}
+	
+	//관리자 페이지 - 다중삭제
+	public int deleteBoardByAdmin(String[] board_num) {
+		int cnt = -1;
+		for(int i=0; i<board_num.length; i++) {
+			cnt += sqlSessionTemplate.delete("DeleteBoardByAdmin", board_num[i]);
+		}
+		return cnt;
+	}
 
 	
 }

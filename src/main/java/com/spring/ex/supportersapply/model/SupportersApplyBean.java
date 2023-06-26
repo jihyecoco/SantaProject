@@ -9,10 +9,16 @@ public class SupportersApplyBean {
 	private String applicantid; //신청회원의 아이디
 	private int state; //신청상태 ( 0:신청, 1:취소 )
 	private int target; //모집대상
-	private Date applydate; //신청일
+	private String applydate; //신청일
 	private String startdate; //활동시작일
 	private String enddate; //활동종료일
 	private int joinnum; //supporters의 num과 같은값
+	
+	private String userId;
+	private String name;
+	private String userRole;
+	private String gender;
+	private String birth;
 	
 	/*
 	supporters_apply의 join_num과 supporters의 num이 같은값이다.
@@ -50,13 +56,12 @@ public class SupportersApplyBean {
 	public void setTarget(int target) {
 		this.target = target;
 	}
-	public Date getApplydate() {
+	public String getApplydate() {
 		return applydate;
 	}
-	public void setApplydate(Date applydate) {
+	public void setApplydate(String applydate) {
 		this.applydate = applydate;
 	}
-
 	public int getJoinnum() {
 		return joinnum;
 	}
@@ -74,6 +79,36 @@ public class SupportersApplyBean {
 	}
 	public void setEnddate(String enddate) {
 		this.enddate = enddate;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getUserRole() {
+		return userRole;
+	}
+	public void setUserRole(String userRole) {
+		this.userRole = userRole;
+	}
+	public String getGender() {
+		return gender;
+	}
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+	public String getBirth() {
+		return birth;
+	}
+	public void setBirth(String birth) {
+		this.birth = birth;
 	}
 	
 	

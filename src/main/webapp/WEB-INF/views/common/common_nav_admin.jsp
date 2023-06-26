@@ -61,6 +61,8 @@
 					커뮤니티 게시판 관리
 				</a>
 				<div class="dropdown-menu" aria-labelledby="dropdown10">
+					<a class="dropdown-item" href="/notice/admin/list.no">공지사항 관리</a>
+					<a class="dropdown-item" href="/board/admin/list.br">자유 게시판 관리</a> 
 					<a class="dropdown-item" href="/products/admin/list.prd">거래 게시판 관리</a> 
 					<a class="dropdown-item" href="#">좋아요한 게시글</a> 
 					<a class="dropdown-item" href="#">저장(북마크)한 게시글</a>
@@ -80,13 +82,20 @@
 				</div>
 			</li>
 			<!-- //게시글 관련 -->
-			<!-- 서포터즈 관련 -->		 
+			<!-- 서포터즈 관련 -->	
 			<li class="nav-item dropdown">
-				<a class="nav-link" href="/supportersapply/admin/list.sua">
-				서포터즈 관리
+				<a class="nav-link dropdown-toggle" href="#" id="dropdown10"
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					서포터즈 관리
 				</a>
+				<div class="dropdown-menu" aria-labelledby="dropdown10">
+					<a class="dropdown-item" href="/supportersapply/admin/supporters.sua">서포터즈 별 조회</a>
+					<a class="dropdown-item" href="/supporters/admin/user.su">회원 별 조회</a>
+					<a class="dropdown-item" href="/supporters/admin/adminlist.su">서포터즈 모집글 관리</a>
+				</div>
 			</li>
 			<!-- //서포터즈 관련 -->
 		</ul><!-- //navbar-nav -->
 	</div><!-- //collapse navbar -->
 </nav><!-- //navbar -->
+

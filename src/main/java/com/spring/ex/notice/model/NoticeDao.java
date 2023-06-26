@@ -66,4 +66,13 @@ public class NoticeDao {
 		return cnt;
 	}
 	
+	//관리자 페이지 : 다중삭제
+	public int deleteNoticeByAdmin(String[] num) {
+		int cnt = -1;
+		for(int i=0; i<num.length; i++) {
+			cnt += sqlSessionTemplate.delete("DeleteNoticeByAdmin", num[i]);
+		}
+		return cnt;
+	}
+	
 }

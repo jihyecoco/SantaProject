@@ -18,7 +18,7 @@ public class SupportersApplyCheckController {
 	private final String command = "/supportersapply/user/apply_check.su";
 
 	@Autowired
-	SupportersApplyDao sadao;
+	SupportersApplyDao sadao;  
 	
 	
 	//서포터즈 게시글 상세보기에서 '신청하기'버튼 클릭시 '글번호'를 갖고 요청을 통해 이동함(ajax함수 사용)

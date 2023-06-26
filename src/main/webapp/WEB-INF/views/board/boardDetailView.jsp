@@ -141,14 +141,14 @@
 	//답글달기 버튼 클릭
 	function replybcmt(num, bnum, ref, re_step, re_level, pageNumber){
 		//댓글 입력창 보여지기
-		var replybcmt_area = "<form action='/boardcomments/user/reply.bcmt' method='post'>";
+		var replybcmt_area = "<form class='form-control' id='reply_form' action='/boardcomments/user/reply.bcmt' method='post'>";
 		replybcmt_area += "<input type='hidden' name='bnum' value='"+bnum+"'>";
 		replybcmt_area += "<input type='hidden' name='ref' value='"+ref+"'>";
 		replybcmt_area += "<input type='hidden' name='restep' value='"+re_step+"'>";
 		replybcmt_area += "<input type='hidden' name='relevel' value='"+re_level+"'>";
 		replybcmt_area += "<input type='hidden' name='pageNumber' value='"+pageNumber+"'>";
 		replybcmt_area += "<input type='text' name='content'>";
-		replybcmt_area += "<input type='submit' value='등록'>";
+		replybcmt_area += "<input type='submit' class='btn btn-light' value='등록'>";
 		
 		$('#replybcmt_area'+num).html(replybcmt_area);
 	}

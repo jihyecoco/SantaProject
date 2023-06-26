@@ -29,9 +29,10 @@ public class SupportersDeleteController {
 		ModelAndView mav = new ModelAndView();
 		System.out.println("삭제할 서포터즈 num: "+num);		
 		
-		int cnt = sdao.deleteSupporters(num);
-		
+		int cnt = sdao.deleteSupporters(num); //서포터즈 삭제
+				
 		if(cnt != -1) {
+			sdao.deleteSupportersHistory(num); //state=1로 바꿈(삭제된 서폿은 마이페이지에서 조회 안되도록)
 			System.out.println("서포터즈 삭제 성공");					
 		}else {
 			System.out.println("서포터즈 삭제 실패");

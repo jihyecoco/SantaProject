@@ -55,10 +55,31 @@ public class SupportersApplyDao {
 		return cnt;
 	}
 	
-	//SupportersApplyListController : 마이페이지에서 내 서포터즈 전체 조회
+	//SupportersApplyListController : 마이페이지에서 내 서포터즈 '전체' 조회
 	public List<SupportersApplyBean> getMySupporters(String loginId) {
 		List<SupportersApplyBean> mysupportersList = new ArrayList<SupportersApplyBean>();
 		mysupportersList = sqlSessionTemplate.selectList("GetMySupporters", loginId); 
+		return mysupportersList;
+	}
+	
+	//SupportersMyPageController : 마이페이지에서 내 서포터즈 '활동중' 조회
+	public List<SupportersApplyBean> getMySupportersIng(String loginId) {
+		List<SupportersApplyBean> mysupportersList = new ArrayList<SupportersApplyBean>();
+		mysupportersList = sqlSessionTemplate.selectList("GetMySupportersIng", loginId); 
+		return mysupportersList;
+	}
+
+	//SupportersMyPageController : 마이페이지에서 내 서포터즈 '활동종료' 조회
+	public List<SupportersApplyBean> getMySupportersEnd(String loginId) {
+		List<SupportersApplyBean> mysupportersList = new ArrayList<SupportersApplyBean>();
+		mysupportersList = sqlSessionTemplate.selectList("GetMySupportersEnd", loginId); 
+		return mysupportersList;
+	}	
+	
+	//SupportersSepaAdminController : 관리자페이지에서 서포터즈 별 '신청회원'들을 조회
+	public List<SupportersApplyBean> getApplicantList(Map<String, String> map) {
+		List<SupportersApplyBean> mysupportersList = new ArrayList<SupportersApplyBean>();
+		mysupportersList = sqlSessionTemplate.selectList("GetApplicantList", map); 
 		return mysupportersList;
 	}
 

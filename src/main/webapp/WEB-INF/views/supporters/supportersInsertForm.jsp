@@ -43,13 +43,18 @@ $(document).ready(function(){
 			}
 		})
 		
-		//활동시작일 : 1. 오늘보다 과거날짜는 선택할 수 없음
+		//활동시작일 : 0. 모집마감일을 선택해야 선택할 수 있음
+		//1. 오늘보다 과거날짜는 선택할 수 없음
 		//2. 모집마감일보다 이전 날짜를 선택할 수 없음
 		$("#startdate").change(function(){ //today
 			let deadline = $("#deadline").val().replaceAll("-", "");
 			let startdate = $("#startdate").val().replaceAll("-", "");
-					
-			if(Number(startdate) < Number(today)){
+			
+			if(Number(deadline) == 0){
+				alert('모집마감일을 먼저 선택하세요.');
+				return false;
+			}	
+			else if(Number(startdate) < Number(today)){
 				alert('과거날짜는 선택이 불가능합니다.');
 				$(this).val("");
 				return false;
@@ -61,14 +66,19 @@ $(document).ready(function(){
 			}			
 		})
 		
-		//활동종료일 : 1.오늘보다 과거날짜는 선택할 수 없음
+		//활동종료일 : 0. 활동시작일을 선택해야 선택할 수 있음
+		//1.오늘보다 과거날짜는 선택할 수 없음
 		//2. 활동시작일보다 이전 날짜를 선택할 수 없음
 		//3. 활동기간은 최소 30일 이상이어야함
 		$("#enddate").change(function(){
 			let endDate = $(this).val().replaceAll("-", "");
 			let startDate = $("#startdate").val().replaceAll("-", "");
 			
-			if(Number(endDate) < Number(today)){
+			if(Number(startDate) == 0){
+				alert('활동시작일을 먼저 선택하세요.');
+				return false;
+			}
+			else if(Number(endDate) < Number(today)){
 				alert('과거날짜는 선택이 불가능합니다.');
 				$(this).val("");
 				return false;

@@ -77,4 +77,9 @@
 		where num = #{num}
 	</update>
 	
+	<delete id="DeleteNoticeByAdmin">
+ 		delete from notice
+ 		where num = #{num}
+ 	</delete>
+ 	
 </mapper>

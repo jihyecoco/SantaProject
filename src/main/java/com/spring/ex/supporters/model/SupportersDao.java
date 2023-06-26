@@ -9,6 +9,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.spring.ex.supportersapply.model.SupportersApplyBean;
 import com.spring.ex.utility.Paging;
 
 @Component
@@ -69,5 +70,41 @@ public class SupportersDao {
 		return cnt;
 	}
 	
+	//SupportersApplySepaAdminController(관리자페이지) : 회원 별 신청한 모든 서포터즈를 조회 !!!!
+	public List<SupportersBean> getSupporterList(Map<String, String> map) {
+		List<SupportersBean> lists = new ArrayList<SupportersBean>();	
+		lists = sqlSessionTemplate.selectList("GetSupporterList",map);
+		return lists;
+	}
+	
+	//서포터즈 삭제하면 state=1로 바꾸도록
+	public int deleteSupportersHistory(int num) {
+		int cnt = -1;		
+		cnt = sqlSessionTemplate.delete("deleteSupportersHistory",num);
+		return cnt;
+	}
+	
+	//SupportersSepaAdminController(관리자페이지) : 서포터즈명 다 가져오기
+	public List<SupportersBean> getSupportersListAll(Map<String, String> map) {
+		List<SupportersBean> lists = new ArrayList<SupportersBean>();	
+		lists = sqlSessionTemplate.selectList("GetSupportersListAll",map);
+		return lists;
+	}
+	
+	//관리자 페이지 : 다중삭제
+	public int deleteSupportersByAdmin(String[] supporters_num) {
+		int cnt = -1;
+		for(int i=0; i<supporters_num.length; i++) {
+			cnt += sqlSessionTemplate.delete("DeleteSupportersByAdmin", supporters_num[i]);
+		}
+		return cnt;
+	}
+	
+	
+
+	
 	
 }
+
+
+

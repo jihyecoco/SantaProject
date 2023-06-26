@@ -19,6 +19,16 @@
 		 <result property="enddate" column="end_date"/>		 
 		 <result property="joinnum" column="join_num"/>		 
 	</resultMap>
+	
+	<resultMap type="com.spring.ex.supportersapply.model.SupportersApplyBean" id="applicantMap">
+		 <result property="userId" column="user_id"/>
+		 <result property="name" column="name"/>
+		 <result property="userRole" column="user_role"/>
+		 <result property="gender" column="gender"/>
+		 <result property="birth" column="birth"/>		 
+		 <result property="applydate" column="apply_date"/>		 
+	</resultMap>
+	
 	<!-- //resultMapping 설정 -->
 	
 	
@@ -58,10 +68,53 @@
 		where num = #{num}
 	</update>
 	
+	<!-- 내 '전체' 서포터즈 조회 -->
+	<!-- state=0인것만 조회해야 서포터즈 신청 취소를 하면 마이페이지의 내 서포터즈에서도 사라짐 -->
 	<select id="GetMySupporters" resultMap="supportersapplyMap">
  		select * from supporters_apply
- 		where applicant_id=#{loginId}
+ 		where applicant_id=#{loginId} AND state=0
  	</select>
-
+ 	
+ 	<!-- 내 '활동중' 서포터즈 조회 -->
+	<select id="GetMySupportersIng" resultMap="supportersapplyMap">
+ 		select * from supporters_apply
+ 		where applicant_id=#{loginId} and state=0 
+ 		<![CDATA[
+ 			and start_date <= sysdate and sysdate <= end_date
+ 		]]>
+ 	</select>
+	
+	<!-- 내 '활동종료' 서포터즈 조회 -->
+	<select id="GetMySupportersEnd" resultMap="supportersapplyMap">
+ 		select * from supporters_apply
+ 		where applicant_id=#{loginId} and state=0 
+ 		<![CDATA[
+ 			and sysdate > end_date
+ 		]]>
+ 	</select>
+ 	
+ 	<!-- 관리자페이지에서 서포터즈 별 '신청회원'들을 조회 
+ 	users와 supporters_apply 조인, 회원과 신청인이 같고, 신청상태(state=0)인 경우만 조회하고
+ 	keyword(서포터즈명)이 일치해야함
+ 	-->
+ 	<select id="GetApplicantList" resultMap="applicantMap" >
+ 		<![CDATA[
+ 		SELECT u.user_id, u.name, u.user_role, u.gender, u.birth, to_char(su.apply_date, 'YYYY-MM-DD') apply_date
+		FROM users u 
+		INNER join supporters_apply su
+		on u.user_id = su.applicant_id
+		where su.state = 0
+		]]>
+		<if test="keyword != '' and keyword != null">
+	 		<![CDATA[
+	 			AND su.supporters_name = #{keyword}
+ 			]]>
+ 		</if>
+ 	</select>
+	
+	<select id="GetSupportersList" resultMap="supportersapplyMap">
+ 		select * from supporters_apply
+ 		where applicant_id=#{loginId} AND state=0
+ 	</select>
 	
  </mapper>  
