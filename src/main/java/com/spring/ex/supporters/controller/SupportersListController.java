@@ -1,5 +1,7 @@
 package com.spring.ex.supporters.controller;
 
+import java.security.Principal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.spring.ex.heart.products.model.ProductsHeartBean;
+import com.spring.ex.heart.supporters.model.SupportersHeartBean;
+import com.spring.ex.heart.supporters.model.SupportersHeartDao;
 import com.spring.ex.supporters.model.SupportersBean;
 import com.spring.ex.supporters.model.SupportersDao;
 import com.spring.ex.utility.Paging;
@@ -26,12 +31,18 @@ public class SupportersListController {
 	@Autowired
 	SupportersDao sdao;
 	
-
+	//좋아요
+	@Autowired
+	SupportersHeartDao shdao;
+		
 	@RequestMapping(value=command)
 	public ModelAndView doAction(HttpServletRequest request,
 			@RequestParam(value="whatColumn",required = false) String whatColumn,
 			@RequestParam(value="keyword",required = false) String keyword,
-			@RequestParam(value="pageNumber",required = false) String pageNumber) {
+			@RequestParam(value="pageNumber",required = false) String pageNumber,
+			Principal principal) {
+		
+		ModelAndView mav = new ModelAndView();
 		
 		System.out.println("whatColumn: "+whatColumn);
 		System.out.println("keyword: "+keyword);
@@ -48,7 +59,22 @@ public class SupportersListController {
 		
 		List<SupportersBean> lists = sdao.getAllSupporters(map,pageInfo);
 		
-		ModelAndView mav = new ModelAndView();
+		
+		/* 좋아요 */
+		List<SupportersHeartBean> shList = new ArrayList<SupportersHeartBean>();
+		SupportersHeartBean shBean = new SupportersHeartBean();
+		String loginId = "";
+		try {
+			loginId = principal.getName();
+			shBean.setUserId(loginId);		//사용자아이디
+			shList = shdao.getAllSupportersHeart(loginId);
+			System.out.println("shList : " + shList);
+			//현재 게시글의 좋아요 수 확인
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		//좋아요
+		mav.addObject("shList", shList);
 		mav.addObject("lists", lists);
 		mav.addObject("pageInfo", pageInfo);
 		mav.setViewName(getPage);

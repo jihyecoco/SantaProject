@@ -9,6 +9,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	
     <meta charset="utf-8">
     <title>산타 - 등산의 모든 것</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -117,13 +118,18 @@
 					</div><!-- //dropdown-menu -->
 				</div>
 				<!-- //커뮤니티 -->
-				
-				<a href="/users/user/mypage.us" class="nav-item nav-link">마이페이지</a>
+				<sec:authorize access="isAuthenticated()">
+					<a href="/users/user/mypage.us" class="nav-item nav-link">마이페이지</a>
+				</sec:authorize>	
 				
 				<!-- 관리자 -->
 				<sec:authorize access="hasRole('ROLE_ADMIN')">
+					<a href="/users/admin/usersList.us" class="nav-item nav-link">관리자</a>
+				</sec:authorize>	
+				<%-- 
+				<sec:authorize access="hasRole('ROLE_ADMIN')">
 				<div class="nav-item dropdown">
-					<a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">관리자</a>
+					<a href="/users/admin/usersList.us" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">관리자</a>
              		<div class="dropdown-menu bg-light m-0"> 
 		                <a href="/users/admin/usersList.us" class="dropdown-item">회원 관리</a> 
 		                <a href="/crew/admin/list.cr" class="dropdown-item">크루 관리</a>
@@ -133,7 +139,7 @@
 		                <a href="#" class="dropdown-item">서포터즈 관리</a>
 					</div><!-- //dropdown-menu -->
 				</div>
-				</sec:authorize>				
+				</sec:authorize>	 --%>			
 				<!-- //관리자 -->
 			</div>
 			<!-- //navbar-nav -->

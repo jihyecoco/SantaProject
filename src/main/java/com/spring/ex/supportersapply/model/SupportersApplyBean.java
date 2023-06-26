@@ -1,6 +1,9 @@
 package com.spring.ex.supportersapply.model;
 
 import java.sql.Date;
+import java.util.List;
+
+import com.spring.ex.heart.supporters.model.SupportersHeartBean;
 
 public class SupportersApplyBean {
 	
@@ -25,6 +28,9 @@ public class SupportersApplyBean {
 	supporters 1 : n supporters_apply 
 	이렇게 1:n 관계를 가지는거(왜냐하면 하나의 서포터즈에 여러회원이 신청할 수 있으므로)	
 	*/
+	
+	/*SupportersHeart 매핑 */
+    private List<SupportersHeartBean> supportersHeartList; 
 	
 	public int getNum() {
 		return num;
@@ -110,6 +116,14 @@ public class SupportersApplyBean {
 	public void setBirth(String birth) {
 		this.birth = birth;
 	}
+	/*SupportersHeart 매핑 */
+	public List<SupportersHeartBean> getSupportersHeartList() {
+		return supportersHeartList;
+	}
+	public void setSupportersHeartList(List<SupportersHeartBean> supportersHeartList) {
+		this.supportersHeartList = supportersHeartList;
+	}
+	
 	
 	
 }

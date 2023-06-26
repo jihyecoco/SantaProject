@@ -68,6 +68,7 @@
 <table class="table table-hover table-borded align-middle">
 	<thead>
 		<tr align="center">
+			<th>좋아요</th><!-- 좋아요 -->
 			<th>번호</th>
 			<th>모집 상태</th>
 			<th>서포터즈</th>
@@ -89,6 +90,16 @@
 	<c:if test="${not empty lists}">
 	<c:forEach var="supporters" items="${lists}">
 		<tr align="center">
+			<td>	
+				<c:if test="${fn:contains(shList, supporters.num)}">
+				<!-- 좋아요 -->
+					<img src="<%=request.getContextPath()%>/resources/images/icon/heart.png" 
+					id="heart" width="30" height="30">
+				</c:if>
+				<c:if test="${not fn:contains(shList, supporters.num)}">
+				<!-- 좋아요X -->
+				</c:if>
+			</td>
 			<td>${supporters.num}</td>			
 			<td>
 				<!-- 디폴트는 모집중(0), 인원이 다 차면 모집완료(1), 모집기한이 지나면 모집마감(2) -->
