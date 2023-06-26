@@ -70,12 +70,12 @@ public class ProductsInsertController {
 			if (osName.contains("win")) 
 			{
 				System.out.println("사용자 OS - Window ");
-				str = "C:/tempUpload";
+				str = "C:/tempUpload/products";
 			} 
 
 			else if (osName.contains("mac"))   {
 			  	System.out.println("사용자 OS - MAC ");
-			  	str = "/Users/ol7roeo/Documents/tempUpload"; 
+			  	str = "/Users/ol7roeo/Documents/tempUpload/products"; 
 			} 
 			
 			String filename = "";

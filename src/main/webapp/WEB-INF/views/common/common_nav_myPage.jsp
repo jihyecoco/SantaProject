@@ -43,6 +43,8 @@
       	<li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="dropdown10" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">작성 게시글 목록</a>
           <div class="dropdown-menu" aria-labelledby="dropdown10">
+          	<a class="dropdown-item" href="/crewboard/user/myPage.bdcr">작성한 게시글(크루)</a>
+            <a class="dropdown-item" href="/products/user/myPage.prd">작성한 게시글(거래)</a>
             <a class="dropdown-item" href="#">작성한 게시글</a>
             <a class="dropdown-item" href="/heart/user/boardAll/getAllHeartList.ht">좋아요한 게시글</a>
             <a class="dropdown-item" href="#">저장(북마크)한 게시글</a>

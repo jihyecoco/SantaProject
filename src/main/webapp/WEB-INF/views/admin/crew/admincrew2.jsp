@@ -37,7 +37,7 @@
         	</div>
                 
             <div class="row justify-content-center">
-                <div class="col-lg-7 mx-auto">
+                <div class="col-lg-8 mx-auto">
                     <div class="bg-light rounded p-4 p-sm-5 wow fadeInUp" data-wow-delay="0.1s">
                         <div class="row g-3 mx-auto" >
                         

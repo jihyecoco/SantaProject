@@ -184,4 +184,33 @@
 		</if>
  	</select>
  	
+ 	<select id="GetAllProductsById" resultMap="productsMap">
+ 		select products_num, kind, name, info, price, image, seller, inputdate, state, readcount,
+ 		(select count(*) from products_comments where idx = products_num) as comments
+		from products
+		where seller = #{loginId}
+		<if test='whatColumn == "state0"'>
+			and state = 0
+		</if>
+		<if test='whatColumn == "state1"'>
+			and state = 1
+		</if>
+		<if test='whatColumn == "name"'>
+			and name like #{keyword}
+		</if>
+ 	</select>
+ 	
+ 	<select id="GetProductsTotalCount_Mypage" resultType="int">
+ 		select count(*) from products
+ 		where seller = #{loginId}
+ 		<if test='whatColumn == "state0"'>
+			and state = 0
+		</if>
+		<if test='whatColumn == "state1"'>
+			and state = 1
+		</if>
+		<if test='whatColumn == "name"'>
+			and name like #{keyword}
+		</if>
+ 	</select>
  </mapper>

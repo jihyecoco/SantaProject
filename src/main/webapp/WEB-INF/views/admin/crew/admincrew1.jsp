@@ -33,8 +33,8 @@
         	</div>
                 
             <div class="row justify-content-center">
-                <div class="col-lg-7 mx-auto">
-                    <div class="bg-light rounded p-4 p-sm-5 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="col-lg-8 mx-auto">
+                    <div class="bg-light rounded p-4 p-sm-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 1000px;">
                         <div class="row g-3 mx-auto" >
                         
                         	<!-- 검색창 -->
@@ -97,6 +97,9 @@
                          				</c:forEach>
                          			</c:if>
                          		</table>
+                         		<!-- 페이지 start -->
+									<div align="center">${pageInfo.pagingHtml}</div>
+								<!-- //페이지 End -->
                             </div><!--//row g-3  -->
                         </div><!-- //bg-light -->
                     </div><!-- //col-lg-7 -->

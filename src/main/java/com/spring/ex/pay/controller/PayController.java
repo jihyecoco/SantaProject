@@ -60,7 +60,7 @@ public class PayController {
 			param += "&item_name="+name+"&quantity=1&total_amount="+price+"&vat_amount=200&tax_free_amount=0";
 			param += "&approval_url=http://localhost:"+port+"/pay/user/approval.pay?num="+products_num+","+pageNumber; // 정상적으로 승인
 			param += "&fail_url=http://localhost:"+port+"/pay/user/fail.pay?num="+products_num+","+pageNumber; // 결제 실패
-			param += "&cancel_url=http://localhost:"+port+"/pay/user/cancel.pay?num="+products_num+","+pageNumber; // 로딩으로 인한 결제 취소
+			param += "&cancel_url=http://localhost:"+port+"/pay/user/cancel.pay?num="+products_num+","+pageNumber; // 결제중 취소버튼 클릭
 			
 			OutputStream giver = conn.getOutputStream(); // 서버로 넘기는 역할
 			DataOutputStream data_giver = new DataOutputStream(giver); // 데이터를 넘기는 역할

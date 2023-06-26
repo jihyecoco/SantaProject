@@ -9,6 +9,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.spring.ex.products.model.ProductsBean;
 import com.spring.ex.utility.Paging;
 
 @Component
@@ -97,6 +98,20 @@ public class CrewBoardDao {
 			cnt += sqlSessionTemplate.delete("DeleteCrewBoardByAdmin", num[i]);
 		}
 		return cnt;
+	}
+
+	public int getCrewBoardTotalCount_Mypage(Map<String, Object> map) {
+		int totalCount = 0;
+		totalCount = sqlSessionTemplate.selectOne("GetCrewBoardTotalCount_Mypage", map);
+		return totalCount;
+	}
+
+	public List<CrewBoardBean> getAllCrewBoardById(Map<String, Object> map, Paging pageInfo) {
+		List<CrewBoardBean> lists = new ArrayList<CrewBoardBean>();
+		RowBounds rowBounds = new RowBounds(pageInfo.getOffset(), pageInfo.getLimit());
+		//lists = sqlSessionTemplate.selectList(namespace+".GetAllCrewboard", map, rowBounds);
+		lists = sqlSessionTemplate.selectList("GetAllCrewboardById", map, rowBounds);
+		return lists;
 	}
 	
 	

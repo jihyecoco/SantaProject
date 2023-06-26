@@ -58,6 +58,14 @@
 			divTag.innerHTML = "";
 		}
 	}
+	
+	/* reset 확인 */
+	function resetconfirm(){
+		var check = confirm("정말 초기화 하시겠습니까?");
+		 if(!check){
+			return false;
+		}
+	}
 </script>
 <style>
 	.err{
@@ -143,7 +151,7 @@
                         	<!-- 버튼 -->
                         	<div class="col-12 text-center">
                         		<input type="submit" class="btn btn-success" value="등록하기">
-                            	<input type="reset" class="btn btn-success" value="다시작성">
+                            	<input type="reset" class="btn btn-success" value="다시작성" onclick="return resetconfirm()">
                             	<input type="button" class="btn btn-success" value="목록" onclick="location.href='/products/all/list.prd'">
 	                        </div>
 	                        <!-- //버튼 -->
@@ -156,71 +164,5 @@
     </div><!-- //container-fluid -->
     </form:form>
     <!-- SignUp End -->
-
-   <%--  <!-- Contact Start -->
-    <form:form name="prdform" commandName="pb" action="insert.prd" method="post" enctype="multipart/form-data">
-	    <div class="container-xxl py-5">
-	        <div class="container">
-	            <div class="row g-5">
-	                <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
-	                    <p class="fs-5 fw-bold text-primary"></p>
-	                    <h1 class="display-5 mb-5">산타 등산용품 거래하기</h1>
-	                    <p class="mb-4"></p>
-	                        <div class="row g-3">
-	                            <div class="col-md-6">
-	                                구분 : 
-	                                <form:errors cssClass="err" path="kind"/>
-	                            </div>
-	                            <div class="col-md-6">
-	                                <select name="kind" id="kind" class="form-select" onchange="kind_change(prdform)">
-	                                	<option value="">선택</option>
-	                                	<option value="a" <c:if test="${pb.kind == 'a'}">selected</c:if>>판매</option>
-	                                	<option value="b" <c:if test="${pb.kind == 'b'}">selected</c:if>>나눔</option>
-	                                	<option value="c" <c:if test="${pb.kind == 'c'}">selected</c:if>>교환</option>
-	                                </select>
-	                            </div>
-	                            <div class="col-md-6">
-	                                상품명 : 
-	                                <form:errors cssClass="err" path="name"/>
-	                            </div>
-	                            <div class="col-md-6">
-	                                <input type="text" class="form-control" name="name" id="name" placeholder="name" value="${pb.name}">
-	                            </div>
-	                            <div class="col-md-6">
-	                                가격 : 
-	                                <form:errors cssClass="err" path="price"/>
-	                            </div>
-	                            <div class="col-md-6">
-	                                <input type="text" class="form-control" name="price" id="price" placeholder="price" value="${pb.price}">
-	                            </div>
-	                            <div class="col-12">
-	                                <div class="form-floating">
-	                                    <textarea class="form-control" placeholder="Leave a message here" name="info" id="info" style="height: 150px">${pb.info}</textarea>
-	                                    <label for="info">상품 설명</label>
-	                                    <form:errors cssClass="err" path="info"/>
-	                                </div>
-	                            </div>
-	                            <div class="col-12" align="right">
-	                                <input type="button" class="btn btn-primary py-3 px-4" value="취소">
-	                      			<button class="btn btn-primary py-3 px-4" id="sub" type="submit">등록</button>
-	                            </div>
-	                        </div>
-	                </div>
-	                <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s" style="min-height: 450px;">
-	                    <div class="position-relative rounded overflow-hidden h-100">
-	                    	<p class="fs-5 fw-bold text-primary">이미지 등록 : </p> 
-	                    	<input type="file" multiple="multiple" name="upload" value="${pb.image}" onchange="filechange()"><br>
-	                    	<input type="hidden" name="image">
-	                    	<form:errors cssClass="err" path="image"/>
-	                    	<div id="img_preview">
-	                    	
-	                    	</div>
-	                    </div>
-	                </div>
-	            </div>
-	        </div>
-	    </div>
-    </form:form>
-    <!-- Contact End --> --%>
 
 <%@ include file = "../common/common_bottom.jsp" %>

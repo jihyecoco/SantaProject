@@ -22,30 +22,36 @@ public class MyBean implements InitializingBean {
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		System.out.println("-----afterPropertiesSet()-----");
-
-		String uploadPath = servletContext.getRealPath("/resources/images/products/");
-
-		File destination = new File(uploadPath); // 웹 서버 폴더
-
-		/* 사용자 OS 확인 */
-		//mkdir 사용하면 더 완성도 있을 듯
-		String osName = System.getProperty("os.name").toLowerCase();
-		System.out.println("OS name : " + osName);
-    
-		String str = "";
-		if (osName.contains("win")) 
-		{
-			System.out.println("사용자 OS - Window ");
-			str = "C:/tempUpload";
-		} 
-
-		else if (osName.contains("mac"))   {
-		  	System.out.println("사용자 OS - MAC ");
-		  	str = "/Users/ol7roeo/Documents/tempUpload"; 
-		} 
-		File destination_local = new File(str); // 임시 폴더
-
-		FileUtils.copyDirectory(destination_local, destination);
+		
+		String[] column = {"products", "users", "board", "mountain", "qna", "stamp"};
+		
+		for(int i=0; i<column.length; i++) {
+			String path = "/resources/images/" + column[i];
+			String uploadPath = servletContext.getRealPath(path);
+			
+			File destination = new File(uploadPath);
+			
+			/* 사용자 OS 확인 */
+			//mkdir 사용하면 더 완성도 있을 듯
+			String osName = System.getProperty("os.name").toLowerCase();
+			System.out.println("OS name : " + osName);
+			
+			String str = "";
+			if (osName.contains("win")) 
+			{
+				System.out.println("사용자 OS - Window ");
+				str = "C:/tempUpload/" + column[i] ;
+			} 
+			
+			else if (osName.contains("mac"))   {
+				System.out.println("사용자 OS - MAC ");
+				str = "/Users/ol7roeo/Documents/tempUpload/" + column[i]; 
+			} 
+			
+			File destination_local = new File(str); // 임시 폴더
+			
+			FileUtils.copyDirectory(destination_local, destination);
+		}
 	}
 
 }//MyBean

@@ -3,7 +3,14 @@
 <%@ include file="../common/common_top.jsp"%>
 <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/jquery.js"></script>
 <script type="text/javascript">
-	
+	/* reset 확인*/
+	function resetconfirm(){
+		var check = confirm("정말 초기화 하시겠습니까?");
+		if(!check){
+			return false;
+		}
+	}
+
 </script>
 <style>
 	.err{
@@ -97,7 +104,7 @@
                              <!-- reset & submit -->
                             <div class="col-12 text-center">
                                	<input type="submit" class="btn btn-success" value="수정하기">
-                            	<input type="button" class="btn btn-success" value="다시작성" onclick="location.href='history.go(-1)'">
+                            	<input type="reset" class="btn btn-success" value="다시작성" onclick="return resetconfirm()">
                             	<input type="button" class="btn btn-success" value="목록" onclick="location.href='/crewboard/all/list.bdcr'">
                             </div>
                              <!-- //reset & submit -->

@@ -1,8 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file ="../../common/common_top.jsp" %>
-
 <%@ include file ="../../common/common_nav_myPage.jsp"%>
+<script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/jquery.js"></script>
+<script type="text/javascript">
+	function withdraw(crewname){
+		var check = confirm("정말 탈퇴하시겠습니까?");
+		if(!check){
+			return false;
+		}else{
+			location.href="/crew/user/withdraw.cr?crewname="+crewname;
+		}
+	}
+</script>
 
 <div class="container-fluid py-5">
         <div class="container">

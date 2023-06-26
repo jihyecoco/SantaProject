@@ -101,5 +101,17 @@ public class ProductsDao {
 		plist = sqlSessionTemplate.selectList("GetAllProductsByAdmin", map , rowBounds);
 		return plist;
 	}
+
+	public List<ProductsBean> getAllProductsById(Map<String,Object> map) {
+		List<ProductsBean> mylist = new ArrayList<ProductsBean>();
+		mylist = sqlSessionTemplate.selectList("GetAllProductsById", map);
+		return mylist;
+	}
+
+	public int getProductsTotalCount_Mypage(Map<String, Object> map) {
+		int totalCount = 0;
+		totalCount = sqlSessionTemplate.selectOne("GetProductsTotalCount_Mypage",map);
+		return totalCount;
+	}
 	
 }

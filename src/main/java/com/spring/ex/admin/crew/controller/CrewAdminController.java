@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +14,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.ex.crew.model.CrewBean;
 import com.spring.ex.crew.model.CrewDao;
+import com.spring.ex.graph.model.CrewGraphBean;
+import com.spring.ex.graph.model.CrewGraphDao;
+import com.spring.ex.utility.Paging;
 
 @Controller
 public class CrewAdminController {
@@ -21,10 +26,28 @@ public class CrewAdminController {
 	@Autowired
 	CrewDao cdao;
 	
+	@Autowired
+	CrewGraphDao cg_dao;
+	
 	// 관리자 페이지 크루 통계
 	@RequestMapping(command)
 	public ModelAndView doAction() {
 		ModelAndView mav = new ModelAndView();
+		
+		CrewGraphBean cgb = new CrewGraphBean();
+		int totalcrew = cg_dao.getAllCrewCount2();
+		int onedaycrew = cg_dao.getOneDayCrewCount();
+		int regularcrew = cg_dao.getRegularCrewCount();
+		int mountaincrew = cg_dao.getMountainCrewCount2();
+		int ploggingcrew = cg_dao.getPloggingCrewCount2();
+		
+		cgb.setTotalcrew(totalcrew);
+		cgb.setOnedaycrew(onedaycrew);
+		cgb.setRegularcrew(regularcrew);
+		cgb.setMountaincrew(mountaincrew);
+		cgb.setPloggingcrew(ploggingcrew);
+		
+		mav.addObject("list", cgb);
 		mav.setViewName(getPage);
 		return mav;
 	}
@@ -41,7 +64,9 @@ public class CrewAdminController {
 	public ModelAndView doAction(
 			@RequestParam(value="small", required=false) String small,
 			@RequestParam(value="whatColumn", required=false) String whatColumn,
-			@RequestParam(value="keyword", required=false) String keyword) {
+			@RequestParam(value="keyword", required=false) String keyword,
+			@RequestParam(value="pageNumber", required=false) String pageNumber,
+			HttpServletRequest request) {
 		
 		ModelAndView mav = new ModelAndView();
 		
@@ -60,8 +85,14 @@ public class CrewAdminController {
 			}
 		}
 		
+		int totalCount = cdao.get1DayCrewTotalCount(map);
+		String url = request.getContextPath()+command;
+		
+		Paging pageInfo = new Paging(pageNumber, "5", totalCount, url, whatColumn, keyword, null);
+		
 		List<CrewBean> crewList = cdao.get1DayCrew(map);
 		mav.addObject("crewList", crewList);
+		mav.addObject("pageInfo", pageInfo);
 		mav.setViewName(getPage1);
 		return mav;
 	}

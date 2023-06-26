@@ -56,9 +56,10 @@ public class CrewBoardListController {
 			HttpServletRequest request, Principal principal) {
 		
 		ModelAndView mav = new ModelAndView();
-		String loginId = principal.getName();
+		String loginId = "";
 		
 		try {
+			loginId = principal.getName();
 			if(loginId != null) { // 로그인 상태라면
 				// 가입한 크루 목록 가져오기
 				List<CrewBean> join_crew = cdao.getJoinCrewById(loginId);

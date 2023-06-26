@@ -79,6 +79,14 @@
 			}
 		});//click
 	})//ready
+	
+	/* reset 확인*/
+	function resetconfirm(){
+		var check = confirm("정말 초기화 하시겠습니까?");
+		if(!check){
+			return false;
+		}
+	}
 </script>
 <style>
 	.err{
@@ -188,7 +196,7 @@
                             <!-- 크루설명 -->
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <textarea class="form-control border-0" name="crewcontents" id="crewcontents" style="height: 100px">${cb.crewcontents}</textarea>
+                                    <textarea class="form-control border-0" name="crewcontents" id="crewcontents" style="height: 100px; resize:none;">${cb.crewcontents}</textarea>
                                     <label for="crewcontents">크루 설명</label>
                                      <form:errors cssClass="err" path="crewcontents"/>
                                 </div>
@@ -197,8 +205,9 @@
                             
                             <!-- reset & submit -->
                             <div class="col-12 text-center">
-                                <input type="reset" value="취소" class="btn btn-success">
                                 <input type="submit" id="sub" value="등록하기" class="btn btn-success">
+                                <input type="reset" value="다시작성" class="btn btn-success" onclick="return resetconfirm()">
+                            	<input type="button" class="btn btn-success" value="목록" onclick="location.href='/crewboard/all/list.bdcr'">
                             </div>
                             <!-- reset & submit -->
                         </div><!--//row  -->
@@ -211,103 +220,4 @@
     <!-- SignUp End -->
     
     
-  <%--   <!-- Quote Start -->
-    <form:form name="crewform" commandName="cb" action="/crew/user/insert.cr" method="post">
-    	
-    	<!-- 아이디를 hidden으로 넘김 -->
-    	<input type="hidden" name="crewmanager" value="${loginId}">
-    	<input type="hidden" name="crewmember" value="${loginId}">
-    	<!--  //아이디 hidden -->
-    	
-    <div class="container-fluid py-5">
-        <div class="container">
-            <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-                <p class="fs-5 fw-bold text-primary">산타의 크루가 되어보세요!</p>
-                <h1 class="display-5 mb-5">크루 등록하기</h1>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-lg-7">
-                    <div class="bg-light rounded p-4 p-sm-5 wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="row g-3">
-                            <div class="col-sm-6">
-                                	<select name="large" id="large" class="form-select" onchange="largeInfo(crewform)">
-                                		<option value="0">구분1</option>
-                                		<option value="1" <c:if test="${cb.large == 1}">selected</c:if>>1일 크루</option>
-                                		<option value="2" <c:if test="${cb.large == 2}">selected</c:if>>정기 크루</option>
-                                	</select>
-                            </div>
-                            <div class="col-sm-6" style="display:table">
-                            		<div id="largeInfo" style="display:table-cell; vertical-align:middle">
-                            			<form:errors cssClass="err" path="large"/>
-                            		</div>
-                            </div>
-                            
-                            <div class="col-sm-6">
-                                	<select name="small" id="small" class="form-select" onchange="smallInfo(crewform)">
-                                		<option value="">구분2</option>
-                                		<option value="M" <c:if test="${cb.small == 'M'}">selected</c:if>>등산</option>
-                                		<option value="P" <c:if test="${cb.small == 'P'}">selected</c:if>>플로깅</option>
-                                	</select>
-                            </div>
-                            <div class="col-sm-6" style="display:table">
-                                	<div id="smallInfo" style="display:table-cell; vertical-align:middle">
-                                		<form:errors cssClass="err" path="small"/>
-                                	</div>
-                            </div>
-                           
-                            <div class="col-sm-6">
-                                <div class="form-floating">
-                                    <input type="text" class="form-control border-0" id="crewname" name="crewname" placeholder="Gurdian Name"
-                                    		value="${cb.crewname}">
-                                    <label for="crewname">크루 이름</label>
-                                </div>
-                            </div>
-                            
-                            <div class="col-sm-2" style="display:table">
-                            	<div style="display:table-cell; vertical-align:middle">
-	                            	<input type="button" class="btn btn-secondary btn-sm" value="중복체크" id="crewname_chk">
-                            	</div>
-                            </div>
-                            <div class="col-sm-4" style="display:table">
-                            	<div style="display:table-cell; vertical-align:middle">
-                            		<span id="crname_chk">
-	                           	     
-	                                </span>
-                            	</div>
-                            </div>
-                            
-                            <div class="col-sm-6">
-                                <div class="form-floating">
-                                    <input type="number" class="form-control border-0" id="crewlimit" name="crewlimit" value="${cb.crewlimit}">
-                                    <label for="crewlimit">가입 제한 인원</label>
-                                </div>
-                            </div>
-                            
-                        	<div class="col-sm-6" style="display:table">
-                                <div class="form-floating" style="display:table-cell; vertical-align:middle">
-                                  <form:errors cssClass="err" path="crewlimit"/>
-                                </div>
-                            </div>
-                         
-                            <div class="col-12">
-                                <div class="form-floating">
-                                    <textarea class="form-control border-0" name="crewcontents" id="crewcontents" placeholder="Gurdian Name" style="height: 100px">${cb.crewcontents}</textarea>
-                                    <label for="crewcontents">크루 설명</label>
-                                     <form:errors cssClass="err" path="crewcontents"/>
-                                </div>
-                            </div>
-                            <div class="col-12 text-center">
-                                <input type="reset" value="취소" class="btn btn-primary py-3 px-4">
-                                <input type="submit" id="sub" value="등록" class="btn btn-primary py-3 px-4">
-                                <!-- <button class="btn btn-primary py-3 px-4" id="sub" type="submit">등록</button> -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    </form:form>
-    <!-- Quote End --> --%>
-
 <%@ include file="../common/common_bottom.jsp"%>

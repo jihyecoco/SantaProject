@@ -77,9 +77,9 @@
 					<br>
 					
 					<!-- 상품이름 가격 -->
-					<table class="table table-borded align-middle" width="100%">
+					<table class="table table-borderless" width="100%">
 						<tr>
-							<td>
+							<td colspan="2">
 								<c:if test="${fn:contains(phList, plist.productsnum)}">
 								<!-- 좋아요 -->
 									<img src="<%=request.getContextPath()%>/resources/images/icon/heart.png" 
@@ -88,20 +88,30 @@
 								<c:if test="${not fn:contains(phList, plist.productsnum)}">
 								<!-- 좋아요X -->
 								</c:if>
-							</td>
-							<td width="30%" align="center">
-								<c:if test="${plist.kind == 'a'}"><font color="blue">[판매]</font></c:if> 
-								<c:if test="${plist.kind == 'b'}"><font color="orange">[나눔]</font></c:if> 
-								<c:if test="${plist.kind == 'c'}"><font color="green">[교환]</font></c:if>
-							</td>
-							
-							<td align="center">
-							<a href="/products/user/detail.prd?num=${plist.productsnum}&pageNumber=${pageInfo.pageNumber}">${plist.name}(${plist.comments})</a>
+								
+								<!-- 상품명 -->
+								<a href="/products/user/detail.prd?num=${plist.productsnum}&pageNumber=${pageInfo.pageNumber}">
+									<font size="4px">${plist.name}  (${plist.comments})</font></a>
+								<!-- //상품명 -->
 							</td>
 						</tr>
-						<tr>
-							<td colspan="2" align="center">
-								<fmt:formatNumber value="${plist.price}" pattern="###,###" />원
+						<tr>	
+							<!-- 구분 & 가격 -->
+							<td align="left">
+								<c:if test="${plist.kind == 'a'}">
+									<font color="blue">[판매] </font>
+									<font size="3px" style="font-weight:bold;"><fmt:formatNumber value="${plist.price}" pattern="###,###" /> 원</font>
+								</c:if> 
+								<c:if test="${plist.kind == 'b'}">
+									<font color="orange">[나눔] </font>
+								</c:if> 
+								<c:if test="${plist.kind == 'c'}">
+									<font color="green">[교환] </font>
+								</c:if>
+							</td>
+							<!-- //구분 & 가격 -->
+							<td align="right">
+								<font size="1px" style="font-color:gray;">${plist.inputdate}</font>
 							</td>
 						</tr>
 					</table>

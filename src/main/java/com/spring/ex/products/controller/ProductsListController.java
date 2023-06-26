@@ -25,18 +25,18 @@ import com.spring.ex.utility.Paging;
 
 @Controller
 public class ProductsListController {
-	
+
 	//private final String command = "/list.prd";
 	private final String command = "/products/all/list.prd";
 	private String getPage = "products/productsList";
-	
+
 	@Autowired
 	ProductsDao pdao;
-	
+
 	//좋아요
 	@Autowired
 	ProductsHeartDao phdao;
-		
+
 	/*
 	 1. 상단 메뉴바에서 거래 클릭시 요청
 	 2. productsInsertForm.jsp에서 등록시 요청
@@ -60,18 +60,21 @@ public class ProductsListController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("whatColumn", whatColumn);
 		map.put("keyword", "%"+keyword+"%");
-		
-		if(whatColumn != null && whatColumn.equals("loginId")) { // 내 판매글 보기 눌렀을때 
-			try {
-				//System.out.println("내 판매글 보기 요청");
-				map.put("keyword", principal.getName()); // keyword에 id
-			}catch(NullPointerException e) { // 로그인 하지 않은 상태
+
+		if(whatColumn != null) {
+			loginId = principal.getName();
+			if(whatColumn.equals("loginId")) { //  내 판매글 보기 요청
 				try {
-					out = response.getWriter();
-					out.println("<script>alert('로그인 후에 사용하실 수 있습니다.');history.go(-1);</script>");
-					out.flush();
-				} catch (IOException e2) {
-					e.printStackTrace();
+					//System.out.println("내 판매글 보기 요청");
+					map.put("keyword", principal.getName()); // keyword에 id
+				}catch(NullPointerException e) { // 로그인 하지 않은 상태
+					try {
+						out = response.getWriter();
+						out.println("<script>alert('로그인 후에 사용하실 수 있습니다.');history.go(-1);</script>");
+						out.flush();
+					} catch (IOException e2) {
+						e.printStackTrace();
+					}
 				}
 			}
 		}
@@ -82,7 +85,7 @@ public class ProductsListController {
 		Paging pageInfo = new Paging(pageNumber, "9", totalCount, url, whatColumn, keyword, null);
 
 		List<ProductsBean> plist = pdao.getAllProducts(map, pageInfo);
-		
+
 		/* 좋아요 */
 		List<ProductsHeartBean> phList = new ArrayList<ProductsHeartBean>();
 		ProductsHeartBean phBean = new ProductsHeartBean();

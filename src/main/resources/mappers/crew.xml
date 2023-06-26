@@ -163,4 +163,66 @@
 		 	and crew_manager like #{keyword}
 		</if>
  	</select>
+ 	
+ 	<update id="WithdrawCrew">
+ 		update crew
+ 		set crew_now = crew_now - 1 and crew_member
+ 		where crew_name = #{crewname}
+ 	</update>
+ 	
+ 	<select id="Get1DayCrewTotalCount" resultType="int">
+ 		select count(*) from crew where large = 1
+ 		<if test='small == "M"'>
+ 			and small = 'M'
+	 		<if test='whatColumn == "crewname"'>
+	 			and crew_name like #{keyword}
+	 		</if>
+	 		<if test='whatColumn == "crewmanager"'>
+	 			and crew_manager like #{keyword}
+	 		</if>
+ 		</if>
+ 		
+ 		<if test='small == "P"'>
+ 			and small = 'P'
+	 		<if test='whatColumn == "crewname"'>
+		 		and crew_name like #{keyword}
+		 	</if>
+		 	<if test='whatColumn == "crewmanager"'>
+		 		and crew_manager like #{keyword}
+		 	</if>
+ 		</if>
+ 		
+ 		<if test='whatColumn == "crewname"'>
+		 	and crew_name like #{keyword}
+		</if>
+		<if test='whatColumn == "crewmanager"'>
+		 	and crew_manager like #{keyword}
+		</if>
+ 	</select> 
+ 	
+ 	<!-- 통계 그래프 -->
+ 	<select id="GetAllCrewCount2" resultType="int">
+ 		select count(*) from crew
+ 	</select>
+ 	
+ 	<select id="GetOneDayCrewCount" resultType="int">
+ 		select count(*) from crew
+ 		where large = 1
+ 	</select>
+ 	
+ 	<select id="GetRegularCrewCount" resultType="int">
+ 		select count(*) from crew
+ 		where large = 2
+ 	</select>
+ 	
+ 	<select id="GetMountainCrewCount2" resultType="int">
+ 		select count(*) from crew
+ 		where small = 'M'
+ 	</select>
+ 	
+ 	<select id="GetPloggingCrewCount2" resultType="int">
+ 		select count(*) from crew
+ 		where small = 'P'
+ 	</select>
+ 	<!-- //통계 그래프 -->
  </mapper>

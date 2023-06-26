@@ -109,5 +109,11 @@ public class CrewDao {
 		crewList = sqlSessionTemplate.selectList("GetRegularCrew", map);
 		return crewList;
 	}
+
+	public int get1DayCrewTotalCount(Map<String, Object> map) {
+		int totalCount = 0;
+		totalCount = sqlSessionTemplate.selectOne("Get1DayCrewTotalCount", map);
+		return totalCount;
+	}
 	
 }
