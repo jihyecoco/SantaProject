@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.spring.ex.bookmark.crewboard.model.CrewBoardBookmarkBean;
-import com.spring.ex.bookmark.crewboard.model.CrewBoardBookmarkDao;
 import com.spring.ex.crew.model.CrewBean;
 import com.spring.ex.crew.model.CrewDao;
 import com.spring.ex.crewboard.model.CrewBoardBean;
@@ -40,10 +38,6 @@ public class CrewBoardDetailController {
 	//좋아요
 	@Autowired
 	CrewBoardHeartDao cbhdao;
-	
-	//북마크
-	@Autowired
-	CrewBoardBookmarkDao cbbdao;
 	
 	//crewboardList.jsp(제목클릭)에서 요청(num, pageNumber) => crewboardDetailView.jsp
 	@RequestMapping(value=command)
@@ -96,32 +90,11 @@ public class CrewBoardDetailController {
 			e.printStackTrace();
 		}
 		
-		/* 북마크 */
-		int getBookmarkCnt = 0;
-		int getBookmarkTotal = 0;
-		try {
-			CrewBoardBookmarkBean cbbBean = new CrewBoardBookmarkBean();
-			cbbBean.setCrewboardNum(num);	//게시글번호
-			cbbBean.setUserId(loginId);		//사용자아이디
-			
-			//crewBoardCheckBookmark : 현재 로그인한 사용자(loginId)의 해당 게시글(num) 북마크 클릭여부
-			//getBookmarkCnt : 북마크 여부 전달 1:북마크클릭, 0:북마크클릭X
-			getBookmarkCnt = cbbdao.crewBoardCheckBookmark(cbbBean);
-			
-			//현재 게시글의 북마크 수 확인
-			getBookmarkTotal = cbbdao.getcrewBoardBookmarkTotal(cbbBean);
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
-		
 		
 		mav.addObject("cbb", cbb);
 		//좋아요
 		mav.addObject("getHeartCnt",getHeartCnt);
 		mav.addObject("getHeartTotal",getHeartTotal);
-		//북마크
-		mav.addObject("getBookmarkCnt",getBookmarkCnt);
-		mav.addObject("getBookmarkTotal",getBookmarkTotal);
 		mav.setViewName(getPage);
 		return mav;
 	}

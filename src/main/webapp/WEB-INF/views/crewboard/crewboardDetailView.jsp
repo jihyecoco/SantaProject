@@ -17,8 +17,6 @@
 		
 		/* 현재 로그인한 사용자의 해당 게시글 좋아요 클릭여부 하트이미지 on/off */
 		heartHandler();
-		/* 현재 로그인한 사용자의 해당 게시글 북마크 클릭여부 북마크이미지 on/off */
-		bookmarkHandler();
 	})//ready
 	
 	/* 댓글 목록 가져오기 */
@@ -230,7 +228,7 @@
     			type: 'POST',
     		    url: '/heart/user/crewboard/insertHeart.ht',
     			data : {
-    				input_userId: $('input[name=writer]').val(),    // 댓글 작성자 아이디
+    				input_userId: $('input[name=writer]').val(),    // 좋아요 클릭한 아이디
     				input_idx	: $('input[name=idx]').val()        // 게시글 번호
     			},
     			success: function(data) {
@@ -253,7 +251,7 @@
     			type: 'POST',
     		    url: '/heart/user/crewboard/deleteHeart.ht',
     			data : {
-    				input_userId: $('input[name=writer]').val(),    // 댓글 작성자 아이디
+    				input_userId: $('input[name=writer]').val(),    // 좋아요 클릭한 아이디
     				input_idx	: $('input[name=idx]').val()        // 게시글 번호
     			},
     			success: function(data) {
@@ -272,70 +270,6 @@
     	//좋아요 수 카운트 증가를 위해 Post 데이터를 포함해 페이지를 새로 고침 
     	location.reload();
     }//heartEvent
-
-	
-	/* 현재 로그인한 사용자의 해당 게시글 북마크 클릭여부 북마크이미지 on/off */
-	function bookmarkHandler(){
-		var getBookmarkval = $("#bookmarkStatus").val();
-		if(Number(getBookmarkval) > 0) {
-			$('#bookmark').attr('src', '../../resources/images/icon/bookmark.png');
-		} else {
-		    $("#bookmark").prop("src", "../../resources/images/icon/empty_bookmark.png");
-		}
-    }//bookmarkHandler
-    
- 	// 북마크(empty -> fill) 
-	function bookmarkEvent(){
-		
-		var getBookmarkval = $("#bookmarkStatus").val();
-    	//좋아요
-    	if(Number(getBookmarkval) == 0) {
-    		$.ajax({
-    			type: 'POST',
-    		    url: '/bookmark/user/crewboard/insertBookmark.bk',
-    			data : {
-    				input_userId: $('input[name=writer]').val(),    // 댓글 작성자 아이디
-    				input_idx	: $('input[name=idx]').val()        // 게시글 번호
-    			},
-    			success: function(data) {
-                    if (data == 'success') {
-                    	$('#bookmark').attr('src', '../../resources/images/icon/bookmark.png');
-                        //alert("북마크🔖");
-                        $("#bookmarkStatus").val("1");
-                    } else if(data == 'fail') {
-                        alert("게시글 북마크 실패했습니다.");
-                        $('#bookmark').attr('src', '../../resources/images/icon/empty_bookmark.png');
-                    } else{
-                    	alert("게시글 북마크 실패했습니다.");
-                    }
-                }//success
-    		});//ajax
-    	} 
-    	// 북마크 취소
-    	else {
-    		$.ajax({
-    			type: 'POST',
-    		    url: '/bookmark/user/crewboard/deleteBookmark.bk',
-    			data : {
-    				input_userId: $('input[name=writer]').val(),    // 댓글 작성자 아이디
-    				input_idx	: $('input[name=idx]').val()        // 게시글 번호
-    			},
-    			success: function(data) {
-                    if (data == 'success') {
-                        $('#bookmark').attr('src', '../../resources/images/icon/empty_bookmark.png');
-                        //alert("게시글 좋아요를 취소하였습니다.");
-                        $("#bookmark").val("");
-                    } else if(data == 'fail') {
-                        alert("게시글 북마크 취소 실패했습니다.");
-                    } else{
-                    	alert("게시글 북마크 취소 실패했습니다.");
-                    }
-                }//success
-    		});
-    	}
-    	//북마크 수 카운트 증가를 위해 Post 데이터를 포함해 페이지를 새로 고침 
-    	location.reload();
-    }
     
 </script>
 
@@ -401,30 +335,21 @@
            	</table>	
         </div>
 	   
-	   	<!-- 좋아요, 북마크 아이콘 -->
+	   	<!-- 좋아요 아이콘 -->
 	   	<div class="container" align="right">
-			<div align="center" style="width: 130px; border-radius: 20px; border: 1px solid #dee2e6; margin-bottom: 25px; padding:10px;" >
+			<div align="center" style="width: 100px; border-radius: 20px; border: 1px solid #dee2e6; margin-bottom: 25px; padding:10px;" >
 				<!-- 좋아요 -->
 				<div style="display: inline-block;">
 					<input type="hidden" id="heartStatus" name="heartStatus" value='<c:out value="${getHeartCnt}"/>'>
 		   			<span>
 		   				<img src="<%=request.getContextPath()%>/resources/images/icon/empty_heart.png" id="heart" width="30" height="30" onclick="heartEvent()">
 		   			</span>
-		   			<span>${getHeartTotal}</span>
+		   			<span style="padding-left: 10px;">${getHeartTotal}</span>
 	   			</div>
 	   			<!-- //좋아요 -->
-	   			<!-- 북마크 -->
-	   			<div style="display: inline-block;">
-	   				<input type="hidden" id="bookmarkStatus" name="bookmarkStatus" value='<c:out value="${getBookmarkCnt}"/>'>
-		   			<span>
-		   				<img src="<%=request.getContextPath()%>/resources/images/icon/empty_bookmark.png" id="bookmark" width="30" height="30" onclick="bookmarkEvent()">
-		   			</span>
-		   			<span>${getBookmarkTotal}</span>
-	   			</div>
-	   			<!-- //북마크 -->
 	   		</div>
 		</div>
-	   	<!-- // 좋아요, 북마크 아이콘 -->
+	   	<!-- // 좋아요 아이콘 -->
 	   	
 	    <!-- 댓글 입력창 -->
 	    <form id="comments_form" action="/crewcomments/user/insert.ccmt" method="post">

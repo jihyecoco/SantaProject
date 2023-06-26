@@ -1,8 +1,11 @@
 package com.spring.ex.crewboard.model;
 
 import java.sql.Date;
+import java.util.List;
 
 import org.hibernate.validator.constraints.NotBlank;
+
+import com.spring.ex.heart.crewboard.model.CrewBoardHeartBean;
 
 public class CrewBoardBean {
 	private int crewboardnum;
@@ -29,7 +32,10 @@ public class CrewBoardBean {
 	//crewboardList에 댓글개수 출력하기 위해서
 	private int comments;
 	
-	public int getComments() {
+	/* CrewBoardHeart 매핑 */
+    private List<CrewBoardHeartBean> crewBoardHeartList; 
+    
+    public int getComments() {
 		return comments;
 	}
 	public void setComments(int comments) {
@@ -108,6 +114,13 @@ public class CrewBoardBean {
 	public void setReadcount(int readcount) {
 		this.readcount = readcount;
 	}
+	/* CrewBoardHeart 매핑 */
+	public CrewBoardHeartBean getCrewBoardHeartBean() {
+		return getCrewBoardHeartBean();
+	}
+	public void setCrewBoardHeartBean(CrewBoardHeartBean crewBoardHeartBean) {
+		crewBoardHeartBean = crewBoardHeartBean;
+	}
 	
-	
-}
+    
+}//CrewBoardBean

@@ -4,6 +4,7 @@
 
 <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/jquery.js"></script>
 <script type="text/javascript">
+
 	/* 신청하기 버튼 클릭 */
 	function signUp(crewname, state, loginId) {
 		if(loginId.length == 0){
@@ -40,7 +41,7 @@
 				}
 			}
 		}
-	}
+	}//signUp
 	
 </script>
 <style>
@@ -120,17 +121,17 @@
     		<br>
     	</div>
     	<!-- //정렬 -->
-    	
-	    <table class="table table-hover table-borded align-middle">
+	    <table class="table table-hover align-middle" style="width: 100%;">
 	    	<thead>
 		    	<tr align="center">
+		    		<th></th><!-- 좋아요 -->
 		    		<th>번호</th>
 		    		<th>모집상태</th>
 		    		<th>구분1/구분2</th>
 		    		<th>제목</th>
 		    		<th>작성자</th>
 		    		<th>크루명</th>
-		    		<th>현재인원/전체인원</th>
+		    		<th>현재인원/<br>전체인원</th>
 		    		<th>신청하기</th>
 				</tr>
 			</thead>
@@ -144,7 +145,17 @@
 	    		<c:forEach var="lists" items="${crewboard_list}" varStatus="status">
 	    			<tr align="center">
 	    				<td>
-	    					${(1-pageInfo.pageNumber)*pageInfo.limit+status.count}
+							<c:if test="${fn:contains(cbhList, lists.crewboardnum)}">
+							<!-- 좋아요 -->
+								<img src="<%=request.getContextPath()%>/resources/images/icon/heart.png" 
+								id="heart" width="30" height="30">
+							</c:if>
+							<c:if test="${not fn:contains(cbhList, lists.crewboardnum)}">
+							<!-- 좋아요X -->
+							</c:if>
+						</td>
+	    				<td> 
+	    					${(1-pageInfo.pageNumber)*pageInfo.limit+status.count} 
 	    				</td>
 	    				<td>
 	    					<c:if test="${lists.state == 0}"><font color="blue">[모집중]</font></c:if>

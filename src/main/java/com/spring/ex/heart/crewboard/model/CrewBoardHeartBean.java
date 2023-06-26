@@ -1,5 +1,7 @@
 package com.spring.ex.heart.crewboard.model;
 
+import com.spring.ex.crewboard.model.CrewBoardBean;
+
 public class CrewBoardHeartBean {
 		
     private int heartId;
@@ -7,6 +9,9 @@ public class CrewBoardHeartBean {
 	private String userId;
 	private String heartDate;
 	
+	/* CrewBoard 매핑 */
+    private CrewBoardBean crewBoard; 
+    
 	//getter & setter
 	public int getHeartId() {
 		return heartId;
@@ -32,5 +37,14 @@ public class CrewBoardHeartBean {
 	public void setHeartDate(String heartDate) {
 		this.heartDate = heartDate;
 	}
+	/* CrewBoard 매핑 */
+	public CrewBoardBean getCrewBoard() {
+		return crewBoard;
+	}
+	
+	public void setCrewBoard(CrewBoardBean crewBoard) {
+		this.crewBoard = crewBoard;
+	}
+	
 	
 }//CrewBoardHeartBean

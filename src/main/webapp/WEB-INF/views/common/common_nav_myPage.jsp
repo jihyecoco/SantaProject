@@ -44,13 +44,13 @@
           <a class="nav-link dropdown-toggle" href="#" id="dropdown10" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">작성 게시글 목록</a>
           <div class="dropdown-menu" aria-labelledby="dropdown10">
             <a class="dropdown-item" href="#">작성한 게시글</a>
-            <a class="dropdown-item" href="#">좋아요한 게시글</a>
+            <a class="dropdown-item" href="/heart/user/boardAll/getAllHeartList.ht">좋아요한 게시글</a>
             <a class="dropdown-item" href="#">저장(북마크)한 게시글</a>
           </div>
         </li>
         <!-- //게시글 관련 -->
         
-         <!-- 게시글 관련 -->
+         <!-- 거래 게시글 관련 -->
       	<li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="dropdown10" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">거래 내역</a>
           <div class="dropdown-menu" aria-labelledby="dropdown10">
@@ -58,7 +58,7 @@
             <a class="dropdown-item" href="/pay/user/myPage_sell.pay">판매 거래내역</a>
           </div>
         </li>
-        <!-- //게시글 관련 -->
+        <!-- //거래 게시글 관련 -->
         
          <!-- 서포터즈 -->
       	<li class="nav-item dropdown">

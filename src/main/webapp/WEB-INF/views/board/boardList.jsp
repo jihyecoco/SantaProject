@@ -88,6 +88,7 @@
 <table class="table table-hover table-borded align-middle">
 	<thead>
 		<tr align="center">
+			<th></th><!-- 좋아요 -->
 			<th>번호</th>
 			<th>카테고리</th>	
 			<th>이미지</th>	
@@ -108,6 +109,16 @@
 	<c:if test="${not empty lists}">
 	<c:forEach var="board" items="${lists}">
 		<tr align="center"> <!-- width="40%" -->
+			<td>
+				<c:if test="${fn:contains(bhList, board.num)}">
+				<!-- 좋아요 -->
+					<img src="<%=request.getContextPath()%>/resources/images/icon/heart.png" 
+					id="heart" width="30" height="30">
+				</c:if>
+				<c:if test="${not fn:contains(bhList, board.num)}">
+				<!-- 좋아요X -->
+				</c:if>
+			</td>
 			<td>${board.num}</td>
 			<td>[${board.category}]</td>
 			<td>

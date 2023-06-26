@@ -3,6 +3,7 @@ package com.spring.ex.products.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.spring.ex.heart.products.model.ProductsHeartBean;
+import com.spring.ex.heart.products.model.ProductsHeartDao;
 import com.spring.ex.products.model.ProductsBean;
 import com.spring.ex.products.model.ProductsDao;
 import com.spring.ex.utility.Paging;
@@ -30,6 +33,10 @@ public class ProductsListController {
 	@Autowired
 	ProductsDao pdao;
 	
+	//좋아요
+	@Autowired
+	ProductsHeartDao phdao;
+		
 	/*
 	 1. 상단 메뉴바에서 거래 클릭시 요청
 	 2. productsInsertForm.jsp에서 등록시 요청
@@ -45,7 +52,7 @@ public class ProductsListController {
 			HttpServletResponse response) {
 
 		ModelAndView mav = new ModelAndView();
-
+		String loginId = principal.getName();
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = null;
 
@@ -75,6 +82,21 @@ public class ProductsListController {
 		Paging pageInfo = new Paging(pageNumber, "9", totalCount, url, whatColumn, keyword, null);
 
 		List<ProductsBean> plist = pdao.getAllProducts(map, pageInfo);
+		
+		/* 좋아요 */
+		List<ProductsHeartBean> phList = new ArrayList<ProductsHeartBean>();
+		ProductsHeartBean phBean = new ProductsHeartBean();
+
+		try {
+			phBean.setUserId(loginId);		//사용자아이디
+			phList = phdao.getAllProductsHeart(loginId);
+			System.out.println("phList : " + phList);
+			//현재 게시글의 좋아요 수 확인
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		//좋아요
+		mav.addObject("phList", phList);
 		mav.addObject("plist", plist); // 상품리스트
 		mav.addObject("pageInfo", pageInfo); // 페이징
 		//mav.addObject("loginId", principal.getName()); // 로그인 아이디 -- 챙길 필요없음 DetailController에서 챙기면 가능

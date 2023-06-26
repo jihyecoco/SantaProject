@@ -79,6 +79,16 @@
 					<!-- 상품이름 가격 -->
 					<table class="table table-borded align-middle" width="100%">
 						<tr>
+							<td>
+								<c:if test="${fn:contains(phList, plist.productsnum)}">
+								<!-- 좋아요 -->
+									<img src="<%=request.getContextPath()%>/resources/images/icon/heart.png" 
+									id="heart" width="30" height="30">
+								</c:if>
+								<c:if test="${not fn:contains(phList, plist.productsnum)}">
+								<!-- 좋아요X -->
+								</c:if>
+							</td>
 							<td width="30%" align="center">
 								<c:if test="${plist.kind == 'a'}"><font color="blue">[판매]</font></c:if> 
 								<c:if test="${plist.kind == 'b'}"><font color="orange">[나눔]</font></c:if> 

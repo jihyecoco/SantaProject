@@ -7,6 +7,9 @@
 		//alert('1');
 		getAllComments();
 		
+		/* 현재 로그인한 사용자의 해당 게시글 좋아요 클릭여부 하트이미지 on/off */
+		heartHandler();
+		
 		/* 구매하기 버튼 클릭 */
 		$('#apibtn').click(function(){
 			$.ajax({
@@ -36,6 +39,8 @@
 				$("input[name=isSecret]").val('N');
 			}
 		});
+		
+		
 	});//ready
 	
 	/* 댓글 목록 가져오기 */
@@ -205,29 +210,70 @@
 		$('#pcmt_update'+pcmt_num).html(pcmt_updateform);
 	}
 	
-	/* 좋아요 버튼 클릭 */
-	var heart_flag = false;
-	function heart(){
-		if(heart_flag == false){ // 좋아요 클릭
+	/* 현재 로그인한 사용자의 해당 게시글 좋아요 클릭여부 하트이미지 on/off */
+	function heartHandler(){
+		var getHeartval = $("#heartStatus").val();
+		if(Number(getHeartval) > 0) {
 			$('#heart').attr('src', '../../resources/images/icon/heart.png');
-			heart_flag = true;
-		}else{ // 좋아요 취소
-			$('#heart').attr('src', '../../resources/images/icon/empty_heart.png');
-			heart_flag = false;
+		} else {
+		    $("#heart").prop("src", "/resources/images/icon/empty_heart.png");
 		}
-	}
+    }//heartHandler
 	
-	/* 북마크 버튼 클릭 */
-	var bookmark_flag = false;
-	function bookmark(){
-		if(bookmark_flag == false){ // 북마크 클릭
-			$('#bookmark').attr('src', '../../resources/images/icon/bookmark.png');
-			bookmark_flag = true;
-		}else{ // 북마크 취소
-			$('#bookmark').attr('src', '../../resources/images/icon/empty_bookmark.png');
-			bookmark_flag = false;
-		}
-	}
+
+	// 좋아요(empty -> fill) 
+	function heartEvent(){
+		//alert($('input[name=writer]').val() + " / " + $('input[name=num]').val() );
+		var getHeartval = $("#heartStatus").val();
+    	//좋아요
+    	if(Number(getHeartval) == 0) {
+    		$.ajax({
+    			type: 'POST',
+    		    url: '/heart/user/products/insertHeart.ht',
+    			data : {
+    				input_userId: $('input[name=writer]').val(),    // 좋아요 클릭한 아이디
+    				input_num	: $('input[name=num]').val()        // 게시글 번호
+    			},
+    			success: function(data) {
+                    if (data == 'success') {
+                    	$('#heart').attr('src', '../../resources/images/icon/heart.png');
+                        //alert("좋아요❤️");
+                        $("#heartStatus").val("1");
+                    } else if(data == 'fail') {
+                        alert("게시글 좋아요 실패했습니다.");
+                        $('#heart').attr('src', '../../resources/images/icon/empty_heart.png');
+                    } else{
+                    	alert("게시글 좋아요 실패했습니다.");
+                    }
+                }//success
+    		});//ajax
+    	} 
+    	// 좋아요 취소
+    	else {
+    		$.ajax({
+    			type: 'POST',
+    		    url: '/heart/user/products/deleteHeart.ht',
+    			data : {
+    				input_userId: $('input[name=writer]').val(),    // 좋아요 클릭한 아이디
+    				input_num	: $('input[name=num]').val()        // 게시글 번호
+    			},
+    			success: function(data) {
+                    if (data == 'success') {
+                        $('#heart').attr('src', '../../resources/images/icon/empty_heart.png');
+                        //alert("게시글 좋아요를 취소하였습니다.");
+                        $("#heartStatus").val("");
+                    } else if(data == 'fail') {
+                        alert("게시글 좋아요 취소 실패했습니다.");
+                    } else{
+                    	alert("게시글 좋아요 취소 실패했습니다.");
+                    }
+                }//success
+    		});
+    	}
+    	//좋아요 수 카운트 증가를 위해 Post 데이터를 포함해 페이지를 새로 고침 
+    	location.reload();
+    }//heartEvent
+    
 </script>
 
 <div class="container-xxl py-5">
@@ -236,6 +282,7 @@
         	<div class="col-lg-6" data-wow-delay="0.1s">
             	<h1 class="display-5 mb-5" style="margin-left:250px;">${pb.name}</h1>
                     <!-- 이미지제외 설명 Start -->
+                    <input type="hidden" name="num" id="num" value="${pb.productsnum}"/>
 					<table class="table table-hover table-borded align-middle">
 						<tr>
 							<th scope="col">상품명</th>
@@ -302,15 +349,21 @@
 	               <!-- //구매하기 버튼 -->
                	</div>
                	
-               	<!-- 좋아요, 북마크 아이콘 -->
-	   			<div class="container">
-	   			<div align="right">
-	   			<img src="<%=request.getContextPath()%>/resources/images/icon/empty_heart.png" id="heart" width="30" height="40" onclick="heart()">
-	   			<img src="<%=request.getContextPath()%>/resources/images/icon/empty_bookmark.png" id="bookmark" width="30" height="30" onclick="bookmark()">
-	   			</div>
-	   			<br>
-	   			</div>
-	   			<!-- // 좋아요, 북마크 아이콘 -->
+               	<!-- 좋아요 아이콘 -->
+			   	<div class="container" align="right">
+					<div align="center" style="width: 100px; border-radius: 20px; border: 1px solid #dee2e6; margin-bottom: 25px; padding:10px;" >
+						<!-- 좋아요 -->
+						<div style="display: inline-block;">
+							<input type="hidden" id="heartStatus" name="heartStatus" value='<c:out value="${getHeartCnt}"/>'>
+				   			<span>
+				   				<img src="<%=request.getContextPath()%>/resources/images/icon/empty_heart.png" id="heart" width="30" height="30" onclick="heartEvent()">
+				   			</span>
+				   			<span style="padding-left: 10px;">${getHeartTotal}</span>
+			   			</div>
+			   			<!-- //좋아요 -->
+			   		</div>
+				</div>
+	   			<!-- // 좋아요 아이콘 -->
             </div>
         </div>
         

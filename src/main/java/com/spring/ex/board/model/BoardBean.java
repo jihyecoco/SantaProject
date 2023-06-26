@@ -1,8 +1,11 @@
 package com.spring.ex.board.model;
 
+import java.util.List;
+
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.spring.ex.heart.board.model.BoardHeartBean;
 
 public class BoardBean {
 	
@@ -25,6 +28,9 @@ public class BoardBean {
 	
 	private int boardcommentscount; //댓글수 출력하기위한 칼럼
 	
+	/*BoardHeart 매핑 */
+    private List<BoardHeartBean> boardHeartList; 
+    
 	//////////	
 	private MultipartFile upload;
 	
@@ -124,7 +130,14 @@ public class BoardBean {
 		this.image = image;
 	}
 	
-	
+	/* BoardHeart 매핑 */
+	public List<BoardHeartBean> getBoardHeartList() {
+		return boardHeartList;
+	}
+
+	public void setBoardHeartList(List<BoardHeartBean> boardHeartList) {
+		this.boardHeartList = boardHeartList;
+	}
 	
 	
 }

@@ -71,11 +71,31 @@ public class CrewBoardHeartDao {
 	}//getcrewBoardHeartTotal
 
 	//getAllCrewBoardHeart : 좋아요한 게시글 list
-	public List<CrewBoardBean> getAllCrewBoardHeart(String getUserId) {
-		List<CrewBoardBean> crewBoardHeartList = new ArrayList<CrewBoardBean>();
-		crewBoardHeartList = sqlSessionTemplate.selectList("crewboardHeart.getAllCrewBoardHeart",getUserId);
+	public List<CrewBoardHeartBean> getAllCrewBoardHeart(String getUserId) {
+		List<CrewBoardHeartBean> crewBoardHeartList = null;
+		crewBoardHeartList = sqlSessionTemplate.selectList("crewboardHeart.getAllCrewBoardHeart", getUserId);
+		System.out.println("Dao - getAllCrewBoardHeart getUserId : " + getUserId);
 		System.out.println("Dao - getAllCrewBoardHeart crewBoardHeartList : " + crewBoardHeartList);
+		for(int i=0; i<crewBoardHeartList.size(); i++) {
+			System.out.println("list " + i + " : "  + crewBoardHeartList.get(i));
+		}
 		return crewBoardHeartList;
-	}
+		
+	}//getAllCrewBoardHeart
+	
+	//getAllCrewBoardHeart_Map : 좋아요한 게시글 list
+	public List<CrewBoardBean> getAllCrewBoardHeart_Map(String getUserId) {
+	    List<CrewBoardBean> crewBoardHeartList = null;
+	    try {
+	    	crewBoardHeartList = sqlSessionTemplate.selectList("crewboardHeart.getAllCrewBoardHeart_Map", getUserId);
+		    //System.out.println("Dao - getAllCrewBoardHeart getUserId : " + getUserId);
+		    //System.out.println("Dao - getAllCrewBoardHeart crewBoardHeartList : " + crewBoardHeartList);
+	    }catch (Exception e) {
+			e.printStackTrace();
+		}
+	    
+	    return crewBoardHeartList;
+	}//getAllCrewBoardHeart_Map
+	
 
 }//CrewBoardHeartDao

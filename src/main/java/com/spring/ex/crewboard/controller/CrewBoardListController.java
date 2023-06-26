@@ -1,6 +1,7 @@
 package com.spring.ex.crewboard.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,8 @@ import com.spring.ex.crew.model.CrewBean;
 import com.spring.ex.crew.model.CrewDao;
 import com.spring.ex.crewboard.model.CrewBoardBean;
 import com.spring.ex.crewboard.model.CrewBoardDao;
+import com.spring.ex.heart.crewboard.model.CrewBoardHeartBean;
+import com.spring.ex.heart.crewboard.model.CrewBoardHeartDao;
 import com.spring.ex.utility.Paging;
 
 
@@ -33,6 +36,10 @@ public class CrewBoardListController {
 	@Autowired
 	CrewDao cdao;
 	
+	//좋아요
+	@Autowired
+	CrewBoardHeartDao cbhdao;
+		
 	/*
 	 1. crewInsertForm.jsp에서 크루등록완료 => list.bdcr 요청
 	 2. crewboardList.jsp 에서 검색시 => list.bdcr 요청
@@ -49,9 +56,9 @@ public class CrewBoardListController {
 			HttpServletRequest request, Principal principal) {
 		
 		ModelAndView mav = new ModelAndView();
+		String loginId = principal.getName();
 		
 		try {
-			String loginId = principal.getName();
 			if(loginId != null) { // 로그인 상태라면
 				// 가입한 크루 목록 가져오기
 				List<CrewBean> join_crew = cdao.getJoinCrewById(loginId);
@@ -79,6 +86,20 @@ public class CrewBoardListController {
 		
 		List<CrewBoardBean> crewboard_list = cbdao.getAllCrewboard(map, pageInfo);
 		
+		/* 좋아요 */
+		List<CrewBoardHeartBean> cbhList = new ArrayList<CrewBoardHeartBean>();
+		CrewBoardHeartBean cbhBean = new CrewBoardHeartBean();
+
+		try {
+			cbhBean.setUserId(loginId);		//사용자아이디
+			cbhList = cbhdao.getAllCrewBoardHeart(loginId);
+			System.out.println("cbhList : " + cbhList);
+			//현재 게시글의 좋아요 수 확인
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		//좋아요
+		mav.addObject("cbhList", cbhList);
 		mav.addObject("crewboard_list", crewboard_list);
 		mav.addObject("pageInfo", pageInfo);
 		mav.setViewName(getPage);

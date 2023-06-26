@@ -28,7 +28,10 @@
 				$("input[name=isSecret]").val('N');
 			}
 		});
-	});//readye
+		
+		/* 현재 로그인한 사용자의 해당 게시글 좋아요 클릭여부 하트이미지 on/off */
+		heartHandler();
+	});//ready
 	
 	
 	//<form:errors cssClass="err" path="content" />
@@ -180,17 +183,68 @@
 		}
 	}
 	
-	/* 북마크 버튼 클릭 */
-	var bookmark_flag = false;
-	function bookmark(){
-		if(bookmark_flag == false){ // 북마크 클릭
-			$('#bookmark').attr('src', '../../resources/images/icon/bookmark.png');
-			bookmark_flag = true;
-		}else{ // 북마크 취소
-			$('#bookmark').attr('src', '../../resources/images/icon/empty_bookmark.png');
-			bookmark_flag = false;
+	/* 현재 로그인한 사용자의 해당 게시글 좋아요 클릭여부 하트이미지 on/off */
+	function heartHandler(){
+		var getHeartval = $("#heartStatus").val();
+		if(Number(getHeartval) > 0) {
+			$('#heart').attr('src', '../../resources/images/icon/heart.png');
+		} else {
+		    $("#heart").prop("src", "/resources/images/icon/empty_heart.png");
 		}
-	}
+    }//heartHandler
+	
+	// 좋아요(empty -> fill) 
+	function heartEvent(){
+		
+		var getHeartval = $("#heartStatus").val();
+    	//좋아요
+    	if(Number(getHeartval) == 0) {
+    		$.ajax({
+    			type: 'POST',
+    		    url: '/heart/user/board/insertHeart.ht',
+    			data : {
+    				input_userId: $('input[name=userid]').val(),    // 좋아요 클릭한 아이디
+    				input_num	: $('input[name=bnum]').val()       // 게시글 번호
+    			},
+    			success: function(data) {
+                    if (data == 'success') {
+                    	$('#heart').attr('src', '../../resources/images/icon/heart.png');
+                        //alert("좋아요❤️");
+                        $("#heartStatus").val("1");
+                    } else if(data == 'fail') {
+                        alert("게시글 좋아요 실패했습니다.");
+                        $('#heart').attr('src', '../../resources/images/icon/empty_heart.png');
+                    } else{
+                    	alert("게시글 좋아요 실패했습니다.");
+                    }
+                }//success
+    		});//ajax
+    	} 
+    	// 좋아요 취소
+    	else {
+    		$.ajax({
+    			type: 'POST',
+    		    url: '/heart/user/board/deleteHeart.ht',
+    			data : {
+    				input_userId: $('input[name=userid]').val(),    // 좋아요 클릭한 아이디
+    				input_num	: $('input[name=bnum]').val()       // 게시글 번호
+    			},
+    			success: function(data) {
+                    if (data == 'success') {
+                        $('#heart').attr('src', '../../resources/images/icon/empty_heart.png');
+                        //alert("게시글 좋아요를 취소하였습니다.");
+                        $("#heartStatus").val("");
+                    } else if(data == 'fail') {
+                        alert("게시글 좋아요 취소 실패했습니다.");
+                    } else{
+                    	alert("게시글 좋아요 취소 실패했습니다.");
+                    }
+                }//success
+    		});
+    	}
+    	//좋아요 수 카운트 증가를 위해 Post 데이터를 포함해 페이지를 새로 고침 
+    	location.reload();
+    }//heartEvent
 	
 </script>
 
@@ -264,15 +318,21 @@
 </table>
 </center>
 
-<!-- 좋아요, 북마크 아이콘 -->
-	<div class="container">
-		<div align="right">
-	   		<img src="<%=request.getContextPath()%>/resources/images/icon/empty_heart.png" id="heart" width="30" height="40" onclick="heart()">
-	   		<img src="<%=request.getContextPath()%>/resources/images/icon/empty_bookmark.png" id="bookmark" width="30" height="30" onclick="bookmark()">
+<!-- 좋아요 아이콘 -->
+<div class="container" align="right">
+	<div align="center" style="width: 100px; border-radius: 20px; border: 1px solid #dee2e6; margin-bottom: 25px; padding:10px;" >
+		<!-- 좋아요 -->
+		<div style="display: inline-block;">
+			<input type="hidden" id="heartStatus" name="heartStatus" value='<c:out value="${getHeartCnt}"/>'>
+  			<span>
+  				<img src="<%=request.getContextPath()%>/resources/images/icon/empty_heart.png" id="heart" width="30" height="30" onclick="heartEvent()">
+  			</span>
+  			<span style="padding-left: 10px;">${getHeartTotal}</span>
 		</div>
-		<br>
+ 		<!-- //좋아요 -->
 	</div>
-<!-- // 좋아요, 북마크 아이콘 -->
+</div>
+<!-- // 좋아요 아이콘 -->
     
 <!-- 댓글 입력창 -->
 <form action="/boardcomments/user/insert.bcmt" method="post">
@@ -289,7 +349,7 @@
 			<ul class="list-group list-group-flush">
 				<li class="list-group-item">
 					<div class="form-inline mb-2"></div>					
-					<textarea class="form-control" name="content" rows="3"></textarea>
+					<textarea class="form-control" name="content" rows="3" style="resize: none;"></textarea>
 					<form:errors cssClass="err" path="content"/> <!-- 유효성검사 -->
 					<div>
 						<input type="checkbox" id="reply_secret" name="reply_secret" style="margin-bottom: 10px; margin-top: 10px; margin-right: 5px;" />
