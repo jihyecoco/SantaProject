@@ -218,7 +218,7 @@
 			    		<c:choose>
 						<c:when test="${cl.stampapply != 1 }">
 							<div class="item">
-							- <a href="/stamp/user/usercertimage.stp?stampimage=${cl.stampimage}&mountainname=${cl.mountainname}&userid=${principal.getName()}" target="_blank" target="_blank" onClick="window.open(this.href, '_blank', 'width=800, height=600'); return false;">
+							- <a href="/stamp/user/usercertimage.stp?stampimage=${cl.stampimage}&mountainname=${cl.mountainname}&userid=${principal.getName()}&stampreject=${cl.stampreject}" target="_blank" target="_blank" onClick="window.open(this.href, '_blank', 'width=800, height=600'); return false;">
 							${cl.mountainname}
 							<c:if test="${cl.stampapply == 0 }"><font color="orange">(승인대기)</font></c:if>
 							<c:if test="${cl.stampapply == 2 }"><font color="red">(승인거절)</font></c:if>

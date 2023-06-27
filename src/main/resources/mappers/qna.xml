@@ -13,7 +13,6 @@
 		<result property="qnaquestion" column="qna_question"/>
 		<result property="qnaanswer" column="qna_answer"/>
 		<result property="qnaimage" column="qna_image"/>
-		<result property="qnasecret" column="qna_secret"/>
 	</resultMap>
 	
 	<!-- 전체 갯수-->
@@ -46,8 +45,7 @@
 			qna_subject,
 			qna_question,
 			qna_answer,
-			qna_image,
-			qna_secret
+			qna_image
 		FROM
 			 qna
 		<if test="whatColumn == '제목'">
@@ -69,10 +67,10 @@
 	<insert id="InsertQuestion">
 		INSERT
 			into qna(qna_num, users_id, qna_category,
-			qna_date, qna_subject, qna_question, qna_image, qna_secret)
+			qna_date, qna_subject, qna_question, qna_image)
 		VALUES
 			(qna_seq.nextval, #{usersid}, #{qnacategory}, sysdate,
-			#{qnasubject}, #{qnaquestion}, #{qnaimage}, #{qnasecret})
+			#{qnasubject}, #{qnaquestion}, #{qnaimage})
 	</insert>
 	<!-- //새로운 qna 삽입 -->
 	

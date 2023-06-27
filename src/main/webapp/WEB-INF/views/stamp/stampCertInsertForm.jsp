@@ -30,18 +30,29 @@
                         	
                         	<!-- 제목 입력 -->
                             <div class="col-6" style="float: left; ">
-	                                <div class="form-floating">
-	                                    <input type="text" class="form-control border-0" id="searchInput" name="mountainname" value="${mountainname}">
-	                                    <label for="mountainname">산 이름</label>
-	                                </div>
-	                                <form:errors cssClass="err" path="mountainname"/>
+	                            <select class="form-select" name="mountainnum" id="mountainnum">
+									<option value="0">선택</option>
+	                                <c:forEach var="mn" items="${mountainNames}">
+										<option value="${mn.mountainnum}" <c:if test="${mn.mountainnum == stampBean.mountainnum}">selected</c:if>>${mn.mountainnum} ${mn.mountainname}</option>
+	                                </c:forEach>
+								</select>
+	                                <form:errors cssClass="err" path="mountainnum"/>
 	                        </div>
 	                        <!-- //제목 입력 -->
                         	
+                        	<!-- 인증 사진 허가 기준 -->
+							<div>
+								<button class="btn btn-secondary btn-sm" onclick ="return apply_info()">
+									인증허가 기준
+								</button>
+							</div>
+                        	<!-- //인증 사진 허가 기준 -->
+                        	
                             <!-- 사진 첨부 -->
-                            <div class="mb-1">
+                            <div class="mb-1" style="clear:both;">
                                 <div class="mb-2 mx-1"><b>완등 사진 : </b></div>
-  								<input class="form-control" type="file" name="upload">
+  								<input class="form-control" type="file" name="upload" value="${stampBean.stampimage}">
+  								<input type="hidden" name="stampimage">
 							</div>
 							<form:errors cssClass="err" path="stampimage"/>
                             <!-- //사진 첨부 -->
@@ -49,7 +60,7 @@
                             <!-- 등록하기 버튼 -->
                             <div class="col-12 text-center">
                                 <button class="btn btn-success" type="submit">등록하기</button>
-                                <button class="btn btn-success" type="reset">다시작성</button>
+                                <button class="btn btn-success" type="reset" onClick="resetCheck()">다시작성</button>
                                 <button class="btn btn-success" onClick="location.href='/stamp/user/list.stp'">목록</button>
                             </div>
                             <!-- //등록하기 버튼 -->
@@ -63,5 +74,16 @@
     </div>
     <!-- stampCert Insert Form End -->
 <script type="text/javascript">
+
+	document.querySelector('form').addEventListener('reset', function(event) {
+		  if (!confirm('초기화하시겠습니까?')) {
+		    event.preventDefault();
+		  }
+		});
+
+	function apply_info(){
+		window.open('/stamp/all/applyinfo.stp', '_blank', 'width=800, height=600');
+		return false;		
+	}
 </script>
 <%@ include file="../common/common_bottom.jsp" %>

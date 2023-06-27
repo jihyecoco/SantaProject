@@ -34,10 +34,6 @@ public class QnaBean {
 	//qna 이미지
 	private String qnaimage;
 	
-	//qna 비밀글, 0 : 일반, 1 : 비밀
-	@NotBlank(message = "글의 공개범위를 선택세요.")
-	private String qnasecret;
-	
 	//이미지 업로드를 위한 객체, 변수 생성
 	private MultipartFile upload;
 	private String upload2;
@@ -90,12 +86,6 @@ public class QnaBean {
 	}
 	public void setQnaimage(String qnaimage) {
 		this.qnaimage = qnaimage;
-	}
-	public String getQnasecret() {
-		return qnasecret;
-	}
-	public void setQnasecret(String qnasecret) {
-		this.qnasecret = qnasecret;
 	}
 	public MultipartFile getUpload() {
 		return upload;

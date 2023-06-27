@@ -224,4 +224,14 @@
 				mountain_num = #{mountainnum}
 		</select>	
 	<!-- //해당 번호의 데이터 검색 -->
+
+	<!-- 산 이름 검색 -->
+		<select id="GetAllMountainName" resultType="com.spring.ex.mountain.model.MountainBean" resultMap="mountainMap">
+			SELECT
+				mountain_num,
+				mountain_name
+			FROM
+				mountain
+		</select>	
+	<!-- //산 이름 검색 -->
 </mapper>

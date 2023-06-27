@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.ex.mountain.model.MountainDao;
+import com.spring.ex.stamp.model.StampDao;
 
 @Controller
 public class MountainDeleteController {
@@ -23,9 +24,13 @@ public class MountainDeleteController {
 			//redirect할 요청 변수
 			private String gotoPage = "redirect:/mountain/all/list.mnt";
 			
-			//qnaDao 객체 생성
+			//mountainDao 객체 생성
 			@Autowired
 			MountainDao mdao;
+			
+			//stampDao 객체 생성
+			@Autowired
+			StampDao sdao;
 			
 			//qna 목록 => 현재 글 삭제하기 버튼 클릭 시
 			@ResponseBody
@@ -56,14 +61,25 @@ public class MountainDeleteController {
 				}else {
 					//로그인 정보가 있으면
 					
-					//dao의 delete메서드로 배열만큼 반복해서 num값을 넘겨 해당 컬럼 삭제, int로 결과 전송
+					//dao의 delete메서드로 배열만큼 반복해서 num값을 넘겨
+					//해당 값을 가진 인증내역의 exist 컬럼의 값을 0으로 변경
+					//해당 컬럼 삭제, int로 결과 전송
 					for(String data:chkArray) {
-						int cnt = mdao.deleteMountain(data);
 						
-						if(cnt > 0) {
-							System.out.println(data+" : 삭제 성공");
+						int cnt = sdao.updateMountainExist(data);
+						
+						if(cnt>0) {
+							System.out.println("업데이트 성공");
+							
+							cnt = mdao.deleteMountain(data);
+							
+							if(cnt > 0) {
+								System.out.println(data+" : 삭제 성공");
+							}else {
+								System.out.println(data+" : 삭제 실패");
+							}
 						}else {
-							System.out.println(data+" : 삭제 실패");
+							System.out.println("업데이트 실패");
 						}
 					}
 					

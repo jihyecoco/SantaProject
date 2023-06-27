@@ -37,7 +37,7 @@
                     <div class="bg-light rounded p-4 p-sm-5 wow fadeInUp" data-wow-delay="0.1s">
                     	<h3>${certBean.mountainname}</h3>
                         <div class="row g-3 mx-auto" >
-                         		<img src="${certBean.stampimage}" alt="인증사진">
+                        		<img src="<%=request.getContextPath()%>/resources/images/mountain/${certBean.stampimage}" alt="인증사진" style="width:450px;">
                             </div><!--//row g-3  --> 
                         </div><!-- //bg-light -->
                     </div><!-- //col-lg-7 -->

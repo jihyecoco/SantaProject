@@ -62,13 +62,13 @@
 							      <th scope="row">${sl.stampnum}</th>
 							      <td>${sl.usersid}</td>
 							      <td>
-								  <c:set var="applyCount" value="0"/>
-							    	<c:forEach var="sl2" items="${stampList}">
-							    		<c:if test="${sl2.stampapply == 1}">
-							    			<c:set var="applyCount" value="${applyCount + 1}"/>
-							    		</c:if>
-							    	</c:forEach>
-							    	${applyCount}</td>
+							      	<!-- applylist의 id를 현재 행의 id와 반복해서 비교, 해당 id의 누적 스탬프 출력 -->
+							      	<c:forEach var="al" items="${applyCount}">
+							      		<c:if test="${sl.usersid == al.usersid}">
+							    			${al.applycount}
+							      		</c:if>
+							      	</c:forEach>
+							      </td>
 							      <td>${sl.mountainnum}</td>
 							      <td>
 							      <a href="/stamp/admin/admincertimage.stp?stampnum=${sl.stampnum}" target="_blank" onClick="window.open(this.href, '_blank', 'width=800, height=600'); return false;">
@@ -86,7 +86,7 @@
 								  	<select id="stampreject${sl.stampnum}" class="form-select" onChange="updateReject('${sl.stampnum}')" <c:if test="${sl.stampapply != 2}">disabled</c:if>>
 										<option value="0" <c:if test="${sl.stampreject == 0}">selected</c:if>>거절사유 선택</option>
 										<option value="1" <c:if test="${sl.stampreject == 1}">selected</c:if>>사진 부적합</option>
-										<option value="2" <c:if test="${sl.stampreject == 2}">selected</c:if>>존재하지 않는 산 이름</option>
+										<option value="2" <c:if test="${sl.stampreject == 2}">selected</c:if>>중복 인증 신청</option>
 										<option value="3" <c:if test="${sl.stampreject == 3}">selected</c:if>>기타</option>
 									</select>
 								  </td>

@@ -18,40 +18,109 @@
 		<result property="regdate" column="reg_date"/>
 		<result property="readcount" column="readcount"/>
 		<result property="image" column="image"/>
+		<result property="boardcommentscount" column="boardcomments_count"/>
 	</resultMap>
 	<!--  //resultMapping 설정  -->
 	
+	<!-- where 1=1를 쓰는 이유 :  -->
 	<select id="GetTotalCount" resultType="int">
-		select count(*) from board
+		select count(*) from board board
+		LEFT JOIN (
+			SELECT bnum, count(bnum) reply_cnt
+			FROM board_comments
+			WHERE is_deleted = 'N' 
+			GROUP BY bnum
+	 		<if test="whatColumn == 'reply'">
+	 			order by count(bnum) desc
+	 		</if>
+		) cmt ON board.num = cmt.bnum
+		where 1=1 
 		<if test="whatColumn == 'user_id'">
-			where user_id like #{keyword}
-		</if>
-		<if test="whatColumn == 'category'">
-			where category like #{keyword}
+			and board.user_id like '%' || #{keyword} || '%' 
 		</if>
 		<if test="whatColumn == 'subject'">
-			where subject like #{keyword}
+			and supporters_name like #{keyword}
+			and board.subject like '%' || #{keyword} || '%' 
 		</if>
 		<if test="whatColumn == 'content'">
-			where content like #{keyword}
+			and board.content like '%' || #{keyword} || '%' 
 		</if>
+		<if test="whatColumn == 'information'">
+ 			and board.category = '정보' 
+ 		</if>
+ 		<if test="whatColumn == 'review'">
+ 			and board.category = '후기' 
+ 		</if>
+ 		<if test="whatColumn == 'recommend'">
+ 			and board.category = '추천' 
+ 		</if>
+ 		<if test="whatColumn == 'free'">
+ 			and board.category = '잡담' 
+ 		</if>
+		<if test="whatColumn == 'reg_date'">
+ 			order by board.reg_date desc
+ 		</if>
+ 		<if test="whatColumn == 'readcount'">
+ 			order by board.readcount desc
+ 		</if>
+ 		<if test="whatColumn == 'like'">
+ 			order by board.num
+ 		</if>
+ 		<if test="whatColumn == ''">
+ 			order by board.num
+ 		</if>
+ 		
 	</select>
 	
 	<select id="GetAllBoard" resultMap="boardMap">
-		select * from board
+		SELECT 
+			board.*,
+			cmt.reply_cnt boardcomments_count
+		FROM board board
+		LEFT JOIN (
+			SELECT bnum, count(bnum) reply_cnt
+			FROM board_comments
+			WHERE is_deleted = 'N' 
+			GROUP BY bnum
+			<if test="whatColumn == 'reply'">
+	 			order by count(bnum) desc
+	 		</if>
+		) cmt ON board.num = cmt.bnum
+		where 1=1
 		<if test="whatColumn == 'user_id'">
-			where user_id like #{keyword}
-		</if>
-		<if test="whatColumn == 'category'">
-			where category like #{keyword}
+			and board.user_id like '%' || #{keyword} || '%'
 		</if>
 		<if test="whatColumn == 'subject'">
-			where subject like #{keyword}
+			and supporters_name like #{keyword}
+			and board.subject like '%' || #{keyword} || '%'
 		</if>
 		<if test="whatColumn == 'content'">
-			where content like #{keyword}
+			and board.content like '%' || #{keyword} || '%'
 		</if>
-		order by num desc
+		<if test="whatColumn == 'information'">
+ 			and board.category = '정보'
+ 		</if>
+ 		<if test="whatColumn == 'review'">
+ 			and board.category = '후기'
+ 		</if>
+ 		<if test="whatColumn == 'recommend'">
+ 			and board.category = '추천'
+ 		</if>
+ 		<if test="whatColumn == 'free'">
+ 			and board.category = '잡담'
+ 		</if>
+		<if test="whatColumn == 'reg_date'">
+ 			order by board.reg_date desc
+ 		</if>
+ 		<if test="whatColumn == 'readcount'">
+ 			order by board.readcount desc
+ 		</if>
+ 		<if test="whatColumn == 'like'">
+ 			order by board.num desc
+ 		</if>
+ 		<if test="whatColumn == ''">
+ 			order by board.num desc
+ 		</if>
 	</select>
 	
 	<insert id="InsertBoard">
@@ -79,6 +148,12 @@
 		where num = #{num}
 	</update>
 	
+	<!-- 관리자 페이지 다중 삭제 -->
+	<delete id="DeleteBoardByAdmin">
+ 		delete from board
+ 		where num = #{num}
+ 	</delete>
+ 	
 </mapper>
 
 

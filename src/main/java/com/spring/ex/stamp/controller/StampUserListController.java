@@ -48,7 +48,7 @@ public class StampUserListController {
 				String userRole = sdao.getUserRoleById(userid);
 				System.out.println("userRole : "+userRole);
 				
-				//userid를 이용해서 등급 불러오기
+				//userid를 이용해서 인증 내역 불러오기
 				List<CertBean> certList = sdao.getCertListById(userid);
 				
 				//*null인 컬럼은 일단 조회되지 않음.

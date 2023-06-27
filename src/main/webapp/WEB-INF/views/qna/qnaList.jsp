@@ -91,11 +91,13 @@
 					<div class="panel-faq-answer">
 						<p>Q : ${qnaLists[i].qnaquestion}</p>
 						<!-- 상품 이미지 -->
+						<div>
                     	<c:forEach var="qna_img" items="${fn:split(qnaLists[i].qnaimage, ',')}">
-           					<img src="<%=request.getContextPath()%>/resources/images/qna/${qna_img}" width="100px" height="100px"><br>
+           					<img src="<%=request.getContextPath()%>/resources/images/qna/${qna_img}" width="100px" height="100px">
            				</c:forEach> 
+						</div>
                     	<!-- //상품이미지-->
-						<br><br>
+						<br>
 						<!-- 답변이 null이 아닐 때만 출력 -->
 						<c:if test="${qnaLists[i].qnaanswer != null}">
 						<p>A : ${qnaLists[i].qnaanswer}</p>
@@ -113,9 +115,9 @@
 							<c:if test="${qnaLists[i].qnaanswer == null}">
 							<form action="/qna/user/update.qna" method="get">
 								<input type="hidden" name="qnanum" value="${qnaLists[i].qnanum}">
-    							<input type="submit" value="질문수정" class="btn btn-success">
-    							<button class="btn btn-success" onClick="deleteQna()">질문삭제</button>
+    							<input type="submit" value="질문수정" class="btn btn-success" style="float:left; margin-right:5px;">
 							</form>
+    							<button class="btn btn-success" onClick="return deleteQna(${qnaLists[i].qnanum})">질문삭제</button>
 							</c:if>
 						</c:when>
 						</c:choose>
@@ -176,8 +178,7 @@
 		  });
 		}
 			//현재 글 삭제를 눌렀을 때=>deleteqna
-			function deleteQna(){
-				var qnanum = "<c:out value='${qnanum}'/>";
+			function deleteQna(qnanum){
 				
 				if(!confirm('정말 삭제하시겠습니까?')){
 					//취소를 눌렀을 때

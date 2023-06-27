@@ -25,7 +25,8 @@
                 <h1 class="display-5 mb-5">산 목록</h1>
             </div>
             
-                <!-- 검색창 -->
+                            <div class="container">
+                            <!-- 검색창 -->
 				            <nav class="navbar navbar-light bg-light">
 				  				<div class="container" style="display:table-cell; vertical-align:middle;">
 				   				 	<form class="d-flex" action="/mountain/all/list.mnt" method="get">
@@ -47,10 +48,11 @@
 				 			 	</div>
 							</nav>
 							<br>
-				 <!-- //검색창 -->
-			    
+				 			<!-- //검색창 -->
+                            <div align="left" style="margin-top:-25px;">
+                            <font size="1px" color="grey">※ <img alt="인기산" src="<%=request.getContextPath()%>/resources/images/icon/fire.png" class="m-1">인기 인증 산 표시</font>
+                            </div>
                             <!-- 산 목록 Start -->
-                            <div class="container">
 							<table class="table table-hover table-borded" border="1">
 							  <thead>
 							    <tr align="center">
@@ -68,20 +70,30 @@
 							  </thead>
 							  <tbody>
 							  	<c:choose>
-							  	<c:when test="${principal.getName() == 'admin' and mountainLists == null}">
+							  	<c:when test="${principal.getName() == 'admin' and mountainList == null}">
 							  		<td colspan="8">등록된 데이터가 없습니다.</td>
 							  	</c:when>
-							  	<c:when test="${mountainLists == null}">
+							  	<c:when test="${mountainList == null}">
 							  		<td colspan="7">등록된 데이터가 없습니다.</td>
 							  	</c:when>
 							  	</c:choose>
-							  	<c:forEach var="ml" items="${mountainLists}">
+							  	<c:forEach var="ml" items="${mountainList}">
 							    <tr>
 							  	  <c:if test="${principal.getName() == 'admin'}">
 			                      <td><input type="checkbox" class="form-check-input" name="selected_one" value="${ml.mountainnum}"></td>
 			                      </c:if>
-							      <th scope="row">${ml.mountainnum}</th>
-							      <td><a href="<c:url value='/mountain/all/detail.mnt?mountainnum=${ml.mountainnum}'/>">${ml.mountainname}</a></td>
+							      <th scope="row">
+							      ${ml.mountainnum}
+							      </th>
+							      <td>
+							      <c:forEach var="cl" items="${certList}">
+							      <!-- 만약 현재 행의 산번호가 인증리스트의 산번호와 같고 -->
+							      <!-- 인증리스트의 갯수가 10이상이면 인기산 표시 -->
+							      <c:if test="${ml.mountainnum == cl.mountainnum && cl.certcount >= 10 }">
+							      	<img alt="인기산" src="<%=request.getContextPath()%>/resources/images/icon/fire.png">
+							      </c:if>
+							      </c:forEach>
+							      <a href="<c:url value='/mountain/all/detail.mnt?mountainnum=${ml.mountainnum}'/>">${ml.mountainname}</a></td>
 							      <td>${ml.mountainlocal}</td>
 							      <td>${ml.mountainheight}</td>
 							      <td>
@@ -117,6 +129,7 @@
 							<div align="center">
 							 	${pageInfo.pagingHtml}
 							</div>
+							<input type="hidden" name="pageNumber" value="${pageInfo.pageNumber}">
 							<!-- //페이지 표시 -->
                         </div>
                     <!-- 체크박스의 값을 넘기는 hidden input -->

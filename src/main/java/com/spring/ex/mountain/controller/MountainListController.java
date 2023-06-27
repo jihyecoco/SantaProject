@@ -15,6 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.ex.mountain.model.MountainBean;
 import com.spring.ex.mountain.model.MountainDao;
+import com.spring.ex.stamp.model.StampBean;
+import com.spring.ex.stamp.model.StampDao;
 import com.spring.ex.utility.Paging;
 
 @Controller
@@ -27,6 +29,10 @@ public class MountainListController {
 	
 	@Autowired
 	MountainDao mdao;
+	
+	//인기 산을 가져오기 위한 stampdao
+	@Autowired
+	StampDao sdao;
 	
 		//사용자-상단 메뉴에서 산별정보 클릭 시 요청 발생=>mountainList.jsp로 이동
 		@RequestMapping(value=command)
@@ -55,15 +61,15 @@ public class MountainListController {
 			System.out.println("tc:"+totalCount);
 					
 			//url을 변수에 저장
-			String url = request.getContextPath() +"/"+ command;
+			String url = request.getContextPath() + command;
 			
 			//페이지 정보 가져오기
 			Paging pageInfo = new Paging(pageNumber, "5", totalCount, url, whatColumn, keyword, null);
 			System.out.println("pageInfo : "+pageInfo);
 			
 			//모든 mountain 목록을 list 객체에 저장, map과 pageInfo로 조건 설정
-			List<MountainBean> mountainLists = mdao.getAllMountain(map, pageInfo);
-			System.out.println("mountainLists : "+mountainLists);
+			List<MountainBean> mountainList = mdao.getAllMountain(map, pageInfo);
+			System.out.println("mountainList : "+mountainList);
 			
 			//높이 평균 구하기
 			//무조건 모든 칼럼의 리스트를 넘기는 메서드
@@ -76,8 +82,14 @@ public class MountainListController {
 			}
 			int avg = total/allMountain.size();
 			
+			//인기산을 가져오기 위한 인증 리스트(산 번호, 인증 갯수)
+			List<StampBean> certList  = sdao.getCertCountByMountainNum();
+			
+			System.out.println("certList : "+certList.get(1).getMountainnum()+" : "+certList.get(1).getCertcount());
+			
 			//mav에 저장해서 넘길 값 설정
-			mav.addObject("mountainLists", mountainLists);
+			mav.addObject("certList", certList);
+			mav.addObject("mountainList", mountainList);
 			mav.addObject("avg", avg);
 			mav.addObject("pageInfo", pageInfo);
 			mav.addObject("principal", principal);

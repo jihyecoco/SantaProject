@@ -68,5 +68,10 @@ public class MountainDao {
 		int cnt = sqlSessionTemplate.update("InsertApi",map);
 		return cnt;
 	}
+
+	public List<MountainBean> getAllMountainName() {
+		List<MountainBean> mountainNames = sqlSessionTemplate.selectList("GetAllMountainName");
+		return mountainNames;
+	}
 	
 }

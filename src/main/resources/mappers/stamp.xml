@@ -49,6 +49,8 @@
 			WHERE
 				users_id like #{keyword}
 		</if>
+		ORDER BY
+			stamp_num desc
 	</select>
 	
 	<select id="GetUserRoleById" resultType="String">
@@ -70,6 +72,8 @@
 			stamp NATURAL JOIN mountain
 		WHERE
 			users_id = #{userid}
+		ORDER BY
+			stamp_num desc
 	</select>
 
 	<select id="GetNumByName" resultType="String">
@@ -95,8 +99,8 @@
 			#{mountainnum},
 			#{usersid},
 			#{stampimage},
-			0,
-			0)
+			#{stampapply},
+			#{stampreject})
 	</insert>
 	
 	<select id="GetStampTotalCount" resultType="int">
@@ -141,4 +145,49 @@
 		WHERE
 			stamp_num = #{stampnum}
 	</update>
+
+	<update id="UpdateMountainExist">
+		UPDATE
+			stamp
+		SET
+			mountain_exist = 0
+		WHERE
+			stamp_num = #{data}
+	</update>
+	
+	<select id="GetCertCountByMountainNum" resultType="com.spring.ex.stamp.model.StampBean">
+	SELECT
+		mountain_num as mountainnum,
+		count(mountain_num) as certcount
+	FROM
+		stamp
+	WHERE
+		stamp_apply = 1
+	GROUP BY
+		mountain_num
+	</select>
+
+	<select id="GetApplyCountGroupById" resultType="com.spring.ex.stamp.model.StampBean">
+	SELECT
+		users_id as usersid,
+		count(users_id) as applycount
+	FROM
+		stamp
+	WHERE
+		stamp_apply = 1
+	GROUP BY
+		users_id
+	</select>
+	<select id="GetApplyListById" resultType="com.spring.ex.stamp.model.StampBean" resultMap="stampMap">
+	SELECT
+		users_id,
+		mountain_num,
+		stamp_apply
+	FROM
+		stamp
+	WHERE
+		users_id = #{userid}
+		and stamp_apply = 1
+	</select>
+
 </mapper>

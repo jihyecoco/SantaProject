@@ -72,31 +72,12 @@
                         	<!-- 질문 내용 입력 -->
                             <div class="col-12" style="float: left; ">
                              	<div class="form-floating">
-                            	<textarea name="qnaquestion" class="form-control border-0" placeholder="질문 내용" id="message" style="height: 200px">${qnaBean.qnaquestion}</textarea>
+                            	<textarea name="qnaquestion" style="resize:none; height:200px;" class="form-control border-0" placeholder="질문 내용" id="message">${qnaBean.qnaquestion}</textarea>
 								<label for="qnaquestion" style="font-size:13px;opacity: 60%;">질문 내용</label>
 								</div>
                             </div>
                             <form:errors cssClass="err" path="qnaquestion"/>
                         	<!-- //질문 내용 입력 -->
-                            
-                            <!-- 비밀글 설정 출력 -->
-                            <div class="col-12">
-                            	<div class="mb-2 mx-1"><b>비밀글 : </b></div>
-								<div class="form-check form-check-inline">
-								  <input name="qnasecret" value="0" <c:if test="${qnaBean.qnasecret=='0'}">checked</c:if> class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-								  <label class="form-check-label" for="flexRadioDefault1">
-								    전체글
-								  </label>
-								</div>
-								<div class="form-check form-check-inline">
-								  <input name="qnasecret" value="1" <c:if test="${qnaBean.qnasecret=='1'}">checked</c:if> class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
-								  <label class="form-check-label" for="flexRadioDefault2">
-								    비밀글
-								  </label>
-								</div>
-                            </div>
-                            <span class="col-12" style="margin-bottom:-3px;"><form:errors cssClass="err" path="qnasecret"/></span>
-                            <!-- //비밀글 설정 출력 -->
                             
                             <!-- 질문하기 버튼 -->
                             <div class="col-12 text-center">
@@ -114,5 +95,13 @@
         </div>
     </div>
     <!-- qna Insert Form End -->
+<script>
 
+	document.querySelector('form').addEventListener('reset', function(event) {
+		  if (!confirm('초기화하시겠습니까?')) {
+		    event.preventDefault();
+		  }
+		});
+	
+</script>
 <%@ include file="../common/common_bottom.jsp" %>

@@ -78,4 +78,24 @@ public class StampDao {
 		return cnt;
 	}
 
+	public int updateMountainExist(String data) {
+		int cnt = sqlSessionTemplate.update("UpdateMountainExist", data);
+		return cnt;
+	}
+
+	public List<StampBean> getCertCountByMountainNum() {
+		List<StampBean> certCount = sqlSessionTemplate.selectList("GetCertCountByMountainNum");
+		return certCount;
+	}
+
+	public List<StampBean> getApplyCountGroupById() {
+		List<StampBean> applyCount = sqlSessionTemplate.selectList("GetApplyCountGroupById");
+		return applyCount;
+	}
+
+	public List<StampBean> getApplyListById(String usersid) {
+		List<StampBean> applyList = sqlSessionTemplate.selectList("GetApplyListById",usersid);
+		return applyList;
+	}
+
 }

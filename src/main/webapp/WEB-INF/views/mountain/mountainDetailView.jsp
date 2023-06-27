@@ -83,10 +83,15 @@
 							</table>
                             <!-- //산 목록 End -->
                 </div>
-                <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s" style="min-height: 450px;">
-						<!-- 산 이미지 -->
-           				<img src="<%=request.getContextPath()%>/resources/images/mountain/${mountainBean.mountainimage}"><br>
-                    	<!-- //산이미지-->
+				<!-- 산 이미지 -->
+                <div class="col-lg-6" style="min-height: 450px;">
+                <c:if test="${fn:contains(mountainBean.mountainimage,'http')}">
+                	<img src="${mountainBean.mountainimage}" style="width:500px;"><br>
+                </c:if>
+                <c:if test="${!fn:contains(mountainBean.mountainimage,'http')}">
+           			<img style="width:500px;" src="<%=request.getContextPath()%>/resources/images/mountain/${mountainBean.mountainimage}"><br>
+                </c:if>
+                <!-- //산이미지-->
                 <!-- 정보 등록 버튼(관리자만 볼 수 있음) -->
                 <c:if test="${principal.getName() == 'admin'}">
                 	<div class="container">

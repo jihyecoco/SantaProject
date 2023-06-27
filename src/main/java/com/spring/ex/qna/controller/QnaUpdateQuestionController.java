@@ -108,7 +108,7 @@ public class QnaUpdateQuestionController {
 				//웹서버 폴더
 				String uploadPath = request.getRealPath("/resources/images/qna");
 				//민지_임시폴더
-				String str = "C:/tempUpload";
+				String str = "C:/tempUpload/qna";
 				
 				String filename = "";
 				int cnt = 0;

@@ -75,7 +75,7 @@
                         	<!-- 상세 정보 입력 -->
                              <div class="col-12" style="float: left; ">
                              	<div class="form-floating">
-                            	<textarea name="mountaincontent" class="form-control border-0" placeholder="*산 상세 정보" id="message" style="height: 200px">${mountainBean.mountaincontent}</textarea>
+                            	<textarea name="mountaincontent" style="resize:none; height:200px;" class="form-control border-0" placeholder="*산 상세 정보" id="message">${mountainBean.mountaincontent}</textarea>
 								<label for="mountaincontent" style="font-size:13px;opacity: 60%;">*산 상세정보</label>
 								</div>
                             </div>
@@ -138,5 +138,12 @@
 	    }
        	document.getElementById('mountaingreat').value='';
 	});
+	
+
+	document.querySelector('form').addEventListener('reset', function(event) {
+		  if (!confirm('초기화하시겠습니까?')) {
+		    event.preventDefault();
+		  }
+		});
 </script>
 <%@ include file="../common/common_bottom.jsp" %>
