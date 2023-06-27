@@ -70,9 +70,9 @@ public class SupportersDao {
 		return cnt;
 	}
 	
-	//SupportersApplySepaAdminController(관리자페이지) : 회원 별 신청한 모든 서포터즈를 조회 !!!!
-	public List<SupportersBean> getSupporterList(Map<String, String> map) {
-		List<SupportersBean> lists = new ArrayList<SupportersBean>();	
+	//SupportersApplySepaAdminController(관리자페이지) : 회원 별 신청한 모든 서포터즈를 조회
+	public List<SupportersBean> getSupporterList(Map<String, String> map) { //map에는 keyword(회원의 id)가 들어있음
+		List<SupportersBean> lists = new ArrayList<SupportersBean>();			
 		lists = sqlSessionTemplate.selectList("GetSupporterList",map);
 		return lists;
 	}

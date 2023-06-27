@@ -58,8 +58,8 @@
 	<!-- 정렬 -->
     <div align="right">
     	<a href="/supporters/all/list.su?whatColumn=reg_date">최신순</a> / 
-    	<a href="/supporters/all/list.su?whatColumn=readcount">조회순</a> / 
-    	<a href="/supporters/all/list.su?whatColumn=supporters_comments">댓글순</a>
+    	<a href="/supporters/all/list.su?whatColumn=readcount">조회순</a> <!-- / 
+    	<a href="/supporters/all/list.su?whatColumn=supporters_comments">댓글순</a> -->
     	<br>
     </div>
     <!-- //정렬 -->	

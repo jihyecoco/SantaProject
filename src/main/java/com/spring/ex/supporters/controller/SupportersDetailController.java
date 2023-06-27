@@ -34,13 +34,14 @@ public class SupportersDetailController {
 	
 	//1. boardList.jsp(글제목 클릭) -> detail.br 요청 -> boardDetailView.jsp로 이동
 	//2. 수정하면 UpdateController을 거쳐 이곳으로 온다.
-	//3. 마이페이지에서 서포터즈명을 클릭하면 이곳으로 이동한다
+	//3. 마이페이지에서 서포터즈명을 클릭
+	//4. 관리자페이지에서 서포터즈명을 클릭
 	@RequestMapping(value=command, method=RequestMethod.GET)
 	public ModelAndView detail(
 			@RequestParam("num") int num, 
 			@RequestParam(value="pageNumber",required = false) Integer pageNumber,  
 			Principal principal) {		
-			//마이페이지에서 이동할때 pageNumber가 안넘어오므로 required = false 처리하고 타입을 int에서 Integer로 수정해야한다!!
+			//마이페이지에서 이동할때 pageNumber가 안넘어오므로 required = false 처리하고 타입을 int에서 Integer로 수정해야함!!
 		
 		ModelAndView mav = new ModelAndView();
 		String loginId = principal.getName();

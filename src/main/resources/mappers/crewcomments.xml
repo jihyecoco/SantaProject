@@ -18,7 +18,7 @@
  		insert into crew_comments(num, idx, writer, content, ref, re_level, re_step, reg_date, delete_yn, isSecret)
  		values(ccmt_seq.nextval, #{idx}, #{writer}, #{content}, ccmt_seq.currval, 0, 0, sysdate, 'N', #{isSecret})
  	</insert>
- 	
+
  	<select id="GetCrewCommentsByIdx" resultMap="crewcommentsMap">
  		select num, idx, writer, content, ref, re_level, re_step, reg_date, delete_yn, isSecret	        
 		from (select rownum as rank, num, idx, writer, content, ref, re_level, re_step, reg_date, delete_yn, isSecret

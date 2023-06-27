@@ -69,7 +69,7 @@ public class BoardUpdateController {
 		}
 		else {//에러 없음
 			
-			String filePath = servletContext.getRealPath("/resources");
+			String filePath = servletContext.getRealPath("/resources/images/board");
 			File deleteImage = new File(filePath +File.separator+board.getUpload2()); //삭제하려는 이미지
 			File destination = new File(filePath + File.separator + board.getUpload().getOriginalFilename()); //수정하려는(업로드할) 이미지
 			

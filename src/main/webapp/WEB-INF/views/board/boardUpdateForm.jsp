@@ -81,7 +81,7 @@
                         <!-- 글내용 -->		
 		        		<div class="col-10">
                             <div class="form-floating">
-                            	<textarea name="content" class="form-control border-0" id="content" style="height:300px">${board.content}</textarea>
+                            	<textarea name="content" class="form-control border-0" id="content" style="resize: none;" style="height:300px">${board.content}</textarea>
                                 <label for="content">글 내용</label>
                                 <form:errors cssClass="err" path="content" />
                             </div>
@@ -91,10 +91,10 @@
                         <!-- 이미지 --> 	        		
 		        		<div class="col-10">
                         	<h6>이미지 첨부</h6>
-                           	<img src="<%=request.getContextPath()%>/resources/${board.image}" width="100px"><br>
+                           	<img src="<%=request.getContextPath()%>/resources/images/board/${board.image}" width="100px"><br>
 							<input type="file" name="upload" id="upload" value="${board.upload}" class="form-control">
 							<input type="hidden" name="upload2" value="${board.image}" class="form-control">
-                            <%-- <form:errors cssClass="err" path="image"/> --%>                          	
+                            <%-- <form:errors cssClass="err" path="image"/> --%>                   	
                         </div>
                         <!-- //이미지 -->
                         

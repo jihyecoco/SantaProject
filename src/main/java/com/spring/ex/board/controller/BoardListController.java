@@ -40,7 +40,7 @@ public class BoardListController {
 			@RequestParam(value="pageNumber",required = false) String pageNumber) {
 		
 		ModelAndView mav = new ModelAndView();
-		String loginId = principal.getName();
+		//String loginId = principal.getName();
 		System.out.println("whatColumn: "+whatColumn);
 		System.out.println("keyword: "+keyword);
 		System.out.println("pageNumber: "+pageNumber);
@@ -56,11 +56,13 @@ public class BoardListController {
 		Paging pageInfo = new Paging(pageNumber,"5",totalcount,url,whatColumn,keyword,null);
 		
 		List<BoardBean> lists = bdao.getAllBoard(map,pageInfo);
+		
 		/* 좋아요 */
 		List<BoardHeartBean> bhList = new ArrayList<BoardHeartBean>();
 		BoardHeartBean bhBean = new BoardHeartBean();
-
+		String loginId = "";
 		try {
+			loginId = principal.getName();
 			bhBean.setUserId(loginId);		//사용자아이디
 			bhList = bhdao.getAllBoardHeart(loginId);
 			System.out.println("bhList : " + bhList);

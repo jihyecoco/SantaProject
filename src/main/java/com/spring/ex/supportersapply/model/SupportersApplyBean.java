@@ -17,11 +17,13 @@ public class SupportersApplyBean {
 	private String enddate; //활동종료일
 	private int joinnum; //supporters의 num과 같은값
 	
+	//DB에는 없는 멤버변수
 	private String userId;
 	private String name;
 	private String userRole;
 	private String gender;
 	private String birth;
+	//DB에는 없는 멤버변수
 	
 	/*
 	supporters_apply의 join_num과 supporters의 num이 같은값이다.

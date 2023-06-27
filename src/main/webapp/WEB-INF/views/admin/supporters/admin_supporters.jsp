@@ -91,8 +91,8 @@ $(document).ready(function(){
 	<!-- 정렬 -->
     <div align="right">
     	<a href="/supporters/all/list.su?whatColumn=reg_date">최신순</a> / 
-    	<a href="/supporters/all/list.su?whatColumn=readcount">조회순</a> / 
-    	<a href="/supporters/all/list.su?whatColumn=supporters_comments">댓글순</a>
+    	<a href="/supporters/all/list.su?whatColumn=readcount">조회순</a> <!-- / 
+    	<a href="/supporters/all/list.su?whatColumn=supporters_comments">댓글순</a> -->
     	<br>
     </div>
     <!-- //정렬 -->	
@@ -156,12 +156,12 @@ $(document).ready(function(){
 	</c:if>		
 </table>
 <!-- //목록보기 -->
-
-<!-- 로그인한 아이디가 관리자(admin)일때만 글쓰기 버튼이 보임 -->
+	
+	<!-- 삭제 버튼 -->
 	<div align="right">
 		<input type="button" value="삭제" class="btn btn-success" onclick="javascript : delete_supporters_check()">
 	</div><br>
-<!-- 글쓰기 버튼 -->
+	<!-- 삭제 버튼 -->
      
 	<!-- 페이지 표시 -->
 	<div align="center">

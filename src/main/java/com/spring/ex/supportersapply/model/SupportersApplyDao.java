@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.spring.ex.supporters.model.SupportersBean;
 import com.spring.ex.utility.Paging;
 
 
@@ -76,15 +77,14 @@ public class SupportersApplyDao {
 		return mysupportersList;
 	}	
 	
-	//SupportersSepaAdminController : 관리자페이지에서 서포터즈 별 '신청회원'들을 조회
+	//SupportersSepaAdminController : 관리자페이지에서 '서포터즈 별 신청회원'을 조회
 	public List<SupportersApplyBean> getApplicantList(Map<String, String> map) {
 		List<SupportersApplyBean> mysupportersList = new ArrayList<SupportersApplyBean>();
 		mysupportersList = sqlSessionTemplate.selectList("GetApplicantList", map); 
 		return mysupportersList;
 	}
+	
 
-	
-	
 	
 	
 }

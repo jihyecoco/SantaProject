@@ -45,7 +45,7 @@ public class BoardDeleteController {
 			System.out.println("DB 삭제 성공");
 			
 			//resources 폴더의 경로
-			String deletePath = servletContext.getRealPath("/resources"); 
+			String deletePath = servletContext.getRealPath("/resources/images/board"); 
 			System.out.println("deletePath: " +deletePath+"\\"+board.getImage()); 
 			
 			//이미지 파일 가져오는 경로

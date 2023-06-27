@@ -1,7 +1,6 @@
 package com.spring.ex.supporters.model;
 
 import java.sql.Date;
-import java.time.LocalDate;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
@@ -34,6 +33,9 @@ public class SupportersBean {
 	private String content;
 	private Date regdate;
 	private int readcount;
+	
+	//DB에는 없는 변수
+	private String applicantid;
 	
 	
 	public String getLimit() {
@@ -113,5 +115,11 @@ public class SupportersBean {
 	}
 	public void setReadcount(int readcount) {
 		this.readcount = readcount;
+	}
+	public String getApplicantid() {
+		return applicantid;
+	}
+	public void setApplicantid(String applicantid) {
+		this.applicantid = applicantid;
 	}
 }

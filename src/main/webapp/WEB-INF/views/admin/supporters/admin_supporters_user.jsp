@@ -13,17 +13,17 @@
                 <h1 class="display-5 mb-5">회원 별 서포터즈 조회</h1>
         	</div>
                 
-            <div class="row justify-content-center">
-                <div class="col-lg-8 mx-auto">
-                    <div class="bg-light rounded p-4 p-sm-5 wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="row g-3 mx-auto" >
+            <div class="row justify-content-center" align="center">
+                <div class="col-lg-9 mx-auto" >
+                    <div class="bg-light rounded p-4 p-sm-5" data-wow-delay="0.1s">
+                        <div class="row g-3 mx-auto" align="center">
                         
                         	<!-- 검색창 -->
-                        	<nav class="navbar navbar-light bg-light" >
-								<div class="container" style="display: table-cell; vertical-align: middle;" align="center">
-									<form class="d-flex" action="/supportersapply/admin/user.sua" method="post">
-										<div class="col-sm-8">
-											<input class="form-control me-3" type="text" name="keyword" value="${paramMap.keyword}">
+                        	<nav class="navbar navbar-light bg-light">
+								<div class="container" style="display: table-cell; vertical-align: middle;"><
+									<form class="d-flex" action="/supporters/admin/user.su" method="post">
+										<div class="col-sm-10">
+											<input class="form-control me-8" type="text" name="keyword" value="${paramMap.keyword}" placeholder="회원 ID를 입력하세요">
 										</div>
 										<div class="col-sm-2" align="center">
 											<button class="btn btn-outline-success" type="submit">Search</button>
@@ -36,8 +36,9 @@
                          		<table class="table table-hover table-borded align-middle">
                          			<thead>
                          			<tr align="center">                     				
-										<th>모집상태</th>
+										<th>회원 ID</th>
 										<th>서포터즈</th>
+										<th>모집상태</th>
                          				<th>신청인원</th>
                          				<th>모집마감일</th>
                          				<th>활동시작일</th>
@@ -55,12 +56,13 @@
                          			<c:if test="${lists.size() != 0}">
                          				<c:forEach var="supporters" items="${lists}">
                          					<tr align="center">
+                         						<td><a href="">${supporters.applicantid}</a></td>
+                         						<td><a href="/supporters/user/detail.su?num=${supporters.num}"">${supporters.supportersname}</a></td>
 	                         					<td>
 	                         						<c:if test="${supporters.state == 0}"><font color="blue">[모집중]</font></c:if>
 	    											<c:if test="${supporters.state == 1}"><font color="red">[모집완료]</font></c:if>
 	    											<c:if test="${supporters.state == 2}"><font color="black">[모집기한 마감]</font></c:if>	
-	                         					</td>
-	                         					<td>${supporters.supportersname}</td>
+	                         					</td>	                         					
 	                         					<td>${supporters.applicant}/${supporters.limit}</td>
 	                         					<td>
 	                         						<fmt:parseDate var="newDay" value="${supporters.deadline}" pattern="yyyy-MM-dd"/>				

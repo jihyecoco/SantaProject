@@ -277,7 +277,6 @@ $(document).ready(function(){
 								<div class="form-floating">
 									<input type="date" name="startdate" id="startdate" class="form-control border-0" size="20" value="${supporters.startdate}">
 									<label for="startdate">활동 시작일</label>
-									<%-- <form:errors cssClass="err" path="startdate" /> --%>
 								</div>
 							</div>
 							<!-- //활동시작일 -->
@@ -287,7 +286,6 @@ $(document).ready(function(){
 								<div class="form-floating">
 									<input type="date" name="enddate" id="enddate" class="form-control border-0" size="20" value="${supporters.enddate}">
 									<label for="enddate">활동 종료일</label>
-									<%-- <form:errors cssClass="err" path="enddate" /> --%>
 								</div>
 							</div>
 							<!-- //활동종료일 -->
@@ -295,7 +293,7 @@ $(document).ready(function(){
 							<!-- 활동 내용 -->
 							<div class="col-9">
 								<div class="form-floating">
-									<textarea name="content" id="content" class="form-control border-0" style="height: 400px" placeholder="">${supporters.content}</textarea>
+									<textarea name="content" id="content" class="form-control border-0" style="resize: none;" style="height: 400px" placeholder="">${supporters.content}</textarea>
 									<label for="content">활동 내용</label>
 									<form:errors cssClass="err" path="content" />
 								</div>

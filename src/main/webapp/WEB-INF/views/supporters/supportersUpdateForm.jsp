@@ -292,7 +292,7 @@ $(document).ready(function(){
 							<!-- 활동 내용 -->
 							<div class="col-9">
 								<div class="form-floating">
-									<textarea name="content" id="content" class="form-control border-0" style="height: 400px" placeholder="">${supporters.content}</textarea>
+									<textarea name="content" id="content" class="form-control border-0" style="resize: none;" style="height: 400px" placeholder="">${supporters.content}</textarea>
 									<label for="content">활동 내용</label>
 									<form:errors cssClass="err" path="content" />
 								</div>

@@ -32,7 +32,7 @@ public class SupportersSepaAdminListController {
 	@Autowired
 	SupportersDao sdao;
 
-	//넘어온 서포터즈에 신청한 '모든 회원'을 조회함
+	//넘어온 서포터즈에 신청한 '모든 회원'을 조회함 : select-option이 바뀔때마다, ajax함수를 통해
 	@ResponseBody
 	@RequestMapping(value=command)
 	public Map<String, Object> doAction(HttpServletRequest request,

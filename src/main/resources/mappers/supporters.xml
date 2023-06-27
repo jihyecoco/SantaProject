@@ -15,13 +15,11 @@
 		 <result property="startdate" column="start_date"/>
 		 <result property="enddate" column="end_date"/>
 		 <result property="regdate" column="reg_date"/>
+		 <result property="applicantid" column="applicant_id"/>
 	</resultMap>
 	<!-- //resultMapping 설정 -->
 	
-	<!-- 
-	<if test="whatColumn == 'board_comments'">
- 		order by readcount desc
- 	</if> -->
+	
 	<select id="GetTotalSupportersCount" resultType="int">
  		select count(*) from supporters
 		<if test="whatColumn == 'supporters_name'">
@@ -50,13 +48,7 @@
  		</if>
  		<if test="whatColumn == 'bestMember'">
  			where target = '1'
- 		</if>
-		<if test="whatColumn == 'reg_date'">
- 			order by reg_date desc
- 		</if>
- 		<if test="whatColumn == 'readcount'">
- 			order by readcount desc
- 		</if> 		
+ 		</if>		
  	</select>
 	
 	<!--  
@@ -107,13 +99,32 @@
  		<if test="whatColumn == 'bestMember'">
  			where target = '1'
  		</if>
-		<if test="whatColumn == 'reg_date'">
- 			order by reg_date desc
- 		</if>
- 		<if test="whatColumn == 'readcount'">
- 			order by readcount desc
- 		</if>
+ 		
+ 		order by
+ 		<choose>
+ 			<when test="whatColumn == 'reg_date'">
+ 				reg_date desc
+ 			</when>
+ 			<when test="whatColumn == 'readcount'">
+ 				readcount desc
+ 			</when>
+ 			<otherwise>
+         		num asc
+          </otherwise>
+ 		</choose>
 	</select>
+	<!-- 
+	<if test="whatColumn == 'board_comments'">
+ 		order by readcount desc
+ 	</if>
+ 	
+ 	<if test="whatColumn == 'reg_date'">
+ 		order by reg_date desc
+ 	</if>
+ 	<if test="whatColumn == 'readcount'">
+ 		order by readcount desc
+ 	</if> 
+ 	-->
 	
 	<insert id="InsertSupporters">
  		insert into supporters(num, writer, supporters_name, deadline, target, limit, applicant, start_date, end_date, content, reg_date)
@@ -162,21 +173,6 @@
 		where join_num = #{num}
 	</update>
 	
-	<!-- 관리자페이지 - 회원 별 신청한 모든 서포터즈를 조회 -->
-	<select id="GetSupporterList" resultMap="supportersMap">
-		select s.num, s.supporters_name, s.deadline, s.target, s.limit, s.applicant,
-			TO_CHAR(s.start_date, 'YYYY-MM-DD')start_date, TO_CHAR(s.end_date, 'YYYY-MM-DD')end_date,
-			<![CDATA[
-			CASE WHEN s.deadline < TO_CHAR(sysdate,'YYYY-MM-DD') then 2
-				WHEN s.applicant >= s.limit then 1
-				ELSE 0
-				END AS state
-			]]>
-		from supporters s inner join supporters_apply su
-		on s.num = su.join_num
-		where su.state = 0 and su.applicant_id like #{keyword}	
-	</select>
-	
 	<!-- 서포터즈명, 번호 조회하기 => 관리자페이지의 select박스에 넣기 위해 -->
 	<select id="GetSupportersListAll" resultMap="supportersMap">
  		select num, supporters_name 
@@ -189,17 +185,32 @@
  		where num = #{num}
  	</delete>
  	
-	<!-- 
-	SELECT u.user_id, u.name, u.user_role, u.gender, u.birth, to_char(su.apply_date, 'YYYY-MM-DD') apply_date
-		FROM users u 
-		INNER join supporters_apply su
-		on u.user_id = su.applicant_id
-		where su.state = 0
-		
-		SELECT u.user_id, u.name, u.user_role, u.gender, u.birth, su.apply_date
-		FROM USERS u 
-		INNER join SUPPORTERS_APPLY su
-		on u.USER_ID = su.APPLICANT_ID -->
-	
+ 	<!-- 관리자페이지 - 회원 별 신청한 모든 서포터즈를 조회 
+ 	supporters와 supporters_apply 테이블을 조인하고 번호가 같은은것끼리
+ 	-->
+	<select id="GetSupporterList" resultMap="supportersMap">
+		select s.num, s.supporters_name, s.deadline, s.target, s.limit, s.applicant, su.applicant_id,
+			TO_CHAR(s.start_date, 'YYYY-MM-DD')start_date, TO_CHAR(s.end_date, 'YYYY-MM-DD')end_date,
+			<![CDATA[
+			CASE 
+ 				WHEN s.deadline < TO_CHAR(sysdate,'YYYY-MM-DD') then 2
+ 				WHEN s.applicant >= s.limit then 1
+ 				ELSE 0 END 
+			AS state			
+			]]>
+		from supporters s inner join supporters_apply su
+		on s.num = su.join_num	
+		where su.state = 0 
+		<if test="keyword != null">
+			and su.applicant_id like '%' || #{keyword} || '%'
+		</if>
+	</select>
 	
 </mapper>
+<!-- 
+	CASE 
+ 		WHEN s.deadline < TO_CHAR(sysdate,'YYYY-MM-DD') then 2
+ 		WHEN s.applicant >= s.limit then 1
+ 		ELSE 0 END 
+	AS state -->
+

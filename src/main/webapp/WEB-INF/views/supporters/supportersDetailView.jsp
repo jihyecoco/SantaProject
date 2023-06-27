@@ -196,10 +196,10 @@
 	<div class="container-xxl py-5">
 		<div class="container">
 			<div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-				<h2 class="display-5 mb-5">서포터즈 등록글 보기</h2>
+				<h2 class="display-5 mb-5">서포터즈 등록글</h2>
 			</div>
-			<input type="text" name="heartCId" value="${loginId}">
-			<input type="text" name="num" value="${supporters.num}">
+			<input type="hidden" name="heartCId" value="${loginId}">
+			<input type="hidden" name="num" value="${supporters.num}">
 			<!-- 게시글 상세보기 -->
 			<table class="table">
 			<%-- 
@@ -307,6 +307,7 @@
    		<!-- // 좋아요 아이콘 -->
 
 		<!-- 댓글 입력창 -->
+		<%-- 
 		<form action="/supporters/admin/insert.scmt" method="post">
 			<input type="hidden" name="bnum" value="${supporters.num}"> 
 			<input type="hidden" name="userid" value="${userid}"> 
@@ -333,9 +334,10 @@
 					</ul>
 				</div>
 			</div><!-- //card -->
-		</form>
+		</form> --%>
 		<!-- //댓글 입력창 -->	  
-	</div><!-- //container-xxl -->
+	</div>
+	<!-- //container-xxl -->
 	    
 
 <%@ include file="../common/common_bottom.jsp"%>     

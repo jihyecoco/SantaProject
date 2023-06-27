@@ -1,5 +1,6 @@
 package com.spring.ex.admin.supportersapply.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +21,7 @@ public class SupportersApplySepaAdminController {
 	
 	
 	
-	//관리자페이지 - 서포터즈 관리의 '회원 별 조회'를 클릭하면 이곳으로 이동
+	//관리자페이지 - '회원 별 서포터즈 조회'
 	private final String command = "/supporters/admin/user.su";
 	private String getPage = "admin/supporters/admin_supporters_user";
 		
@@ -28,7 +29,7 @@ public class SupportersApplySepaAdminController {
 	SupportersDao sdao;
 	
 	
-	//넘어온 회원 id가 신청한 '모든 서포터즈'를 조회함
+	//검색한 회원 id가 신청한 '모든 서포터즈'를 조회함
 	@RequestMapping(value=command)
 	public ModelAndView doAction(HttpServletRequest request,
 			@RequestParam(value="keyword",required = false) String keyword) {
@@ -38,7 +39,10 @@ public class SupportersApplySepaAdminController {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("keyword", keyword);
 		
-		List<SupportersBean> lists = sdao.getSupporterList(map); //해당 회원이 신청한 모든 서포터즈를 조회
+		List<SupportersBean> lists = new ArrayList<SupportersBean>();
+		if ( keyword != null) { //처음 조회할때는 키워드가 없음 - 키워드가 null일때는 쿼리로 가지 않도록해줘야 에러가 안남
+			lists = sdao.getSupporterList(map); //해당 회원이 신청한 모든 서포터즈를 조회
+		}			
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("lists", lists);

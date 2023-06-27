@@ -79,7 +79,7 @@
                             <!-- 글내용 -->
                             <div class="col-10">
                                	<div class="form-floating">
-                                    <textarea name="content" class="form-control border-0" id="content" style="height:300px">${board.content}</textarea>
+                                    <textarea name="content" class="form-control border-0" id="content" style="resize: none;" style="height:300px">${board.content}</textarea>
                                     <label for="content">글 내용</label>
                                     <form:errors cssClass="err" path="content" />
                                 </div>
@@ -89,7 +89,9 @@
                             <!-- 이미지 -->
                             <div class="col-10">
                             	<h6>이미지 첨부</h6>
-                            	<input type="file" class="form-control" name="upload" id="upload">
+                            	<input type="file" class="form-control" name="upload" id="upload" value="${board.image}">
+                            	
+		                    	<input type="hidden" name="image">
                             	<%-- <form:errors cssClass="err" path="image"/> --%>                          	
                             </div><br>
                             <!-- //이미지 -->

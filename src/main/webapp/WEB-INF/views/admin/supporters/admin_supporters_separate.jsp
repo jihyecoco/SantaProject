@@ -13,26 +13,26 @@
                 <h1 class="display-5 mb-5">서포터즈 별 회원 조회</h1>
         	</div>
                 
-            <div class="row justify-content-center">
-                <div class="col-lg-8 mx-auto">
+            <div class="row justify-content-center" align="center">
+                <div class="col-lg-8 mx-auto" >
                     <div class="bg-light rounded p-4 p-sm-5 wow fadeInUp" data-wow-delay="0.1s">
                         <div class="row g-3 mx-auto" >
                         
                         	<!-- 검색창 -->
                         	<nav class="navbar navbar-light bg-light" >
-								<div class="container" style="display: table-cell; vertical-align: middle;" align="center">
-									<form class="d-flex" action="/supportersapply/admin/user.sua" method="post">
-										<div class="col-sm-8" align="center">
-											<select class="form-control me-3" id="keyword" name="keyword" onChange="change_supporters(this.value)">
+								<div class="container" style="display: table-cell; vertical-align: middle;">
+									<!-- <form class="d-flex" action="/supportersapply/admin/user.sua" method="post"> -->
+										<div class="col-sm-8" >
+											<select class="form-control me-6" id="keyword" name="keyword" onChange="change_supporters(this.value)" data-bs-toggle="dropdown">
 												<c:forEach var="list" items="${suLists}">
 													<option value="${list.supportersname}" <c:if test="${paramMap.keyword eq list.supportersname}"> selected</c:if> >${list.supportersname}</option>
 												</c:forEach>
 											</select>
 										</div>
-										<div class="col-sm-2" align="center">
+										<!-- <div class="col-sm-2" align="center">
 											<button class="btn btn-outline-success" type="button" onclick="fn_search();">Search</button>
-										</div>
-									</form>
+										</div> -->
+									<!-- </form> -->
 								</div>
 							</nav>
                         	<!-- //검색창 -->                        	
@@ -45,7 +45,7 @@
                          				<th>등급</th>
                          				<th>신청일</th>
                          				<th>성별</th>
-                         				<th>출생년도</th>
+                         				<th>생년월일</th>
                          			</tr>
                          			</thead>
                          			<tbody id="tb-body">
@@ -69,8 +69,9 @@
 	                         					<td>${applicant.user_id}</td>
 	                         					<td>${applicant.name}</td>
 	                         					<td>${applicant.user_role}
-	                         						<c:if test="${applicant.user_role == 'ro1'}">일반회원</c:if>
-													<c:if test="${applicant.user_role == 'r02'}">우수회원</c:if>
+	                         						<c:if test="${applicant.user_role == 'ro1'}">일반</c:if>
+													<c:if test="${applicant.user_role == 'r02'}">우수</c:if>
+													<c:if test="${applicant.user_role == 'r99'}">관리자</c:if>
 	                         					</td>
 	                         					<td>
 	                         						<fmt:parseDate var="newDay2" value="${applicant.apply_date}" pattern="yyyy-MM-dd"/>				
@@ -101,11 +102,11 @@
     		change_supporters($("#keyword").val()) //서포터즈명 담아서 change_supporters() 함수로
     	})
     	
-    	function fn_search(){ //검색버튼 클릭하면 실행
+    	/* function fn_search(){ //검색버튼 클릭하면 실행
     		change_supporters($("#keyword").val());
-    	}
+    	} */
     	
-    	//즉 search 버튼을 눌러도, select-option이 바뀌어도 이 함수를 호출
+    	//select-option이 바뀔때마다 이 함수를 호출함
     	function change_supporters(value){
     		$.ajax({
 				url : "/supportersapply/admin/supportersList.sua", //SupportersSepaAdminListController
@@ -119,7 +120,7 @@
 					if(data.suLists.length > 0){
 					
 						for(let i=0; i < data.suLists.length; i++){
-							htmls += "<tr>";
+							htmls += "<tr align='center'>";
 							htmls += "<td>"+ data.suLists[i].userId +"</td>";
 							htmls += "<td>"+ data.suLists[i].name +"</td>";
 							htmls += "<td>"+ data.suLists[i].userRole +"</td>";
@@ -127,6 +128,7 @@
 							htmls += "<td>"+ data.suLists[i].gender +"</td>";
 							htmls += "<td>"+ data.suLists[i].birth +"</td>";
 							htmls += "</tr>";
+													
 						}					
 						$("#tb-body").append(htmls);
 					}
@@ -137,6 +139,22 @@
 			});//ajax	
     	}//fn_change_supporters
     </script>
+    <%-- 
+    htmls += "<td>"+ if(data.suLists[i].userRole == 'r01'){'일반'}  
+	htmls += else if(data.suLists[i].userRole == 'r02'){'우수'}
+	htmls += else if(data.suLists[i].userRole == 'r99'){'관리자'}							
+	htmls += "</td>";
     
+    htmls += "<td><c:if test='${"+ data.suLists[i].userRole + "= 'r01'}'>일반</c:if>";
+	htmls += "<c:if test='${"+ data.suLists[i].userRole + "= 'r02'}'>우수</c:if>";
+	htmls += "<c:if test='${"+ data.suLists[i].userRole + "= 'r99'}'>관리자</c:if></td>"; 
+    
+    <c:if test="${data.suLists[i].userRole == 'r01'}">일반</c:if>
+	<c:if test="${data.suLists[i].userRole == 'r02'}">우수</c:if>
+	<c:if test="${data.suLists[i].userRole == 'r99'}">관리자</c:if>
+	
+	<fmt:parseDate var="newDay" value="${data.suLists[i].birth}" pattern="yyyy-MM-dd"/>				
+	<fmt:formatDate var="fNewDay" value="${newDay}" pattern="yyyy-MM-dd"/>
+	${fNewDay } --%>
     
 <%@ include file="../../common/common_bottom.jsp" %>      

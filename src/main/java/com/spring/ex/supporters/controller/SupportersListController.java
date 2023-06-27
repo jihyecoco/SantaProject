@@ -74,6 +74,7 @@ public class SupportersListController {
 			e.printStackTrace();
 		}
 		//좋아요
+		
 		mav.addObject("shList", shList);
 		mav.addObject("lists", lists);
 		mav.addObject("pageInfo", pageInfo);

@@ -118,7 +118,7 @@
                         </div>
                         <div class="service-text rounded p-5">
                             <div class="btn-square rounded-circle mx-auto mb-3">
-                                <img class="img-fluid" src="<%=request.getContextPath()%>/resources/bootstrap/user/img/icon/icon-3.png" alt="Icon">
+                                <img class="img-fluid" src="<%=request.getContextPath()%>/resources/bootstrap/user/img/icon/icon-8.png" alt="Icon">
                             </div>
                             <h4 class="mb-3">Landscaping</h4>
                             <p class="mb-4">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet.</p>
@@ -178,11 +178,11 @@
                         </div>
                         <div class="service-text rounded p-5">
                             <div class="btn-square rounded-circle mx-auto mb-3">
-                                <img class="img-fluid" src="<%=request.getContextPath()%>/resources/bootstrap/user/img/icon/icon-8.png" alt="Icon">
-                            </div>
-                            <h4 class="mb-3">Green Technology</h4>
-                            <p class="mb-4">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet.</p>
-                            <a class="btn btn-sm" href=""><i class="fa fa-plus text-primary me-2"></i>Read More</a>
+                                <img class="img-fluid" src="<%=request.getContextPath()%>/resources/bootstrap/user/img/icon/icon-3.png" alt="Icon">
+                            </div>  
+                            <h4 class="mb-3">서포터즈 모집</h4>
+                            <p class="mb-4">다양한 주제로 서포터즈를 모집합니다! 마음에 드는 서포터즈에 바로 신청하세요!</p>
+                            <a class="btn btn-sm" href="/supporters/all/list.su"><i class="fa fa-plus text-primary me-2"></i>Read More</a>
                         </div>
                     </div>
                 </div>

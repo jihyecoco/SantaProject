@@ -57,7 +57,7 @@
                             <!-- 글내용 -->
 							<div class="col-11">
                                	<div class="form-floating">
-                                    <textarea class="form-control border-0" id="content" name="content" style="height: 220px">${notice.content}</textarea>
+                                    <textarea class="form-control border-0" id="content" name="content" style="resize: none;" style="height: 220px">${notice.content}</textarea>
                                     <label for="content">글 내용</label>
                                     <form:errors cssClass="err" path="content"/>
                                 </div>

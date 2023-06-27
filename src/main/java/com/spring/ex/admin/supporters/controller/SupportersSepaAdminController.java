@@ -20,7 +20,7 @@ import com.spring.ex.supportersapply.model.SupportersApplyDao;
 @Controller
 public class SupportersSepaAdminController {
 	
-	//관리자페이지 - 서포터즈 관리의 '서포터즈 별 조회'를 클릭하면 이곳으로 이동
+	//관리자페이지 - 서포터즈 관리의 '서포터즈 별 조회'를 클릭하면 이곳으로 이동 : Search 버튼 지워서 이제 이 컨트롤러는 필요없음
 	private final String command = "/supportersapply/admin/supporters.sua";
 	private String getPage = "admin/supporters/admin_supporters_separate";
 	

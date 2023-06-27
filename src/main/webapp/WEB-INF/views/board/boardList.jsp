@@ -88,7 +88,7 @@
 <table class="table table-hover table-borded align-middle">
 	<thead>
 		<tr align="center">
-			<th></th><!-- 좋아요 -->
+			<th>좋아요</th>
 			<th>번호</th>
 			<th>카테고리</th>	
 			<th>이미지</th>	

@@ -22,7 +22,10 @@
 	</resultMap>
 	<!--  //resultMapping 설정  -->
 	
-	<!-- where 1=1를 쓰는 이유 :  -->
+	
+	<!-- where 1=1은 "참"을 의미한다 
+	where 1=1를 쓰는 이유 : 조회 등으로 where절을 다르게 작성해줘야 할때 편리해서
+	그리고 count 갯수셀때는 order by절 안써도 됨 -->
 	<select id="GetTotalCount" resultType="int">
 		select count(*) from board board
 		LEFT JOIN (
@@ -30,16 +33,12 @@
 			FROM board_comments
 			WHERE is_deleted = 'N' 
 			GROUP BY bnum
-	 		<if test="whatColumn == 'reply'">
-	 			order by count(bnum) desc
-	 		</if>
-		) cmt ON board.num = cmt.bnum
+		) cmt ON board.num = cmt.bnum		
 		where 1=1 
 		<if test="whatColumn == 'user_id'">
 			and board.user_id like '%' || #{keyword} || '%' 
 		</if>
 		<if test="whatColumn == 'subject'">
-			and supporters_name like #{keyword}
 			and board.subject like '%' || #{keyword} || '%' 
 		</if>
 		<if test="whatColumn == 'content'">
@@ -57,20 +56,11 @@
  		<if test="whatColumn == 'free'">
  			and board.category = '잡담' 
  		</if>
-		<if test="whatColumn == 'reg_date'">
- 			order by board.reg_date desc
+ 		<if test="loginId != null"> <!-- 마이페이지의 내 자유게시판 글 조회할때 필요 -->
+ 			and board.user_id = #{loginId}
  		</if>
- 		<if test="whatColumn == 'readcount'">
- 			order by board.readcount desc
- 		</if>
- 		<if test="whatColumn == 'like'">
- 			order by board.num
- 		</if>
- 		<if test="whatColumn == ''">
- 			order by board.num
- 		</if>
- 		
 	</select>
+	
 	
 	<select id="GetAllBoard" resultMap="boardMap">
 		SELECT 
@@ -82,16 +72,13 @@
 			FROM board_comments
 			WHERE is_deleted = 'N' 
 			GROUP BY bnum
-			<if test="whatColumn == 'reply'">
-	 			order by count(bnum) desc
-	 		</if>
 		) cmt ON board.num = cmt.bnum
 		where 1=1
 		<if test="whatColumn == 'user_id'">
 			and board.user_id like '%' || #{keyword} || '%'
 		</if>
 		<if test="whatColumn == 'subject'">
-			and supporters_name like #{keyword}
+			<!-- and supporters_name like #{keyword} -->
 			and board.subject like '%' || #{keyword} || '%'
 		</if>
 		<if test="whatColumn == 'content'">
@@ -109,18 +96,28 @@
  		<if test="whatColumn == 'free'">
  			and board.category = '잡담'
  		</if>
-		<if test="whatColumn == 'reg_date'">
- 			order by board.reg_date desc
- 		</if>
- 		<if test="whatColumn == 'readcount'">
- 			order by board.readcount desc
- 		</if>
- 		<if test="whatColumn == 'like'">
- 			order by board.num desc
- 		</if>
- 		<if test="whatColumn == ''">
- 			order by board.num desc
- 		</if>
+ 		<if test="loginId != null"> <!-- 마이페이지의 내 자유게시판 글 조회할때 필요 -->
+ 			and board.user_id = #{loginId}
+ 		</if>		
+ 		order by 
+ 		<choose>
+          <when test="whatColumn == 'reg_date'">
+         		board.reg_date desc
+          </when>
+          <when test="whatColumn == 'readcount'">
+         		board.readcount desc
+          </when>
+          <when test="whatColumn == 'heart'">
+          		<!-- 좋아요수 정렬은 여기에 구현 -->
+         		board.num asc
+          </when>
+          <when test="whatColumn == 'reply'"> <!-- 댓글 내림차순으로 정렬하면서, null값인건 마지막에 위치하도록 -->
+         		cmt.reply_cnt desc NULLS LAST
+          </when>
+          <otherwise>
+         		board.num asc
+          </otherwise>
+        </choose>
 	</select>
 	
 	<insert id="InsertBoard">
