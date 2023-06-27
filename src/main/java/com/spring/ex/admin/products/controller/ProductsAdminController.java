@@ -44,7 +44,7 @@ public class ProductsAdminController {
 		//페이지 설정
 		int totalCount = prd_dao.getProductsTotalCount(map);
 		String url = request.getContextPath()+command;
-		Paging pageInfo = new Paging(pageNumber, "9", totalCount, url, whatColumn, keyword, null);
+		Paging pageInfo = new Paging(pageNumber, "5", totalCount, url, whatColumn, keyword, null);
 
 		List<ProductsBean> plist = prd_dao.getAllProductsByAdmin(map, pageInfo);
 		mav.addObject("plist", plist); // 상품리스트

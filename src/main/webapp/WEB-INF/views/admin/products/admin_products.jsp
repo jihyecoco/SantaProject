@@ -142,7 +142,7 @@
 	    					<input type="checkbox" name="oneCheck" value="${lists.productsnum}">
 	    				</td>
 	    				<td>
-	    					${(1-pageInfo.pageNumber)*pageInfo.limit+status.count}
+	    					${(pageInfo.pageNumber-1)*pageInfo.limit+status.count}
 	    				</td>
 	    				<td>
 	    					<c:if test="${lists.kind == 'a'}">

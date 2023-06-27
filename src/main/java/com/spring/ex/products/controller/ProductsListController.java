@@ -82,7 +82,7 @@ public class ProductsListController {
 		//페이지 설정
 		int totalCount = pdao.getProductsTotalCount(map);
 		String url = request.getContextPath()+command;
-		Paging pageInfo = new Paging(pageNumber, "9", totalCount, url, whatColumn, keyword, null);
+		Paging pageInfo = new Paging(pageNumber, "6", totalCount, url, whatColumn, keyword, null);
 
 		List<ProductsBean> plist = pdao.getAllProducts(map, pageInfo);
 

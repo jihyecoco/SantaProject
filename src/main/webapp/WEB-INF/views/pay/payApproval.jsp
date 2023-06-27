@@ -40,7 +40,7 @@
 					
             		<td>
             			<a href="/products/user/detail.prd?num=${pay_result.prdnum}&pageNumber=${pageNumber}">
-            				<img src="<%=request.getContextPath()%>/resources/images/products/${thumbnail[0]}">
+            				<img src="<%=request.getContextPath()%>/resources/images/products/${thumbnail[0]}" width="200" height="300">
             			</a>
             		</td>
             		<td>${pb.name}</td>

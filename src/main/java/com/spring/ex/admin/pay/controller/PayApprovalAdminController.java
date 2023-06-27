@@ -63,6 +63,11 @@ public class PayApprovalAdminController {
 			String seller = prd_bean.getSeller();
 			
 			//2. 판매자 포인트 수정
+			int point = Integer.parseInt(prd_bean.getPrice());
+			double point2 = point * 0.1;
+			String cal_point = String.valueOf(point2);
+			prd_bean.setPrice(cal_point);
+			
 			int point_result = u_dao.updatePoint(prd_bean);
 			if(point_result != -1) {
 				System.out.println(seller+" 포인트 적립완료");

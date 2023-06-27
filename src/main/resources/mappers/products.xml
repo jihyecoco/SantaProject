@@ -82,6 +82,33 @@
  		<if test="whatColumn == 'name'">
  			where name like #{keyword}
  		</if>
+ 		<if test="whatColumn == 'sell'">
+ 			where kind = 'a'
+ 		</if>
+ 		<if test="whatColumn == 'give'">
+ 			where kind = 'b'
+ 		</if>
+ 		<if test="whatColumn == 'change'">
+ 			where kind = 'c'
+ 		</if>
+ 		<if test="whatColumn == 'loginId'">
+ 			where seller = #{keyword}
+ 		</if>
+ 		<if test="whatColumn == 'state0'">
+ 			where state = 0
+ 		</if>
+ 		<if test="whatColumn == 'state1'">
+ 			where state = 1
+ 		</if>
+ 		<if test='whatColumn == "inputdate"'>
+ 			order by inputdate desc
+ 		</if>
+ 		<if test='whatColumn == "readcount"'>
+ 			order by readcount desc
+ 		</if>
+ 		<if test='whatColumn == "products_comments"'>
+ 			order by comments desc
+ 		</if>
  	</select>
  	
  	<update id="UpdateProductsState">
