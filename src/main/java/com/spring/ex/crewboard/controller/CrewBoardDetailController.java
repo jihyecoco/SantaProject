@@ -56,8 +56,12 @@ public class CrewBoardDetailController {
 		mav.addObject("loginId", principal.getName()); // 로그인 아이디
 		
 		String loginId = principal.getName();
-		List<CrewBean> join_crew = cdao.getJoinCrewById(loginId);
+		List<CrewBean> join_crew = cdao.getJoinCrewById(loginId); // 가입한 크루
 		mav.addObject("join_crew", join_crew);
+		
+		// 가입한 정기 크루 가져오기
+		List<CrewBean> join_regular_crew = cdao.getJoinRegularCrewById(loginId);
+		mav.addObject("join_regular_crew", join_regular_crew);
 		
 		CrewBoardBean cbb = cbdao.getCrewboardByNum(num);
 		if(num == 0) { // 마이페이지에서 모집글 눌렀을때

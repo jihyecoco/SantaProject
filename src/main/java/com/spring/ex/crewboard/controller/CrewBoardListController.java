@@ -65,6 +65,10 @@ public class CrewBoardListController {
 				List<CrewBean> join_crew = cdao.getJoinCrewById(loginId);
 				mav.addObject("loginId",loginId);
 				mav.addObject("join_crew", join_crew);
+				
+				// 가입한 정기 크루 가져오기
+				List<CrewBean> join_regular_crew = cdao.getJoinRegularCrewById(loginId);
+				mav.addObject("join_regular_crew", join_regular_crew);
 			}
 		}catch(NullPointerException e) {
 			

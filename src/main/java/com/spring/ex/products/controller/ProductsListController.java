@@ -52,7 +52,7 @@ public class ProductsListController {
 			HttpServletResponse response) {
 
 		ModelAndView mav = new ModelAndView();
-		String loginId = principal.getName();
+		String loginId = "";
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = null;
 

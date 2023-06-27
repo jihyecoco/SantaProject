@@ -101,6 +101,9 @@
                          				</c:forEach>
                          			</c:if>
                          		</table>
+                         		<!-- 페이지 start -->
+									<div align="center">${pageInfo.pagingHtml}</div>
+								<!-- //페이지 End -->
                             </div><!--//row g-3  -->
                         </div><!-- //bg-light -->
                     </div><!-- //col-lg-7 -->

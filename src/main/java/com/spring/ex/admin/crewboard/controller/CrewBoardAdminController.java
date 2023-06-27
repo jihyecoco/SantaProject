@@ -24,6 +24,9 @@ public class CrewBoardAdminController {
 	@Autowired
 	CrewBoardDao cb_dao;
 	
+	/*
+	 관리자페이지 크루모집글 관리 => admin/crew/admin_Crewboard.jsp
+	 */
 	@RequestMapping(command)
 	public ModelAndView doAction(@RequestParam(value="whatColumn", required=false) String whatColumn,
 			@RequestParam(value="keyword", required=false) String keyword,

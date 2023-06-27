@@ -90,7 +90,7 @@ public class CrewAdminController {
 		
 		Paging pageInfo = new Paging(pageNumber, "5", totalCount, url, whatColumn, keyword, null);
 		
-		List<CrewBean> crewList = cdao.get1DayCrew(map);
+		List<CrewBean> crewList = cdao.get1DayCrew(map, pageInfo);
 		mav.addObject("crewList", crewList);
 		mav.addObject("pageInfo", pageInfo);
 		mav.setViewName(getPage1);
@@ -108,7 +108,9 @@ public class CrewAdminController {
 	public ModelAndView doAction2(
 			@RequestParam(value="small", required=false) String small,
 			@RequestParam(value="whatColumn", required=false) String whatColumn,
-			@RequestParam(value="keyword", required=false) String keyword) {
+			@RequestParam(value="keyword", required=false) String keyword,
+			@RequestParam(value="pageNumber", required=false) String pageNumber,
+			HttpServletRequest request) {
 		
 		ModelAndView mav = new ModelAndView();
 		
@@ -127,7 +129,13 @@ public class CrewAdminController {
 			}
 		}
 		
-		List<CrewBean> crewList = cdao.getRegularCrew(map);
+		int totalCount = cdao.getRegularCrewTotalCount(map);
+		String url = request.getContextPath()+command;
+		
+		Paging pageInfo = new Paging(pageNumber, "5", totalCount, url, whatColumn, keyword, null);
+		
+		List<CrewBean> crewList = cdao.getRegularCrew(map, pageInfo);
+		mav.addObject("pageInfo", pageInfo);
 		mav.addObject("crewList", crewList);
 		mav.setViewName(getPage2);
 		return mav;

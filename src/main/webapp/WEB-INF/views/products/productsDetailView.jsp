@@ -22,7 +22,22 @@
 				success : function(data){
 					//alert(data.tid);
 					var url = data.next_redirect_pc_url;
-					window.open(url);
+					
+					//창 크기 지정
+					var width = 500;
+					var height = 500;
+					
+					//pc화면기준 가운데 정렬
+					var left = (window.screen.width / 2) - (width/2);
+					var top = (window.screen.height / 4);
+					
+				    //윈도우 속성 지정
+					var windowStatus = 'width='+width+', height='+height+', left='+left+', top='+top+', scrollbars=yes, status=yes, resizable=yes, titlebar=yes';
+					
+					//등록된 url 및 window 속성 기준으로 팝업창을 연다.
+					window.open(url, "hello popup", windowStatus);
+					
+					//window.open(url);
 										
 				},
 				error : function(error){
@@ -168,10 +183,10 @@
 		} 
 	}
 	
-	/* 판매완료 버튼 클릭 */
+	/* 거래완료 버튼 클릭 */
 	function changeState(prd_num, pageNumber){
 		//alert(prd_num);
-		var result = confirm('판매 완료로 바꾸시겠습니까?');
+		var result = confirm('거래 완료 상태로 바꾸시겠습니까?');
 		if(result == true){ // 판매완료된 상품
 			location.href = '/products/user/update.prd?num='+prd_num+'&state=change&pageNumber='+pageNumber;
 		}
@@ -198,12 +213,12 @@
 	/* 댓글 수정 버튼 클릭 */
 	function updateComments(pcmt_num, pageNumber, idx){
 		//alert(pcmt_num);
-		var pcmt_updateform = "<form class='form-control' action='/productscomments/user/update.pcmt' method='post'>";
+		var pcmt_updateform = "<form class='form-control' id='comments_updateform' action='/productscomments/user/update.pcmt' method='post'>";
 		pcmt_updateform += "<input type='text' name='content'>";
 		pcmt_updateform += "<input type='hidden' name='num' value='"+pcmt_num+"'>";
 		pcmt_updateform += "<input type='hidden' name='idx' value='"+idx+"'>";
 		pcmt_updateform += "<input type='hidden' name='pageNumber' value='"+pageNumber+"'>";
-		pcmt_updateform += "<input type='submit' value='확인'>";
+		pcmt_updateform += "<input type='submit' value='확인' onclick='javascript:return comments_check(comments_updateform)'>";
 		pcmt_updateform += "<input type='reset' value='취소' onclick='javascript:getAllComments()'>";
 		pcmt_updateform += "</form>";
 		
@@ -411,124 +426,5 @@
 	   	<!-- //댓글 목록 -->
     </div>
     <!-- Contact End -->
-
-
-
-
-
-<%-- <!-- Projects Start -->
-    <div class="container-xxl py-5">
-        <div class="container">
-            <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-                <p class="fs-5 fw-bold text-primary">상품 상세보기</p>
-                <h3 class="display-5 mb-5">${pb.name}</h3>
-            </div>
-            
-           	<!-- 거래 게시글 상세보기 -->
-           	<table class="table">
-           		<tr align="right">
-           			<td colspan="4">
-           				<!-- 해당 글 작성자만 보이게 설정 -->
-           				<c:if test="${pb.seller == loginId}">
-           					<c:if test="${pb.state == 0}"> <input type="button" value="판매완료" onclick="changeState(${pb.productsnum},${pageNumber})"> </c:if>
-           					<input type="button" value="수정" onclick="location.href='/products/user/update.prd?num=${pb.productsnum}&pageNumber=${pageNumber}'">
-           					<input type="button" value="삭제" onclick="deleteProducts(${pb.productsnum}, ${pageNumber})">
-           				</c:if>
-           				<!-- //해당 글 작성자만 보이게 설정 -->
-           			</td>
-           		</tr>
-           		<tr align="center">
-           			<th colspan="4">상품명</th>
-           		</tr>
-           		<tr align="center">
-           			<td colspan="4">${pb.name}</td>
-           		</tr>
-           		<tr>
-           			<td colspan="4" align="center">
-           			<c:set var="thumbnail" value="${fn:split(plist.image, ',')}"/>
-           			<c:forEach var="prd_img" items="${fn:split(pb.image, ',')}">
-           				<img src ="<%=request.getContextPath()%>/resources/images/products/${prd_img}"><br>
-           			</c:forEach> 
-           			</td>
-           		</tr>
-           		<tr align="right">
-           			<td colspan="3">
-           				판매자 : ${pb.seller}<br>
-           				작성일 : ${pb.inputdate}
-           			</td>
-           			<td>
-           				조회수 : ${pb.readcount}
-           			</td>
-           		</tr>
-           		<tr>
-           			<th>가격</th>
-           			<td>${pb.price}</td>
-           			<th></th>
-           			<td></td>
-           		</tr>
-           		<tr align="center">
-           			<th colspan="4">글 내용</th>
-           		</tr>
-           		<tr>
-           			<td colspan="4" align="center" height="200">
-           				${pb.info}
-           			</td>
-           		</tr>
-           		<tr>
-           			<td colspan="4" align="right">
-           				<input type="button" id="apibtn" value="구매하기">
-           				<input type="button" value="목록보기" onclick="location.href='/products/all/list.prd?pageNumber=${pageNumber}'">
-           			</td>
-           		</tr>
-           	</table>	
-           	<!-- //게시글 상세보기 -->
-        </div>
-        
-        <!-- 좋아요, 북마크 아이콘 -->
-	   	<div class="container">
-	   		<div align="right">
-	   			<img src="<%=request.getContextPath()%>/resources/images/icon/empty_heart.png" id="heart" width="30" height="40" onclick="heart()">
-	   			<img src="<%=request.getContextPath()%>/resources/images/icon/empty_bookmark.png" id="bookmark" width="30" height="30" onclick="bookmark()">
-	   		</div>
-	   		<br>
-	   	</div>
-	   	<!-- // 좋아요, 북마크 아이콘 -->
-	   
-	    <!-- 댓글 입력창 -->
-	    <form action="/productscomments/user/insert.pcmt" method="post">
-	    	<input type="hidden" name="idx" value="${pb.productsnum}"> <!-- 원글 번호 -->
-		    <input type="hidden" name="writer" value="${loginId}"> <!-- 작성자 아이디 -->
-		    <input type="hidden" name="pageNumber" value="${pageNumber}"> <!-- 페이지 -->
-		    
-		    <div class="card mb-2">
-			<div class="card-header bg-light">
-			        <i class="fa fa-comment fa"></i> REPLY
-			</div>
-			<div class="card-body">
-				<ul class="list-group list-group-flush">
-				    <li class="list-group-item">
-					<div class="form-inline mb-2">
-						<!-- <label for="replyId"><i class="fa fa-user-circle-o fa-2x"></i></label>
-						<input type="text" class="form-control ml-2" placeholder="Enter yourId" id="replyId">
-						<label for="replyPassword" class="ml-4"><i class="fa fa-unlock-alt fa-2x"></i></label>
-						<input type="password" class="form-control ml-2" placeholder="Enter password" id="replyPassword"> -->
-					</div>
-					<textarea class="form-control" name="content" rows="3"></textarea>
-					<input type="submit" class="btn btn-dark mt-3" value="post reply">
-				    </li>
-				</ul>
-			</div>
-			</div>
-		</form>
-		<!-- //댓글 입력창-->
-		
-	   	<!-- 댓글 목록 -->
-		<div class="my-3 p-3 bg-body rounded shadow-sm" id="comments_area">
-			
-		</div>
-	   	<!-- //댓글 목록 -->
-	   	
-    </div>
-    <!-- Projects End --> --%>
 
 <%@ include file ="../common/common_bottom.jsp" %>

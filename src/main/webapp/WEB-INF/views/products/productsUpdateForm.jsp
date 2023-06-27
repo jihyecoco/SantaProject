@@ -101,7 +101,7 @@
                         	<!-- 구분 -->
                         		<div class="col-9">
                         			<div class="form-floating">
-			                        	<select name="kind" id="kind" class="form-select border-0" onchange="kind_change(prdform)">
+			                        	<select name="kind" id="kind" class="form-select border-0" onchange="kind_change(prdform)" disabled="disabled">
 			                                <option value="">판매/나눔/교환</option>
 			                                <option value="a" <c:if test="${pb.kind == 'a'}">selected</c:if>>판매</option>
 			                                <option value="b" <c:if test="${pb.kind == 'b'}">selected</c:if>>나눔</option>
@@ -126,7 +126,8 @@
                         	<!-- 가격 -->
                         	<div class="col-9">
                         		<div class="form-floating">
-	                                <input type="text" class="form-control border-0" name="price" id="price" value="${pb.price}">
+	                                <input type="text" class="form-control border-0" name="price" id="price" value="${pb.price}"
+	                                	<c:if test="${pb.kind == 'b' || pb.kind == 'c' }">disabled</c:if>>
 	                                <label for="price">가격</label>
 	                            </div>
 	                            <form:errors cssClass="err" path="price"/>
@@ -146,11 +147,12 @@
                         	<!-- 이미지업로드 -->
                         	<div class="col-12">
 		                    		<div class="mb-2 mx-1"><b>상품 사진 </b></div>
-		                    		<input type="file" class="form-control" multiple="multiple" name="upload" value="${pb.upload}" onchange="filechange()"><br>
+		                    		<input type="file" class="form-control" multiple="multiple" name="upload" value="${pb.upload}" onchange="filechange()">
+		                    		<span style="font-size:10px; color: gray;">※첨부파일은 최대 10개까지 등록이 가능합니다.</span><br>
 		                    		<input type="hidden" name="upload2" value="${pb.upload2}"/> <!-- 기존 이미지 -->
 		                    		<form:errors cssClass="err" path="image"/>
 	                    		
-		                    		<input type="text" value="${pb.image}">
+		                    		<input type="hidden" value="${pb.image}">
 		                    		<!-- 이미지 미리보기 -->
 		                    		<div id="img_preview" style="height:300">
 		                    			<!-- 원래 업로드 이미지 보여지기 -->

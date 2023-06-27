@@ -34,22 +34,22 @@
                          			</c:if>
                          			<c:if test="${sell_prd_list.size() != 0}">
 	                         			<c:forEach var="sell_prd_list" items="${sell_prd_list}" varStatus="status">
-	                         				<tr align="center">
-	                         					<td>${status.count}</td>
-	                         					<td><a href="/products/user/detail.prd?num=${sell_prd_list.productsnum}">${sell_prd_list.name}</a></td>
-	                         					<td><fmt:formatNumber value="${sell_prd_list.price}" pattern="###,###" />원</td>
-	                         					<td>${sell_prd_list.buyer}</td>
-	                         					<td align="left">
-	                         						<c:if test="${sell_prd_list.paystate == 0}">
-	                         							승인 대기중
-	                         						</c:if>
-	                         						<c:if test="${sell_prd_list.paystate == 1}">
-	                         							승인완료
-	                         						</c:if>
-	                         					</td>
-	                         				</tr>
+		                         				<tr align="center">
+		                         					<td>${status.count}</td>
+		                         					<td><a href="/products/user/detail.prd?num=${sell_prd_list.productsnum}">${sell_prd_list.name}</a></td>
+		                         					<td><fmt:formatNumber value="${sell_prd_list.price}" pattern="###,###" />원</td>
+		                         					<td>${sell_prd_list.buyer}</td>
+		                         					<td align="left">
+		                         						<c:if test="${sell_prd_list.paystate == 0}">
+		                         							승인 대기중
+		                         						</c:if>
+		                         						<c:if test="${sell_prd_list.paystate == 1}">
+		                         							승인완료
+		                         						</c:if>
+		                         					</td>
+		                         				</tr>
 	                         			</c:forEach>
-                         			</c:if>
+                         			 </c:if> 
                          		</table>
                             </div><!--//row g-3  -->
                         </div><!-- //bg-light -->

@@ -26,8 +26,8 @@
 	function filechange() {
 		/* 파일 업로드 개수제한 */
 		var $fileUpload = $("input[type='file']");
-		if (parseInt($fileUpload.get(0).files.length) > 4) {
-			alert("이미지는 4개 이하만 올릴 수 있습니다");
+		if (parseInt($fileUpload.get(0).files.length) > 10) {
+			alert("이미지는 10개 이하만 올릴 수 있습니다");
 			$("input[type='file']").val('');
 		}
 		
@@ -126,7 +126,7 @@
                         	<!-- 상품설명 -->
                         	<div class="col-12">
 	                            <div class="form-floating">
-	                                  <textarea class="form-control border-0" name="info" id="info" style="height: 150px">${pb.info}</textarea>
+	                                  <textarea class="form-control border-0" name="info" id="info" style="height: 150px; resize:none;">${pb.info}</textarea>
 	                                  <label for="info">상품 설명</label>
 	                            </div>
 	                           	<form:errors cssClass="err" path="info"/>
@@ -136,7 +136,8 @@
                         	<!-- 이미지업로드 -->
                         	<div class="col-12">
 		                    		<div class="mb-2 mx-1"><b>상품 사진 </b></div>
-		                    		<input type="file" class="form-control" multiple="multiple" name="upload" value="${pb.image}" onchange="filechange()"><br>
+		                    		<input type="file" class="form-control" multiple="multiple" name="upload" value="${pb.image}" onchange="filechange()">
+		                    		<span style="font-size:10px; color: gray;">※첨부파일은 최대 10개까지 등록이 가능합니다.</span><br>
 		                    		<input type="hidden" name="image">
 		                    		<form:errors cssClass="err" path="image"/>
 	                    		

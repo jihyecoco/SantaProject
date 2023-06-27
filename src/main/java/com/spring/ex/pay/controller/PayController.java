@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -53,11 +54,12 @@ public class PayController {
 			
 			ProductsBean pb = prd_dao.getProductsByNum(products_num);
 			String name = pb.getName(); // 구매하려는 상품명
+			String name2 = URLEncoder.encode(name, "UTF-8"); // 상품명이 한글일시 깨져보임 => URL Encoding 설정
 			String price = pb.getPrice(); // 가격
 			
 			// 파라미터 설정 localhost:xx 자신의 port번호 입력
 			String param = "cid=TC0ONETIME&partner_order_id=partner_order_id&partner_user_id=partner_user_id";
-			param += "&item_name="+name+"&quantity=1&total_amount="+price+"&vat_amount=200&tax_free_amount=0";
+			param += "&item_name="+name2+"&quantity=1&total_amount="+price+"&vat_amount=200&tax_free_amount=0";
 			param += "&approval_url=http://localhost:"+port+"/pay/user/approval.pay?num="+products_num+","+pageNumber; // 정상적으로 승인
 			param += "&fail_url=http://localhost:"+port+"/pay/user/fail.pay?num="+products_num+","+pageNumber; // 결제 실패
 			param += "&cancel_url=http://localhost:"+port+"/pay/user/cancel.pay?num="+products_num+","+pageNumber; // 결제중 취소버튼 클릭

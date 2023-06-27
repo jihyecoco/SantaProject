@@ -200,6 +200,43 @@
 		</if>
  	</select> 
  	
+ 	<select id="GetRegularCrewTotalCount" resultType="int">
+ 		select count(*) from crew where large = 2
+ 		<if test='small == "M"'>
+ 			and small = 'M'
+	 		<if test='whatColumn == "crewname"'>
+	 			and crew_name like #{keyword}
+	 		</if>
+	 		<if test='whatColumn == "crewmanager"'>
+	 			and crew_manager like #{keyword}
+	 		</if>
+ 		</if>
+ 		
+ 		<if test='small == "P"'>
+ 			and small = 'P'
+	 		<if test='whatColumn == "crewname"'>
+		 		and crew_name like #{keyword}
+		 	</if>
+		 	<if test='whatColumn == "crewmanager"'>
+		 		and crew_manager like #{keyword}
+		 	</if>
+ 		</if>
+ 		
+ 		<if test='whatColumn == "crewname"'>
+		 	and crew_name like #{keyword}
+		</if>
+		<if test='whatColumn == "crewmanager"'>
+		 	and crew_manager like #{keyword}
+		</if>
+ 	</select> 
+ 	
+ 	<!-- 가입한 정기크루 목록 -->
+ 	<select id="GetJoinRegularCrewById" resultMap="crewMap">
+ 		select * from crew
+ 		where large = 2 and crew_member like #{loginId}
+ 	</select>
+ 	<!-- //가입한 정기크루 목록 -->
+ 	
  	<!-- 통계 그래프 -->
  	<select id="GetAllCrewCount2" resultType="int">
  		select count(*) from crew
@@ -225,4 +262,5 @@
  		where small = 'P'
  	</select>
  	<!-- //통계 그래프 -->
+ 	
  </mapper>

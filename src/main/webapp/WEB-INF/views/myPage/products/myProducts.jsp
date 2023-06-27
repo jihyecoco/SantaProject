@@ -20,6 +20,9 @@
 							<select name="whatColumn" class="form-select">
 								<option value="">전체</option>
 								<option value="name">상품명</option>
+								<option value="sell">판매</option>
+								<option value="give">나눔</option>
+								<option value="change">교환</option>
 							</select>
 						</div>
 						<div class="col-sm-8">

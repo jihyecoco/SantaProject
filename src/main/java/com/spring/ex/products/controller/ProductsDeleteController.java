@@ -55,12 +55,12 @@ public class ProductsDeleteController {
 			if (osName.contains("win")) 
 			{
 				System.out.println("사용자 OS - Window ");
-				str = "C:/tempUpload";
+				str = "C:/tempUpload/products";
 			} 
 
 			else if (osName.contains("mac"))   {
 			  	System.out.println("사용자 OS - MAC ");
-			  	str = "/Users/ol7roeo/Documents/tempUpload"; 
+			  	str = "/Users/ol7roeo/Documents/tempUpload/products"; 
 			} 
 			
 			String[] delete_image = pb.getImage().split(","); // 여러개 파일 이름 배열로 만들기

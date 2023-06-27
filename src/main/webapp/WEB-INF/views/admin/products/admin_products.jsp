@@ -156,8 +156,8 @@
 		                	</c:if>
 	    				</td>
 	    				<td>
-	    					<c:if test="${lists.state == 0}"><font color="blue">[판매중]</font></c:if>
-	    					<c:if test="${lists.state == 1}"><font color="red">[판매완료]</font></c:if>
+	    					<c:if test="${lists.state == 0}"><font color="blue">[거래중]</font></c:if>
+	    					<c:if test="${lists.state == 1}"><font color="red">[거래완료]</font></c:if>
 	    				</td>
 	    				<td width="40%" align="left">
 	    					<a href="/products/user/detail.prd?num=${lists.productsnum}&pageNumber=${pageInfo.pageNumber}">${lists.name}</a>

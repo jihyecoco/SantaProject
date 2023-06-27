@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.spring.ex.utility.Paging;
 
 @Component("CrewDao")
 public class CrewDao {
@@ -98,15 +101,17 @@ public class CrewDao {
 		return myJoinCrewList;
 	}
 
-	public List<CrewBean> get1DayCrew(Map<String, Object> map) {
+	public List<CrewBean> get1DayCrew(Map<String, Object> map, Paging pageInfo) {
 		List<CrewBean> crewList = new ArrayList<CrewBean>();
-		crewList = sqlSessionTemplate.selectList("Get1DayCrew", map);
+		RowBounds rowBounds = new RowBounds(pageInfo.getOffset(), pageInfo.getLimit());
+		crewList = sqlSessionTemplate.selectList("Get1DayCrew", map, rowBounds);
 		return crewList;
 	}
 
-	public List<CrewBean> getRegularCrew(Map<String, Object> map) {
+	public List<CrewBean> getRegularCrew(Map<String, Object> map, Paging pageInfo) {
 		List<CrewBean> crewList = new ArrayList<CrewBean>();
-		crewList = sqlSessionTemplate.selectList("GetRegularCrew", map);
+		RowBounds rowBounds = new RowBounds(pageInfo.getOffset(), pageInfo.getLimit());
+		crewList = sqlSessionTemplate.selectList("GetRegularCrew", map, rowBounds);
 		return crewList;
 	}
 
@@ -114,6 +119,19 @@ public class CrewDao {
 		int totalCount = 0;
 		totalCount = sqlSessionTemplate.selectOne("Get1DayCrewTotalCount", map);
 		return totalCount;
+	}
+
+	public int getRegularCrewTotalCount(Map<String, Object> map) {
+		int totalCount = 0;
+		totalCount = sqlSessionTemplate.selectOne("GetRegularCrewTotalCount", map);
+		return totalCount;
+	}
+
+	public List<CrewBean> getJoinRegularCrewById(String login_Id) {
+		List<CrewBean> crewList = new ArrayList<CrewBean>();
+		String loginId = "%"+login_Id+"%";
+		crewList = sqlSessionTemplate.selectList("GetJoinRegularCrewById", loginId);
+		return crewList;
 	}
 	
 }

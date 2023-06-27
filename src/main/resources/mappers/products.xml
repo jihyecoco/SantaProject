@@ -111,7 +111,7 @@
  		select A.products_num, A.kind, A.name, A.info, A.price, A.image, A.seller, A.inputdate, A.state, A.readcount, B.state as paystate, B.buyer
  		from products A inner join pay B
  		on A.products_num = B.prd_num
- 		where A.kind = 'a' and A.state = 1 and A.seller=#{loginId}
+ 		where A.kind = 'a' and A.state = 1 and A.seller=#{loginId} and B.state IN(0,1)
  	</select>
  	
  	<delete id="DeleteProductsByAdmin">
@@ -129,7 +129,7 @@
  				and name like #{keyword}
  			</if>
  			<if test="whatColumn == 'seller'">
- 				and seller = #{keyword}
+ 				and seller like #{keyword}
  			</if>
  			<if test="whatColumn == 'state0'">
  				and state = 0
@@ -144,7 +144,7 @@
  				and name like #{keyword}
  			</if>
  			<if test="whatColumn == 'seller'">
- 				and seller = #{keyword}
+ 				and seller like #{keyword}
  			</if>
  			<if test="whatColumn == 'state0'">
  				and state = 0
@@ -159,7 +159,7 @@
  				and name like #{keyword}
  			</if>
  			<if test="whatColumn == 'seller'">
- 				and seller = #{keyword}
+ 				and seller like #{keyword}
  			</if>
  			<if test="whatColumn == 'state0'">
  				and state = 0
@@ -173,7 +173,7 @@
 	 			where name like #{keyword}
 	 		</if>
 			<if test="whatColumn == 'seller'">
-	 			where seller = #{keyword}
+	 			where seller like #{keyword}
 	 		</if>
 	 		<if test="whatColumn == 'state0'">
 	 			where state = 0
@@ -198,6 +198,15 @@
 		<if test='whatColumn == "name"'>
 			and name like #{keyword}
 		</if>
+		<if test='whatColumn == "sell"'>
+			and kind = 'a'
+		</if>
+		<if test='whatColumn == "give"'>
+			and kind = 'b'
+		</if>
+		<if test='whatColumn == "change"'>
+			and kind = 'c'
+		</if>
  	</select>
  	
  	<select id="GetProductsTotalCount_Mypage" resultType="int">
@@ -211,6 +220,15 @@
 		</if>
 		<if test='whatColumn == "name"'>
 			and name like #{keyword}
+		</if>
+		<if test='whatColumn == "sell"'>
+			and kind = 'a'
+		</if>
+		<if test='whatColumn == "give"'>
+			and kind = 'b'
+		</if>
+		<if test='whatColumn == "change"'>
+			and kind = 'c'
 		</if>
  	</select>
  </mapper>

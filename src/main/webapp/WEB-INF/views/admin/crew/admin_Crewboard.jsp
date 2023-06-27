@@ -93,9 +93,9 @@
     <div class="container">
     	<!-- 정렬 -->
     	<div align="right">
-    		<a href="/crewboard/all/list.bdcr?whatColumn=reg_date">최신순</a> / 
-    		<a href="/crewboard/all/list.bdcr?whatColumn=readcount">조회순</a> / 
-    		<a href="/crewboard/all/list.bdcr?whatColumn=crew_comments">댓글순</a>
+    		<a href="/crewboard/admin/list.bdcr?whatColumn=reg_date">최신순</a> / 
+    		<a href="/crewboard/admin/list.bdcr?whatColumn=readcount">조회순</a> / 
+    		<a href="/crewboard/admin/list.bdcr?whatColumn=crew_comments">댓글순</a>
     		<br>
     	</div>
     	<!-- //정렬 -->
@@ -126,7 +126,7 @@
 	    					<input type="checkbox" name="oneCheck" value="${lists.crewboardnum}">
 	    				</td>
 	    				<td>
-	    					${(1-pageInfo.pageNumber)*pageInfo.limit+status.count}
+	    					${(pageInfo.pageNumber-1)*pageInfo.limit+status.count}
 	    				</td>
 	    				<td>
 	    					<c:if test="${lists.state == 0}"><font color="blue">[모집중]</font></c:if>

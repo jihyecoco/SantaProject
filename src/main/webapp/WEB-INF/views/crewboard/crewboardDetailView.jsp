@@ -144,30 +144,57 @@
 	}
 	
 	/* 신청하기 버튼 클릭 */
-	function signUp(crewname, state, pageNumber, loginId, crewboard_num){
+	function signUp(crewname, state, pageNumber, loginId, crewboard_num, large, small){
 		if(state == '1' ){//모집완료 일때
 			alert('이미 모집완료된 크루입니다');
 		}else{ // 모집중 일때
-			var joincrew_list = new Array();
+			if(large == '2'){ // 정기 크루일때
+				var join_regular_list = new Array();
+				
+				<c:forEach items="${join_regular_crew}" var="item">
+					join_regular_list.push("${item.small}");
+				</c:forEach>
 			
-			<c:forEach items="${join_crew}" var="item">
-			joincrew_list.push("${item.crewname}");
-			</c:forEach>
-			
-			var result = false;
-			for(i=0; i<joincrew_list.length; i++){
-				if(joincrew_list[i] == crewname){ // 가입한 크루 목록에 신청하기 누른 크루이름이 있다면
-					result = true;
+				var regular_result = false;
+				for(i=0; i<join_regular_list.length; i++){
+					if(join_regular_list[i] == small){
+						regular_result = true;
+					}
+				}//for
+				
+				if(regular_result == true){ // 이미가입한 해당 정기 크루가 있음
+					if(small == 'M'){
+						alert('이미 가입한 등산 정기크루가 있습니다');
+					}else{
+						alert('이미 가입한 플로깅 정기크루가 있습니다');
+					}
+				}else{
+					var choose2 = confirm(crewname + "에 가입하시겠습니까?");
+					if(choose2 == true) { // 확인 눌렀을때
+						location.href = "/crew/user/update.cr?crewname="+crewname+"&pageNumber="+pageNumber+"&loginId="+loginId+"&num="+crewboard_num;
+					}
 				}
-			}
-			
-			if(result == true) { // 멤버에 loginId가 있음
-				alert('이미 가입한 크루입니다');
-				return false;
-			}else{
-				var choose = confirm(crewname+"에 가입하시겠습니까?");
-				if(choose == true){ // 확인 눌렀을때
-					location.href = "/crew/user/update.cr?crewname="+crewname+"&pageNumber="+pageNumber+"&loginId="+loginId+"&num="+crewboard_num;
+			}else{ // 일일 크루
+				var joincrew_list = new Array();
+				
+				<c:forEach items="${join_crew}" var="item">
+					joincrew_list.push("${item.crewname}");
+				</c:forEach>
+				
+				var result = false;
+				for(i=0; i<joincrew_list.length; i++){
+					if(joincrew_list[i] == crewname){ // 가입한 크루 목록에 신청하기 누른 크루이름이 있다면
+						result = true;
+					}
+				}
+				
+				if(result == true) { // 멤버에 loginId가 있음
+					alert('이미 가입한 크루입니다');
+				}else{
+					var choose = confirm(crewname+"에 가입하시겠습니까?");
+					if(choose == true){ // 확인 눌렀을때
+						location.href = "/crew/user/update.cr?crewname="+crewname+"&pageNumber="+pageNumber+"&loginId="+loginId+"&num="+crewboard_num;
+					}
 				}
 			}
 		}
@@ -195,12 +222,12 @@
 	/* 댓글 수정 버튼 클릭 */
 	function updateComments(ccmt_num, pageNumber, idx){
 		//alert(ccmt_num);
-		var cmt_updateform = "<form class='form-control' action='/crewcomments/user/update.ccmt' method='post'>";
+		var cmt_updateform = "<form class='form-control' id='comments_updateform' action='/crewcomments/user/update.ccmt' method='post'>";
 		cmt_updateform += "<input type='text' name='content'>";
 		cmt_updateform += "<input type='hidden' name='num' value='"+ccmt_num+"'>";
 		cmt_updateform += "<input type='hidden' name='idx' value='"+idx+"'>";
 		cmt_updateform += "<input type='hidden' name='pageNumber' value='"+pageNumber+"'>";
-		cmt_updateform += "<input type='submit' value='확인'>";
+		cmt_updateform += "<input type='submit' value='확인' onclick='javascript:return comments_check(comments_updateform)'>";
 		cmt_updateform += "<input type='reset' value='취소' onclick='javascript:getAllComments()'>";
 		cmt_updateform += "</form>";
 		
@@ -318,7 +345,7 @@
            		</tr>
            		<tr>
            			<td colspan="2" align="right">
-           				<input type="button" value="신청하기" class="btn btn-success" onclick="signUp('${cbb.crewname}','${cbb.state}', '${pageNumber}', '${loginId}', '${cbb.crewboardnum}')">
+           				<input type="button" value="신청하기" class="btn btn-success" onclick="signUp('${cbb.crewname}','${cbb.state}', '${pageNumber}', '${loginId}', '${cbb.crewboardnum}', '${cbb.large}', '${cbb.small}')">
            			</td>
            		</tr>
            		<tr>
