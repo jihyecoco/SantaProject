@@ -197,12 +197,16 @@
 						<c:when test="${cl.stampapply == 1 }">
 							<div class="item">
 							- 
-							<c:if test="${cl.mountainname == ''}">
+							<c:if test="${cl.mountainexist == 0}">
+							<a href="/stamp/user/usercertimage.stp?stampimage=${cl.stampimage}&userid=${principal.getName()}&stampreject=${cl.stampreject}" target="_blank" target="_blank" onClick="window.open(this.href, '_blank', 'width=800, height=600'); return false;">
 							(산 정보 삭제됨)
+							</a>
 							</c:if>
-							<a href="/stamp/user/usercertimage.stp?stampimage=${cl.stampimage}&mountainname=${cl.mountainname}&userid=${principal.getName()}" target="_blank" target="_blank" onClick="window.open(this.href, '_blank', 'width=800, height=600'); return false;">
+							<c:if test="${cl.mountainexist == 1}">
+							<a href="/stamp/user/usercertimage.stp?stampimage=${cl.stampimage}&mountainname=${cl.mountainname}&userid=${principal.getName()}&stampreject=${cl.stampreject}" target="_blank" target="_blank" onClick="window.open(this.href, '_blank', 'width=800, height=600'); return false;">
 							${cl.mountainname}
 							</a>
+							</c:if>
 							</div>
 						</c:when>
 			    		</c:choose>
@@ -218,7 +222,13 @@
 			    		<c:choose>
 						<c:when test="${cl.stampapply != 1 }">
 							<div class="item">
-							- <a href="/stamp/user/usercertimage.stp?stampimage=${cl.stampimage}&mountainname=${cl.mountainname}&userid=${principal.getName()}&stampreject=${cl.stampreject}" target="_blank" target="_blank" onClick="window.open(this.href, '_blank', 'width=800, height=600'); return false;">
+							- 
+							<c:if test="${cl.mountainexist == 0}">
+							<a href="/stamp/user/usercertimage.stp?stampimage=${cl.stampimage}&userid=${principal.getName()}&stampreject=${cl.stampreject}" target="_blank" target="_blank" onClick="window.open(this.href, '_blank', 'width=800, height=600'); return false;">
+							(산 정보 삭제됨)
+							</a>
+							</c:if>
+							<a href="/stamp/user/usercertimage.stp?stampimage=${cl.stampimage}&mountainname=${cl.mountainname}&userid=${principal.getName()}&stampreject=${cl.stampreject}" target="_blank" target="_blank" onClick="window.open(this.href, '_blank', 'width=800, height=600'); return false;">
 							${cl.mountainname}
 							<c:if test="${cl.stampapply == 0 }"><font color="orange">(승인대기)</font></c:if>
 							<c:if test="${cl.stampapply == 2 }"><font color="red">(승인거절)</font></c:if>

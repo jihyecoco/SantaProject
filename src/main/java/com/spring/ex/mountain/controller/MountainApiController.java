@@ -5,6 +5,7 @@ import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.xml.sax.InputSource;
 
+import com.spring.ex.mountain.model.MountainBean;
 import com.spring.ex.mountain.model.MountainDao;
 
 import java.io.BufferedReader;
@@ -37,6 +39,8 @@ public class MountainApiController {
 
 	//요청 값을 담은 변수
 	private final static String command = "/mountain/admin/api.mnt";
+	
+	private static String getPage = "/mountain/mountainApiInsertList";
 			
 	@RequestMapping(command)
     public static ModelAndView main(String[] args) throws Exception {
@@ -79,27 +83,45 @@ public class MountainApiController {
         
         List<HashMap<String, String>> list = getResultMap(sb.toString());
         
-        for(Map<String,String> tmpMap : list) {
-            map.put("mountainnum", tmpMap.get("mntnid"));
-            map.put("mountainname", tmpMap.get("mntnnm"));
-            map.put("mountaingreat", tmpMap.get("hndfmsmtnslctnrson"));
-            map.put("mountainlocal", tmpMap.get("mntninfopoflc"));
-            map.put("mountainheight", tmpMap.get("mntninfohght"));
-            map.put("mountaincontent", tmpMap.get("mntninfodtlinfocont"));
-            map.put("mountainimage", tmpMap.get("mntnattchimageseq"));
+        List<String> mountainnum = new ArrayList<String>();
+        List<String> mountainname = new ArrayList<String>();
+        List<String> mountaingreat = new ArrayList<String>();
+        List<String> mountainlocal = new ArrayList<String>();
+        List<String> mountainheight = new ArrayList<String>();
+        List<String> mountaincontent = new ArrayList<String>();
+        List<String> mountainimage = new ArrayList<String>();
+
+        for(int i = 0; i< list.size(); i++) {
+            map.put("mountainnum", list.get(i).get("mntnid"));
+            map.put("mountainname", list.get(i).get("mntnnm"));
+            map.put("mountaingreat", list.get(i).get("hndfmsmtnslctnrson"));
+            map.put("mountainlocal", list.get(i).get("mntninfopoflc"));
+            map.put("mountainheight", list.get(i).get("mntninfohght"));
+            map.put("mountaincontent", list.get(i).get("mntninfodtlinfocont"));
+            map.put("mountainimage", list.get(i).get("mntnattchimageseq"));
             
-            //map을 insert 매개변수로 넣어도 안됨
-            //map을 modelandview로 저장해서 jsp로 넘겨서 출력해도 안됨
-            //map을 list 형으로 변환해서 jsp 출력해도 안됨(collertor 사용)
-            //각각의 값을 다시 map으로 저장해서 insert 매개변수 넣어줘도 안됨
-            //map.get~을 string으로 캐스팅한 후 dao에서 map에 저장해도 안됨
-            //출력은 잘 됨... 
+//            int cnt = mdao.insertApi(map);
+//            System.out.println("cnt : "+cnt);
             
-            System.out.println("산 이름 : "+map.get("mountainname"));
+            mountainnum.add(map.get("mountainnum").toString());
+            mountainname.add(map.get("mountainname").toString());
+            mountaingreat.add(map.get("mountaingreat").toString());
+            mountainlocal.add(map.get("mountainlocal").toString());
+            mountainheight.add(map.get("mountainheight").toString());
+            mountaincontent.add(map.get("mountaincontent").toString());
+            mountainimage.add(map.get("mountainimage").toString());
 
         }
         
-        mav.setViewName("redirect:/mountain/all/list.mnt");
+        mav.addObject("mountainnum",mountainnum);
+        mav.addObject("mountainname",mountainname);
+        mav.addObject("mountaingreat",mountaingreat);
+        mav.addObject("mountainlocal",mountainlocal);
+        mav.addObject("mountainheight",mountainheight);
+        mav.addObject("mountaincontent",mountaincontent);
+        mav.addObject("mountainimage",mountainimage);
+        
+        mav.setViewName(getPage);
         
         return mav;
     }

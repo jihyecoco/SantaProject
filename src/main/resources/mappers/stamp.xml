@@ -11,6 +11,7 @@
 		<result property="stampimage" column="stamp_image"/>
 		<result property="stampapply" column="stamp_apply"/>
 		<result property="stampreject" column="stamp_reject"/>
+		<result property="mountainexist" column="mountain_exist"/>
 	</resultMap>
 
 	<resultMap type="com.spring.ex.stamp.model.CertBean" id="certMap">
@@ -19,6 +20,7 @@
 		<result property="stampimage" column="stamp_image"/>
 		<result property="usersid" column="users_id"/>
 		<result property="stampreject" column="stamp_reject"/>
+		<result property="mountainexist" column="mountain_exist"/>
 	</resultMap>
 
 	<select id="GetAllStampById" resultType="com.spring.ex.stamp.model.StampBean" resultMap="stampMap">
@@ -28,7 +30,8 @@
 			users_id,
 			stamp_image,
 			stamp_apply,
-			stamp_reject
+			stamp_reject,
+			mountain_exist
 		FROM
 			stamp
 		WHERE
@@ -42,7 +45,8 @@
 			users_id,
 			stamp_image,
 			stamp_apply,
-			stamp_reject
+			stamp_reject,
+			mountain_exist
 		FROM
 			stamp
 		<if test="whatColumn == '아이디'">
@@ -67,7 +71,8 @@
 			mountain_name,
 			stamp_apply,
 			users_id,
-			stamp_reject
+			stamp_reject,
+			mountain_exist
 		FROM
 			stamp NATURAL JOIN mountain
 		WHERE
@@ -93,14 +98,16 @@
 			users_id,
 			stamp_image,
 			stamp_apply,
-			stamp_reject)
+			stamp_reject,
+			mountain_exist)
 		VALUES(
 			stamp_seq.nextval,
 			#{mountainnum},
 			#{usersid},
 			#{stampimage},
 			#{stampapply},
-			#{stampreject})
+			#{stampreject},
+			1)
 	</insert>
 	
 	<select id="GetStampTotalCount" resultType="int">
@@ -118,7 +125,8 @@
 			mountain_name,
 			stamp_apply,
 			users_id,
-			stamp_reject
+			stamp_reject,
+			mountain_exist
 		FROM
 			stamp NATURAL JOIN mountain
 		WHERE
@@ -152,7 +160,7 @@
 		SET
 			mountain_exist = 0
 		WHERE
-			stamp_num = #{data}
+			mountain_num = #{data}
 	</update>
 	
 	<select id="GetCertCountByMountainNum" resultType="com.spring.ex.stamp.model.StampBean">

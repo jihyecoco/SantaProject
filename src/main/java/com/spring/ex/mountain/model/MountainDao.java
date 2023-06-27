@@ -1,5 +1,6 @@
 package com.spring.ex.mountain.model;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -64,8 +65,9 @@ public class MountainDao {
 		return mountainBean;
 	}
 
-	public int insertApi(Map<String, Object> map) {
-		int cnt = sqlSessionTemplate.update("InsertApi",map);
+	public int insertApi(MountainBean mb) {
+		int cnt = sqlSessionTemplate.insert("InsertApi",mb);
+		System.out.println("cnt : "+cnt);
 		return cnt;
 	}
 
@@ -73,5 +75,6 @@ public class MountainDao {
 		List<MountainBean> mountainNames = sqlSessionTemplate.selectList("GetAllMountainName");
 		return mountainNames;
 	}
+
 	
 }

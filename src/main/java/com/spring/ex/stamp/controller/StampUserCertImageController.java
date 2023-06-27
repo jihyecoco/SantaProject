@@ -21,9 +21,9 @@ public class StampUserCertImageController {
 	
 	@RequestMapping(value = command, method = RequestMethod.GET)
 	public ModelAndView doAction(
-			@RequestParam("stampreject") String stampreject,
+			@RequestParam(value="stampreject", required=false) String stampreject,
 			@RequestParam("userid") String userid,
-			@RequestParam("mountainname") String mountainname,
+			@RequestParam(value="mountainname", required=false) String mountainname,
 			@RequestParam("stampimage") String stampimage
 			) {
 		ModelAndView mav = new ModelAndView();

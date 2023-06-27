@@ -7,7 +7,15 @@ public class CertBean {
 	private String stampimage;
 	private String usersid;
 	private int stampreject;
+	private String mountainexist;
 	
+	
+	public String getMountainexist() {
+		return mountainexist;
+	}
+	public void setMountainexist(String mountainexist) {
+		this.mountainexist = mountainexist;
+	}
 	public int getStampreject() {
 		return stampreject;
 	}

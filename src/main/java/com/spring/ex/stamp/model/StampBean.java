@@ -27,6 +27,9 @@ public class StampBean {
 	//stamp 인증 거절사유, 0: 사진 부적합, 1:존재하지 않는 산 이름, 2:기타
 	private int stampreject;
 	
+	//id별 인증된 갯수
+	private int mountainexist;
+
 	//인증된 mountain의 갯수
 	private int certcount;
 	
@@ -41,6 +44,13 @@ public class StampBean {
 	
 	//setter, getter 메서드
 	
+	public int getMountainexist() {
+		return mountainexist;
+	}
+	
+	public void setMountainexist(int mountainexist) {
+		this.mountainexist = mountainexist;
+	}
 	
 	public int getApplycount() {
 		return applycount;

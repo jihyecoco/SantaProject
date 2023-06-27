@@ -29,17 +29,17 @@
 	</select>
 	<!-- //최초 목록 불러오기 -->
 
-	<!-- 최초 목록 불러오기 -->
+	<!-- 산 이름 불러오기 -->
 	<select id="GetAllMountainNames" resultType="com.spring.ex.mountain.model.MountainBean" resultMap="mountainMap">
 		SELECT
 			mountain_name
 		FROM
 			mountain
 	</select>
-	<!-- //최초 목록 불러오기 -->
+	<!-- //산 이름 불러오기 -->
 	
 	<!-- api 목록 삽입하기 -->
-		<insert id="InsertApi">
+		<insert id="InsertApi" parameterType="HashMap">
 			INSERT
 				into mountain(
 					mountain_num,
@@ -232,6 +232,8 @@
 				mountain_name
 			FROM
 				mountain
+		ORDER BY
+			mountain_num asc
 		</select>	
 	<!-- //산 이름 검색 -->
 </mapper>

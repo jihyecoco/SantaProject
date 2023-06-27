@@ -51,14 +51,6 @@ public class StampUserListController {
 				//userid를 이용해서 인증 내역 불러오기
 				List<CertBean> certList = sdao.getCertListById(userid);
 				
-				//*null인 컬럼은 일단 조회되지 않음.
-				//필요 시 api성공 여부에 따라 mountain_num = null인 컬럼 해결하기
-//				for(int i=0;i<stampList.size();i++) {
-//					if(stampList.get(i).getMountainnum() == 0) {
-//						
-//					}
-//				}
-				
 				//mav에 저장해서 넘길 값 설정
 				mav.addObject("stampList", stampList); // 현재 유저의 스탬프 테이블
 				mav.addObject("certList", certList); //현재 유저의 인증 신청 목록(산 이름, 인증 사진, 인증 상태)

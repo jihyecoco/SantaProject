@@ -139,7 +139,7 @@
                     <c:if test="${principal.getName() == 'admin'}">
                     <div class="container">
     				<div align="right">
-                    	<button class="btn btn-success" onClick="location.href='/mountain/admin/api.mnt'">산 api 등록</button>
+                    	<!-- <button class="btn btn-success" onClick="location.href='/mountain/admin/api.mnt'">산 api 등록</button> -->
                     	<button class="btn btn-success" onClick="location.href='/mountain/admin/insert.mnt'">산 정보 등록</button>
                     	<button class="btn btn-success" onclick="fnGetdata()">선택 정보 삭제</button>
                     </div>
