@@ -16,7 +16,6 @@ import com.spring.ex.boardcomments.model.BoardCommentsDao;
 public class BoardCommentsReplyController {
 	
 	private final String command = "/boardcomments/user/reply.bcmt";
-	private String getPage ="";
 	private String gotoPage = "redirect:/board/user/detail.br";
 	
 	@Autowired

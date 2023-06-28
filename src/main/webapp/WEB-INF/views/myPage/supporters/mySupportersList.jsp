@@ -19,7 +19,7 @@
                         
                          	<table class="table table-hover">
                          			<tr align="center">
-                         				<th>번호</th>
+                         				<!-- <th>번호</th> -->
                          				<th>서포터즈</th>
                          				<th>모집 대상</th> 
                          				<th>신청일</th> 
@@ -28,13 +28,13 @@
                          			</tr>
                          			<c:if test="${applybean.size() == 0}">
                          				<tr align="center">
-                         					<td colspan="6"> 신청한 서포터즈가 없습니다. </td>
+                         					<td colspan="5"> 신청한 서포터즈가 없습니다. </td>
                          				</tr>
                          			</c:if>
                          			<c:if test="${applybean.size() != 0}">
 	                         			<c:forEach var="mysupporters" items="${applybean}">
 	                         				<tr align="center">
-	                         					<td>${mysupporters.num}</td>
+	                         					<%-- <td>${mysupporters.num}</td> --%>
 	                         					<td><a href="/supporters/user/detail.su?num=${mysupporters.joinnum}">${mysupporters.supportersname}</a></td>
 	                         					<td>
 	                         						<c:if test="${mysupporters.target == 0}">전체회원</c:if>

@@ -47,23 +47,15 @@ public class BoardCommentsInsertController {
 		mav.addObject("num", boardcomments.getBnum()); //게시글의 번호(bnum) 11을 num으로 보낸다.
 		//왜냐하면 detail.br에서는 게시글 번호를 num으로 받고 있기 때문이다.
 		
-		System.out.println("result.hasErrors(): "+result.hasErrors()); 
-		if(result.hasErrors()) { //에러 있음
-			mav.setViewName(getPage);
-		}
-		else {//유효성검사 통과
-			int cnt = -1;
-			cnt = bcmt_dao.insertBoardComments(boardcomments);
-			System.out.println("cnt: "+cnt); //1 
-			
-			if(cnt != -1) { //댓글 insert 성공
-				System.out.println("댓글 insert 성공");
-				mav.setViewName(gotoPage);
-			}
-			else { //insert 실패
-				System.out.println("댓글 insert 실패");
-				//mav.setViewName(getPage);
-			}		
+		int cnt = -1;
+		cnt = bcmt_dao.insertBoardComments(boardcomments);
+		
+		if(cnt != -1) { //댓글등록 성공
+			System.out.println("댓글 insert 성공");
+			mav.setViewName(gotoPage);
+		}else {//댓글등록 실패
+			System.out.println("댓글 insert 실패");
+			mav.setViewName(gotoPage);
 		}
 		return mav;
 	}

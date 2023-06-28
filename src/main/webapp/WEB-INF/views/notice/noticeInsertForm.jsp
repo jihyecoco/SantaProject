@@ -8,7 +8,21 @@
 		font-size: 7px;
 	}
 </style>
-    
+
+<script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/jquery.js"></script>
+<script type="text/javascript">
+
+	//reset 확인
+	function resetCheck(){
+		var check = confirm("정말 초기화 하시겠습니까?");
+		 if(!check){
+			return false;
+		}
+	}
+
+</script>
+
+
     <!-- Page Header Start -->
     <div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container text-center py-5">
@@ -57,7 +71,7 @@
                             <!-- 글내용 -->
 							<div class="col-11">
                                	<div class="form-floating">
-                                    <textarea class="form-control border-0" id="content" name="content" style="resize: none;" style="height: 220px">${notice.content}</textarea>
+                                    <textarea class="form-control border-0" id="content" name="content" style="height: 250px; resize:none;">${notice.content}</textarea>
                                     <label for="content">글 내용</label>
                                     <form:errors cssClass="err" path="content"/>
                                 </div>
@@ -65,7 +79,7 @@
                             <!-- //글내용 -->
                             <div class="col-11 text-center">                          	
                             	<input type="submit" value="등록" class="btn btn-success">
-                            	<input type="reset" value="다시작성" class="btn btn-success"> 
+                            	<input type="reset" value="다시작성" class="btn btn-success" onclick="return resetCheck()"> 
                             	<input type="button" value="목록" class="btn btn-success" onclick="location.href='/notice/all/list.no?pageNumber=${pageNumber}'">
                             </div>                           				
 						</div>

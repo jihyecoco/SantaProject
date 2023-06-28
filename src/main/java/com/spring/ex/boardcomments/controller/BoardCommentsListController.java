@@ -32,37 +32,24 @@ public class BoardCommentsListController {
 			@RequestParam("pageNumber") String pageNumber){
 		
 		System.out.println("bnum:"+ idx);
+		
 		List<BoardCommentsBean> boardcomments = new ArrayList<BoardCommentsBean>();
 		boardcomments = bcmt_dao.getBoardCommentsByBnum(idx);
+		
 		System.out.println("boardcomments size: "+boardcomments.size());
 		
 		for(int i=0; i<boardcomments.size(); i++) { // 페이지 넣기
 			boardcomments.get(i).setPageNumber(pageNumber);
+			
+			// 비밀댓글 열람을 위해 원댓글자
+			int ref = boardcomments.get(i).getRef();
+			System.out.println(">>>>>>>" + ref);
+			String orgwriter = bcmt_dao.getBoardCommentsOrgWriter(ref);
+			System.out.println(">>>>>>>" + orgwriter);
+			boardcomments.get(i).setOrgwriter(orgwriter);
 		}
 		
 		return boardcomments;
 	}
-	
-	/*
-	@RequestMapping(value=command, method = RequestMethod.POST)
-	public ModelAndView doAction(BoardCommentsBean boardcomments,
-			@RequestParam("pageNumber") String pageNumber) { 
-		
-		System.out.println("listcon의 getBoardnum(): "+boardcomments.getBnum()); //
-		
-		int bnum = boardcomments.getBnum();
-		//List<BoardCommentsBean> boardcomment = bcmt_dao.getAllBoardComments();
-		
-		List<BoardCommentsBean> boardcomment = new ArrayList<BoardCommentsBean>();
-		boardcomment = bcmt_dao.getBoardCommentsByBnum(bnum);
-		 
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("boardcomment", boardcomment); 
-		mav.addObject("pageNumber", pageNumber);
-		mav.setViewName(getPage);
-		
-		return mav;
-	}
-	*/
 	
 }

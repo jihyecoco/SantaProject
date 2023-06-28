@@ -72,23 +72,7 @@ public class BoardInsertController {
 		String userId = principal.getName();	
 		mav.addObject("userId", userId);
 		
-		/* 사용자 OS 확인 */
-		String osName = System.getProperty("os.name").toLowerCase();
-		System.out.println("OS name : " + osName);
-    
-		String str = "";
-		if (osName.contains("win")) 
-		{
-			System.out.println("사용자 OS - Window ");
-			str = "C:/tempUpload/board";
-		} 
-
-		else if (osName.contains("mac"))   {
-		  	System.out.println("사용자 OS - MAC ");
-		  	str = "/Users/ol7roeo/Documents/tempUpload/board"; 
-		} 
-		
-		//String str = "c:/tempUpload";
+		String str = "c:/tempUpload/board";
 		File destination_local = new File(str + File.separator + multi.getOriginalFilename());
 		
 		System.out.println("result.hasErrors(): "+result.hasErrors()); 

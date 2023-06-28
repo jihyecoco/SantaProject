@@ -106,6 +106,40 @@
     		change_supporters($("#keyword").val());
     	} */
     	
+    	
+    	function getUserRoleName(userRole) { //userRole 코드 값으로 명칭을 치환
+    		var userRoleName = '';
+    		
+    		switch(userRole) {
+    			case 'r01' :
+    			userRoleName = '일반';
+    			break;
+    			case 'r02': 
+    				userRoleName = '우수';
+    			break;
+    			case 'r99': 
+    				userRoleName = '관리자';
+    			break;
+    			default :
+    				userRoleName = '';
+    			break;
+    		}
+    		
+    		return userRoleName;
+    	}
+    	
+    	function getUserBirth(birth) {
+    		
+    		var date = new Date(birth);
+	   		var year = date.getFullYear();
+	   		var month = date.getMonth() + 1; 
+	   		month = month < 10 ? '0' + month : month;
+	   		var day = date.getDate();
+	   		day = day < 10 ? '0' + day : day;
+	   		
+    		return year + '-' + month + '-' + day ;
+    	}
+    	
     	//select-option이 바뀔때마다 이 함수를 호출함
     	function change_supporters(value){
     		$.ajax({
@@ -123,10 +157,10 @@
 							htmls += "<tr align='center'>";
 							htmls += "<td>"+ data.suLists[i].userId +"</td>";
 							htmls += "<td>"+ data.suLists[i].name +"</td>";
-							htmls += "<td>"+ data.suLists[i].userRole +"</td>";
+							htmls += "<td>"+ getUserRoleName(data.suLists[i].userRole) +"</td>";
 							htmls += "<td>"+ data.suLists[i].applydate +"</td>";
 							htmls += "<td>"+ data.suLists[i].gender +"</td>";
-							htmls += "<td>"+ data.suLists[i].birth +"</td>";
+							htmls += "<td>"+ getUserBirth(data.suLists[i].birth) +"</td>";
 							htmls += "</tr>";
 													
 						}					
@@ -139,11 +173,9 @@
 			});//ajax	
     	}//fn_change_supporters
     </script>
+    
     <%-- 
-    htmls += "<td>"+ if(data.suLists[i].userRole == 'r01'){'일반'}  
-	htmls += else if(data.suLists[i].userRole == 'r02'){'우수'}
-	htmls += else if(data.suLists[i].userRole == 'r99'){'관리자'}							
-	htmls += "</td>";
+    getUserBirth(data.suLists[i].birth)
     
     htmls += "<td><c:if test='${"+ data.suLists[i].userRole + "= 'r01'}'>일반</c:if>";
 	htmls += "<c:if test='${"+ data.suLists[i].userRole + "= 'r02'}'>우수</c:if>";
@@ -155,6 +187,8 @@
 	
 	<fmt:parseDate var="newDay" value="${data.suLists[i].birth}" pattern="yyyy-MM-dd"/>				
 	<fmt:formatDate var="fNewDay" value="${newDay}" pattern="yyyy-MM-dd"/>
-	${fNewDay } --%>
+	${fNewDay } 
+	 --%>
+	
     
 <%@ include file="../../common/common_bottom.jsp" %>      

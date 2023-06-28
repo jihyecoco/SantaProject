@@ -68,8 +68,10 @@
 		where num = #{num}
 	</update>
 	
-	<!-- 내 '전체' 서포터즈 조회 -->
-	<!-- state=0인것만 조회해야 서포터즈 신청 취소를 하면 마이페이지의 내 서포터즈에서도 사라짐 -->
+	<!-- 마이페이지 : 내 '전체' 서포터즈 조회 -->
+	<!-- state=0인것만 조회해야 서포터즈 신청 취소를 하면 마이페이지의 내 서포터즈에서도 사라짐 
+	 	 그리고 삭제한 서포터즈 안보이도록
+	-->
 	<select id="GetMySupporters" resultMap="supportersapplyMap">
  		select * from supporters_apply
  		where applicant_id=#{loginId} AND state=0

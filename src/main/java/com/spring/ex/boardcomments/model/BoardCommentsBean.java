@@ -16,36 +16,25 @@ public class BoardCommentsBean {
 	private String regdate;
 	private String isSecret;
 	
+	private String orgwriter; // 최상위 원댓글 작성자 (DB에는 작성 필요 없음, 비밀댓글 열람시 필요)
+	
 	// 댓글 목록의 ajax에서 필요
 	private String pageNumber;
 		
+	
 	public String getPageNumber() {
 		return pageNumber;
 	}
-
 	public void setPageNumber(String pageNumber) {
 		this.pageNumber = pageNumber;
 	}
+	public String getOrgwriter() {
+		return orgwriter;
+	}
 
-	public BoardCommentsBean() {
-		super();
-	}
-	
-	public BoardCommentsBean(int num, int bnum, int ref, int relevel, int restep, String isdeleted, String userid,
-			String content, String regdate) {
-		super();
-		this.num = num;
-		this.bnum = bnum;
-		this.ref = ref;
-		this.relevel = relevel;
-		this.restep = restep;
-		this.isdeleted = isdeleted;
-		this.userid = userid;
-		this.content = content;
-		this.regdate = regdate;
-	}
-	
-	
+	public void setOrgwriter(String orgwriter) {
+		this.orgwriter = orgwriter;
+	}	
 	public int getNum() {
 		return num;
 	}

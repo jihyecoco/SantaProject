@@ -8,7 +8,7 @@
 	.err{
 		color:red;
 		font-weight: bold;
-		font-size: 9px;
+		font-size: 7px;
 	}
 </style>
 
@@ -34,12 +34,11 @@
 	});//ready
 	
 	
-	//<form:errors cssClass="err" path="content" />
 	//댓글 목록 가져오기
 	function getAllBoardComments(){
 		var userid = $('input[name=userid]').val();
 		var pageNumber2 = $('input[name=pageNumber]').val(); //현재 페이지
-		console.log(userid) //아이디 출력해보기
+		//console.log(userid) //아이디 출력해보기
 		
 		$.ajax({ 
 			url : "/boardcomments/user/list.bcmt",
@@ -54,9 +53,9 @@
 				if (data.length === 0 ) {
 					result += "<tr><td colspan='5' align='center'>등록된 댓글이 없습니다.</td></tr>"
 				} else { //댓글이 있으면
-					$.each(data, function(bnum, value) {
+					$.each(data, function(bnum, value) { // 값이 여러개 일 때는 반복문 사용
 						result += "<div class='d-flex text-body-secondary pt-3'>";
-						console.log("value" + value.userid)
+						//console.log("value" + value.userid)
 						if(value.relevel > 0){ //대댓글일 경우 들어가도록 설정
 		                	var wid = value.relevel*15;
 		                	result += "<img src='../../../resources/images/comments/level.gif' width='"+wid+"' height='32'>";
@@ -82,7 +81,7 @@
 		                	
 		                	<%-- result += "<span id='bcmt_update"+value.num+"'><img src='<%=request.getContextPath()%>/resources/images/icon/comments_lock.png'>비밀 댓글입니다.<br>"; --%>
 		                	//1.댓글 작성자 본인일때 2. 해당 게시글의 작성자일때 3. 관리자일때 => 댓글 비밀설정해도 볼 수 있음
-		                	if(value.userid == userid || "${board.userid}" == userid || "admin" == userid){
+		                	if(value.userid == userid || "${board.userid}" == userid || "admin" == userid || value.orgwriter == userid){
 		                		result += "<span id='bcmt_update" + value.num + "'><img src='<%=request.getContextPath()%>/resources/images/icon/comments_lock.png' width='15' height='15'>" + value.content + "<br>";
 
 		                	}else{ //위 3가지 경우에 해당되지 않는다면, 내용 대신 "비밀 댓글입니다."가 보임
@@ -117,11 +116,20 @@
 				$('#comments_area').html(result);
 			},//success
 			error : function(request, error) {
+				alert("error");
 				alert("code : "+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 			}
 		});//ajax				
 	}//getAllBoardComments
 	
+	
+	//댓글의 유효성 검사
+	function board_comments_check(f){
+		if(f.content.value == ""){
+			alert('내용을 입력하세요');
+			return false;
+		}
+	}
 	
 	//'글'의 삭제버튼을 클릭
 	function deleteboard(num, pageNumber){
@@ -150,16 +158,33 @@
 		replybcmt_area += "<input type='hidden' name='restep' value='"+re_step+"'>";
 		replybcmt_area += "<input type='hidden' name='relevel' value='"+re_level+"'>";
 		replybcmt_area += "<input type='hidden' name='pageNumber' value='"+pageNumber+"'>";
+		replybcmt_area += "<input type='hidden' id='isSecret2' name='isSecret' value='N'>"; // 비밀 댓글
 		replybcmt_area += "<input type='text' name='content'>";
-		replybcmt_area += "<input type='submit' class='btn btn-light' value='등록'>";
+		replybcmt_area += "<input type='submit' class='btn btn-light' value='등록' onclick='javascript:return board_comments_check(reply_form)'>";
+		
+		//비밀 댓글 설정
+		replybcmt_area += "<div>";
+		replybcmt_area += "<input type='checkbox' id='reply_secret2' name='reply_secret2' style='margin-bottom: 10px; margin-top: 10px; margin-right: 5px;' ";
+		replybcmt_area += "onchange='javascript:board_reply_secret()'/>";
+		replybcmt_area += "<label for='reply_secret2' style='cusor:pointer;'>비밀댓글로 작성</label></div>";
 		
 		$('#replybcmt_area'+num).html(replybcmt_area);
+	}
+	
+	/* 댓글 답글달기 비밀글 설정 클릭 */
+	function board_reply_secret(){
+		//alert('1');
+		if($('#reply_secret2').prop("checked")){
+			$('#isSecret2').attr('value','Y');
+		}else{
+			$('#isSecret2').attr('value', 'N');
+		} 
 	}
 	
 	//댓글의 수정 버튼 클릭
 	function updateBoardComments(bcmt_num, pageNumber, bnum){
 		//alert("수정할 댓글의 번호: "+bcmt_num);
-		var bcmt_updateform = "<form action='/boardcomments/user/update.bcmt' method='post'>";
+		var bcmt_updateform = "<form class='form-control' action='/boardcomments/user/update.bcmt' method='post'>";
 		bcmt_updateform += "<input type='text' name='content'>";
 		bcmt_updateform += "<input type='hidden' name='num' value='"+bcmt_num+"'>";
 		bcmt_updateform += "<input type='hidden' name='bnum' value='"+bnum+"'>";
@@ -171,18 +196,6 @@
 		$('#bcmt_update'+bcmt_num).html(bcmt_updateform);
 	}
 	
-	/* 좋아요 버튼 클릭 */
-	var heart_flag = false;
-	function heart(){
-		if(heart_flag == false){ // 좋아요 클릭
-			$('#heart').attr('src', '../../resources/images/icon/heart.png');
-			heart_flag = true;
-		}else{ // 좋아요 취소
-			$('#heart').attr('src', '../../resources/images/icon/empty_heart.png');
-			heart_flag = false;
-		}
-	}
-	
 	/* 현재 로그인한 사용자의 해당 게시글 좋아요 클릭여부 하트이미지 on/off */
 	function heartHandler(){
 		var getHeartval = $("#heartStatus").val();
@@ -192,7 +205,7 @@
 		    $("#heart").prop("src", "/resources/images/icon/empty_heart.png");
 		}
     }//heartHandler
-	
+
 	// 좋아요(empty -> fill) 
 	function heartEvent(){
 		
@@ -248,14 +261,6 @@
 	
 </script>
 
-<style type="text/css">
-	.err{
-		color:red;
-		font-weight: bold;
-		font-size: 7px;
-	}
-</style>
-
 
 <!-- Page Header Start -->
     <div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
@@ -302,7 +307,9 @@
 	</tr>
 	<tr>
 		<td>이미지</td>
-		<td><img src="<%=request.getContextPath()%>/resources/${board.image}"></td>
+		<td>
+			<img src="<%=request.getContextPath()%>/resources/images/board/${board.image}">		
+		</td>
 	</tr>
 	<tr>
 		<td colspan="2" align="center">			

@@ -207,10 +207,4 @@
 	</select>
 	
 </mapper>
-<!-- 
-	CASE 
- 		WHEN s.deadline < TO_CHAR(sysdate,'YYYY-MM-DD') then 2
- 		WHEN s.applicant >= s.limit then 1
- 		ELSE 0 END 
-	AS state -->
 

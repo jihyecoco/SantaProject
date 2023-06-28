@@ -20,7 +20,7 @@
                         
                         	<!-- 검색창 -->
                         	<nav class="navbar navbar-light bg-light">
-								<div class="container" style="display: table-cell; vertical-align: middle;"><
+								<div class="container" style="display: table-cell; vertical-align: middle;">
 									<form class="d-flex" action="/supporters/admin/user.su" method="post">
 										<div class="col-sm-10">
 											<input class="form-control me-8" type="text" name="keyword" value="${paramMap.keyword}" placeholder="회원 ID를 입력하세요">
@@ -47,7 +47,7 @@
                          			</thead>
                          			<c:if test="${lists.size() == 0}">
                          				<tr>
-                         					<td colspan="6" align="center">
+                         					<td colspan="7" align="center">
                          						신청한 서포터즈가 없습니다.
                          					</td>
                          				</tr>
@@ -56,7 +56,7 @@
                          			<c:if test="${lists.size() != 0}">
                          				<c:forEach var="supporters" items="${lists}">
                          					<tr align="center">
-                         						<td><a href="">${supporters.applicantid}</a></td>
+                         						<td>${supporters.applicantid}</td>
                          						<td><a href="/supporters/user/detail.su?num=${supporters.num}"">${supporters.supportersname}</a></td>
 	                         					<td>
 	                         						<c:if test="${supporters.state == 0}"><font color="blue">[모집중]</font></c:if>

@@ -3,6 +3,7 @@ package com.spring.ex.board.model;
 import java.util.List;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.ex.heart.board.model.BoardHeartBean;
@@ -23,7 +24,7 @@ public class BoardBean {
 	private String regdate;
 	private String readcount;
 	
-	//@NotEmpty(message="파일을 선택하세요.")
+	@NotEmpty(message="이미지는 한 개 이상 업로드 해야합니다.")
 	private String image;
 	
 	private int boardcommentscount; //댓글수 출력하기위한 칼럼
@@ -36,25 +37,31 @@ public class BoardBean {
 	
 	private String upload2; //수정할때 기존 이미지를 담는 변수(수정할때 웹서버폴더에서 기존이미지를 지워야 하므로)
 		
-	public String getUpload2() {
-		return upload2;
-	}
-
-	public void setUpload2(String upload2) {
-		this.upload2 = upload2;
-	}
-
 	public MultipartFile getUpload() {
 		return upload;
 	}
-
 	public void setUpload(MultipartFile upload) {
-		System.out.println("setUpload");
-		this.upload = upload;
-		String fileName = upload.getOriginalFilename();
-		this.image = fileName;
+		if(upload.isEmpty()) { // 수정시 파일 선택을 안했을때 (기존이미지 그대로 업로드)
+			System.out.println("uploadEmpty()");
+			this.upload = upload;
+			this.image = this.getUpload2();
+		}else {
+			System.out.println("setUpload()");
+			this.upload = upload;
+			
+			String fileName = upload.getOriginalFilename();
+			System.out.println("fileName : "+fileName);
+			
+			this.image = fileName;
+		}
 	}
 	
+	public String getUpload2() {
+		return upload2;
+	}
+	public void setUpload2(String upload2) {
+		this.upload2 = upload2;
+	}
 	//////////
 
 	

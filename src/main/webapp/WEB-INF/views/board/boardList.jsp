@@ -8,6 +8,7 @@
 
 	//정렬 select-option에서 클릭할때
 	function clickSelect(){ //get방식 요청
+		
 		var form = document.list_form;
         form.submit();		
 	}
@@ -122,7 +123,8 @@
 			<td>${board.num}</td>
 			<td>[${board.category}]</td>
 			<td>
-				<img src="<%=request.getContextPath() %>/resources/${board.image}" width="100" height="100">
+				<img src="<%=request.getContextPath() %>/resources/images/board/${board.image}" width="100" height="100">
+				<%-- <img src="<%=request.getContextPath() %>/resources/images/board/${board.image}" width="100" height="100"> --%>
 			</td>		
 			<td align="left">
 				<a href="/board/user/detail.br?num=${board.num}&pageNumber=${pageInfo.pageNumber}">${board.subject}(${board.boardcommentscount})</a>

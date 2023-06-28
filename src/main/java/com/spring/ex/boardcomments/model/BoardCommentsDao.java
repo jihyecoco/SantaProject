@@ -62,6 +62,12 @@ public class BoardCommentsDao {
 		cnt = sqlSessionTemplate.update("UpdateBoardComments",boardcomments);
 		return cnt;
 	}
+
+	public String getBoardCommentsOrgWriter(int ref) {
+		String orgwriter = "";
+		orgwriter = sqlSessionTemplate.selectOne("GetBoardCommentsOrgWriter", ref);
+		return orgwriter;
+	}
 	
 	
 	

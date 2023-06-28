@@ -178,6 +178,14 @@ $(document).ready(function(){
 	});//keydown		
 	
 });//document
+	
+//reset 확인
+function resetCheck(){
+	var check = confirm("정말 초기화 하시겠습니까?");
+	 if(!check){
+		return false;
+	}
+}
 
 </script>
 
@@ -292,7 +300,7 @@ $(document).ready(function(){
 							<!-- 활동 내용 -->
 							<div class="col-9">
 								<div class="form-floating">
-									<textarea name="content" id="content" class="form-control border-0" style="resize: none;" style="height: 400px" placeholder="">${supporters.content}</textarea>
+									<textarea name="content" id="content" class="form-control border-0" style="height: 400px; resize:none;">${supporters.content}</textarea>
 									<label for="content">활동 내용</label>
 									<form:errors cssClass="err" path="content" />
 								</div>
@@ -301,7 +309,7 @@ $(document).ready(function(){
 							
 							<div class="col-12 text-center">
 								<input type="submit" value="수정하기" class="btn btn-success" id="sub"> 
-								<input type="reset" value="다시작성" class="btn btn-success"> 
+								<input type="reset" value="다시작성" class="btn btn-success" onclick="return resetCheck()"> 
 								<input type="button" value="목록" class="btn btn-success" onclick="location.href='/supporters/all/list.su'">
 							</div>
 						</div>

@@ -9,6 +9,63 @@
 	}
 </style>
 
+<script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/jquery.js"></script>
+<script type="text/javascript">
+	
+/* 파일 업로드 */
+function filechange() {
+	
+	/* 파일 업로드 개수제한 */
+	
+	var $fileUpload = $("input[type='file']");
+	if (parseInt($fileUpload.get(0).files.length) > 4) {
+		alert("이미지는 4개 이하만 올릴 수 있습니다");
+		$("input[type='file']").val('');
+		
+	}else{ // 업로드 개수 제한과 상관없을 때
+		
+		/* 업로드한 이미지 미리보기*/
+		var fileTag = document.querySelector('input[name=upload]');
+		var divTag = document.querySelector('#img_preview');
+		
+		if(fileTag.files.length>0){ // 파일을 올렸을 때
+			
+			divTag.innerHTML = ""; // 원래 이미지 미리보기 삭제하기
+		
+			for(var i=0; i<fileTag.files.length; i++){
+				var reader = new FileReader();
+				reader.onload = function(data){
+					//1. 이미지 태그 만들기
+					var imgTag = document.createElement('img');
+					
+					//2. 이미지 태그에 속성 넣기
+					imgTag.setAttribute('src', data.target.result);
+					imgTag.setAttribute('width', '250');
+					imgTag.setAttribute('height', '150');
+					
+					//3. 이미지 태그 div에 추가하기
+					divTag.appendChild(imgTag);
+				}
+				reader.readAsDataURL(fileTag.files[i]);
+			}//for
+		}//if
+		else{ //취소버튼을 눌렀을 때
+			//div안에 내용 비우기
+			divTag.innerHTML = "";
+		}
+	}
+}
+	
+//reset 확인
+function resetCheck(){
+	var check = confirm("정말 초기화 하시겠습니까?");
+	 if(!check){
+		return false;
+	}
+}
+
+</script>
+
    <!--  boardUpdateForm.jsp<br> -->
    
    <!-- Page Header Start -->
@@ -81,7 +138,7 @@
                         <!-- 글내용 -->		
 		        		<div class="col-10">
                             <div class="form-floating">
-                            	<textarea name="content" class="form-control border-0" id="content" style="resize: none;" style="height:300px">${board.content}</textarea>
+                            	<textarea name="content" class="form-control border-0" id="content" style="height:300px; resize:none;">${board.content}</textarea>
                                 <label for="content">글 내용</label>
                                 <form:errors cssClass="err" path="content" />
                             </div>
@@ -91,16 +148,33 @@
                         <!-- 이미지 --> 	        		
 		        		<div class="col-10">
                         	<h6>이미지 첨부</h6>
+                        	<%-- 
+                        	<input type="file" class="form-control" multiple="multiple" name="upload" value="${board.upload}" onchange="filechange()">
+		                    <span style="font-size:10px; color: gray;">※첨부파일은 최대 10개까지 등록이 가능합니다.</span><br>
+		                    <input type="hidden" name="upload2" value="${board.upload2}"/> <!-- 기존 이미지 -->
+		                    <form:errors cssClass="err" path="image"/>
+	                    		
+		                    <input type="text" value="${board.image}">
+		                    이미지 미리보기
+		                    <div id="img_preview" style="height:200">
+		                    	 원래 업로드 이미지 보여지기 
+		                    	<c:set var="array" value="${fn:split(board.upload2, ',')}" />
+		                    	<c:forEach var="org_img" items="${array}">
+		                    		<img src="<%=request.getContextPath()%>/resources/images/board/${org_img}" width="250" height="150">
+		                    	</c:forEach>
+		                    </div>
+		                     //이미지 미리보기
+                        	 --%>                       	 
                            	<img src="<%=request.getContextPath()%>/resources/images/board/${board.image}" width="100px"><br>
 							<input type="file" name="upload" id="upload" value="${board.upload}" class="form-control">
 							<input type="hidden" name="upload2" value="${board.image}" class="form-control">
-                            <%-- <form:errors cssClass="err" path="image"/> --%>                   	
+                            <form:errors cssClass="err" path="image"/>               	
                         </div>
                         <!-- //이미지 -->
                         
 		        		<div class="col-10 text-center">                          	
                         	<input type="submit" value="수정하기" class="btn btn-success">
-                            <input type="reset" value="다시작성" class="btn btn-success"> 
+                            <input type="reset" value="다시작성" class="btn btn-success" onclick="return resetCheck()"> 
                             <input type="button" value="목록" class="btn btn-success" onclick="location.href='/board/all/list.br?pageNumber=${pageNumber}'">
                        	</div>
 						</div>
