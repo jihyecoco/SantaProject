@@ -97,5 +97,11 @@ public class StampDao {
 		List<StampBean> applyList = sqlSessionTemplate.selectList("GetApplyListById",usersid);
 		return applyList;
 	}
+	
+	//delete요청을 받은 num에 해당하는 인증내역이 있는지 체크
+	public List<CertBean> getCertListByNum(String check) {
+		List<CertBean> certCheck = sqlSessionTemplate.selectList("GetCertListByNum",check);
+		return certCheck;
+	}
 
 }

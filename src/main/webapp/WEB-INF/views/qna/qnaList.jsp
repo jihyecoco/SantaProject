@@ -92,9 +92,11 @@
 						<p>Q : ${qnaLists[i].qnaquestion}</p>
 						<!-- 상품 이미지 -->
 						<div>
+						<c:if test="${qnaLists[i].qnaimage!=null}">
                     	<c:forEach var="qna_img" items="${fn:split(qnaLists[i].qnaimage, ',')}">
            					<img src="<%=request.getContextPath()%>/resources/images/qna/${qna_img}" width="100px" height="100px">
            				</c:forEach> 
+						</c:if>
 						</div>
                     	<!-- //상품이미지-->
 						<br>

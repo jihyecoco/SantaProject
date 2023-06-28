@@ -1,8 +1,10 @@
 package com.spring.ex.mountain.controller;
 
+import java.io.PrintWriter;
 import java.security.Principal;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +40,8 @@ public class MountainDeleteController {
 			public ModelAndView doAction(
 					@RequestParam(value="chkArray") String[] chkArray,
 					@RequestParam(value="pageNumber", required = false) String pageNumber,
-					HttpSession session, Principal principal, HttpServletRequest request
+					HttpSession session, Principal principal, HttpServletRequest request,
+					HttpServletResponse response
 					) {
 				
 				System.out.println("chkArray : "+chkArray);
@@ -62,26 +65,21 @@ public class MountainDeleteController {
 					//로그인 정보가 있으면
 					
 					//dao의 delete메서드로 배열만큼 반복해서 num값을 넘겨
-					//해당 값을 가진 stamp의 exist 컬럼의 값을 0, apply를 2, reject를 3으로 변경
-					//해당 mountain 컬럼 삭제, int로 결과 전송
+					//해당 값을 가진 인증내역의 exist 컬럼의 값을 0으로 변경
+					//해당 컬럼 삭제, int로 결과 전송
 					for(String data:chkArray) {
+						System.out.println("data: "+data);
 						
-						int cnt = sdao.updateMountainExist(data);
+						sdao.updateMountainExist(data);
 						
-						if(cnt>0) {
-							System.out.println("업데이트 성공");
-							
-							cnt = mdao.deleteMountain(data);
-							
-							if(cnt > 0) {
-								System.out.println(data+" : 삭제 성공");
-							}else {
-								System.out.println(data+" : 삭제 실패");
-							}
+						int cnt = 0;
+						cnt = mdao.deleteMountain(data);
+						if(cnt > 0) {
+							System.out.println(data+" : 삭제 성공");
 						}else {
-							System.out.println("업데이트 실패");
+							System.out.println(data+" : 삭제 실패");
 						}
-					}
+					}//for
 					
 					//다시 원래 페이지로 돌아가기 위해 페이지 정보 넘기기
 					mav.addObject("pageNumber",pageNumber);

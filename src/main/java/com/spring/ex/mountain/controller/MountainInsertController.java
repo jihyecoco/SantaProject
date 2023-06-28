@@ -92,47 +92,6 @@ public class MountainInsertController {
 			//ModelAndView 객체 생성
 			ModelAndView mav = new ModelAndView(); 
 			
-			String uploadPath = servletContext.getRealPath("/resources/images/mountain");
-			System.out.println("uploadPath:"+uploadPath);
-			
-			//mkdir
-			File Folder = new File(uploadPath);
-			
-			if (!Folder.exists()) {
-				try{
-				    Folder.mkdir(); //폴더 생성합니다.
-				    System.out.println("폴더가 생성되었습니다.");
-			        } 
-			        catch(Exception e){
-				    e.getStackTrace();
-				}        
-		         }else {
-				System.out.println("이미 폴더가 생성되어 있습니다.");
-			}
-			
-			File destination = new File(uploadPath+File.separator+mountainBean.getUpload().getOriginalFilename());
-			System.out.println("destination: "+destination);
-			
-			MultipartFile multi = mountainBean.getUpload();
-			
-			/* 사용자 OS 확인 */
-			String osName = System.getProperty("os.name").toLowerCase();
-			System.out.println("OS name : " + osName);
-	    
-			String str = "";
-			if (osName.contains("win")) 
-			{
-				System.out.println("사용자 OS - Window ");
-				str = "C:/tempUpload/mountain";
-			} 
-
-			else if (osName.contains("mac"))   {
-			  	System.out.println("사용자 OS - MAC ");
-			  	str = "/Users/ol7roeo/Documents/tempUpload"; 
-			} 
-			
-			File destination_local = new File(str + File.separator + multi.getOriginalFilename());
-			
 			if(result.hasErrors()) {
 				//유효성 검사에 에러가 있으면
 				System.out.println("유효성 검사 에러");
@@ -146,20 +105,62 @@ public class MountainInsertController {
 				//유효성 검사에 에러가 없으면
 				System.out.println("유효성 검사 통과");
 				
+				//파일 업로드 start
+				//웹서버 폴더
+				String uploadPath = request.getRealPath("/resources/images/mountain");
+				
+				//mkdir
+				File Folder = new File(uploadPath);
+				
+				if (!Folder.exists()) {
+					try{
+					    Folder.mkdir(); //폴더 생성합니다.
+					    System.out.println("폴더가 생성되었습니다.");
+				        } 
+				        catch(Exception e){
+					    e.getStackTrace();
+					}        
+			         }else {
+					System.out.println("이미 폴더가 생성되어 있습니다.");
+				}
+				
+				/* 사용자 OS 확인 */
+				String osName = System.getProperty("os.name").toLowerCase();
+				System.out.println("OS name : " + osName);
+		    
+				String str = "";
+				if (osName.contains("win")) 
+				{
+					System.out.println("사용자 OS - Window ");
+					str = "C:/tempUpload/mountain";
+				} 
+
+				else if (osName.contains("mac"))   {
+				  	System.out.println("사용자 OS - MAC ");
+				  	str = "/Users/ol7roeo/Documents/tempUpload/mountain"; 
+				} 
+
+				File destination = new File(uploadPath+File.separator+mountainBean.getUpload().getOriginalFilename());
+				System.out.println("destination: "+destination);
+				
+				MultipartFile multi = mountainBean.getUpload();
+				
+				File destination_local = new File(str + File.separator + multi.getOriginalFilename());
+				
+				try {
+					multi.transferTo(destination);
+					FileCopyUtils.copy(destination, destination_local);
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
 				//mdao의 insertMountain 메서드 결과를 cnt에 저장
 				int cnt = mdao.insertMountain(mountainBean);
 				
 				if(cnt > 0) {
 					//insert 성공 시
-					
-					try {
-						multi.transferTo(destination);
-						FileCopyUtils.copy(destination, destination_local);
-					} catch (IllegalStateException e) {
-						e.printStackTrace();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
 					
 					//다시 목록으로 가기 위해 정보 넘기기
 					mav.addObject("pageNumber",pageNumber);				

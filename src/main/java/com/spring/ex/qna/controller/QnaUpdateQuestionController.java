@@ -3,9 +3,7 @@ package com.spring.ex.qna.controller;
 import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -101,17 +99,47 @@ public class QnaUpdateQuestionController {
 			} else {
 				//유효성 검사에 에러가 없으면
 				System.out.println("유효성 검사 통과");
-
-				String filename = "";
-				int cnt = 0;
 				
 				//파일을 담을 리스트 객체 생성
 				List<MultipartFile> fileList = mtfRequest.getFiles("upload");
 
 				//웹서버 폴더
 				String uploadPath = request.getRealPath("/resources/images/qna");
-				//민지_임시폴더
-				String str = "C:/tempUpload/qna";
+
+				//mkdir
+				File Folder = new File(uploadPath);
+				
+				if (!Folder.exists()) {
+					try{
+					    Folder.mkdir(); //폴더 생성합니다.
+					    System.out.println("폴더가 생성되었습니다.");
+				        } 
+				        catch(Exception e){
+					    e.getStackTrace();
+					}        
+			         }else {
+					System.out.println("이미 폴더가 생성되어 있습니다.");
+				}
+				
+				/* 사용자 OS 확인 */
+				String osName = System.getProperty("os.name").toLowerCase();
+				System.out.println("OS name : " + osName);
+		    
+				String str = "";
+				if (osName.contains("win")) 
+				{
+					System.out.println("사용자 OS - Window ");
+					str = "C:/tempUpload/qna";
+				} 
+
+				else if (osName.contains("mac"))   {
+				  	System.out.println("사용자 OS - MAC ");
+				  	str = "/Users/ol7roeo/Documents/tempUpload/qna"; 
+				} 
+				
+				String filename = "";
+				int cnt = 0;
+				
 				for(int i=0; i<fileList.size(); i++) {
 					// Bean에 담기 위해 파일명 적립
 					if(i == fileList.size()-1) {
@@ -137,9 +165,10 @@ public class QnaUpdateQuestionController {
 					File destination_local = new File(str + File.separator +originalFileName);
 					
 					try {
-						//웹서버로 업로드
+						if (destination.exists()) {
+				            destination.delete(); // 기존 파일 삭제
+				        }
 						fileList.get(i).transferTo(destination);
-						//웹서버 폴더 => 임시 폴더로 복사
 						FileCopyUtils.copy(destination, destination_local);
 					} catch(IllegalStateException e) {
 						e.printStackTrace();
@@ -151,6 +180,7 @@ public class QnaUpdateQuestionController {
 					qnaBean.setUsersid(principal.getName());
 					qnaBean.setQnaimage(filename);
 				}//for end
+				
 			//qdao의 updateQuestion 메서드 결과를 cnt에 저장
 			cnt = qdao.updateQuestion(qnaBean);
 				

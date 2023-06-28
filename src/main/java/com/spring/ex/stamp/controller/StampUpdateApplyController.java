@@ -35,6 +35,7 @@ public class StampUpdateApplyController {
 		
 		@RequestMapping(value=command)
 		public ModelAndView doAction(
+				@RequestParam(value="userid") String userid,
 				@RequestParam(value="stampnum") String stampnum,
 				@RequestParam(value="stampapply") String stampapply,
 				@RequestParam(value="pageNumber", required = false) String pageNumber,
@@ -60,20 +61,40 @@ public class StampUpdateApplyController {
 				mav.setViewName("redirect:/loginForm");
 			}else {
 				//로그인 정보가 있으면
+				//인증 상태 업데이트
 				int cnt = sdao.updateApply(map);
 				if(cnt > 0) {
+					//업데이트 성공 시
 					System.out.println(stampapply+" : 업데이트 성공");
 					
+					//업데이트 성공 시 id 기준 승인 상태인 인증 내역 불러옴
 					List<StampBean> applyCount = sdao.getApplyCountGroupById();
 					System.out.println("applyCount"+applyCount);
 					
-					/*
-					 * if(!applyCount.isEmpty()) { for(int i=0;i<applyCount.size();i++) { //만약 현재
-					 * 아이디의 apply갯수가 10 이상이면 if(principal.getName() ==
-					 * applyCount.get(i).getUsersid() && applyCount.get(i).getApplycount() >=10 ) {
-					 * //UsersBean usersBean = new UsersBean(); //int cnt2 =
-					 * udao.usersUpdateUserRole(usersBean); } } }
-					 */
+					//불러온 인증 내역이 null이 아니면
+					if(!applyCount.isEmpty()) {
+						System.out.println("인증내역 null 아님");
+						//인증 내역의 크기 만큼 비교
+						for(int i=0;i<applyCount.size();i++) {
+							//만약 현재 아이디가 인증 내역의 아이디와 같고
+							//apply갯수가 10이면
+							if(userid.equals(applyCount.get(i).getUsersid()) && applyCount.get(i).getApplycount() == 10 ) {
+								UsersBean usersBean = new UsersBean();
+								
+								//usersBean에 아이디와 변경할 등급 저장
+								usersBean.setUserId(userid);
+								usersBean.setUserRole("r02");
+								
+								//bean을 넘겨 등급을 업데이트
+								int cnt2 = udao.usersUpdateUserRole(usersBean);
+								if(cnt2>0) {
+									System.out.println("등급 업 성공");
+								}else {
+									System.out.println("등급 업 실패");
+								}//if~else
+							}//if
+						}//for
+					}//if
 					
 					
 					//다시 원래 페이지로 돌아가기 위해 페이지 정보 넘기기

@@ -99,7 +99,7 @@
 								</div>
 							<div class="col-12" style="float: left; ">
                              	<div class="form-floating">
-                            	<textarea name="mountaingreat" id="mountaingreat" style="resize:none; class="form-control border-0" placeholder="100대 명산 선정 이유" id="message" style="height: 130px" <c:if test="${mountainBean.mountaingreat == null}">disabled</c:if>>${mountainBean.mountaingreat}</textarea>
+                            	<textarea name="mountaingreat" id="mountaingreat" style="resize:none;" class="form-control border-0" placeholder="100대 명산 선정 이유" id="message" style="height: 130px" <c:if test="${mountainBean.mountaingreat == null}">disabled</c:if>>${mountainBean.mountaingreat}</textarea>
 								<label for="mountaingreat" style="font-size:13px;opacity: 60%;">100대 명산 선정 이유</label>
 								</div>
                             </div>

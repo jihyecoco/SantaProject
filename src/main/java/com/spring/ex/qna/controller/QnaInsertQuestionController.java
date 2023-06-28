@@ -136,7 +136,7 @@ public class QnaInsertQuestionController {
 
 			else if (osName.contains("mac"))   {
 			  	System.out.println("사용자 OS - MAC ");
-			  	str = "/Users/ol7roeo/Documents/tempUpload"; 
+			  	str = "/Users/ol7roeo/Documents/tempUpload/qna"; 
 			} 
 			
 			String filename = "";

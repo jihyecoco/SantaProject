@@ -89,20 +89,18 @@
                 	<img src="${mountainBean.mountainimage}" style="width:500px;"><br>
                 </c:if>
                 <c:if test="${!fn:contains(mountainBean.mountainimage,'http')}">
-           			<img style="width:500px;" src="<%=request.getContextPath()%>/resources/images/mountain/${mountainBean.mountainimage}"><br>
+           			<img style="width:620px; margin-bottom:10px;" src="<%=request.getContextPath()%>/resources/images/mountain/${mountainBean.mountainimage}"><br>
                 </c:if>
                 <!-- //산이미지-->
                 <!-- 정보 등록 버튼(관리자만 볼 수 있음) -->
                 <c:if test="${principal.getName() == 'admin'}">
-                	<div class="container">
-    				<div align="right">
                 <form action="/mountain/admin/update.mnt" method="get">
+                	<div class="container" align="center">
                 	<input type="hidden" name="mountainnum" value="${mountainBean.mountainnum}">
                     <input type="submit" class="btn btn-success" value="산 정보 수정" onClick="location.href='/mountain/admin/update.mnt'">
+                    <input type="button" class="btn btn-success" onclick="deleteOne()" value="현재 정보 삭제">
+                	</div>
                 </form>
-                    <button class="btn btn-success" onclick="deleteOne()">현재 정보 삭제</button>
-                	</div>
-                	</div>
                 </c:if>
                <!-- //정보 등록 버튼 end -->
                 </div>

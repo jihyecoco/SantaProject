@@ -98,48 +98,7 @@ public class StampCertInsertController {
 				
 				//현재 로그인된 아이디를 bean에 저장
 				stampBean.setUsersid(principal.getName());
-				
-				String uploadPath = servletContext.getRealPath("/resources/images/stamp/");
-				System.out.println("uploadPath:"+uploadPath);
-				
-				//mkdir
-				File Folder = new File(uploadPath);
-				
-				if (!Folder.exists()) {
-					try{
-					    Folder.mkdir(); //폴더 생성합니다.
-					    System.out.println("폴더가 생성되었습니다.");
-				        } 
-				        catch(Exception e){
-					    e.getStackTrace();
-					}        
-			         }else {
-					System.out.println("이미 폴더가 생성되어 있습니다.");
-				}
-				
-				File destination = new File(uploadPath+File.separator+stampBean.getUpload().getOriginalFilename());
-				System.out.println("destination: "+destination);
-				
-				MultipartFile multi = stampBean.getUpload();
-				
-				/* 사용자 OS 확인 */
-				String osName = System.getProperty("os.name").toLowerCase();
-				System.out.println("OS name : " + osName);
-		    
-				String str = "";
-				if (osName.contains("win")) 
-				{
-					System.out.println("사용자 OS - Window ");
-					str = "C:/tempUpload/stamp";
-				} 
 
-				else if (osName.contains("mac"))   {
-				  	System.out.println("사용자 OS - MAC ");
-				  	str = "/Users/ol7roeo/Documents/tempUpload"; 
-				} 
-				
-				File destination_local = new File(str + File.separator + multi.getOriginalFilename());
-				
 				if(result.hasErrors()) {
 					//유효성 검사에 에러가 있으면
 					System.out.println("유효성 검사 에러");
@@ -153,10 +112,60 @@ public class StampCertInsertController {
 				} else {
 					//유효성 검사에 에러가 없으면
 					System.out.println("유효성 검사 통과");
+
+					//파일 업로드 start
+					//웹서버 폴더
+					String uploadPath = request.getRealPath("/resources/images/stamp/cert");
+					System.out.println("uploadPath:"+uploadPath);
 					
-//					int mountainnum = sdao.GetNumByName(mountainname);
-//					
-//					stampBean.setMountainnum(mountainnum);
+					//mkdir
+					File Folder = new File(uploadPath);
+					
+					if (!Folder.exists()) {
+						try{
+						    Folder.mkdir(); //폴더 생성합니다.
+						    System.out.println("폴더가 생성되었습니다.");
+					        } 
+					        catch(Exception e){
+						    e.getStackTrace();
+						}        
+				         }else {
+						System.out.println("이미 폴더가 생성되어 있습니다.");
+					}
+					
+					/* 사용자 OS 확인 */
+					String osName = System.getProperty("os.name").toLowerCase();
+					System.out.println("OS name : " + osName);
+			    
+					String str = "";
+					if (osName.contains("win")) 
+					{
+						System.out.println("사용자 OS - Window ");
+						str = "C:/tempUpload/stamp/cert";
+					} 
+
+					else if (osName.contains("mac"))   {
+					  	System.out.println("사용자 OS - MAC ");
+					  	str = "/Users/ol7roeo/Documents/tempUpload/stamp/cert"; 
+					} 
+					
+
+					File destination = new File(uploadPath+File.separator+stampBean.getUpload().getOriginalFilename());
+					System.out.println("destination: "+destination);
+					
+					MultipartFile multi = stampBean.getUpload();
+					
+					File destination_local = new File(str + File.separator + multi.getOriginalFilename());
+
+					try {
+						multi.transferTo(destination);
+						FileCopyUtils.copy(destination, destination_local);
+					} catch (IllegalStateException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					//파일 업로드 end
 					
 					stampBean.setStampapply(0);//인증 상태 대기
 					stampBean.setStampreject(0);//거절 사유 없음
@@ -179,15 +188,6 @@ public class StampCertInsertController {
 					if(cnt > 0) {
 						//insert 성공 시
 						System.out.println("insert성공");
-						
-						try {
-							multi.transferTo(destination);
-							FileCopyUtils.copy(destination, destination_local);
-						} catch (IllegalStateException e) {
-							e.printStackTrace();
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
 						
 						//뷰 설정, list.stp를 다시 요청
 						mav.setViewName(gotoPage);

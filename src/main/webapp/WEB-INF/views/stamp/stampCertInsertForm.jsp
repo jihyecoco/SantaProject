@@ -33,7 +33,7 @@
 	                            <select class="form-select" name="mountainnum" id="mountainnum">
 									<option value="0">선택</option>
 	                                <c:forEach var="mn" items="${mountainNames}">
-										<option value="${mn.mountainnum}" <c:if test="${mn.mountainnum == stampBean.mountainnum}">selected</c:if>>${mn.mountainnum} ${mn.mountainname}</option>
+										<option value="${mn.mountainnum}" <c:if test="${mn.mountainnum == stampBean.mountainnum}">selected</c:if>>${mn.mountainname}</option>
 	                                </c:forEach>
 								</select>
 	                                <form:errors cssClass="err" path="mountainnum"/>

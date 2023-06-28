@@ -68,6 +68,9 @@
 							    			${al.applycount}
 							      		</c:if>
 							      	</c:forEach>
+							      	<c:if test="${zero == 0}">
+							      		${zero}
+							      	</c:if>
 							      </td>
 							      <td>${sl.mountainnum}</td>
 							      <td>
@@ -76,7 +79,7 @@
 							      </a>
 							      </td>
 							      <td>
-									<select id="stampapply${sl.stampnum}" class="form-select" onChange="updateApply('${sl.stampnum}')">
+									<select id="stampapply${sl.stampnum}" class="form-select" onChange="updateApply('${sl.stampnum}','${sl.usersid}')">
 										<option value="0" <c:if test="${sl.stampapply == 0}">selected</c:if>>대기</option>
 										<option value="1" <c:if test="${sl.stampapply == 1}">selected</c:if>>승인</option>
 										<option value="2" <c:if test="${sl.stampapply == 2}">selected</c:if>>거절</option>
@@ -103,7 +106,7 @@
                         </div>
     <!-- //완등내역 End -->
     <script>
-    	function updateApply(stampnum){
+    	function updateApply(stampnum, userid){
 
     		var selector = document.getElementById('stampapply'+stampnum);
     		var selectItem = selector.options[selector.selectedIndex].value;
@@ -111,7 +114,7 @@
     		console.log(selectItem+","+stampnum);
     		
     		if(confirm('인증 상태를 정말 바꾸시겠습니까?')){
-	    		location.href='/stamp/admin/updateapply.stp?stampapply='+selectItem+'&stampnum='+stampnum;	
+	    		location.href='/stamp/admin/updateapply.stp?stampapply='+selectItem+'&stampnum='+stampnum+'&userid='+userid;	
     		}else{
     			return;
     		}

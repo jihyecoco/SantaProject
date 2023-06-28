@@ -202,4 +202,14 @@
 		and stamp_apply = 1
 	</select>
 
+	<select id="GetCertListByNum" resultType="com.spring.ex.stamp.model.CertBean" resultMap="certMap">
+		SELECT
+			stamp_num,
+			mountain_exist
+		FROM
+			stamp NATURAL JOIN mountain
+		WHERE
+			mountain_num = #{check}
+	</select>
+
 </mapper>
