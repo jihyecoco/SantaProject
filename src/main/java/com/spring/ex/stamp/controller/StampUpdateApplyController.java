@@ -67,15 +67,13 @@ public class StampUpdateApplyController {
 					List<StampBean> applyCount = sdao.getApplyCountGroupById();
 					System.out.println("applyCount"+applyCount);
 					
-					if(!applyCount.isEmpty()) {
-						for(int i=0;i<applyCount.size();i++) {
-							//만약 현재 아이디의 apply갯수가 10 이상이면
-							if(principal.getName() == applyCount.get(i).getUsersid() && applyCount.get(i).getApplycount() >=10 ) {
-								UsersBean usersBean = new UsersBean();
-								int cnt2 = udao.usersUpdateUserRole(usersBean);
-							}
-						}
-					}
+					/*
+					 * if(!applyCount.isEmpty()) { for(int i=0;i<applyCount.size();i++) { //만약 현재
+					 * 아이디의 apply갯수가 10 이상이면 if(principal.getName() ==
+					 * applyCount.get(i).getUsersid() && applyCount.get(i).getApplycount() >=10 ) {
+					 * //UsersBean usersBean = new UsersBean(); //int cnt2 =
+					 * udao.usersUpdateUserRole(usersBean); } } }
+					 */
 					
 					
 					//다시 원래 페이지로 돌아가기 위해 페이지 정보 넘기기
