@@ -55,9 +55,8 @@
 					<a class="dropdown-item" href="/notice/admin/list.no">공지사항 관리</a>
 					<a class="dropdown-item" href="/board/admin/list.br">자유 게시판 관리</a> 
 					<a class="dropdown-item" href="/products/admin/list.prd">거래 게시판 관리</a> 
-					<a class="dropdown-item" href="#">좋아요한 게시글</a> 
-					<a class="dropdown-item" href="#">저장(북마크)한 게시글</a>
-				</div></li>
+				</div>
+			</li>
 			<!-- //커뮤니티 관련 -->
 
 			<!-- 결제 관련 -->

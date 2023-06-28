@@ -6,7 +6,7 @@
 <script type="text/javascript">
 </script>	
 <% 
-	String[] thArr = {"번호", "아이디", "회원명", "성별", "생년월일", "등급", "가입일"};
+	String[] thArr = {"번호", "아이디", "회원명", "성별", "생년월일", "등급", "가입일", "point"};
 %>
 
 	<div class="container-fluid py-5">
@@ -46,13 +46,12 @@
 	<!-- 탈퇴 회원 목록 start -->
 	<div class="container">
 		<!-- 정렬 -->
-	   	<div align="right">
-	   		<a href="/crewboard/all/list.bdcr?whatColumn=reg_date">최신순</a> / 
-	   		<a href="/crewboard/all/list.bdcr?whatColumn=readcount">조회순</a> / 
-	   		<a href="/crewboard/all/list.bdcr?whatColumn=crew_comments">댓글순</a>
-	   		<br>
-	   	</div>
-	   	<!-- //정렬 -->
+	 	<div align="right">
+    		<a href="/users/admin/usersWithdrawalList.us?whatColumn=udate">가입일자순</a> / 
+    		<a href="/users/admin/usersWithdrawalList.us?whatColumn=userRole">등급순</a> / 
+    		<a href="/users/admin/usersWithdrawalList.us?whatColumn=name">이름순</a>
+    		<br>
+    	</div>	   	<!-- //정렬 -->
 		<table class="table table-hover table-borded align-middle">
 			<thead>
 				<tr>
@@ -68,12 +67,12 @@
 					</td>
 				</c:if>
 				<c:if test="${usersWithdrawalList != null || usersWithdrawalList.size() != 0}">
-					<c:forEach var="usersWithdrawalList" items="${usersWithdrawalList}">
+					<c:forEach var="usersWithdrawalList" items="${usersWithdrawalList}"  varStatus="status">
 					 	<tr>
-							<td scope="col">${usersWithdrawalList.userNum}</tds>
 							<td scope="col">
-								<a href="#">${usersWithdrawalList.userId}</a>
+								${(pageInfo.pageNumber-1)*pageInfo.limit+status.count}
 							</td>
+							<td scope="col">${usersWithdrawalList.userId}</td>
 							<td scope="col">${usersWithdrawalList.name}</td>
 							<td scope="col">${usersWithdrawalList.gender}</td>
 							<td scope="col">
@@ -93,6 +92,9 @@
 								<fmt:parseDate var="parse_udate" value="${usersWithdrawalList.udate}" pattern = "yyyy-MM-dd"/>​
 								<fmt:formatDate  var="fmt_udate" value="${parse_udate}" pattern="yyyy-MM-dd"/>
 								${fmt_udate}
+							</td>
+							<td scope="col" align="right" >
+								<fmt:formatNumber value="${usersWithdrawalList.point}" pattern="###,###"/>원
 							</td>
 						</tr>
 					</c:forEach>

@@ -15,14 +15,13 @@
 		<!-- SupportersApplyBean과의 1:1 관계 매핑 -->
     	<association property="supporters" resultMap="supportersMap"/>
 	</resultMap>
-	<resultMap type="com.spring.ex.supportersapply.model.SupportersApplyBean" id="supportersMap">
-		 <id property="joinnum" 		column="join_num"/>	
-		 <result property="userId" 		column="user_id"/>
-		 <result property="name" 		column="name"/>
-		 <result property="userRole" 	column="user_role"/>
-		 <result property="gender" 		column="gender"/>
-		 <result property="birth" 		column="birth"/>		 
-		 <result property="applydate" 	column="apply_date"/>		 
+	<resultMap type="com.spring.ex.supporters.model.SupportersBean" id="supportersMap">
+		 <id property="num" column="num"/>
+		 <result property="supportersname" 	column="supporters_name"/>
+		 <result property="startdate" 		column="start_date"/>
+		 <result property="enddate" 		column="end_date"/>
+		 <result property="regdate" 		column="reg_date"/>
+		 <result property="deadline" 		column="deadline"/>
 	</resultMap>
 	<!-- //resultMapping 설정  -->
  
@@ -83,20 +82,24 @@
  	<!-- //게시글 목록에서 좋아요 여부 판단 -->
  	
  	<!-- 게시글 목록에서 좋아요 여부 판단 - supportersMap -->
- 	<select id="getAllSupportersHeart_Map" resultMap="supportersMap">
+ 	<select id="getAllSupportersHeart_Map" resultMap="supportersHeartMap">
  		select 
  			sprt.num, 
-			sprt.supporters_name,
-			heart.heart_date,
+	        sprt.supporters_name,
+	        sprt.start_date,
+	        sprt.end_date,
+	        sprt.deadline,
+	       	heart.heart_date,
 			heart.user_id
 		from 
-			board_heart heart 
+			supporters_heart heart 
 			inner join 
 			supporters sprt
 		on 
-			sprt.num = heart.board_num
+			sprt.num = heart.supporters_num
 	      	and
 	      	heart.USER_ID = #{getUserId}
+	      	
 		order by sprt.num
  	</select>  
  	<!-- //게시글 목록에서 좋아요 여부 판단 -->

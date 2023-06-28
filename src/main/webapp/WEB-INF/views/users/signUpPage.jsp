@@ -9,22 +9,59 @@
 <%@ include file="../common/common_top.jsp"%>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/jquery.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
-	
-	/* 아이디 중복체크 */
 	$(document).ready(function(){
-		//alert(123);
+		/* 아이디 중복체크 */
 		var isCheck = false;
 		var use = "";
+		
+		/* 아이디 유효성검사 - focusout */
+		$('#userId').focusout(function() {
+			var userId = $(this).val();
+			
+			if (!/^(?=.*[a-z0-9])[a-z0-9]{5,16}$/.test(userId)) {
+				$('#userId_check_result').html("<font color='red' size='2px' font-weight='bold'>아이디는 영문 5자~16자로 작성해야합니다.</font>");
+				//유효성검사를 통과하지못하면 아이디 중복체크를 비활성화함 -> 비활성화하지않으면 사용가능한 아이디로 뜨고, submit을 눌러야 해당 유효성검사 내용을 요구하게됨.
+				$('#userId_check').prop('disabled', true); 
+			} else {
+				$('#userId_check_result').empty();
+				$('#userId_check').prop('disabled', false); // 중복체크 버튼 활성화
+			}
+		});
+		/* //아이디 유효성검사 - focusout */
+		
+		/* 비밀번호 유효성검사 - focusout */
+		$('#password').focusout(function(){
+			var password = $(this).val();
+			
+			if (!/^(?=.*[a-z0-9])[a-z0-9]{5,16}$/.test(password)) {
+				$('#password_check_result').html("<font color='red' size='2px' font-weight='bold'>비밀번호는 영문 5자~16자로 작성해야합니다.</font>");
+			} else {
+				$('#password_check_result').empty();
+			}
+		});
+		/* //비밀번호 유효성검사 - focusout */
+	
+		/* 비밀번호, 비밀번호 확인 일치여부 - focusout */
+		$('#passwordCheck').focusout(function() {
+			var password = $('#password').val();
+			var passwordCheck = $(this).val();
+			
+			if (password !== passwordCheck) {
+				alert('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
+			}
+		});
+		/* //비밀번호, 비밀번호 확인 일치여부 - focusout */
+		
 		$('#userId_check').click(function(){ // 중복체크 버튼 눌렀을 때
-			//alert(1);
 			isCheck = true;
 			$.ajax({
-				url : '/login/all/userId_check.us', //users로 경로잡으면 권한이 없기때문에 접근할 수 X
+				url : '/login/all/userId_check.us',
 				data : ({
 					input_UserId : $('input[name=userId]').val()
 				}),
-				success : function(data){ //가능하면 yes 불가능하면 no
+				success : function(data){
 					if($('input[name=userId]').val()==""){
 						$('#userId_check_result').html("<font color='red' size='2px' font-weight='bold'>아이디를 입력하세요.</font>");
 						$('input[name=userId]').focus();
@@ -38,14 +75,11 @@
 						use = "possible";
 					}
 				}
-			});//ajax
+			});
 		});
-		
-		$('#userId').keydown(function(){
-			$('#userId_check_result').css('display', 'none');
-		});//keydown
-		
-		//회원가입(submit) 클릭 
+		/* //아이디 중복체크 */
+	
+		/* 회원가입(submit) 클릭 */
 		$('#submit').click(function(){
 			if(!isCheck){
 				alert('아이디 중복여부를 확인해주세요.');
@@ -57,15 +91,50 @@
 			}else if($('input[name=userId]').val() == ""){
 				alert('아이디를 입력하세요');
 				return false;
-			}else if( $('input[name=password]').val() !=  
-					  $('input[name=passwordCheck]').val()){
+			}else if( $('input[name=password]').val() != $('input[name=passwordCheck]').val()){
 				alert('비밀번호가 일치하지 않습니다');
 				return false;
 			}
-		});//click
-	})//ready
-	/* 아이디 중복체크 */
+		});
+		/*//회원가입(submit) 클릭 */
+		
+		/* 연락처 필드의 값이 변경될 때마다 이벤트 처리 */
+	    $('#phone').on('input', function() {
+	        var phoneNumber = $(this).val();
+	        var formattedNumber = formatPhoneNumber(phoneNumber);
+	        $(this).val(formattedNumber);
+	    });
+	    /*//연락처 필드의 값이 변경될 때마다 이벤트 처리 */
+	});//ready
 
+ 	
+ 	/* 연락처 하이픈처리 */
+	function formatPhoneNumber(phoneNumber) {
+	    phoneNumber = phoneNumber.replace(/[^0-9]/g, ''); // 입력된 값에서 숫자 이외의 문자 제거
+	    var formattedNumber = '';
+	    if (phoneNumber.length < 4) {
+	        formattedNumber = phoneNumber;
+	    } else if (phoneNumber.length < 7) {
+	        formattedNumber = phoneNumber.substr(0, 3) + '-' + phoneNumber.substr(3);
+	    } else if (phoneNumber.length < 11) {
+	        formattedNumber =
+	            phoneNumber.substr(0, 3) +
+	            '-' +
+	            phoneNumber.substr(3, 4) +
+	            '-' +
+	            phoneNumber.substr(7);
+	    } else {
+	        formattedNumber =
+	            phoneNumber.substr(0, 3) +
+	            '-' +
+	            phoneNumber.substr(3, 4) +
+	            '-' +
+	            phoneNumber.substr(7);
+	    }
+	    return formattedNumber;
+	}
+	/*//연락처 하이픈처리 */
+ 	
 	/* 카카오 주소 API */
     function execDaumPostcode() {
         new daum.Postcode({
@@ -123,9 +192,6 @@
 		font-weight : bold;
 	}
 </style>
-<%
-	String[] genderArr = {"남자", "여자"};
-%>
     <!-- SignUp Start -->
     <form:form name="signUp" commandName="usersBean" action="/login/all/signUp.lg" method="post">
     	
@@ -150,7 +216,7 @@
 	                                    <input type="text" class="form-control border-0" id="userId" name="userId" value="${usersBean.userId}">
 	                                    <label for="userId">아이디</label>
 	                                </div>
-	                                <form:errors cssClass="err" path="userId"/>
+	                                <%-- <form:errors cssClass="err" path="userId"/> --%>
 	                            </div>
 	                            <!-- //아이디 -->
 	                            
@@ -174,18 +240,24 @@
                                     <input type="password" class="form-control border-0" id="password" name="password" value="${usersBean.password}">
                                     <label for="password">비밀번호</label>
                                 </div>
-                                <form:errors cssClass="err" path="password"/>
+                                <div style="float: left; display:inline-block;"  >
+	                           		<span id="password_check_result" style="text-align: left;">
+	                           	    	
+	                                </span>
+	                        	</div>
                             </div>
+                            
                             <!-- //비밀번호 -->
                              
-                             <!-- 비밀번호 확인 -->
+                            <!-- 비밀번호 확인 -->
                             <div class="col-9">
                                 <div class="form-floating">
                                     <input type="password" class="form-control border-0" id="passwordCheck" name="passwordCheck">
                                     <label for="password">비밀번호 확인</label>
                                 </div>
                             </div>
-                             <!-- //비밀번호 확인-->
+                            <!-- //비밀번호 확인-->
+                             
                             <!-- 이름 -->
                         	<div class="col-9">
                                 <div class="form-floating">
@@ -206,15 +278,15 @@
 							</div>
                             <!-- //생년월일 -->
                             
-                            
                             <!-- 성별 -->
 							<div class="col-9">
 							 	<div class="form-floating">
-									<c:set var="gender" value="<%= genderArr %>"/>
+									<c:set var="gender" value="${genderArr}"/>
 									<c:forEach var="gender" items="${gender}">
-											<input type="radio" class=" form-check-input border-0" name="gender" id="gender" value="${gender}"
-											<c:if test="${usersBean.gender eq gender}">checked</c:if>
-											>${gender} &nbsp;&nbsp;&nbsp;
+										<input type="radio" class="form-check-input border-0" name="gender" id="gender" value="${gender}" 
+										${usersBean.gender eq gender ? 'checked' : ''}>
+										${gender} &nbsp;&nbsp;&nbsp;
+											
 									</c:forEach>
 								  </div>
 							    <form:errors cssClass="err" path="gender"/>
@@ -233,12 +305,12 @@
                              
                             <!-- 연락처 -->
                             <div class="col-9">
-                                <div class="form-floating">
-                                    <input type="text" class="form-control border-0" id="phone" name="phone" value="${usersBean.phone}">
-                                    <label for="phone">연락처</label>
-                                </div>
-                                <form:errors cssClass="err" path="phone"/>
-                            </div>
+							    <div class="form-floating">
+							        <input type="text" class="form-control border-0" id="phone" name="phone" value="${usersBean.phone}" maxlength="13">
+							        <label for="phone">연락처</label>
+							    </div>
+							    <form:errors cssClass="err" path="phone"/>
+							</div>
                             <!-- //연락처 -->
                             
                             <!-- 주소 -->

@@ -2,6 +2,8 @@ package com.spring.ex.myPage.users.controller;
 
 import java.security.Principal;
 
+import javax.servlet.ServletContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,11 +28,13 @@ public class UsersMyPageController {
 		ModelAndView mav = new ModelAndView();
 		String getUserId = principal.getName();
 		UsersBean usersBean = udao.getUsersByUserId(getUserId);
+		
+		String[] genderArr = {"남자", "여자"};
+		
+		mav.addObject("genderArr", genderArr);
 		mav.addObject("usersBean", usersBean);
 		mav.setViewName(getPage);
 		return mav;
 	}//myPage - 마이페이지 화면띄우기
-	
-	
 	
 }//UsersMyPageController

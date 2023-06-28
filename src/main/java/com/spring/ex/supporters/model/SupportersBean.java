@@ -1,9 +1,12 @@
 package com.spring.ex.supporters.model;
 
 import java.sql.Date;
+import java.util.List;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
+
+import com.spring.ex.heart.supporters.model.SupportersHeartBean;
 
 public class SupportersBean {
 	
@@ -37,7 +40,10 @@ public class SupportersBean {
 	//DB에는 없는 변수
 	private String applicantid;
 	
+	/*SupportersHeart 매핑 */
+    private List<SupportersHeartBean> supportersHeartList; 
 	
+    
 	public String getLimit() {
 		return limit;
 	}
@@ -122,4 +128,13 @@ public class SupportersBean {
 	public void setApplicantid(String applicantid) {
 		this.applicantid = applicantid;
 	}
+	/*SupportersHeart 매핑 */
+	public List<SupportersHeartBean> getSupportersHeartList() {
+		return supportersHeartList;
+	}
+	public void setSupportersHeartList(List<SupportersHeartBean> supportersHeartList) {
+		this.supportersHeartList = supportersHeartList;
+	}
+	
+	
 }

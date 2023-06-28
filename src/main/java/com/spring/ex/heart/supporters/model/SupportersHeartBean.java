@@ -1,5 +1,6 @@
 package com.spring.ex.heart.supporters.model;
 
+import com.spring.ex.supporters.model.SupportersBean;
 import com.spring.ex.supportersapply.model.SupportersApplyBean;
 
 public class SupportersHeartBean {
@@ -9,8 +10,8 @@ public class SupportersHeartBean {
 	private String userId;
 	private String heartDate;
 	
-	/* SupportersApplyBean 매핑 */
-    private SupportersApplyBean supporters;
+	/* SupportersBean 매핑 */
+    private SupportersBean supporters;
 
 	//getter & setter
 	public int getHeartId() {
@@ -44,15 +45,15 @@ public class SupportersHeartBean {
 	public void setHeartDate(String heartDate) {
 		this.heartDate = heartDate;
 	}
-	/* SupportersApplyBean 매핑 */
-	public SupportersApplyBean getSupporters() {
+	/* SupportersBean 매핑 */
+	public SupportersBean getSupporters() {
 		return supporters;
 	}
 
-	public void setSupporters(SupportersApplyBean supporters) {
+	public void setSupporters(SupportersBean supporters) {
 		this.supporters = supporters;
 	}
-
+	
 	
 	
 }//CrewBoardHeartBean

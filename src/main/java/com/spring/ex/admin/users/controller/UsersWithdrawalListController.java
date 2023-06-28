@@ -20,43 +20,60 @@ import com.spring.ex.utility.Paging;
 @Controller
 public class UsersWithdrawalListController {
 
-	private final String command = "/users/admin/usersWithdrawalList.us";
-	private String gotoPage = "/admin/users/usersWithdrawalList";
-	
-	@Autowired
-	UsersDao udao;
-	
-	@RequestMapping(value = command)
-	public ModelAndView usersList(
-			@RequestParam(value="whatColumn", required=false) String whatColumn,
-			@RequestParam(value="keyword", required=false) String keyword,
-			@RequestParam(value="pageNumber", required=false) String pageNumber,
-			HttpServletRequest request, Principal principal	) {
-		
-		ModelAndView mav = new ModelAndView();
-		Map<String, String> map = new HashMap<String, String>();
-		
-		int totalCount 	= 0;
-		String url 		= "";
-		Paging pageInfo = null;
-		List<UsersBean> usersWithdrawalList = null;
-		try {
-			map.put("whatColumn", whatColumn);
-			map.put("keyword", "%"+keyword+"%");
-			
-			totalCount = udao.getUserWithdrawalTotalCount(map);
-			url = request.getContextPath()+command;
-			pageInfo = new Paging(pageNumber, "5", totalCount, url, whatColumn, keyword, null);
-			usersWithdrawalList = udao.getAllUserWithdrawalList(map, pageInfo);
+    private final String command = "/users/admin/usersWithdrawalList.us";
+    private String gotoPage = "/admin/users/usersWithdrawalList";
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		mav.addObject("usersWithdrawalList", usersWithdrawalList);
-		mav.addObject("pageInfo", pageInfo);
-		mav.setViewName(gotoPage);
-		return mav;
-	}//usersList
-	
-}//UsersWithdrawalListController
+    @Autowired
+    UsersDao udao;
+
+    @RequestMapping(value = command)
+    public ModelAndView usersWithdrawalList(
+            @RequestParam(value = "whatColumn"	, required = false) String whatColumn,
+            @RequestParam(value = "keyword"		, required = false) String keyword,
+            @RequestParam(value = "pageNumber"	, required = false) String pageNumber,
+            HttpServletRequest request, Principal principal) {
+
+        ModelAndView mav = new ModelAndView();
+        List<UsersBean> usersWithdrawalList = null;
+        Paging pageInfo = null;
+
+        try {
+            Map<String, String> map = new HashMap<String, String>();
+            map.put("whatColumn", whatColumn);
+            if ("user_role".equals(whatColumn)) {
+                if ("일".equals(keyword) || "반".equals(keyword) || "일반".equals(keyword)) {
+                    map.put("keyword", "r01");
+                } else if ("우".equals(keyword) || "수".equals(keyword) || "우수".equals(keyword)) {
+                    map.put("keyword", "r02");
+                } else if ("관".equals(keyword) || "리".equals(keyword) || "자".equals(keyword)
+                        || "관리자".equals(keyword)) {
+                    map.put("keyword", "r99");
+                }
+            } else {
+                if (keyword == null) {
+                    keyword = ""; // 검색어가 null인 경우 빈 문자열로 설정
+                }
+                map.put("keyword", "%" + keyword + "%");
+
+            }
+
+            System.out.println("whatColumn : " + whatColumn);
+            System.out.println("keyword : " + keyword);
+
+            int totalCount = udao.getUserWithdrawalTotalCount(map);
+			String url = request.getContextPath()+command;
+			pageInfo = new Paging(pageNumber, "5", totalCount, url, whatColumn, keyword, null);
+			
+            usersWithdrawalList = udao.getAllUserWithdrawalList(map, pageInfo);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        mav.addObject("usersWithdrawalList", usersWithdrawalList);
+        mav.addObject("pageInfo", pageInfo);
+        mav.setViewName(gotoPage);
+        return mav;
+    }// usersWithdrawalList
+
+}// UsersWithdrawalListController

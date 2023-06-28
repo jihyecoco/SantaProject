@@ -30,7 +30,7 @@ public class UsersListController {
 	@RequestMapping(value = command)
 	public ModelAndView usersList(
 			@RequestParam(value="whatColumn", required=false) String whatColumn,
-			@RequestParam(value="keyword", required=false) String keyword,
+			@RequestParam(value="keyword"	, required=false) String keyword,
 			@RequestParam(value="pageNumber", required=false) String pageNumber,
 			HttpServletRequest request, Principal principal	) {
 		
@@ -46,9 +46,16 @@ public class UsersListController {
 			        map.put("keyword", "r01");
 			    } else if ("우".equals(keyword) || "수".equals(keyword) || "우수".equals(keyword)) {
 			        map.put("keyword", "r02");
-			    }
+			    } else if ("관".equals(keyword) || "리".equals(keyword) || "자".equals(keyword) 
+			    			|| "관리자".equals(keyword)) {
+			        map.put("keyword", "r99");
+			    } 
 			} else {
+				if (keyword == null) {
+	                keyword = ""; // 검색어가 null인 경우 빈 문자열로 설정
+	            }
 			    map.put("keyword", "%" + keyword + "%");
+			    
 			}
 
 			System.out.println("whatColumn : " + whatColumn);

@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.spring.ex.supporters.model.SupportersBean;
+
 
 @Component("SupportersHeartDao")
 public class SupportersHeartDao {
@@ -78,16 +80,15 @@ public class SupportersHeartDao {
 	}//getAllSupportersHeart
 	
 	//getAllSupportersHeart_Map : 좋아요한 게시글 list
-	public List<SupportersHeartBean> getAllSupportersHeart_Map(String getUserId) {
-	    List<SupportersHeartBean> supportersHeartList = null;
+	public List<SupportersBean> getAllSupportersHeart_Map(String getUserId) {
+	    List<SupportersBean> supportersHeartList = null;
 	    try {
-	    	supportersHeartList = sqlSessionTemplate.selectList("supportersHeart.getAllSupportersHeart_Map", getUserId);
-
-	    }catch (Exception e) {
-			e.printStackTrace();
-		}
-	    
+	        supportersHeartList = sqlSessionTemplate.selectList("supportersHeart.getAllSupportersHeart_Map", getUserId);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
 	    return supportersHeartList;
+
 	}//getAllSupportersHeart_Map
 	
 

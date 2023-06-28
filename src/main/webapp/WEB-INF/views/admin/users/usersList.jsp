@@ -4,9 +4,11 @@
 <%@ include file="../../common/common_nav_admin.jsp"%>
 <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/jquery.js"></script>
 <script type="text/javascript">
+
 </script>	
+
 <% 
-	String[] thArr = {"번호", "아이디", "회원명", "성별", "생년월일", "등급", "가입일"};
+	String[] thArr = {"번호", "아이디", "회원명", "성별", "생년월일", "등급", "가입일", "point"};
 %>
 
 	<div class="container-fluid py-5">
@@ -26,6 +28,7 @@
 								<option value="name">이름</option>
 								<option value="user_role">등급</option>
 								<option value="gender">성별</option>
+								<option value="udate" hidden>날짜</option>
 							</select>
 						</div>
 						<div class="col-sm-8">
@@ -45,9 +48,9 @@
 	<div class="container">
 	   	<!-- 정렬 -->
 	   	<div align="right">
-    		<a href="#">최신순</a> / 
-    		<a href="#">조회순</a> / 
-    		<a href="#">댓글순</a>
+    		<a href="/users/admin/usersList.us?whatColumn=udate">가입일자순</a> / 
+    		<a href="/users/admin/usersList.us?whatColumn=userRole">등급순</a> / 
+    		<a href="/users/admin/usersList.us?whatColumn=name">이름순</a>
     		<br>
     	</div>
 	   	<!-- //정렬 -->
@@ -66,11 +69,15 @@
 					</td>
 				</c:if>
 				<c:if test="${usersList != null || usersList.size() != 0 }">
-					<c:forEach var="usersList" items="${usersList}">
+					<c:forEach var="usersList" items="${usersList}"  varStatus="status">
 					   	<tr>
-							<td scope="col">${usersList.userNum}</tds>
 							<td scope="col">
-								<a href="#">${usersList.userId}</a>
+								${(pageInfo.pageNumber-1)*pageInfo.limit+status.count}
+							</td>
+							<td scope="col">
+								<a href="/users/admin/usersUpdateRole.us?userId=${usersList.userId}">
+									${usersList.userId}
+								</a>
 							</td>
 							<td scope="col">${usersList.name}</td>
 							<td scope="col">${usersList.gender}</td>
@@ -86,11 +93,17 @@
 								<c:if test="${usersList.userRole eq 'r02'}">
 									우수
 								</c:if>
+								<c:if test="${usersList.userRole eq 'r99'}">
+									관리자
+								</c:if>
 							</td>
 							<td scope="col">
 								<fmt:parseDate var="parse_udate" value="${usersList.udate}" pattern = "yyyy-MM-dd"/>​
 								<fmt:formatDate  var="fmt_udate" value="${parse_udate}" pattern="yyyy-MM-dd"/>
 								${fmt_udate}
+							</td>
+							<td scope="col" align="right" >
+								<fmt:formatNumber value="${usersList.point}" pattern="###,###"/>원
 							</td>
 					   </tr>
 					</c:forEach>
