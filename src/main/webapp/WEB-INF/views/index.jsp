@@ -76,13 +76,8 @@
                                 <img class="img-fluid" src="<%=request.getContextPath()%>/resources/bootstrap/user/img/icon/icon-2.png" alt="Icon">
                             </div>
                             <h4 class="mb-3">산별정보</h4>
-                            <p class="mb-4"></p>
-                            <a class="btn btn-sm" href="">
-				            <i class="fa fa-plus text-primary me-2">
-				            국내 산 정보를 제공합니다. 산의 높이와 위치는 물론, 산에 대한 상세한 정보와 사진을 함께 열람하실 수 있습니다. 원하는 검색어로 정보를 탐색할 수 있습니다. 
-				            </i>
-				            Read More
-				        </a>
+                            <p class="mb-4"> 국내 산 정보를 제공합니다. 산의 높이와 위치는 물론, 산에 대한 상세한 정보와 사진을 함께 열람하실 수 있습니다. 원하는 검색어로 정보를 탐색할 수 있습니다. </p>
+                            <a class="btn btn-sm" href="/mountain/all/list.mnt"><i class="fa fa-plus text-primary me-2"> Read More</i></a>
                         </div>
                     </div>
                 </div>
