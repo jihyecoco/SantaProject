@@ -14,7 +14,7 @@ $(document).ready(function(){
 	});	
 })
 	
-	/* 삭제 버튼 클릭 */
+	//글 다중삭제
 	function delete_supporters_check(){
 		
 		var chkArray = new Array(); // 배열 선언
@@ -64,7 +64,7 @@ $(document).ready(function(){
     <div class="col-12 text-center">
 		<nav class="navbar navbar-light bg-light">
 			<div class="container" style="display: table-cell; vertical-align: middle;">
-				<form class="d-flex" action="/supporters/all/list.su" method="post">
+				<form class="d-flex" action="/supporters/admin/adminlist.su" method="post">
 					<div class="col-sm-2">
 						<select name="whatColumn" class="form-select">
 							<option value="">전체</option>
@@ -90,8 +90,8 @@ $(document).ready(function(){
 <div class="container">
 	<!-- 정렬 -->
     <div align="right">
-    	<a href="/supporters/all/list.su?whatColumn=reg_date">최신순</a> / 
-    	<a href="/supporters/all/list.su?whatColumn=readcount">조회순</a> <!-- / 
+    	<a href="/supporters/admin/adminlist.su?whatColumn=reg_date">최신순</a> / 
+    	<a href="/supporters/admin/adminlist.su?whatColumn=readcount">조회순</a> <!-- / 
     	<a href="/supporters/all/list.su?whatColumn=supporters_comments">댓글순</a> -->
     	<br>
     </div>

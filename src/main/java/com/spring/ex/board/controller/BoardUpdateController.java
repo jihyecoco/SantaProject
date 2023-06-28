@@ -24,8 +24,8 @@ import com.spring.ex.board.model.BoardDao;
 public class BoardUpdateController {
 	
 	private final String command = "/board/user/update.br";
-	private final String getPage = "/board/boardUpdateForm";
-	private final String gotoPage = "redirect:/board/all/list.br";
+	private String getPage = "/board/boardUpdateForm";
+	private String gotoPage = "redirect:/board/user/detail.br"; //detail로 이동
 	
 	@Autowired
 	BoardDao bdao;
@@ -56,6 +56,7 @@ public class BoardUpdateController {
 			@ModelAttribute("board") @Valid BoardBean board, BindingResult result) {
 		
 		ModelAndView mav = new ModelAndView();
+		mav.addObject("num", board.getNum()); //번호도 보내줘야함!
 		mav.addObject("pageNumber", pageNumber);
 		
 		if(board.getImage().equals("")) { //업로드할 이미지를 선택하지 않았다면

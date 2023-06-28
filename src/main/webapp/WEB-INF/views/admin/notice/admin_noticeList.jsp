@@ -66,7 +66,7 @@ $(document).ready(function(){
 		<!-- 검색 창 -->
 		<nav class="navbar navbar-light bg-light">
   			<div class="container" style="display:table-cell; vertical-align:middle;">
-   				<form class="d-flex" action="/notice/all/list.no" method="post">
+   				<form class="d-flex" action="/notice/admin/list.no" method="post">
    				 	<div class="col-sm-2">
 	   				 	<select name="whatColumn" class="form-select">
 							<option value="">전체검색
@@ -89,8 +89,8 @@ $(document).ready(function(){
 	<div class="container">	
 		<!-- 정렬 -->
     	<div align="right">
-    		<a href="/notice/all/list.no?whatColumn=reg_date">최신순</a> / 
-    		<a href="/notice/all/list.no?whatColumn=readcount">조회순</a>
+    		<a href="/notice/admin/list.no?whatColumn=reg_date">최신순</a> / 
+    		<a href="/notice/admin/list.no?whatColumn=readcount">조회순</a>
     		<br>
     	</div>
     	<!-- //정렬 -->

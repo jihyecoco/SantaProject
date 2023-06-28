@@ -274,19 +274,22 @@
     </div>
 <!-- Page Header End -->
 
-<center>
-<h2>글내용 보기</h2>    
-<table border="1" class="table" width="300px">
-	<tr width="50px">
-		<td>글번호</td>
+<div class="container-xxl py-5">
+	<div class="container">
+        <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+        	<h2 class="display-5 mb-5">글내용 보기</h2>
+        </div> 
+<table class="table">
+	<tr>
+		<th width="20%" align="center">글번호</th>
 		<td>${board.num }</td>		
 	</tr>
 	<tr>
-		<td>작성자</td>
+		<th align="center">작성자</th>
 		<td>${board.userid}</td>
 	</tr>
 	<tr>
-		<td>작성일</td>
+		<th align="center">작성일</th>
 		<td>
 			<fmt:parseDate var="newDay" value="${board.regdate}" pattern="yyyy-MM-dd"/>				
 			<fmt:formatDate var="fNewDay" value="${newDay}" pattern="yyyy-MM-dd"/>
@@ -294,21 +297,21 @@
 		</td>
 	</tr>
 	<tr>
-		<td>조회수</td>
+		<th align="center">조회수</th>
 		<td>${board.readcount }</td>
 	</tr>
 	<tr>
-		<td>글제목</td>
+		<th align="center">글제목</th>
 		<td>${board.subject }</td>
 	</tr>
 	<tr>
-		<td>글내용</td>
+		<th align="center">글내용</th>
 		<td>${board.content }</td>
 	</tr>
 	<tr>
-		<td>이미지</td>
+		<th align="center">이미지</th>
 		<td>
-			<img src="<%=request.getContextPath()%>/resources/images/board/${board.image}">		
+			<img src="<%=request.getContextPath()%>/resources/images/board/${board.image}" width="280" height="360">		
 		</td>
 	</tr>
 	<tr>
@@ -323,7 +326,8 @@
 		</td>
 	</tr>
 </table>
-</center>
+</div>
+</div>
 
 <!-- 좋아요 아이콘 -->
 <div class="container" align="right">

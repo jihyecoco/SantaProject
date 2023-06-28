@@ -62,7 +62,7 @@ $(document).ready(function(){
 		<!-- 정렬&검색창 -->			
 		<nav class="navbar navbar-light bg-light">		
 	  			<div class="container" style="display:table-cell; vertical-align:middle;">
-	  			<form class="d-block" name="list_form" action="/board/all/list.br" method="get">
+	  			<form class="d-block" name="list_form" action="/board/admin/list.br" method="get">
    				 	<div class="row">
 						<!-- 검색 주제 -->
    				 		<div class="col-sm-2">
@@ -99,9 +99,9 @@ $(document).ready(function(){
 
 	<!-- 정렬 -->
     <div align="right">
-    	<a href="/board/all/list.br?whatColumn=reg_date">최신순</a> / 
-    	<a href="/board/all/list.br?whatColumn=readcount">조회순</a> / 
-    	<a href="/board/all/list.br?whatColumn=reply">댓글순</a>
+    	<a href="/board/admin/list.br?whatColumn=reg_date">최신순</a> / 
+    	<a href="/board/admin/list.br?whatColumn=readcount">조회순</a> / 
+    	<a href="/board/admin/list.br?whatColumn=reply">댓글순</a>
     	<br>
     </div>
     <!-- //정렬 -->

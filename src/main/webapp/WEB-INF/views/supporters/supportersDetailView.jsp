@@ -208,11 +208,11 @@
 					<td>${supporters.num }</td>		
 				</tr> --%>
 				<tr>
-					<td>서포터즈</td>
+					<th>서포터즈</th>
 					<td colspan="3" align="center">${supporters.supportersname }</td>
 				</tr>		
 				<tr>
-					<td>모집상태</td>
+					<th>모집상태</th>
 					<td colspan="3" align="center">
 						<%-- <c:if test="${supporters.state == 0}"><font color="blue">[모집중]</font></c:if>
 			    		<c:if test="${supporters.state == 1}"><font color="red">[모집완료]</font></c:if>
@@ -221,7 +221,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td>모집기한</td>
+					<th>모집기한</th>
 					<td colspan="3" align="center">
 						<fmt:parseDate var="newDay2" value="${supporters.deadline}" pattern="yyyy-MM-dd" /> 
 						<fmt:formatDate var="fNewDay2" value="${newDay2}" pattern="yyyy-MM-dd" />
@@ -229,26 +229,26 @@
 					</td>
 				</tr>
 				<tr>
-					<td>모집대상</td>
+					<th>모집대상</th>
 					<td colspan="3" align="center">
 						<c:if test="${supporters.target == 0}">전체회원</c:if> 
 						<c:if test="${supporters.target == 1}">우수회원</c:if>
 					</td>
 				</tr>
 				<tr>
-					<td>모집인원</td>
+					<th>모집인원</th>
 					<td>${supporters.limit }</td>
-					<td>신청인원</td>
+					<th>신청인원</th>
 					<td>${supporters.applicant }</td>
 				</tr>
 				<tr>
-					<td>활동 시작일</td>
+					<th>활동 시작일</th>
 					<td>
 						<fmt:parseDate var="newDay3" value="${supporters.startdate}" pattern="yyyy-MM-dd" /> 
 						<fmt:formatDate var="fNewDay3" value="${newDay3}" pattern="yyyy-MM-dd" />
 						${fNewDay3 }
 					</td>
-					<td>활동 종료일</td>
+					<th>활동 종료일</th>
 					<td>
 						<fmt:parseDate var="newDay4" value="${supporters.enddate}" pattern="yyyy-MM-dd" /> 
 						<fmt:formatDate var="fNewDay4" value="${newDay4}" pattern="yyyy-MM-dd" /> 
@@ -256,15 +256,15 @@
 					</td>
 				</tr>
 				<tr>
-					<td width="120px">등록일</td>
+					<th width="120px">등록일</th>
 					<td>
 						<fmt:formatDate value="${supporters.regdate}" type="date" dateStyle="medium" timeStyle="medium" pattern="yyyy-MM-dd hh:mm:ss"/>	
 					</td>
-					<td width="120px">조회수</td>
+					<th width="120px">조회수</th>
 					<td>${supporters.readcount }</td>
 				</tr>
 				<tr>
-					<td>활동내용</td>
+					<th>활동내용</th>
 					<td colspan="3" height="200">${supporters.content }</td>
 				</tr>
 				<tr>

@@ -29,7 +29,7 @@
 
 
 <div class="container-xxl py-5">
-        <div class="container">
+	<div class="container">
         <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
         	<h2 class="display-5 mb-5">글내용 보기</h2>
         </div>
@@ -37,29 +37,29 @@
 		<!-- 게시글 상세보기 -->
 		<table class="table">
 			<tr>
-				<td>글번호</td>
+				<th>글번호</th>
 				<td>${notice.num }</td>
 			</tr>
 			<tr>
-				<td>작성자</td>
+				<th>작성자</th>
 				<td>${notice.userid}</td>
 			</tr>
 			<tr>
-				<td>작성일</td>
+				<th>작성일</th>
 				<td><%-- <fmt:parseDate var="newDay" value="${notice.regdate}" pattern="yyyy-MM-dd hh:mm:ss" /> 
 					<fmt:formatDate var="fNewDay" value="${newDay}" pattern="yyyy-MM-dd hh:mm:ss" /> ${fNewDay }</td> --%>
 					<fmt:formatDate value="${notice.regdate}" type="date" dateStyle="medium" timeStyle="medium" pattern="yyyy-MM-dd hh:mm:ss"/>
 			</tr>
 			<tr>
-				<td>조회수</td>
+				<th>조회수</th>
 				<td>${notice.readcount }</td>
 			</tr>
 			<tr>
-				<td>글제목</td>
+				<th>글제목</th>
 				<td>${notice.subject }</td>
 			</tr>
 			<tr>
-				<td colspan="2" align="center">글내용</td>
+				<th colspan="2" align="center">글내용</th>
 			</tr>
 			<tr>
 				<td colspan="2" height="230">${notice.content }</td>

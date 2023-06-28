@@ -68,7 +68,7 @@
 <table class="table table-hover table-borded align-middle">
 	<thead>
 		<tr align="center">
-			<th>좋아요</th><!-- 좋아요 -->
+			<th></th><!-- 좋아요 -->
 			<th>번호</th>
 			<th>모집 상태</th>
 			<th>서포터즈</th>
