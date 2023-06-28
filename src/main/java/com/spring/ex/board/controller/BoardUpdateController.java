@@ -52,7 +52,7 @@ public class BoardUpdateController {
 	
 	//boardUpdateForm.jsp(수정 버튼 클릭) -> detail.br (post방식)요청 -> 수정 성공 -> list.br 재요청
 	@RequestMapping(value=command, method = RequestMethod.POST)
-	public ModelAndView update(@RequestParam("pageNumber") int pageNumber,
+	public ModelAndView update(@RequestParam(value="pageNumber",required = false) String pageNumber,
 			@ModelAttribute("board") @Valid BoardBean board, BindingResult result) {
 		
 		ModelAndView mav = new ModelAndView();

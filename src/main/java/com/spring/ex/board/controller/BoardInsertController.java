@@ -40,7 +40,7 @@ public class BoardInsertController {
 	
 	//boardList.jsp(목록에서 글쓰기 버튼 클릭) -> insert.br 요청(get방식) -> boardInsertForm.jsp로 이동
 	@RequestMapping(value=command, method = RequestMethod.GET) //폼 요청
-	public ModelAndView insert(@RequestParam("pageNumber") String pageNumber,
+	public ModelAndView insert(@RequestParam(value="pageNumber",required = false) String pageNumber,
 			Principal principal) {
 		
 		ModelAndView mav = new ModelAndView();

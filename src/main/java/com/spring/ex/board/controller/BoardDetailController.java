@@ -33,7 +33,8 @@ public class BoardDetailController {
 	//BoardCommentsInsertController에서 redirect:/detail.br을 거쳐서 이곳으로 넘어옴(command객체, num, 페이지번호)
 	@RequestMapping(value=command, method=RequestMethod.GET)
 	public ModelAndView detail(@RequestParam("num") int num, 
-			@RequestParam("pageNumber") int pageNumber, Principal principal) {
+			@RequestParam(value="pageNumber",required = false) String pageNumber, 
+			Principal principal) {
 		
 		ModelAndView mav = new ModelAndView();
 		
