@@ -51,7 +51,7 @@ public class SupportersUpdateController {
 	//서포터즈 객체와 페이지번호를 받음
 	//supportersUpdateForm.jsp(수정 버튼 클릭) -> detail.su 요청(post방식) -> 수정 성공하면 -> detail.su 재요청
 	@RequestMapping(value=command, method = RequestMethod.POST)
-	public ModelAndView update(@RequestParam("pageNumber") int pageNumber,
+	public ModelAndView update(@RequestParam(value="pageNumber",required = false) String pageNumber,
 			@ModelAttribute("supporters") @Valid SupportersBean supporters, BindingResult result) {
 
 		//System.out.println("수정 num: "+supporters.getNum());

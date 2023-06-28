@@ -29,7 +29,8 @@ public class SupportersInsertController {
 	
 	
 	@RequestMapping(value=command, method=RequestMethod.GET) //폼요청
-	public ModelAndView doAction(@RequestParam("pageNumber") String pageNumber, 
+	public ModelAndView doAction(
+			@RequestParam(value="pageNumber",required = false) String pageNumber, 
 			Principal principal) {
 		
 		ModelAndView mav = new ModelAndView();
