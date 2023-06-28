@@ -311,7 +311,7 @@
 	<tr>
 		<th align="center">이미지</th>
 		<td>
-			<img src="<%=request.getContextPath()%>/resources/images/board/${board.image}" width="280" height="360">		
+			<img src="<%=request.getContextPath()%>/resources/images/board/${board.image}" width="330" height="360">		
 		</td>
 	</tr>
 	<tr>

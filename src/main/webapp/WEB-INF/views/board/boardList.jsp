@@ -108,7 +108,7 @@
 	</c:if>
 	
 	<c:if test="${not empty lists}">
-	<c:forEach var="board" items="${lists}">
+	<c:forEach var="board" items="${lists}" varStatus="status">
 		<tr align="center"> <!-- width="40%" -->
 			<td>
 				<c:if test="${fn:contains(bhList, board.num)}">
@@ -120,7 +120,9 @@
 				<!-- 좋아요X -->
 				</c:if>
 			</td>
-			<td>${board.num}</td>
+			<td><%-- ${board.num} --%>
+				${(pageInfo.pageNumber-1)*pageInfo.limit+status.count} 
+			</td>
 			<td>[${board.category}]</td>
 			<td>
 				<img src="<%=request.getContextPath() %>/resources/images/board/${board.image}" width="100" height="100">

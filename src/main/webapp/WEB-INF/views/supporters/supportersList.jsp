@@ -88,7 +88,7 @@
 	</c:if>
 	
 	<c:if test="${not empty lists}">
-	<c:forEach var="supporters" items="${lists}">
+	<c:forEach var="supporters" items="${lists}" varStatus="status">
 		<tr align="center">
 			<td>	
 				<c:if test="${fn:contains(shList, supporters.num)}">
@@ -100,7 +100,9 @@
 				<!-- 좋아요X -->
 				</c:if>
 			</td>
-			<td>${supporters.num}</td>			
+			<td><%-- ${supporters.num} --%>
+				${(pageInfo.pageNumber-1)*pageInfo.limit+status.count} 
+			</td>			
 			<td>
 				<!-- 디폴트는 모집중(0), 인원이 다 차면 모집완료(1), 모집기한이 지나면 모집마감(2) -->
 				<%-- <font color="${statusColor}">${statusLabel}</font> --%>

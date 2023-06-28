@@ -106,6 +106,7 @@
 				<a href="/mountain/all/list.mnt" class="nav-item nav-link">산 별 정보</a>
 				<a href="/crewboard/all/list.bdcr" class="nav-item nav-link">크루</a>
 				<a href="/qna/all/list.qna" class="nav-item nav-link">QnA</a>    
+				<a href="/supporters/all/list.su" class="nav-item nav-link">서포터즈</a>    
 				
 				<!-- 커뮤니티 -->  
 				<div class="nav-item dropdown">
@@ -113,7 +114,7 @@
              		<div class="dropdown-menu bg-light m-0"> 
 		                <a href="/notice/all/list.no" class="dropdown-item">공지사항</a>
 		                <a href="/board/all/list.br" class="dropdown-item">자유게시판</a>
-		                <a href="/supporters/all/list.su" class="dropdown-item">서포터즈</a>
+		                <!-- <a href="/supporters/all/list.su" class="dropdown-item">서포터즈</a> -->
 		                <a href="/products/all/list.prd" class="dropdown-item">거래게시판</a>
 					</div><!-- //dropdown-menu -->
 				</div>

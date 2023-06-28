@@ -77,9 +77,11 @@
 	</c:if>
 	
 	<c:if test="${not empty lists}">
-	<c:forEach var="notice" items="${lists}">
+	<c:forEach var="notice" items="${lists}" varStatus="status">
 		<tr align="center">
-			<td>${notice.num}</td>
+			<td><%-- ${notice.num} --%>
+				${(pageInfo.pageNumber-1)*pageInfo.limit+status.count} 
+			</td>
 			<td>${notice.userid}</td>
 			<td align="left"><a href="/notice/all/detail.no?num=${notice.num}&pageNumber=${pageInfo.pageNumber}">${notice.subject}</a></td>
 			<td>${notice.readcount}</td>

@@ -128,13 +128,15 @@ $(document).ready(function(){
 	</c:if>
 	
 	<c:if test="${not empty lists}">
-	<c:forEach var="board" items="${lists}">
+	<c:forEach var="board" items="${lists}" varStatus="status">
 		<tr align="center"> <!-- width="40%" -->
 			<td><input type="checkbox" name="rowcheck" value="${board.num}"></td>
-			<td>${board.num}</td>
+			<td><%-- ${board.num} --%>
+				${(pageInfo.pageNumber-1)*pageInfo.limit+status.count} 
+			</td>
 			<td>[${board.category}]</td>
 			<td>
-				<img src="<%=request.getContextPath() %>/resources/${board.image}" width="100" height="100">
+				<img src="<%=request.getContextPath() %>/resources/images/board/${board.image}" width="100" height="100">
 			</td>		
 			<td align="left">
 				<a href="/board/user/detail.br?num=${board.num}&pageNumber=${pageInfo.pageNumber}">${board.subject}(${board.boardcommentscount})</a>
