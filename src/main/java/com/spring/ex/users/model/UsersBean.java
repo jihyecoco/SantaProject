@@ -11,11 +11,10 @@ public class UsersBean {
 	private final String choice_message = " 필수선택 사항입니다.";
 	
 	private int userNum;
-	
-	@Pattern(regexp = "^[a-z0-9]+$", message = "아이디의 형식이 올바르지않습니다")
+	@Pattern(regexp = "^(?=.*[a-z0-9])[a-z0-9]{5,16}$", message = "아이디는 영문 5자~16자로 작성해야합니다.")
 	private String userId;
 	
-	@Pattern(regexp = "^[a-z0-9]+$", message = "비밀번호의 형식이 올바르지않습니다.")
+	@Pattern(regexp = "^(?=.*[a-z0-9])[a-z0-9]{5,16}$", message = "비밀번호는 영문 5자~16자로 작성해야합니다.")
 	private String password;
 
 	@NotBlank(message = "이름은" + input_message)
@@ -31,9 +30,8 @@ public class UsersBean {
 	@Email(message = "올바른 이메일 형식이 아닙니다.") //@Email Null허용
 	private String email;
 	
-	//* 정규식 및 자동 하이픈 처리 추가 할 예정
-	@NotBlank(message = "연락처는" + input_message)
-	//@Pattern(regexp = "^01(?:0|1|[6-9])-(?:d{3}|d{4})-d{4}$", message = "올바른 연락처의 형태가 아닙니다.")
+	//@NotBlank(message = "연락처는" + input_message)
+	@Pattern(regexp = "^01(?:0|1|[0-9])-(?:\\d{3}|\\d{4})-\\d{4}$", message = "올바른 연락처의 형태가 아닙니다.")
 	private String phone;
 	
 	private String status;
