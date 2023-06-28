@@ -18,7 +18,7 @@
  
  	<select id="GetAllCrewboard" resultMap="crewboardMap">
  		select crewboard_num, cb.large, cb.small, cb.state, cb.crew_name, cb.subject, cb.writer, cb.contents, cb.reg_date, cb.readcount, crew.crew_limit, crew.crew_now,
- 		(select count(*) from crew_comments where idx = cb.crewboard_num) as comments
+ 		(select count(*) from crew_comments where idx = cb.crewboard_num and delete_yn = 'N') as comments
 		from crew_board cb inner join crew
 		on cb.crew_name = crew.crew_name
 		<if test='whatColumn == "all"'>
@@ -70,7 +70,7 @@
  	
  	<select id="GetCrewboardByNum" resultMap="crewboardMap">
  		select crewboard_num, cb.large, cb.small, cb.state, cb.crew_name, cb.subject, cb.writer, cb.contents, cb.reg_date, cb.readcount, crew.crew_limit, crew.crew_now,
- 		(select count(*) from crew_comments where idx = cb.crewboard_num) as comments
+ 		(select count(*) from crew_comments where idx = cb.crewboard_num and delete_yn = 'N') as comments
 		from crew_board cb inner join crew
 		on cb.crew_name = crew.crew_name
 		where crewboard_num = #{num}
@@ -78,7 +78,7 @@
  	
  	<select id="GetCrewboardByCrewname" resultMap="crewboardMap">
  		select crewboard_num, cb.large, cb.small, cb.state, cb.crew_name, cb.subject, cb.writer, cb.contents, cb.reg_date, cb.readcount, crew.crew_limit, crew.crew_now,
- 		(select count(*) from crew_comments where idx = cb.crewboard_num) as comments
+ 		(select count(*) from crew_comments where idx = cb.crewboard_num and delete_yn = 'N') as comments
 		from crew_board cb inner join crew
 		on cb.crew_name = crew.crew_name
 		where cb.crew_name = #{crewname}
@@ -170,7 +170,7 @@
  	
  	<select id="GetAllCrewboardById" resultMap="crewboardMap">
  		select crewboard_num, cb.large, cb.small, cb.state, cb.crew_name, cb.subject, cb.writer, cb.contents, cb.reg_date, cb.readcount, crew.crew_limit, crew.crew_now,
- 		(select count(*) from crew_comments where idx = cb.crewboard_num) as comments
+ 		(select count(*) from crew_comments where idx = cb.crewboard_num and delete_yn = 'N') as comments
 		from crew_board cb inner join crew
 		on cb.crew_name = crew.crew_name
 		where cb.writer = #{loginId}

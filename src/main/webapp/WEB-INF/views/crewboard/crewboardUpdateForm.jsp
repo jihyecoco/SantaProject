@@ -53,9 +53,9 @@
                         <div class="row g-3">
                         	<!-- 글제목 -->
                         	<div class="col-12">
-                        		<form:errors cssClass="err" path="subject"/>
                                 <div class="form-floating">
                                     <input class="form-control border-0" name="subject" id="subject" value="${cbb.subject}">
+	                        		<form:errors cssClass="err" path="subject"/>
                                     <label for="subject">글 제목</label>
                                 </div>
                             </div>

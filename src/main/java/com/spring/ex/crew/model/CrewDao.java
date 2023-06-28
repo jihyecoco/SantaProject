@@ -133,5 +133,11 @@ public class CrewDao {
 		crewList = sqlSessionTemplate.selectList("GetJoinRegularCrewById", loginId);
 		return crewList;
 	}
+
+	public int updateCrewState(String crewname) {
+		int cnt = -1;
+		cnt = sqlSessionTemplate.update("UpdateCrewStateByCrewName", crewname);
+		return cnt;
+	}
 	
 }

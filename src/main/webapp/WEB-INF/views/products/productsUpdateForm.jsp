@@ -91,7 +91,7 @@
     <div class="container-fluid py-5">
         <div class="container">
             <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-                <h1 class="display-5 mb-5">거래 게시글 등록</h1>
+                <h1 class="display-5 mb-5">거래 게시글 수정</h1>
             </div>
             <div class="row justify-content-center">
                 <div class="col-lg-7">
@@ -101,7 +101,7 @@
                         	<!-- 구분 -->
                         		<div class="col-9">
                         			<div class="form-floating">
-			                        	<select name="kind" id="kind" class="form-select border-0" onchange="kind_change(prdform)" disabled="disabled">
+			                        	<select name="kind" id="kind" class="form-select border-0" onchange="kind_change(prdform)">
 			                                <option value="">판매/나눔/교환</option>
 			                                <option value="a" <c:if test="${pb.kind == 'a'}">selected</c:if>>판매</option>
 			                                <option value="b" <c:if test="${pb.kind == 'b'}">selected</c:if>>나눔</option>
@@ -137,7 +137,7 @@
                         	<!-- 상품설명 -->
                         	<div class="col-12">
 	                            <div class="form-floating">
-	                                  <textarea class="form-control border-0" placeholder="Leave a message here" name="info" id="info" style="height: 150px">${pb.info}</textarea>
+	                                  <textarea class="form-control border-0" placeholder="Leave a message here" name="info" id="info" style="height: 150px; resize:none;">${pb.info}</textarea>
 	                                  <label for="info">상품 설명</label>
 	                            </div>
 	                           	<form:errors cssClass="err" path="info"/>

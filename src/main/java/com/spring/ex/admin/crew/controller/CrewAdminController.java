@@ -86,7 +86,7 @@ public class CrewAdminController {
 		}
 		
 		int totalCount = cdao.get1DayCrewTotalCount(map);
-		String url = request.getContextPath()+command;
+		String url = request.getContextPath()+command1;
 		
 		Paging pageInfo = new Paging(pageNumber, "5", totalCount, url, whatColumn, keyword, null);
 		
@@ -130,7 +130,7 @@ public class CrewAdminController {
 		}
 		
 		int totalCount = cdao.getRegularCrewTotalCount(map);
-		String url = request.getContextPath()+command;
+		String url = request.getContextPath()+command2;
 		
 		Paging pageInfo = new Paging(pageNumber, "5", totalCount, url, whatColumn, keyword, null);
 		

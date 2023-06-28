@@ -60,6 +60,14 @@ public class CrewUpdateController {
 				int result = cbdao.updateCrewboardState(crewname);
 				if(result != -1) {
 					System.out.println("모집완료 수정 성공");
+					
+					//2. 크루 state도 바꾸기
+					int result2 = cdao.updateCrewState(crewname);
+					if(result2 != -1) {
+						System.out.println("크루 모집완료로 수정 성공");
+					}else {
+						System.out.println("크루 모집완료로 수정 실패");
+					}
 				}else {
 					System.out.println("모집완료 수정 실패");
 				}
@@ -99,6 +107,14 @@ public class CrewUpdateController {
 				int result = cbdao.updateCrewboardState(cb.getCrewname());
 				if(result != -1) {
 					System.out.println("모집완료 수정 성공");
+					
+					//2. 크루 state도 바꾸기
+					int result2 = cdao.updateCrewState(cb.getCrewname());
+					if(result2 != -1) {
+						System.out.println("크루 모집완료로 수정 성공");
+					}else {
+						System.out.println("크루 모집완료로 수정 실패");
+					}
 				}else {
 					System.out.println("모집완료 수정 실패");
 				}

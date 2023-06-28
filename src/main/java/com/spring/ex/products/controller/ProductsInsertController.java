@@ -55,6 +55,7 @@ public class ProductsInsertController {
 		ModelAndView mav = new ModelAndView();
 		pb.setSeller(principal.getName()); // 아이디 챙겨가기
 		
+		
 		if(result.hasErrors()) {
 			mav.setViewName(getPage);
 		}else {

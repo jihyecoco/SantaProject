@@ -136,9 +136,8 @@
                         	<!-- 이미지업로드 -->
                         	<div class="col-12">
 		                    		<div class="mb-2 mx-1"><b>상품 사진 </b></div>
-		                    		<input type="file" class="form-control" multiple="multiple" name="upload" value="${pb.image}" onchange="filechange()">
+		                    		<input type="file" class="form-control" multiple="multiple" name="upload" value="${pb.upload}" onchange="filechange()">
 		                    		<span style="font-size:10px; color: gray;">※첨부파일은 최대 10개까지 등록이 가능합니다.</span><br>
-		                    		<input type="hidden" name="image">
 		                    		<form:errors cssClass="err" path="image"/>
 	                    		
 		                    		<!-- 이미지 미리보기 -->

@@ -62,9 +62,9 @@ public class ProductsListController {
 		map.put("keyword", "%"+keyword+"%");
 
 		if(whatColumn != null) {
-			loginId = principal.getName();
 			if(whatColumn.equals("loginId")) { //  내 판매글 보기 요청
 				try {
+					loginId = principal.getName();
 					//System.out.println("내 판매글 보기 요청");
 					map.put("keyword", principal.getName()); // keyword에 id
 				}catch(NullPointerException e) { // 로그인 하지 않은 상태
@@ -91,6 +91,7 @@ public class ProductsListController {
 		ProductsHeartBean phBean = new ProductsHeartBean();
 
 		try {
+			loginId = principal.getName();
 			phBean.setUserId(loginId);		//사용자아이디
 			phList = phdao.getAllProductsHeart(loginId);
 			System.out.println("phList : " + phList);

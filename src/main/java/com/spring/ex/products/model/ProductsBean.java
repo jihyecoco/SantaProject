@@ -2,6 +2,7 @@ package com.spring.ex.products.model;
 
 import java.sql.Date;
 
+import org.apache.tomcat.util.http.fileupload.UploadContext;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.web.multipart.MultipartFile;
@@ -77,7 +78,27 @@ public class ProductsBean {
 			System.out.println("fileName : "+fileName);
 			
 			this.image = fileName;
+			
+//			// insert폼 업로드 한거 upload3에 담아놓기
+//			setUpload3(upload);
+//			System.out.println("upload3에 upload담김");
 		}
+	}
+	
+	// insert 유효성 검사시 원래 업로드했던 객체
+	private MultipartFile upload3;
+	
+	public MultipartFile getUpload3() {
+		return upload3;
+	}
+	
+	public void setUpload3(MultipartFile upload3) {
+		this.upload3 = upload3;
+		
+		String fileName = upload3.getOriginalFilename();
+		this.image = fileName;
+		this.upload2 = image;
+		System.out.println();
 	}
 	
 	private String upload2; // 수정폼을 띄울때 기존이미지를 담을 변수
