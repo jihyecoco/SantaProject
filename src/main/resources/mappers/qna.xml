@@ -60,6 +60,8 @@
 			WHERE
 				users_id like #{keyword}
 		</if>
+		ORDER BY
+			qna_num asc
 	</select>
 	<!-- //전체 목록 -->
 	

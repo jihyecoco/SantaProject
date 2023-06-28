@@ -57,9 +57,9 @@
 							  	<c:if test="${stampList == null}">
 							  		<td colspan="7">등록된 데이터가 없습니다.</td>
 							  	</c:if>
-							  	<c:forEach var="sl" items="${stampList}">
+							  	<c:forEach var="sl" items="${stampList}" varStatus="status">
 							    <tr>
-							      <th scope="row">${sl.stampnum}</th>
+							      <th scope="row">${(pageInfo.pageNumber-1)*pageInfo.limit+status.count} </th>
 							      <td>${sl.usersid}</td>
 							      <td>
 							      	<!-- applylist의 id를 현재 행의 id와 반복해서 비교, 해당 id의 누적 스탬프 출력 -->

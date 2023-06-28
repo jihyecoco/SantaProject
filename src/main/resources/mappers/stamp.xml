@@ -158,7 +158,9 @@
 		UPDATE
 			stamp
 		SET
-			mountain_exist = 0
+			mountain_exist = 0,
+			stamp_apply = 2,
+			stamp_reject = 3
 		WHERE
 			mountain_num = #{data}
 	</update>

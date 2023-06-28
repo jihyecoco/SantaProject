@@ -101,18 +101,17 @@ public class QnaUpdateQuestionController {
 			} else {
 				//유효성 검사에 에러가 없으면
 				System.out.println("유효성 검사 통과");
+
+				String filename = "";
+				int cnt = 0;
 				
 				//파일을 담을 리스트 객체 생성
 				List<MultipartFile> fileList = mtfRequest.getFiles("upload");
-				
+
 				//웹서버 폴더
 				String uploadPath = request.getRealPath("/resources/images/qna");
 				//민지_임시폴더
 				String str = "C:/tempUpload/qna";
-				
-				String filename = "";
-				int cnt = 0;
-				
 				for(int i=0; i<fileList.size(); i++) {
 					// Bean에 담기 위해 파일명 적립
 					if(i == fileList.size()-1) {
@@ -140,7 +139,6 @@ public class QnaUpdateQuestionController {
 					try {
 						//웹서버로 업로드
 						fileList.get(i).transferTo(destination);
-						
 						//웹서버 폴더 => 임시 폴더로 복사
 						FileCopyUtils.copy(destination, destination_local);
 					} catch(IllegalStateException e) {
@@ -153,12 +151,12 @@ public class QnaUpdateQuestionController {
 					qnaBean.setUsersid(principal.getName());
 					qnaBean.setQnaimage(filename);
 				}//for end
-				
 			//qdao의 updateQuestion 메서드 결과를 cnt에 저장
 			cnt = qdao.updateQuestion(qnaBean);
 				
 			if(cnt > 0) {
 				//update 성공 시
+				System.out.println("update 성공");
 					
 				//다시 원래 목록으로 돌아가기 위해 페이지 정보 넘기기
 				mav.addObject("pageNumber",pageNumber);				
@@ -166,7 +164,7 @@ public class QnaUpdateQuestionController {
 				mav.setViewName(gotoPage);
 			} else {
 				//update 실패 시
-
+				System.out.println("update 실패");
 				//다시 원래 페이지로 돌아가기 위해 페이지 정보 넘기기
 				mav.addObject("pageNumber",pageNumber);	
 				

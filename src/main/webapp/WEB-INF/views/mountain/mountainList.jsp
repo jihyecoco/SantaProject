@@ -77,13 +77,13 @@
 							  		<td colspan="7">등록된 데이터가 없습니다.</td>
 							  	</c:when>
 							  	</c:choose>
-							  	<c:forEach var="ml" items="${mountainList}">
+							  	<c:forEach var="ml" items="${mountainList}" varStatus="status">
 							    <tr>
 							  	  <c:if test="${principal.getName() == 'admin'}">
 			                      <td><input type="checkbox" class="form-check-input" name="selected_one" value="${ml.mountainnum}"></td>
 			                      </c:if>
 							      <th scope="row">
-							      ${ml.mountainnum}
+							      ${(pageInfo.pageNumber-1)*pageInfo.limit+status.count} 
 							      </th>
 							      <td>
 							      <c:forEach var="cl" items="${certList}">

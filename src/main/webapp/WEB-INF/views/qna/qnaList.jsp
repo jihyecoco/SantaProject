@@ -81,9 +81,9 @@
         		</tr>
 			</thead>
 			<tbody>
-			<c:forEach var="i" begin="0" end="${fn:length(qnaLists)-1}">
+			<c:forEach var="i" begin="0" end="${fn:length(qnaLists)-1}" varStatus="status">
 			<tr align="center">
-				<td>${qnaLists[i].qnanum}</td>
+				<td>${(pageInfo.pageNumber-1)*pageInfo.limit+status.count} </td>
 				<td>${qnaLists[i].qnacategory}</td>
 				<td align="left" width="50%" >
 				<div class="panel-faq-container">

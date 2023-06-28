@@ -51,6 +51,13 @@ public class StampUserListController {
 				//userid를 이용해서 인증 내역 불러오기
 				List<CertBean> certList = sdao.getCertListById(userid);
 				
+				//exist가 0이면 산 이름에 삭제됨 표시
+				for(int i = 0; i<certList.size();i++) {
+					if(certList.get(i).getMountainexist() == 0) {
+						certList.get(i).setMountainname("(삭제됨)");
+					}
+				}
+				
 				//mav에 저장해서 넘길 값 설정
 				mav.addObject("stampList", stampList); // 현재 유저의 스탬프 테이블
 				mav.addObject("certList", certList); //현재 유저의 인증 신청 목록(산 이름, 인증 사진, 인증 상태)

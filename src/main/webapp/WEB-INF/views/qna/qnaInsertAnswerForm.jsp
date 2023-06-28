@@ -58,8 +58,8 @@
                         <!-- 답변하기 버튼 -->
                             <div class="col-12 text-center">
                                 <button class="btn btn-success" type="submit">답변하기</button>
-                                <button class="btn btn-success" type="reset">다시작성</button>
-                                <button class="btn btn-success" onClick="location.href='/mountain/all/list.qna'">목록</button>
+                                <button class="btn btn-success" type="reset" onclick="return resetCheck()">다시작성</button>
+                                <input type="button" class="btn btn-success" onClick="location.href='/qna/all/list.qna'" value="목록">
                             </div>
                         <!-- //답변하기 버튼 -->
 			            </form:form>
@@ -70,5 +70,13 @@
             <!-- //폼 end -->
         </div>
     	<!-- //Answer Insert Form End-->
-
+<script>
+//reset 확인
+function resetCheck(){
+	var check = confirm("정말 초기화 하시겠습니까?");
+	 if(!check){
+		return false;
+	}
+}
+</script>
 <%@ include file="../common/common_bottom.jsp" %>

@@ -85,8 +85,6 @@ public class MountainListController {
 			//인기산을 가져오기 위한 인증 리스트(산 번호, 인증 갯수)
 			List<StampBean> certList  = sdao.getCertCountByMountainNum();
 			
-			System.out.println("certList : "+certList.get(1).getMountainnum()+" : "+certList.get(1).getCertcount());
-			
 			//mav에 저장해서 넘길 값 설정
 			mav.addObject("certList", certList);
 			mav.addObject("mountainList", mountainList);

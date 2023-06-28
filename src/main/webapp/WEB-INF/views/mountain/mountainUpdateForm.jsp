@@ -75,8 +75,8 @@
                         	<!-- 상세 정보 입력 -->
                              <div class="col-12" style="float: left; ">
                              	<div class="form-floating">
-                            	<textarea name="mountaincontent" style="resize:none; height:200px;" class="form-control border-0" placeholder="*산 상세 정보" id="message">${mountainBean.mountaincontent}</textarea>
-								<label for="mountaincontent" style="font-size:13px;opacity: 60%;">*산 상세정보</label>
+                            	<textarea name="mountaincontent" style="resize:none; height:200px;" class="form-control border-0" placeholder="산 상세 정보" id="message">${mountainBean.mountaincontent}</textarea>
+								<label for="mountaincontent" style="font-size:13px;opacity: 60%;">산 상세정보</label>
 								</div>
                             </div>
                             <form:errors cssClass="err" path="mountaincontent"/>
@@ -100,8 +100,8 @@
 								</div>
 							<div class="col-12" style="float: left; ">
                              	<div class="form-floating">
-                            	<textarea name="mountaingreat" id="mountaingreat" class="form-control border-0" placeholder="*100대 명산 선정 이유" id="message" style="height: 130px" <c:if test="${mountainBean.mountaingreat == null}">disabled</c:if>>${mountainBean.mountaingreat}</textarea>
-								<label for="mountaingreat" style="font-size:13px;opacity: 60%;">*100대 명산 선정 이유</label>
+                            	<textarea name="mountaingreat" id="mountaingreat" style="resize:none; class="form-control border-0" placeholder="100대 명산 선정 이유" id="message" style="height: 130px" <c:if test="${mountainBean.mountaingreat == null}">disabled</c:if>>${mountainBean.mountaingreat}</textarea>
+								<label for="mountaingreat" style="font-size:13px;opacity: 60%;">100대 명산 선정 이유</label>
 								</div>
                             </div>
                             <span style="font-size:7px;color:grey;">※선정 이유를 입력해주셔야 100대명산으로 등록됩니다.</span>
@@ -110,9 +110,9 @@
                             
                             <!-- 등록하기 버튼 -->
                             <div class="col-12 text-center">
-                                <button class="btn btn-success" type="submit">수정하기</button>
-                                <button class="btn btn-success" type="reset">다시작성</button>
-                                <button class="btn btn-success" onClick="location.href='/mountain/all/list.mnt'">목록</button>
+                        		<input type="submit" value="수정하기" class="btn btn-success">
+                            	<input type="reset" value="다시작성" class="btn btn-success" onclick="return resetCheck()"> 
+                                <input type="button" class="btn btn-success" onClick="location.href='/mountain/all/list.mnt'" value="목록">
                             </div>
                             <!-- //등록하기 버튼 -->
                         </div>
@@ -140,10 +140,12 @@
 	});
 	
 
-	document.querySelector('form').addEventListener('reset', function(event) {
-		  if (!confirm('초기화하시겠습니까?')) {
-		    event.preventDefault();
-		  }
-		});
+	//reset 확인
+	function resetCheck(){
+		var check = confirm("정말 초기화 하시겠습니까?");
+		 if(!check){
+			return false;
+		}
+	}
 </script>
 <%@ include file="../common/common_bottom.jsp" %>

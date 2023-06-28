@@ -62,8 +62,8 @@ public class MountainDeleteController {
 					//로그인 정보가 있으면
 					
 					//dao의 delete메서드로 배열만큼 반복해서 num값을 넘겨
-					//해당 값을 가진 인증내역의 exist 컬럼의 값을 0으로 변경
-					//해당 컬럼 삭제, int로 결과 전송
+					//해당 값을 가진 stamp의 exist 컬럼의 값을 0, apply를 2, reject를 3으로 변경
+					//해당 mountain 컬럼 삭제, int로 결과 전송
 					for(String data:chkArray) {
 						
 						int cnt = sdao.updateMountainExist(data);

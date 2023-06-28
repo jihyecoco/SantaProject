@@ -61,8 +61,11 @@ public class StampAdminListController {
 				
 				//스탬프 갯수를 출력하기 위해 전체 컬럼에서 id 기준으로 apply가 승인상태(1)인 컬럼 갯수 그룹으로 리스트에 저장
 				List<StampBean> applyCount = sdao.getApplyCountGroupById();
-				System.out.println(applyCount.get(0).getUsersid()+" : "+applyCount.get(0).getApplycount());
+				System.out.println("applyCount"+applyCount);
 				
+				if(applyCount.isEmpty()) {
+					System.out.println("applyCount null");
+				}
 				
 				//mav에 저장해서 넘길 값 설정
 				mav.addObject("applyCount", applyCount);

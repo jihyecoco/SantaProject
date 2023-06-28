@@ -2,6 +2,7 @@ package com.spring.ex.stamp.controller;
 
 import java.security.Principal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.spring.ex.stamp.model.StampBean;
 import com.spring.ex.stamp.model.StampDao;
+import com.spring.ex.users.model.UsersBean;
+import com.spring.ex.users.model.UsersDao;
 
 @Controller
 public class StampUpdateApplyController {
@@ -26,6 +30,9 @@ public class StampUpdateApplyController {
 		//qnaDao 객체 생성
 		@Autowired
 		StampDao sdao;
+		@Autowired
+		UsersDao udao;
+		
 		@RequestMapping(value=command)
 		public ModelAndView doAction(
 				@RequestParam(value="stampnum") String stampnum,
@@ -56,6 +63,20 @@ public class StampUpdateApplyController {
 				int cnt = sdao.updateApply(map);
 				if(cnt > 0) {
 					System.out.println(stampapply+" : 업데이트 성공");
+					
+					List<StampBean> applyCount = sdao.getApplyCountGroupById();
+					System.out.println("applyCount"+applyCount);
+					
+					if(!applyCount.isEmpty()) {
+						for(int i=0;i<applyCount.size();i++) {
+							//만약 현재 아이디의 apply갯수가 10 이상이면
+							if(principal.getName() == applyCount.get(i).getUsersid() && applyCount.get(i).getApplycount() >=10 ) {
+								UsersBean usersBean = new UsersBean();
+								int cnt2 = udao.usersUpdateUserRole(usersBean);
+							}
+						}
+					}
+					
 					
 					//다시 원래 페이지로 돌아가기 위해 페이지 정보 넘기기
 					mav.addObject("pageNumber",pageNumber);
