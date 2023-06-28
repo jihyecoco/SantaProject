@@ -71,6 +71,7 @@
 			mountain_name,
 			stamp_apply,
 			users_id,
+			stamp_image,
 			stamp_reject,
 			mountain_exist
 		FROM
@@ -125,6 +126,7 @@
 			mountain_name,
 			stamp_apply,
 			users_id,
+			stamp_image,
 			stamp_reject,
 			mountain_exist
 		FROM

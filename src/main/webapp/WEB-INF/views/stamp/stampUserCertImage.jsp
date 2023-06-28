@@ -53,7 +53,7 @@
                     	</c:when>
                     	</c:choose>
                         <div class="row g-3 mx-auto" >
-                         		<img src="<%=request.getContextPath()%>/resources/images/mountain/${stampImage}" alt="인증사진" style="width:450px;">
+                         		<img src="<%=request.getContextPath()%>/resources/images/stamp/cert/${stampImage}" alt="인증사진" style="width:450px;">
                             </div><!--//row g-3  --> 
                         </div><!-- //bg-light -->
                     </div><!-- //col-lg-7 -->
