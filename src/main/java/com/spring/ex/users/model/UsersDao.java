@@ -233,24 +233,12 @@ private static final Logger logger = LoggerFactory.getLogger(UsersDao.class);
 	    return ageStatistics;
 	}
 
-	public List<Object> getGenderStatistics() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	public List<Object> getRoleStatistics() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public List<Object> getYearStatistics() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public List<Object> getMonthStatistics() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<HashMap<String, Object>> userStats1(HashMap<String, Object> param) {
+		List<HashMap<String, Object>> ageStatistics = new ArrayList<>();
+		ageStatistics = sqlSessionTemplate.selectList("users.stats1", param);
+		
+		return ageStatistics;
 	}
 
 

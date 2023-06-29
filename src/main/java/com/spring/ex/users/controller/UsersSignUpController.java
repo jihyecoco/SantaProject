@@ -45,7 +45,7 @@ public class UsersSignUpController {
 			HttpServletResponse response) throws Exception {
 		
 		ModelAndView mav = new ModelAndView();
-		
+		String[] genderArr = {"남자", "여자"};		
 		//유효성검사 통과X
 		if(result.hasErrors()) {
 			mav.setViewName(getPage);// /users/signUpPage
@@ -70,6 +70,7 @@ public class UsersSignUpController {
 			}
 			
 		}//else
+		mav.addObject("genderArr", genderArr);
 		return mav;
 	}//signUp - submit 클릭
 	
