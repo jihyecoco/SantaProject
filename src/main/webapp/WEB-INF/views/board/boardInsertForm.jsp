@@ -133,7 +133,7 @@ function boardfilechange() {
                             <!-- 글내용 -->
                             <div class="col-10">
                                	<div class="form-floating"> <!--  -->
-                                    <textarea name="content" class="form-control border-0" id="content" style="height:300px; resize:none;">${board.content}</textarea>
+                                    <textarea name="content" class="form-control border-0" id="content" style="height:280px; resize:none;">${board.content}</textarea>
                                     <label for="content">글 내용</label>
                                     <form:errors cssClass="err" path="content" />
                                 </div>

@@ -48,6 +48,13 @@ public class SupportersListController {
 		System.out.println("keyword: "+keyword);
 		System.out.println("pageNumber: "+pageNumber);
 		
+		int[] supporters_count = new int[4];
+		supporters_count[0] = sdao.getAllSupportersCount(); // 총 크루 수 
+		supporters_count[1] = sdao.getIngSupportersCount(); // 모집중
+		supporters_count[2] = sdao.getCompleteSupportersCount(); // 모집완료
+		supporters_count[3] = sdao.getClosedSupportersCount();	// 모집기한 마감
+		mav.addObject("supporters_count", supporters_count);
+		
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("whatColumn", whatColumn);
 		map.put("keyword","%"+keyword+"%");

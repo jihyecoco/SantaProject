@@ -39,7 +39,7 @@ public class BoardDeleteController {
 		BoardBean board = bdao.getBoardByNum(num); //board에는 이미지의 파일명도 들어 있음
 		//삭제하기 전에 Bean을 가져오는걸 먼저 해야함
 		
-		int cnt = bdao.deleteBoard(num);
+		int cnt = bdao.deleteBoard(num); //DB 삭제
 		
 		if(cnt != -1) {
 			System.out.println("DB 삭제 성공");
@@ -48,21 +48,46 @@ public class BoardDeleteController {
 			String deletePath = servletContext.getRealPath("/resources/images/board"); 
 			System.out.println("deletePath: " +deletePath+"\\"+board.getImage()); 
 			
+			
+			/* 사용자 OS 확인 */
+			String osName = System.getProperty("os.name").toLowerCase();
+			System.out.println("OS name : " + osName);
+	    
+			String str = "";
+			if (osName.contains("win")) 
+			{
+				System.out.println("사용자 OS - Window ");
+				str = "C:/tempUpload/board";
+			} 
+
+			else if (osName.contains("mac"))   {
+			  	System.out.println("사용자 OS - MAC ");
+			  	str = "/Users/ol7roeo/Documents/tempUpload/board"; 
+			} 
+			
+			
 			//이미지 파일 가져오는 경로
 			File prdImage = new File(deletePath+ File.separator+ board.getImage());
+			File prdImage_local = new File(str+ File.separator+ board.getImage());
+			
 			//긴 파일 경로를 File 객체에 담아서 파일로 만든다
-			boolean flag = prdImage.delete();
+			boolean flag = prdImage.delete(); // 웹서버 폴더 파일 삭제
+			boolean flag2 = prdImage_local.delete(); // 임시폴더 파일 삭제
 			
 			if(flag == true) {
 				System.out.println("이미지 삭제 성공");
-			}else {
-				System.out.println("이미지 삭제 실패");
-			}			
+			}
 			
-		}else {
+			if(flag2 == true) {
+				System.out.println("임시 폴더 이미지 삭제 성공");
+			}
+			
+		}else { // DB 삭제 실패
 			System.out.println("DB 삭제 실패");
-		}			
-		mav.addObject("pageNumber", pageNumber);		
+		}
+		
+		mav.addObject("pageNumber", pageNumber);	
+		mav.addObject("num", num);	
 		mav.setViewName(gotoPage);
 		return mav;
 	}//

@@ -99,6 +99,30 @@ public class SupportersDao {
 		}
 		return cnt;
 	}
+
+	public int getAllSupportersCount() {
+		int allsupo_count = 0;
+		allsupo_count = sqlSessionTemplate.selectOne("GetAllSupportersCount");
+		return allsupo_count;
+	}
+
+	public int getIngSupportersCount() {
+		int ingsupo_count = 0;
+		ingsupo_count = sqlSessionTemplate.selectOne("GetIngSupportersCount");
+		return ingsupo_count;
+	}
+
+	public int getCompleteSupportersCount() {
+		int completesupo_count = 0;
+		completesupo_count = sqlSessionTemplate.selectOne("GetCompleteSupportersCount");
+		return completesupo_count;
+	}
+
+	public int getClosedSupportersCount() {
+		int closesupo_count = 0;
+		closesupo_count = sqlSessionTemplate.selectOne("GetClosedSupportersCount");
+		return closesupo_count;
+	}
 	
 	
 

@@ -33,7 +33,8 @@
 			FROM board_comments
 			WHERE is_deleted = 'N' 
 			GROUP BY bnum
-		) cmt ON board.num = cmt.bnum		
+		) cmt 
+		ON board.num = cmt.bnum		
 		where 1=1 
 		<if test="whatColumn == 'user_id'">
 			and board.user_id like '%' || #{keyword} || '%' 

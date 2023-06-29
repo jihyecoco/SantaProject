@@ -56,7 +56,7 @@ public class BoardUpdateController {
 			@ModelAttribute("board") @Valid BoardBean board, BindingResult result) {
 		
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("num", board.getNum()); //번호도 보내줘야함!
+		mav.addObject("num", board.getNum()); //번호도 보내줘야함
 		mav.addObject("pageNumber", pageNumber);
 		
 		if(board.getImage().equals("")) { //업로드할 이미지를 선택하지 않았다면
@@ -78,18 +78,34 @@ public class BoardUpdateController {
 			System.out.println("수정 cnt: "+ cnt);
 			
 			if(cnt > -1) {  // DB 테이블에서 수정 성공
-				boolean flag = deleteImage.delete();
+				boolean flag = deleteImage.delete(); //기존이미지 삭제
 				System.out.println("삭제: " +flag);
+				
+				/* 사용자 OS 확인 */
+				String osName = System.getProperty("os.name").toLowerCase();
+				System.out.println("OS name : " + osName);
+
+				String str = "";
+				if (osName.contains("win")) 
+				{
+					System.out.println("사용자 OS - Window ");
+					str = "C:/tempUpload/board";
+				} 
+
+				else if (osName.contains("mac"))   {
+					System.out.println("사용자 OS - MAC ");
+					str = "/Users/ol7roeo/Documents/tempUpload/board"; 
+				} 
 				
 				MultipartFile multi = board.getUpload();
 				try {
-					multi.transferTo(destination); //진짜 업로드
-					
+					multi.transferTo(destination); //진짜 업로드					
 				} catch (IllegalStateException e) {
 					e.printStackTrace();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
+				
 				mav.setViewName(gotoPage);
 			}else { //수정 실패
 				mav.setViewName(getPage);

@@ -4,14 +4,27 @@
 
 
 <!-- Page Header Start -->
-<div class="container-fluid page-header py-5 mb-5 wow fadeIn"
-	data-wow-delay="0.1s">
+<div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
 	<div class="container text-center py-5">
-		<h1 class="display-3 text-white mb-4 animated slideInDown">서포터즈</h1>
-		<nav aria-label="breadcrumb animated slideInDown">
-			<ol class="breadcrumb justify-content-center mb-0">
-			</ol>
-		</nav>
+		<h1 class="display-3 text-white mb-4 animated slideInDown">서포터즈 모집 게시판</h1>		
+		<div class="row g-5">
+                <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.1s">
+                    <h1 class="display-4 text-white" data-toggle="counter-up">${supporters_count[0]}</h1>
+                    <span class="fs-5 fw-semi-bold text-light">총 서포터즈</span>
+                </div>
+                <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.1s">
+                    <h1 class="display-4 text-white" data-toggle="counter-up">${supporters_count[1]}</h1>
+                    <span class="fs-5 fw-semi-bold text-light">모집중인 서포터즈</span>
+                </div>
+                <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.1s">
+                    <h1 class="display-4 text-white" data-toggle="counter-up">${supporters_count[2]}</h1>
+                    <span class="fs-5 fw-semi-bold text-light">모집완료 서포터즈</span>
+                </div>
+                <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.1s">
+                    <h1 class="display-4 text-white" data-toggle="counter-up">${supporters_count[3]}</h1>
+                    <span class="fs-5 fw-semi-bold text-light">모집기한 마감 서포터즈</span>
+                </div>
+		</div>
 	</div>
 </div>
 <!-- Page Header End -->
@@ -24,7 +37,7 @@
 	<div class="container">
 		<div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
 			<p class="fs-5 fw-bold text-primary"></p>
-            <h3 class="display-5 mb-5">서포터즈 게시판</h3>
+            <h3 class="display-5 mb-5">서포터즈 모집 게시판</h3>
         </div>
     
     <!-- 검색 기능 창 -->
@@ -46,8 +59,8 @@
 						<button class="btn btn-outline-success" type="submit">Search</button>
 					</div>
 				</form>
-			</div>
-			</nav><br>
+			  </div>
+			</nav>
 		</div>
 	</div>
 </div>	
@@ -58,9 +71,7 @@
 	<!-- 정렬 -->
     <div align="right">
     	<a href="/supporters/all/list.su?whatColumn=reg_date">최신순</a> / 
-    	<a href="/supporters/all/list.su?whatColumn=readcount">조회순</a> <!-- / 
-    	<a href="/supporters/all/list.su?whatColumn=supporters_comments">댓글순</a> -->
-    	<br>
+    	<a href="/supporters/all/list.su?whatColumn=readcount">조회순</a>
     </div>
     <!-- //정렬 -->	
 	

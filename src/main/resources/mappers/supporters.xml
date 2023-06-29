@@ -113,18 +113,7 @@
           </otherwise>
  		</choose>
 	</select>
-	<!-- 
-	<if test="whatColumn == 'board_comments'">
- 		order by readcount desc
- 	</if>
- 	
- 	<if test="whatColumn == 'reg_date'">
- 		order by reg_date desc
- 	</if>
- 	<if test="whatColumn == 'readcount'">
- 		order by readcount desc
- 	</if> 
- 	-->
+
 	
 	<insert id="InsertSupporters">
  		insert into supporters(num, writer, supporters_name, deadline, target, limit, applicant, start_date, end_date, content, reg_date)
@@ -205,6 +194,32 @@
 			and su.applicant_id like '%' || #{keyword} || '%'
 		</if>
 	</select>
+	
+	
+	<select id="GetAllSupportersCount" resultType="int"> <!-- 총 -->
+ 		select count(*) from supporters
+ 	</select>
+ 	
+	<select id="GetIngSupportersCount" resultType="int"> <!-- 모집중 -->
+		select count(*) from supporters
+		<![CDATA[
+	 		where applicant < "LIMIT" AND deadline > TO_CHAR(SYSDATE,'YYYY-MM-DD')
+		]]>
+ 	</select> 	
+ 	
+ 	<select id="GetCompleteSupportersCount" resultType="int"> <!-- 모집완료 -->
+		select count(*) from supporters
+	 	<![CDATA[
+	 		where applicant >= "LIMIT" AND deadline >= TO_CHAR(SYSDATE,'YYYY-MM-DD')
+ 		]]>
+ 	</select>	
+ 	
+ 	<select id="GetClosedSupportersCount" resultType="int"> <!-- 모집기한 마감 -->
+		select count(*) from supporters
+	 	<![CDATA[
+	 		where deadline < TO_CHAR(SYSDATE,'YYYY-MM-DD')
+ 		]]>
+ 	</select>
 	
 </mapper>
 

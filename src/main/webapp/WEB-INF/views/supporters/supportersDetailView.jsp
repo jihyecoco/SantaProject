@@ -59,7 +59,7 @@
 			success : function(data){
 				//alert(data);
 				if(data === 'YES') { //이미 신청함
-					alert('이미 등록되었습니다.');
+					alert('이미 신청한 서포터즈입니다.');
 				} else { //신청 안함 -> 신청할 수 있음
 					var result = confirm("["+supportersname+"] 서포터즈에 신청하시겠습니까?"); 
 					if(result == true){ //신청을 한다고 하면

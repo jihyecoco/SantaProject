@@ -28,16 +28,16 @@
 <!-- Page Header End -->
 
 
-<div class="container-xxl py-5">
+<div class="container-xxl py-4">
 	<div class="container">
         <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-        	<h2 class="display-5 mb-5">글내용 보기</h2>
+        	<h2 class="display-5 mb-5">공지사항</h2>
         </div>
 
 		<!-- 게시글 상세보기 -->
 		<table class="table">
 			<tr>
-				<th>글번호</th>
+				<th width="20%">글번호</th>
 				<td>${notice.num }</td>
 			</tr>
 			<tr>
@@ -59,10 +59,8 @@
 				<td>${notice.subject }</td>
 			</tr>
 			<tr>
-				<th colspan="2" align="center">글내용</th>
-			</tr>
-			<tr>
-				<td colspan="2" height="230">${notice.content }</td>
+				<th>글내용</th>
+				<td height="210">${notice.content }</td>
 			</tr>
 			<tr>
 				<td colspan="2" align="center">
