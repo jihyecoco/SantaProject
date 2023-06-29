@@ -84,19 +84,17 @@
  	<!-- 게시글 목록에서 좋아요 여부 판단 - supportersMap -->
  	<select id="getAllSupportersHeart_Map" resultMap="supportersHeartMap">
  		select 
- 			sprt.num, 
-	        sprt.supporters_name,
-	        sprt.start_date,
-	        sprt.end_date,
-	        sprt.deadline,
-	       	heart.heart_date,
+ 			prod.products_num, 
+			prod.name,
+			prod.state,
+			heart.heart_date,
 			heart.user_id
 		from 
-			supporters_heart heart 
+			products_heart heart 
 			inner join 
-			supporters sprt
+			products prod
 		on 
-			sprt.num = heart.supporters_num
+			prod.products_num = heart.products_num
 	      	and
 	      	heart.USER_ID = #{getUserId}
 	      	

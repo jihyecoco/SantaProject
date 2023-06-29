@@ -15,9 +15,9 @@
 				<a class="nav-link dropdown-toggle" href="#" id="dropdown10"
 					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">회원</a>
 				<div class="dropdown-menu" aria-labelledby="dropdown10">
+					<a class="dropdown-item" href="/users/admin/userStatistics.us">회원 통계</a>
 					<a class="dropdown-item" href="/users/admin/usersList.us">회원 관리</a>
 					<a class="dropdown-item" href="/users/admin/usersWithdrawalList.us">탈퇴 회원 관리</a>
-					<a class="dropdown-item" href="/users/admin/userStatistics.us">회원 통계</a>
 				</div>
 			</li>
 			<!-- //users -->

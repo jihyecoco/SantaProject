@@ -378,5 +378,11 @@
 	</select>
 	<!-- //통계 -->
 	
+	<select id="stats1" resultType="hashmap" parameterType="hashmap">
+		select max(gender) as sex ,
+			   count(gender) as  gender
+		FROM USERS
+		group by gender
+	</select>
 	
 </mapper>

@@ -61,7 +61,7 @@
 							<div class="col-9 mx-auto">
                                 <div class="form-floating">
                                     <input type="text" class="form-control border-0" id="userId" name="userId" value="${userId}" disabled>
-                                    <label for="name">아이디</label>
+                                    <label for="userId">아이디</label>
                                 </div>
                             </div>
                             <!-- //아이디 -->

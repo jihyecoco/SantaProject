@@ -1,11 +1,13 @@
 package com.spring.ex.products.model;
 
 import java.sql.Date;
+import java.util.List;
 
-import org.apache.tomcat.util.http.fileupload.UploadContext;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.spring.ex.heart.products.model.ProductsHeartBean;
 
 public class ProductsBean {
 	private int productsnum;
@@ -33,6 +35,9 @@ public class ProductsBean {
 	private int paystate;
 	private String buyer;
 	
+	/* ProductsHeart 매핑 */
+    private List<ProductsHeartBean> productsHeartList; 
+    
 	public String getBuyer() {
 		return buyer;
 	}
@@ -57,8 +62,6 @@ public class ProductsBean {
 	}
 	
 	//////////
-	
-	
 	
 	private MultipartFile upload;
 	
@@ -170,6 +173,14 @@ public class ProductsBean {
 	}
 	public void setState(int state) {
 		this.state = state;
+	}
+	
+	/* ProductsHeart 매핑 */
+	public List<ProductsHeartBean> getProductsHeartList() {
+		return productsHeartList;
+	}
+	public void setProductsHeartList(List<ProductsHeartBean> productsHeartList) {
+		this.productsHeartList = productsHeartList;
 	}
 	
 	

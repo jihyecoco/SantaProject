@@ -8,6 +8,7 @@
 	String[] thArr_crewBoard 	= {"번호", "크루이름", "제목", "작성자", "좋아요한 날짜"};
 	String[] thArr_board 	 	= {"번호", "카테고리", "제목", "작성자", "좋아요한 날짜"};
 	String[] thArr_supporters 	= {"번호", "서포터즈명", "신청기한", "서포터즈활동기간", "좋아요한 날짜"};
+	String[] thArr_products 	= {"번호", "서포터즈명", "신청기한", "서포터즈활동기간", "좋아요한 날짜"};
 %>
 	<div class="container-fluid py-5">
 		<div class="container" style="display:table">
@@ -58,7 +59,6 @@
 					</tbody>
 				</table>
 				<!-- //크루 게시판 -->
-				
 				
 				<!-- 자유 게시판 -->
 			  	<div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px; margin-top: 100px;">
@@ -147,6 +147,52 @@
 					</tbody>
 				</table> 
 				<!-- //서포터즈 게시판 -->
+				
+				<!-- 거래 게시판 -->
+			   	<div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s"
+					style="max-width: 500px; margin-top: 100px;" >
+					<h4 class="mb-4">거래 게시판</h4>
+				</div>
+				<table class="table table-hover table-borded align-middle">
+					<thead>
+						<tr>
+							<c:forEach var="th_products" items="<%= thArr_products %>">
+								<th>${th_products}</th>
+							</c:forEach>
+						</tr>
+					</thead>
+					<tbody>
+						<c:if test="${phList == null || phList.size() == 0}">
+					  		 <tr>
+						  		<td colspan="5" align="center">좋아요한 게시글이 없습니다.</td>
+						  	</tr>
+						</c:if>
+					  	<c:if test="${phList != null && phList.size() != 0}">
+						  	<c:forEach var="pheart" items="${phList}" varStatus="status">
+							   <tr>
+									 <td>${status.index + 1}</td>
+									<td scope="col">${pheart.products.productsNum}</td>
+									<td scope="col">
+										<a href="#">
+											${pheart.products.name}
+										</a>
+									</td>
+									<td scope="col">${pheart.products.price}</td>
+									<td scope="col">${pheart.products.state}</td>
+									<td>
+										<fmt:parseDate 	var="parse_heartDate" value="${pheart.heartDate}" pattern="yyyy-MM-dd"/>​
+										<fmt:formatDate	var="fmt_heartDate" value="${parse_heartDate}" pattern="yyyy-MM-dd"/>
+										${fmt_heartDate}
+									</td> 
+							    </tr> 
+						  	</c:forEach>
+					  	</c:if>
+					</tbody>
+				</table>
+				<!-- //거래 게시판 -->
+				
+				
+				
 			</div><!-- //container -->
 		</div><!-- //container - display:table -->
 	</div><!-- //container-fluid -->

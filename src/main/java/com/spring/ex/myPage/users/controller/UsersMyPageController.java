@@ -30,7 +30,8 @@ public class UsersMyPageController {
 		UsersBean usersBean = udao.getUsersByUserId(getUserId);
 		
 		String[] genderArr = {"남자", "여자"};
-		
+		String getUserRole = usersBean.getUserRole();
+		mav.addObject("getUserRole", getUserRole);
 		mav.addObject("genderArr", genderArr);
 		mav.addObject("usersBean", usersBean);
 		mav.setViewName(getPage);

@@ -10,7 +10,15 @@
 <%@ include file="../../common/common_nav_myPage.jsp"%>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript">
-		
+	function confirmUpdate(event) {
+		  event.preventDefault(); // 기본 동작을 막음
+	
+		  var confirmed = confirm("정말로 정보를 수정하시겠습니까?");
+		  if (confirmed) {
+		    // 수정 정보를 서버로 전송하는 코드
+		    document.getElementById("updateForm").submit();
+		  }
+	}
 	/* 카카오 주소 API */
 	function execDaumPostcode() {
 		new daum.Postcode({
@@ -102,6 +110,7 @@
 
 
 </script>
+
 <style>
 	.err{
 		font-size : 7px;
@@ -109,10 +118,7 @@
 		font-weight : bold;
 	}
 </style>
-<%
-	String[] genderArr = {"남자", "여자"};
-%>
-	
+
 	<!-- myPage Start -->
 	<form:form name="usersUpdate" commandName="usersBean" action="/users/user/usersUpdate.us" method="post" enctype="multipart/form-data">
     <div class="container-fluid py-5">
@@ -128,15 +134,22 @@
                         	<input type="hidden" name="userNum" 	value="${usersBean.userNum}">
                         	<input type="hidden" name="password" 	value="${usersBean.password}">
                         	<input type="hidden" name="status" 		value="${usersBean.status}">
-                        	<input type="hidden" name="udate" 		value="${usersBean.udate}"> 
                         	<!-- //hidden -->
                         	<!-- 등록된 이미지 -->
                         	<div class="col-9">
-								<img 
-                            		alt="${usersBean.image}"
-                            		src="<%=request.getContextPath() %>/resources/images/users/${usersBean.image}" 
-                            		style="max-width: 300px; max-height: 300px;"  >
-                             </div>	
+							    <img 
+							        alt="${usersBean.image}"
+							        src="<c:choose>
+							                <c:when test="${usersBean.image == null}">
+							                    <%=request.getContextPath() %>/resources/images/users/user_basic_box.png
+							                </c:when>
+							                <c:otherwise>
+							                    <%=request.getContextPath() %>/resources/images/users/${usersBean.image}
+							                </c:otherwise>
+							            </c:choose>"
+							        style="width: 200px; height: 150px;"  > 
+							</div>
+
                             <!-- //등록된 이미지 -->
                             <!-- 변경할 이미지 등록 -->
                             <div class="col-9">
@@ -172,55 +185,71 @@
                             <!-- //이름 -->
                             
                             <!-- 생년월일 -->
+                            <fmt:parseDate var="parse_birth" value="${usersBean.birth}" pattern = "yyyy-MM-dd"/>​
+							<fmt:formatDate  var="fmt_birth" value="${parse_birth}" pattern="yyyy-MM-dd"/>
 							<div class="col-9">
-								<fmt:parseDate var="parse_birth" value="${usersBean.birth}" pattern = "yyyy-MM-dd"/>​
-								<fmt:formatDate  var="fmt_birth" value="${parse_birth}" pattern="yyyy-MM-dd"/>
 							 	<div class="form-floating">
-									<input type="date" class="form-control border-0" id="birth" name="birth" value="${fmt_birth}">
+									<input type="date" class="form-control border-0" id="birth" name="birth" value="${fmt_birth}"
+									readonly="readonly">
                                     <label for="birth">생년월일</label>
 								 </div>
 							    <form:errors cssClass="err" path="birth"/>
 							</div>
                             <!-- //생년월일 -->
                             
-                            <!-- 등급 -->
-                            <div class="col-12" >
-								<div class="col-9" style="float: left"> 
-									<div class="form-floating">
-										<c:choose>
-										    <c:when test='${usersBean.userRole eq "r01"}'>
-										    	<c:set var="userRole" value="일반회원"/>
-										    </c:when>
-										    <c:when test='${usersBean.userRole eq "r02"}'>
-										   		<c:set var="userRole" value="우수회원"/>
-										 	</c:when>
-										  </c:choose>
-									  <input type="text" class="form-control border-0" readonly="readonly" value="${userRole}">
-									  <label for="userRole">등급</label>
-									</div>
-
-								</div>
-								<div style="float: left; display:inline-block; margin-left:10px;" >
-									<button target="_blank" class="btn btn-secondary btn-sm" onclick ="userRole_info()">
-										등급 안내
-									</button>
-								</div>
-                            </div>
-                            <!-- //등급 --> 
-                            
+                           	<!-- 등급 -->
+							<div class="col-12">
+							  <div class="col-9" style="float: left">
+								<c:choose>
+							        <c:when test="${usersBean.userRole eq 'r01'}">
+							          <c:set var="userRole" value="일반회원" />
+							        </c:when>
+							        <c:when test="${usersBean.userRole eq 'r02'}">
+							          <c:set var="userRole" value="우수회원" />
+							        </c:when>
+							        <c:when test="${usersBean.userRole eq 'r99'}">
+							          <c:set var="userRole" value="관리자" />
+							        </c:when>
+							      </c:choose>							    
+							    <div class="form-floating">
+							      <input type="text" class="form-control border-0" id="userRole" value="${userRole}" readonly="readonly">
+							      <label for="userRole">등급</label>
+							    </div>
+							  </div>
+							  <div style="float: left; display:inline-block; margin-left:10px;">
+							    <button target="_blank" class="btn btn-secondary btn-sm" onclick="userRole_info()">
+							      등급 안내
+							    </button>
+							  </div>
+							</div>
+							<!-- //등급 -->
+							
+							<!-- 가입일 -->
+                            <fmt:parseDate	var="parse_udate"	value="${usersBean.udate}" 	pattern = "yyyy-MM-dd"/>​
+							<fmt:formatDate var="fmt_udate" 	value="${parse_udate}" 		pattern = "yyyy-MM-dd"/>
+							<div class="col-9">
+							 	<div class="form-floating">
+									<input type="date" class="form-control border-0" id="udate" name="udate"
+									 value="${fmt_udate}" readonly="readonly" >
+                                    <label for="udate">가입일</label>
+								 </div>
+							</div>
+                            <!-- //가입일 -->
+                             
                             <!-- 성별 -->
 							<div class="col-9">
 							 	<div class="form-floating">
-									<c:set var="gender" value="<%= genderArr %>"/>
+									<c:set var="gender" value="${genderArr}"/>
 									<c:forEach var="gender" items="${gender}">
-											<input type="radio" class=" form-check-input border-0" name="gender" id="gender" value="${gender}"
-											<c:if test="${usersBean.gender eq gender}">checked</c:if>
-											>${gender} &nbsp;&nbsp;&nbsp;
+										<input type="radio" class="form-check-input border-0" name="gender" id="gender_${gender}" value="${gender}" 
+										${usersBean.gender eq gender ? 'checked' : ''}>
+										${gender} &nbsp;&nbsp;&nbsp;
+											
 									</c:forEach>
 								  </div>
-								  <form:errors cssClass="err" path="gender"/>
+							    <form:errors cssClass="err" path="gender"/>
 							</div>
-                            <!-- //성별 -->
+							<!-- //성별 -->
                             
                             <!-- 이메일 -->
                             <div class="col-9">
@@ -247,7 +276,7 @@
                            
 							<div class="col-12" >
 								<div class="col-9" style="float: left;">
-									<div class="form-floating" ">
+									<div class="form-floating"  style="margin-bottom: -20px;" >
 										<input type="text" class="form-control border-0" name="address" id="address" value="${usersBean.address}"><br>
 										<label for="address">주소</label>
 									</div>	
@@ -258,9 +287,9 @@
                             	</div>
                             </div>		
                             
-                            <div class="col-9" style="margin-top: 0" ><!-- style="line-height: 10px" -->	
-									<div class="form-floating">
-										<form:input  path="addressSub" class="form-control border-0" name="addressSub"  id="addressSub" value="${usersBean.addressSub}"/>
+                            <div class="col-9">
+									<div class="form-floating" >
+										<input  path="addressSub" class="form-control border-0" name="addressSub"  id="addressSub" value="${usersBean.addressSub}"/>
 										<label for="addressSub">상세주소</label>
 										<input type="hidden" class="form-control border-0" id="address_extra" placeholder="참고항목">
 	                           		</div>
@@ -268,9 +297,20 @@
 							</div>	
                             <!-- //주소 -->
                            
+                            <!-- point -->
+                            <fmt:formatNumber var="fmt_point" value="${usersBean.point}" pattern="###,###"/>
+                            <div class="col-9">
+                                <div class="form-floating">
+									<input type="text" class="form-control border-0" id="point" name="point" value="${usersBean.point}" readonly>
+									<label for="point">point</label>
+								</div>
+								<form:errors cssClass="err" path="point"/>
+                            </div>
+                            <!-- //point -->
+                           
                             <!-- submit -->
                             <div class="col-12 text-center" style="line-height: 10px">
-								<input type="submit" id="submit" class="btn btn-success" value="수정하기" >
+								<input type="submit" class="btn btn-success"  value="수정하기" onclick="confirmUpdate()">
 								<input type="reset" class="btn btn-success" value="다시작성" >
 								<input type="button" class="btn btn-success" value="목록" onclick="myPage()">
 							</div>

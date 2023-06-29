@@ -44,18 +44,16 @@ public class UsersUpdateController {
         String getUserId = principal.getName();
         System.out.println("myPage getUserId : " + getUserId);
         UsersBean usersBean = udao.getUsersByUserId(getUserId);
-        String[] genderArr = {"남자", "여자"};        
+        String[] genderArr = {"남자", "여자"};
+        String getUserRole = usersBean.getUserRole(); 
+        System.out.println("getUserRole1 : " + getUserRole);
         mav.addObject("genderArr", genderArr);
+        mav.addObject("getUserRole", getUserRole);
         mav.addObject("usersBean", usersBean);
         mav.setViewName(getPage);
         return mav;
     }//usersUpdate - GET
 
-    //사용자가 sumbit을 클릭했을 때 한번 더 확인하는 confirmUpdate 함수 추가
-	/*
-	 * private boolean confirmUpdate(HttpServletRequest request) { return
-	 * "true".equals(request.getParameter("confirmUpdate")); }
-	 */
     
     // 마이페이지 사용자정보 update submit 클릭
     @RequestMapping(value = command, method = RequestMethod.POST)
@@ -67,10 +65,9 @@ public class UsersUpdateController {
             HttpSession session) throws Exception {
 
         ModelAndView mav = new ModelAndView();
-        //UsersBean existingUsersBean = udao.getUsersByUserId(usersBean.getUserId());
-        //usersBean.setUserRole(usersBean.getUserRole());
         String[] genderArr = {"남자", "여자"};
-
+		
+        
         if (result.hasErrors()) {
             mav.addObject("usersBean", usersBean);
             mav.addObject("genderArr", genderArr);
@@ -86,7 +83,6 @@ public class UsersUpdateController {
             tempFilePath = "/Users/ol7roeo/Documents/tempUpload/users";
         }
 
-        //if (confirmUpdate(request)) {
         int cnt = udao.usersUpdate(usersBean);
 
         if (cnt == 1) {
@@ -102,14 +98,18 @@ public class UsersUpdateController {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                response.setContentType("text/html; charset=UTF-8");
+                PrintWriter out = response.getWriter();
+                out.println("<script>alert('회원정보가 수정되었습니다.');</script>");
+                out.flush();
+            } else {
+                response.setContentType("text/html; charset=UTF-8");
+                PrintWriter out = response.getWriter();
+                out.println("<script>alert('회원정보 수정에 실패했습니다.');</script>");
+                out.flush();
             }
-
-            mav.addObject("successMessage", "사용자 정보가 수정되었습니다.");
-        } else {
-            mav.addObject("errorMessage", "사용자 정보 수정에 실패하였습니다.");
         }
-       // }
-
+       
         mav.addObject("usersBean", usersBean);
         mav.addObject("genderArr", genderArr);
         mav.setViewName(getPage);

@@ -17,6 +17,9 @@
 	</resultMap>
 	<resultMap type="com.spring.ex.products.model.ProductsBean" id="productsMap">
 		 <id property="productsnum" column="products_num"/>
+		 <result property="name" column="name"/>
+		 <result property="price" column="price"/>
+		 <result property="state" column="state"/>
 	</resultMap>
 	
 	<!-- //resultMapping 설정 -->
@@ -90,7 +93,7 @@
 			inner join 
 			products prod
 		on 
-			products.products_num = heart.products_num
+			prod.products_num = heart.products_num
 	      	and
 	      	heart.USER_ID = #{getUserId}
 		order by prod.products_num

@@ -65,8 +65,43 @@
 		
 		});//submit - click
 		/* 아이디 존재여부 확인하기 위한 param 값 aJax로 확인 */
-			
+		
+		/* 연락처 필드의 값이 변경될 때마다 이벤트 처리 */
+	    $('#phone').on('input', function() {
+	        var phoneNumber = $(this).val();
+	        var formattedNumber = formatPhoneNumber(phoneNumber);
+	        $(this).val(formattedNumber);
+	    });
+	    /*//연락처 필드의 값이 변경될 때마다 이벤트 처리 */
+	    
 	})//ready
+	
+	/* 연락처 하이픈처리 */
+	function formatPhoneNumber(phoneNumber) {
+	    phoneNumber = phoneNumber.replace(/[^0-9]/g, ''); // 입력된 값에서 숫자 이외의 문자 제거
+	    var formattedNumber = '';
+	    if (phoneNumber.length < 4) {
+	        formattedNumber = phoneNumber;
+	    } else if (phoneNumber.length < 7) {
+	        formattedNumber = phoneNumber.substr(0, 3) + '-' + phoneNumber.substr(3);
+	    } else if (phoneNumber.length < 11) {
+	        formattedNumber =
+	            phoneNumber.substr(0, 3) +
+	            '-' +
+	            phoneNumber.substr(3, 4) +
+	            '-' +
+	            phoneNumber.substr(7);
+	    } else {
+	        formattedNumber =
+	            phoneNumber.substr(0, 3) +
+	            '-' +
+	            phoneNumber.substr(3, 4) +
+	            '-' +
+	            phoneNumber.substr(7);
+	    }
+	    return formattedNumber;
+	}
+	/*//연락처 하이픈처리 */
 </script>
 <style>
 	.err{
@@ -106,7 +141,7 @@
                             <!-- 연락처 -->
                             <div class="col-9 mx-auto">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control border-0" id="phone" name="phone" >
+                                    <input type="text" class="form-control border-0" id="phone" name="phone" maxlength="13">
                                     <label for="phone">연락처</label>
                                 </div>
                             </div>
@@ -116,12 +151,12 @@
                             <br> <br> <br>
                             <!-- submit & onclick-->
                             <div class="col-12 text-center" style="line-height: 10px">
-								<input type="submit" id="submit" class="btn btn-primary py-3 px-4" value="아이디찾기" >
+								<input type="submit" id="submit" class="btn btn-success" value="아이디찾기" >
 							</div>
 							<br>
 							<div class="col-12 text-center" style="line-height: 10px">
-								<input type="button" class="btn btn-primary btn" value="비밀번호찾기" onclick="findPassword()">
-								<input type="button" class="btn btn-primary btn" value="로그인" onclick="login()">
+								<input type="button" class="btn btn-success" value="비밀번호찾기" onclick="findPassword()">
+								<input type="button" class="btn btn-success" value="로그인" onclick="login()">
                             </div>
                             <!-- //submit & onclick -->
                         </div><!-- //bg-light -->

@@ -88,9 +88,10 @@
  	<select id="getAllBoardHeart_Map" resultMap="boardHeartMap">
  		select 
  			board.num, 
+			board.category,
 			board.subject,
-			heart.heart_date,
-			heart.user_id
+			board.user_id,
+			heart.heart_date
 		from 
 			board_heart heart 
 			inner join 

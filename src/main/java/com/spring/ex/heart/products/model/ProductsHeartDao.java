@@ -1,6 +1,5 @@
 package com.spring.ex.heart.products.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -9,8 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.spring.ex.users.model.UsersBean;
-import com.spring.ex.users.model.UsersDao;
+import com.spring.ex.products.model.ProductsBean;
 
 @Component("ProductsHeartDao")
 public class ProductsHeartDao {
@@ -75,17 +73,19 @@ public class ProductsHeartDao {
 		productsHeartList = sqlSessionTemplate.selectList("productsHeart.getAllProductsHeart", getUserId);
 		for(int i=0; i<productsHeartList.size(); i++) {
 			System.out.println("list " + i + " : "  + productsHeartList.get(i));
+			System.out.println("====getAllProductsHeart====");
 		}
 		return productsHeartList;
 		
 	}//getAllProductsHeart
 	
 	//getAllProductsHeart_Map : 좋아요한 게시글 list
-	public List<ProductsHeartBean> getAllProductsHeart_Map(String getUserId) {
-	    List<ProductsHeartBean> productsHeartList = null;
+	public List<ProductsBean> getAllProductsHeart_Map(String getUserId) {
+	    List<ProductsBean> productsHeartList = null;
 	    try {
 	    	productsHeartList = sqlSessionTemplate.selectList("productsHeart.getAllProductsHeart_Map", getUserId);
 	    }catch (Exception e) {
+	    	System.out.println("====getAllProductsHeart_Map====");
 			e.printStackTrace();
 		}
 	    

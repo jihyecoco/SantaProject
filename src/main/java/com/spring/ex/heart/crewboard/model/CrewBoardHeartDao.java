@@ -96,6 +96,5 @@ public class CrewBoardHeartDao {
 	    
 	    return crewBoardHeartList;
 	}//getAllCrewBoardHeart_Map
-	
 
 }//CrewBoardHeartDao
